@@ -5,6 +5,10 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  corePlugins: {
+    preflight: false,
+  },
+  important: true,
   theme: {
     extend: {
       backgroundImage: {
@@ -17,9 +21,6 @@ module.exports = {
           light: "#7bd3ef",
           DEFAULT: "#0fabe0",
           dark: "#0f80b0",
-        },
-        "auth-mute": {
-          DEFAULT: "#888686",
         },
       },
       boxShadow: {

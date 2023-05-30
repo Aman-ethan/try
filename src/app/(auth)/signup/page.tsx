@@ -2,11 +2,18 @@
 
 import useSWRMutation from "swr/mutation";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { message } from "antd";
-import Input from "@/components/Auth/Input";
-import Button from "@/components/Auth/Button";
+import {
+  Button,
+  Form,
+  Input,
+  Radio,
+  Space,
+  TimePicker,
+  Typography,
+  message,
+} from "antd";
 import Link from "next/link";
+import SubHeading from "@/components/Auth/SubHeading";
 
 interface ISignupResponse {
   id: string;
@@ -20,20 +27,20 @@ interface ISignupArgs {
   media: string;
   company: string;
   designation: string;
-  time: string;
+  time: Date;
   source: string;
 }
 
 async function signup(key: string, { arg }: Readonly<{ arg: ISignupArgs }>) {
-  const { phoneNumber, countryCode, source, media, ...rest } = arg;
+  const { phoneNumber, source, media, time, ...rest } = arg;
   const res = await fetch(
     process.env.NEXT_PUBLIC_AUTH_SERVER_URL +
       key +
       new URLSearchParams({
         ...rest,
         phone_number: phoneNumber,
-        code: countryCode,
         media: media === "Other" ? source : media,
+        time: time.toISOString(),
       })
   );
   if (!res.ok) {
@@ -52,9 +59,9 @@ const REFERRAL_SOURCE = [
 
 export default function SignupPage() {
   const router = useRouter();
-  const { register, handleSubmit, reset, watch } = useForm<ISignupArgs>();
-  const media = watch("media");
-
+  const [form] = Form.useForm<ISignupArgs>();
+  const media = Form.useWatch("media", form);
+  console.log(media);
   const { trigger, isMutating } = useSWRMutation<
     ISignupResponse | void,
     Error,
@@ -63,7 +70,7 @@ export default function SignupPage() {
   >("/api/contact_us/?", signup, {
     onSuccess(data) {
       if (data?.id) {
-        reset();
+        form.resetFields();
         message.success("Thank you! Your data is recorded.");
         fetch(`/api/send_email/?contact_id=${data.id}`);
         router.push("/login");
@@ -72,100 +79,83 @@ export default function SignupPage() {
   });
 
   return (
-    <form
-      onSubmit={handleSubmit((data) => trigger(data))}
-      className="flex flex-col space-y-6"
+    <Form
+      layout="vertical"
+      form={form}
+      onFinish={(data) => trigger(data)}
+      disabled={isMutating}
+      size="large"
+      labelCol={{ className: "font-medium -my-2" }}
     >
-      <p className="text-[#727272] text-2xl">Please enter your credentials</p>
-      <div className="space-y-4 w-full">
-        <Input
-          type="text"
-          placeholder="Enter Username"
-          disabled={isMutating}
-          {...register("username")}
-        />
-        <Input
-          type="email"
-          placeholder="Enter Email ID"
-          disabled={isMutating}
-          {...register("email")}
-        />
-        <div className="flex gap-x-4">
-          <Input
-            placeholder="Country Code"
-            type="number"
-            className="w-1/2"
-            disabled={isMutating}
-            {...register("countryCode")}
-          />
-          <Input
-            placeholder="Enter Phone Number"
-            type="tel"
-            disabled={isMutating}
-            {...register("phoneNumber")}
-          />
-        </div>
-        <Input
-          type="text"
-          placeholder="Enter Company Name"
-          disabled={isMutating}
-          {...register("company")}
-        />
-        <Input
-          type="text"
-          placeholder="Enter Designation"
-          disabled={isMutating}
-          {...register("designation")}
-        />
-        <label htmlFor="time" className="block">
-          <span className="font-medium">When can we contact you?</span>
-          <Input
+      <Space direction="vertical" size="small">
+        <SubHeading />
+        <Form.Item noStyle label="Enter Username" name="username">
+          <Input type="text" placeholder="Enter Username" />
+        </Form.Item>
+        <Form.Item noStyle label="Enter Email ID" name="email">
+          <Input type="email" placeholder="Enter Email ID" />
+        </Form.Item>
+        <Space.Compact block>
+          <Form.Item noStyle label="Country Code" name="code">
+            <Input type="tel" placeholder="Country Code" className="w-3/5" />
+          </Form.Item>
+          <Form.Item noStyle label="Phone Number" name="phoneNumber">
+            <Input type="tel" placeholder="Enter Phone Number" />
+          </Form.Item>
+        </Space.Compact>
+        <Form.Item noStyle label="Enter Company Name" name="company">
+          <Input type="text" placeholder="Enter Company Name" />
+        </Form.Item>
+        <Form.Item noStyle label="Enter Designation" name="designation">
+          <Input type="text" placeholder="Enter Designation" />
+        </Form.Item>
+        <Form.Item label="When can we contact you?" name="time" htmlFor="time">
+          <TimePicker
             id="time"
-            defaultValue="10:00"
-            type="time"
-            disabled={isMutating}
-            {...register("time")}
+            format="HH:mm A"
+            className="w-full"
+            placeholder="10:00 AM"
+            use12Hours
           />
-        </label>
-        <label htmlFor="media" className="block">
-          <span className="font-medium">How did you hear about us?</span>
-          {REFERRAL_SOURCE.map((source) => (
-            <label
-              key={source}
-              htmlFor={source.toLowerCase().replace(" ", "_")}
-              className="flex items-center gap-x-2"
-            >
-              <input
-                type="radio"
-                id={source.toLowerCase().replace(" ", "_")}
-                value={source}
-                disabled={isMutating}
-                {...register("media")}
-              />
-              {source}
-            </label>
-          ))}
-        </label>
+        </Form.Item>
+        <Form.Item
+          label="How did you hear about us?"
+          htmlFor="media"
+          name="media"
+          className="-mt-6 -mb-0.5"
+        >
+          <Radio.Group id="media">
+            <Space direction="vertical">
+              {REFERRAL_SOURCE.map((source) => (
+                <Radio key={source} value={source}>
+                  {source}
+                </Radio>
+              ))}
+            </Space>
+          </Radio.Group>
+        </Form.Item>
         {media === "Other" && (
-          <Input
-            type="text"
-            placeholder="State Here"
-            disabled={isMutating}
-            {...register("source")}
-          />
+          <Form.Item noStyle label="State Here" name="source">
+            <Input type="text" placeholder="State Here" />
+          </Form.Item>
         )}
-      </div>
-      <div className="mx-auto space-y-2">
-        <Button type="submit" disabled={isMutating}>
-          Submit
-        </Button>
-        <p className="text-sm text-auth-mute">
-          Already a member?{" "}
-          <Link href="/login" className="text-auth-blue hover:underline">
-            Login
-          </Link>
-        </p>
-      </div>
-    </form>
+        <Space direction="vertical" align="center" className="w-full pt-10">
+          <Button
+            htmlType="submit"
+            type="primary"
+            className="px-12"
+            loading={isMutating}
+          >
+            Submit
+          </Button>
+          <Typography.Text type="secondary">
+            Already a member?{" "}
+            <Link href="/login" className="hover:underline">
+              Login
+            </Link>
+          </Typography.Text>
+        </Space>
+      </Space>
+    </Form>
   );
 }

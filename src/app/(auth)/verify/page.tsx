@@ -33,12 +33,8 @@ const OPT_LENGTH = 6;
 
 export default function VerifyPage() {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<IVerifyArgs>();
-  const { trigger } = useSWRMutation<
+  const { register, handleSubmit } = useForm<IVerifyArgs>();
+  const { trigger, isMutating } = useSWRMutation<
     IVerifyResponse | void,
     Error,
     string,

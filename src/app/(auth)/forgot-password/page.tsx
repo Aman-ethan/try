@@ -1,7 +1,12 @@
+"use client";
+
+import Input from "@/components/Auth/Input";
+import SubHeading from "@/components/Auth/SubHeading";
+
 export default function ForgotPasswordPage() {
   return (
-    <div>
-      <h1>Signup Page</h1>
-    </div>
+    <form>
+      <SubHeading />
+    </form>
   );
 }
