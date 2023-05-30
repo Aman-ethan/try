@@ -64,14 +64,14 @@ export default function LoginPage() {
               required
               type="text"
               placeholder="Enter Username"
-              prefix={<UserOutlined />}
+              addonBefore={<UserOutlined />}
             />
           </Form.Item>
           <Form.Item noStyle name="password">
             <Input.Password
               required
               placeholder="Enter Password"
-              prefix={<LockOutlined />}
+              addonBefore={<LockOutlined />}
             />
           </Form.Item>
           <Typography.Paragraph type="secondary">

@@ -98,7 +98,7 @@ export default function ResetPasswordPage() {
           <Form.Item name="password" help={helpText}>
             <Input.Password
               status={helpText ? "warning" : undefined}
-              prefix={<LockOutlined />}
+              addonBefore={<LockOutlined />}
               required
               placeholder="New Password"
             />
@@ -122,7 +122,7 @@ export default function ResetPasswordPage() {
             ]}
           >
             <Input.Password
-              prefix={<LockOutlined />}
+              addonBefore={<LockOutlined />}
               required
               placeholder="Confirm New Password"
             />

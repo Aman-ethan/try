@@ -15,6 +15,14 @@ import {
 import Link from "next/link";
 import SubHeading from "@/components/Auth/SubHeading";
 import Heading from "@/components/Auth/Heading";
+import {
+  BankOutlined,
+  IdcardOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  PlusOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
 interface ISignupResponse {
   id: string;
@@ -95,24 +103,49 @@ export default function SignupPage() {
       >
         <Space direction="vertical" size="small">
           <Form.Item noStyle label="Enter Username" name="username">
-            <Input type="text" placeholder="Enter Username" />
+            <Input
+              type="text"
+              placeholder="Enter Username"
+              addonBefore={<UserOutlined />}
+            />
           </Form.Item>
           <Form.Item noStyle label="Enter Email ID" name="email">
-            <Input type="email" placeholder="Enter Email ID" />
+            <Input
+              type="email"
+              placeholder="Enter Email ID"
+              addonBefore={<MailOutlined />}
+            />
           </Form.Item>
           <Space.Compact block>
             <Form.Item noStyle label="Country Code" name="code">
-              <Input type="tel" placeholder="Country Code" className="w-3/5" />
+              <Input
+                type="tel"
+                placeholder="Country Code"
+                className="w-3/5"
+                addonBefore={<PlusOutlined />}
+              />
             </Form.Item>
             <Form.Item noStyle label="Phone Number" name="phoneNumber">
-              <Input type="tel" placeholder="Enter Phone Number" />
+              <Input
+                type="tel"
+                placeholder="Enter Phone Number"
+                addonBefore={<PhoneOutlined />}
+              />
             </Form.Item>
           </Space.Compact>
           <Form.Item noStyle label="Enter Company Name" name="company">
-            <Input type="text" placeholder="Enter Company Name" />
+            <Input
+              type="text"
+              placeholder="Enter Company Name"
+              addonBefore={<BankOutlined />}
+            />
           </Form.Item>
           <Form.Item noStyle label="Enter Designation" name="designation">
-            <Input type="text" placeholder="Enter Designation" />
+            <Input
+              type="text"
+              placeholder="Enter Designation"
+              addonBefore={<IdcardOutlined />}
+            />
           </Form.Item>
           <Form.Item
             label="When can we contact you?"

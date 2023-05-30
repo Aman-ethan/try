@@ -65,7 +65,7 @@ export default function ForgotPasswordPage() {
               required
               type="text"
               placeholder="Enter Username or Email ID"
-              prefix={<UserOutlined />}
+              addonBefore={<UserOutlined />}
             />
           </Form.Item>
           <Space direction="vertical" align="center" className="w-full pt-6">
