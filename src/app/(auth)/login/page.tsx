@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SubHeading from "@/components/Auth/SubHeading";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import Heading from "@/components/Auth/Heading";
 
 interface ILoginArgs {
   username: string;
@@ -43,72 +44,75 @@ export default function LoginPage() {
   >("/api/login", login, {
     onSuccess(data) {
       if (data?.user_id) {
-        router.push("/verify?userId=" + data.user_id);
+        router.push("/verify-otp?" + new URLSearchParams({ ...data }));
       }
     },
   });
 
   return (
-    <Form
-      onFinish={(data: ILoginArgs) => trigger(data)}
-      disabled={isMutating}
-      size="large"
-    >
-      <Space direction="vertical" size="middle">
-        <SubHeading />
-        <Form.Item noStyle name="username">
-          <Input
-            required
-            type="text"
-            placeholder="Enter Username"
-            prefix={<UserOutlined />}
-          />
-        </Form.Item>
-        <Form.Item noStyle name="password">
-          <Input.Password
-            required
-            placeholder="Enter Password"
-            prefix={<LockOutlined />}
-          />
-        </Form.Item>
-        <Typography.Paragraph type="secondary">
-          By signing up you agree to ethan terms of service and{" "}
-          <Typography.Link
-            href="https://www.ethan-ai.com/privacy"
-            target="_blank"
-            rel="noreferrer"
-            className="hover:underline"
+    <Space direction="vertical" size="small">
+      <Heading />
+      <SubHeading />
+      <Form
+        onFinish={(data: ILoginArgs) => trigger(data)}
+        disabled={isMutating}
+        size="large"
+      >
+        <Space direction="vertical" size="middle">
+          <Form.Item noStyle name="username">
+            <Input
+              required
+              type="text"
+              placeholder="Enter Username"
+              prefix={<UserOutlined />}
+            />
+          </Form.Item>
+          <Form.Item noStyle name="password">
+            <Input.Password
+              required
+              placeholder="Enter Password"
+              prefix={<LockOutlined />}
+            />
+          </Form.Item>
+          <Typography.Paragraph type="secondary">
+            By signing up you agree to ethan terms of service and{" "}
+            <Typography.Link
+              href="https://www.ethan-ai.com/privacy"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:underline"
+            >
+              privacy policy
+            </Typography.Link>
+            . You also agree to receive subsequent email and third-party
+            communications, which you may opt out of at any time.
+          </Typography.Paragraph>
+          <Space
+            direction="vertical"
+            size="small"
+            align="center"
+            className="w-full"
           >
-            privacy policy
-          </Typography.Link>
-          . You also agree to receive subsequent email and third-party
-          communications, which you may opt out of at any time.
-        </Typography.Paragraph>
-        <Space
-          direction="vertical"
-          size="small"
-          align="center"
-          className="w-full"
-        >
-          <Button
-            htmlType="submit"
-            type="primary"
-            loading={isMutating}
-            className="px-10"
-          >
-            Log In
-          </Button>
-          <Typography.Text type="secondary">
-            Not a member?{" "}
-            <Link href="/signup" className="hover:underline">
-              Sign up
+            <Button
+              htmlType="submit"
+              type="primary"
+              loading={isMutating}
+              className="px-10"
+            >
+              Log In
+            </Button>
+            <Typography.Text type="secondary">
+              Not a member?{" "}
+              <Link href="/signup" className="hover:underline">
+                Sign up
+              </Link>
+            </Typography.Text>
+            <Link href="/forgot-password" className="hover:underline">
+              Forgot Password?
             </Link>
-          </Typography.Text>
-          <Link href="/forgot-password" className="hover:underline">
-            Forgot Password?
-          </Link>
+          </Space>
         </Space>
-      </Space>
-    </Form>
+      </Form>
+    </Space>
   );
 }
