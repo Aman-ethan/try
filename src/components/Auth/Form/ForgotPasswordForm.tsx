@@ -57,6 +57,7 @@ export default function ForgotPasswordForm() {
             type="text"
             placeholder="Enter Username or Email ID"
             addonBefore={<UserOutlined />}
+            autoFocus
           />
         </Form.Item>
         <Space direction="vertical" align="center" className="w-full pt-6">

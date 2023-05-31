@@ -3,7 +3,6 @@
 import { Button, Form, Input, Progress, Space, message } from "antd";
 import useSWRMutation from "swr/mutation";
 import { LockOutlined } from "@ant-design/icons";
-import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 import { zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
 import * as zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
@@ -20,11 +19,16 @@ async function resetPassword(
   key: string,
   { arg }: Readonly<{ arg: IUpdatePasswordArgs }>
 ) {
+  // The first letter of hash is a #, so we need to remove it
+  const accessToken = new URLSearchParams(
+    window.location.hash.substring(1)
+  ).get("access_token");
+
   const res = await fetch(process.env.NEXT_PUBLIC_AUTH_SERVER_URL + key, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + window.location.hash,
+      Authorization: "Bearer " + accessToken,
     },
     body: JSON.stringify({
       new_password: arg.password,
@@ -58,7 +62,6 @@ const strengthStrokeColor = [
 
 export default function ResetPasswordForm() {
   const router = useRouter();
-  const cookies = useCookies<string>([])[0];
 
   const [form] = Form.useForm();
   const password = Form.useWatch("password", form);
@@ -77,7 +80,7 @@ export default function ResetPasswordForm() {
   >("/api/reset-password", resetPassword, {
     onSuccess(data) {
       if (data) {
-        router.push("/reset-success");
+        router.replace("/reset-success");
       }
     },
   });
@@ -96,6 +99,7 @@ export default function ResetPasswordForm() {
             addonBefore={<LockOutlined />}
             required
             placeholder="New Password"
+            autoFocus
           />
         </Form.Item>
         <Form.Item

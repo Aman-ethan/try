@@ -40,7 +40,7 @@ const OPT_LENGTH = 6;
 
 export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
   const [form] = Form.useForm();
-  const { push } = useRouter();
+  const { push, replace } = useRouter();
   const otpRef = useRef<Record<string, InputRef | null>>({});
   const setCookie = useCookies<string>([])[1];
 
@@ -58,7 +58,9 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
       if (data?.access_token && data.refresh_token) {
         switch (nextPath) {
           case "/reset-password":
-            push(`${nextPath}#${data.access_token}`);
+            // Using hash instead of query params to prevent the token from being sent to the server
+            replace(`${nextPath}#${new URLSearchParams({ ...data })}`);
+            return;
           default:
             const currentDate = Date.now();
             setCookie("access_token", data.access_token, {

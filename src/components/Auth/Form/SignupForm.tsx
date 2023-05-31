@@ -102,6 +102,7 @@ export default function SignupForm() {
             type="text"
             placeholder="Enter Username"
             addonBefore={<UserOutlined />}
+            autoFocus
           />
         </Form.Item>
         <Form.Item noStyle label="Enter Email ID" name="email">

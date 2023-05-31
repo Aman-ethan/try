@@ -61,6 +61,7 @@ export default function LoginForm() {
             type="text"
             placeholder="Enter Username"
             addonBefore={<UserOutlined />}
+            autoFocus
           />
         </Form.Item>
         <Form.Item noStyle name="password">
