@@ -1,4 +1,4 @@
-import { Typography } from "@/lib/antd";
+import { Title } from "@/lib/antd";
 import { TitleProps } from "antd/es/typography/Title";
 
 const DefaultTitle = (
@@ -8,7 +8,5 @@ const DefaultTitle = (
 );
 
 export default function Heading({ children = DefaultTitle }: TitleProps) {
-  return (
-    <Typography.Title className="font-normal">{children}</Typography.Title>
-  );
+  return <Title className="font-normal">{children}</Title>;
 }

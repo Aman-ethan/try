@@ -1,4 +1,4 @@
-import Logo from "@/app/(auth)/components/Logo";
+import Logo from "@/components/Auth/Common/Logo";
 import theme from "@/config/theme";
 import {
   ConfigProvider,
@@ -9,7 +9,7 @@ import {
   Content,
 } from "@/lib/antd";
 import Link from "next/link";
-import StyleRegistry from "@/lib/StyleRegistry";
+import StyleRegistry from "@/components/StyleRegistry";
 
 import "antd/dist/reset.css";
 import "tailwindcss/tailwind.css";

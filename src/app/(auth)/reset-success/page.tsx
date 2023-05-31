@@ -1,7 +1,6 @@
 "use client";
 
-import { CheckCircleFilled } from "@ant-design/icons";
-import { Button, Result, Space, Typography } from "antd";
+import { Button, Result } from "antd";
 import { useRouter } from "next/navigation";
 
 export default function ResetSuccessPage() {
