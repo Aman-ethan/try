@@ -4,9 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import useSWRMutation from "swr/mutation";
 import { Button, Form, Input, InputRef, Space, message } from "antd";
 import { ChangeEvent, KeyboardEvent, useEffect, useRef } from "react";
-import SubHeading from "@/components/Auth/Common/SubHeading";
-import Cookies from "js-cookie";
-import Heading from "@/components/Auth/Common/Heading";
+import { useCookies } from "react-cookie";
 
 interface IVerifyResponse {
   access_token: string;
@@ -44,6 +42,7 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
   const [form] = Form.useForm();
   const { push } = useRouter();
   const otpRef = useRef<Record<string, InputRef | null>>({});
+  const setCookie = useCookies<string>([])[1];
 
   const searchParams = useSearchParams();
   const userId = searchParams.get("user_id");
@@ -57,18 +56,22 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
   >("/api/verify-otp", verify, {
     onSuccess(data) {
       if (data?.access_token && data.refresh_token) {
-        Cookies.set("access_token", data.access_token, {
-          sameSite: "lax",
-          secure: true,
-          expires: Date.now() + 1000 * 60 * 60,
-        });
-        Cookies.set("refresh_token", data.refresh_token, {
-          sameSite: "lax",
-          secure: true,
-          expires: Date.now() + 1000 * 60 * 60 * 2,
-        });
-        if (nextPath) push(nextPath);
-        else push("/dashboard");
+        switch (nextPath) {
+          case "/reset-password":
+            push(`${nextPath}#${data.access_token}`);
+          default:
+            const currentDate = Date.now();
+            setCookie("access_token", data.access_token, {
+              sameSite: "lax",
+              secure: true,
+              expires: new Date(currentDate + 1000 * 60 * 60),
+            });
+            setCookie("refresh_token", data.refresh_token, {
+              sameSite: "lax",
+              secure: true,
+              expires: new Date(currentDate + 1000 * 60 * 60 * 2),
+            });
+        }
       } else {
         otpRef.current[OPT_LENGTH - 1]?.focus();
       }
@@ -102,7 +105,7 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
     };
   }
 
-  return !!userId ? (
+  return userId ? (
     <>
       {children}
       <Form

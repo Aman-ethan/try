@@ -1,8 +1,18 @@
+"use client";
+
+import { Button } from "@/lib/antd";
+import { useCookies } from "react-cookie";
+
 export default function Home() {
+  const removeCookie = useCookies()[2];
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Home page</p>
-    </div>
-  )
+    <Button
+      onClick={() => {
+        removeCookie("access_token");
+        removeCookie("refresh_token");
+      }}
+    >
+      Logout
+    </Button>
+  );
 }

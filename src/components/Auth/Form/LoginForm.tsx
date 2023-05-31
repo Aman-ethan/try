@@ -13,6 +13,7 @@ interface ILoginArgs {
 
 interface ILoginResponse {
   user_id: string;
+  message?: string;
 }
 
 async function login(key: string, { arg }: Readonly<{ arg: ILoginArgs }>) {
@@ -42,6 +43,7 @@ export default function LoginForm() {
   >("/api/login", login, {
     onSuccess(data) {
       if (data?.user_id) {
+        delete data.message;
         router.push("/verify-otp?" + new URLSearchParams({ ...data }));
       }
     },

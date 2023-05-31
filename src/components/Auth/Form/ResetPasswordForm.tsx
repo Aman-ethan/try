@@ -1,11 +1,9 @@
 "use client";
 
-import Heading from "@/components/Auth/Common/Heading";
-import SubHeading from "@/components/Auth/Common/SubHeading";
 import { Button, Form, Input, Progress, Space, message } from "antd";
 import useSWRMutation from "swr/mutation";
 import { LockOutlined } from "@ant-design/icons";
-import Cookies from "js-cookie";
+import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 import { zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
 import * as zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
@@ -26,7 +24,7 @@ async function resetPassword(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + Cookies.get("access_token"),
+      Authorization: "Bearer " + window.location.hash,
     },
     body: JSON.stringify({
       new_password: arg.password,
@@ -60,6 +58,8 @@ const strengthStrokeColor = [
 
 export default function ResetPasswordForm() {
   const router = useRouter();
+  const cookies = useCookies<string>([])[0];
+
   const [form] = Form.useForm();
   const password = Form.useWatch("password", form);
   const passwordInfo = zxcvbn(password || "");
@@ -77,8 +77,6 @@ export default function ResetPasswordForm() {
   >("/api/reset-password", resetPassword, {
     onSuccess(data) {
       if (data) {
-        Cookies.remove("access_token");
-        Cookies.remove("refresh_token");
         router.push("/reset-success");
       }
     },
