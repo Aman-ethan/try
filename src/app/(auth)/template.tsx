@@ -18,5 +18,5 @@ export default function AuthTemplate({ children }: IAuthTemplateProps) {
     }
   }, [isLoggedIn, push]);
 
-  return <>{!isLoggedIn && children}</>;
+  return !isLoggedIn ? children : null;
 }

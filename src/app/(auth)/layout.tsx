@@ -14,7 +14,7 @@ import StyleRegistry from "@/components/StyleRegistry";
 import "antd/dist/reset.css";
 import "tailwindcss/tailwind.css";
 
-export default function RootLayout({
+export default function AuthRootLayout({
   children,
 }: {
   children: React.ReactNode;
