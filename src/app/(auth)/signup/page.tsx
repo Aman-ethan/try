@@ -13,8 +13,8 @@ import {
   message,
 } from "antd";
 import Link from "next/link";
-import SubHeading from "@/components/Auth/SubHeading";
-import Heading from "@/components/Auth/Heading";
+import SubHeading from "@/app/(auth)/components/SubHeading";
+import Heading from "@/app/(auth)/components/Heading";
 import {
   BankOutlined,
   IdcardOutlined,

@@ -4,9 +4,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import useSWRMutation from "swr/mutation";
 import { Button, Form, Input, InputRef, Space, message } from "antd";
 import { ChangeEvent, KeyboardEvent, useEffect, useRef } from "react";
-import SubHeading from "@/components/Auth/SubHeading";
+import SubHeading from "@/app/(auth)/components/SubHeading";
 import Cookies from "js-cookie";
-import Heading from "@/components/Auth/Heading";
+import Heading from "@/app/(auth)/components/Heading";
 
 interface IVerifyResponse {
   access_token: string;

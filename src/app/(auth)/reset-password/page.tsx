@@ -1,7 +1,7 @@
 "use client";
 
-import Heading from "@/components/Auth/Heading";
-import SubHeading from "@/components/Auth/SubHeading";
+import Heading from "@/app/(auth)/components/Heading";
+import SubHeading from "@/app/(auth)/components/SubHeading";
 import { Button, Form, Input, Progress, Space, message } from "antd";
 import useSWRMutation from "swr/mutation";
 import { LockOutlined } from "@ant-design/icons";

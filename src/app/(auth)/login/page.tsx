@@ -4,9 +4,9 @@ import useSWRMutation from "swr/mutation";
 import { Button, Form, Input, Space, Typography, message } from "antd";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import SubHeading from "@/components/Auth/SubHeading";
+import SubHeading from "@/app/(auth)/components/SubHeading";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import Heading from "@/components/Auth/Heading";
+import Heading from "@/app/(auth)/components/Heading";
 
 interface ILoginArgs {
   username: string;

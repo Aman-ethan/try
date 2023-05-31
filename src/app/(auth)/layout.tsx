@@ -1,4 +1,4 @@
-import Logo from "@/components/Auth/Logo";
+import Logo from "@/app/(auth)/components/Logo";
 import theme from "@/config/theme";
 import {
   ConfigProvider,
