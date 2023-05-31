@@ -1,8 +1,19 @@
+import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 
 export default function useAuth() {
-  const cookies = useCookies(["access_token", "refresh_token"])[0];
+  const { access_token, refresh_token } = useCookies([
+    "access_token",
+    "refresh_token",
+  ])[0];
+
+  useEffect(() => {
+    if (!access_token && refresh_token) {
+      // fetch access token
+    }
+  }, [access_token, refresh_token]);
+
   return {
-    isLoggedIn: cookies.access_token && cookies.refresh_token,
+    isLoggedIn: !!refresh_token,
   };
 }

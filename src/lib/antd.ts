@@ -1,5 +1,6 @@
 "use client";
-import { Typography, Layout, theme } from "antd";
+
+import { Typography, Layout } from "antd";
 
 export * from "antd";
 export const Title = Typography.Title;
@@ -10,4 +11,3 @@ export const Header = Layout.Header;
 export const Footer = Layout.Footer;
 export const Content = Layout.Content;
 export const Sider = Layout.Sider;
-export const defaultAlgorithm = theme.defaultAlgorithm;

@@ -1,4 +1,4 @@
-import { ThemeConfig, defaultAlgorithm } from "@/lib/antd";
+import { ThemeConfig, theme as _theme } from "antd";
 
 const theme: ThemeConfig = {
   token: {
@@ -6,7 +6,7 @@ const theme: ThemeConfig = {
     colorLink: "#0fabe0",
     colorTextSecondary: "#888686",
   },
-  algorithm: defaultAlgorithm,
+  algorithm: _theme.defaultAlgorithm,
 };
 
 export default theme;

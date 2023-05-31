@@ -1,8 +1,6 @@
-import StyleRegistry from "@/components/StyleRegistry";
 import "tailwindcss/tailwind.css";
 import { Inter } from "next/font/google";
-import { ConfigProvider } from "@/lib/antd";
-import theme from "@/config/theme";
+import AppProvider from "@/context/AppProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,9 +12,7 @@ export default function MainRootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <StyleRegistry>
-          <ConfigProvider theme={theme}>{children}</ConfigProvider>
-        </StyleRegistry>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );
