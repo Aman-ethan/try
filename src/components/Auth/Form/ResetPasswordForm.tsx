@@ -1,46 +1,19 @@
 "use client";
 
 import { Button, Form, Input, Progress, Space, message } from "antd";
-import useSWRMutation from "swr/mutation";
 import { LockOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
 import * as zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
 import * as zxcvbnEnPackage from "@zxcvbn-ts/language-en";
+import { useAuthServerMutation } from "@/hooks/useMutation";
 
 interface IUpdatePasswordArgs {
-  password: string;
-  confirmPassword: string;
+  new_password: string;
+  confirm_new_password: string;
 }
 
 interface IUpdatePasswordResponse {}
-
-async function resetPassword(
-  key: string,
-  { arg }: Readonly<{ arg: IUpdatePasswordArgs }>
-) {
-  // The first letter of hash is a #, so we need to remove it
-  const accessToken = new URLSearchParams(
-    window.location.hash.substring(1)
-  ).get("access_token");
-
-  const res = await fetch(process.env.NEXT_PUBLIC_AUTH_SERVER_URL + key, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken,
-    },
-    body: JSON.stringify({
-      new_password: arg.password,
-      confirm_new_password: arg.confirmPassword,
-    }),
-  });
-  if (!res.ok) {
-    message.error("Password reset failed. Please try again.");
-  } else {
-    return res.json();
-  }
-}
 
 const options = {
   translations: zxcvbnEnPackage.translations,
@@ -63,7 +36,7 @@ const strengthStrokeColor = [
 export default function ResetPasswordForm() {
   const router = useRouter();
 
-  const [form] = Form.useForm();
+  const [form] = Form.useForm<IUpdatePasswordArgs>();
   const password = Form.useWatch("password", form);
   const passwordInfo = zxcvbn(password || "");
   const passwordScore = passwordInfo.score;
@@ -72,28 +45,24 @@ export default function ResetPasswordForm() {
       passwordInfo.feedback.suggestions.join(" ")
     : undefined;
 
-  const { trigger, isMutating } = useSWRMutation<
-    IUpdatePasswordResponse,
-    Error,
-    string,
-    IUpdatePasswordArgs
-  >("/api/reset-password", resetPassword, {
+  const { trigger, isMutating } = useAuthServerMutation<
+    IUpdatePasswordArgs,
+    IUpdatePasswordResponse
+  >("/api/reset-password", {
     onSuccess(data) {
       if (data) {
         router.replace("/reset-success");
       }
     },
+    onError() {
+      message.error("Password reset failed. Please try again.");
+    },
   });
 
   return (
-    <Form
-      form={form}
-      size="large"
-      onFinish={(data) => trigger(data)}
-      disabled={isMutating}
-    >
+    <Form form={form} size="large" onFinish={trigger} disabled={isMutating}>
       <Space direction="vertical" className="w-full">
-        <Form.Item name="password" help={helpText}>
+        <Form.Item name="new_password" help={helpText}>
           <Input.Password
             status={helpText ? "warning" : undefined}
             addonBefore={<LockOutlined />}
@@ -103,12 +72,12 @@ export default function ResetPasswordForm() {
           />
         </Form.Item>
         <Form.Item
-          name="confirmPassword"
+          name="confirm_new_password"
           dependencies={["password"]}
           rules={[
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
+                if (!value || getFieldValue("new_password") === value) {
                   return Promise.resolve();
                 }
                 return Promise.reject(

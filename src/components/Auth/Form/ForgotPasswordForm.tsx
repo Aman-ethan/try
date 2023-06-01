@@ -1,10 +1,10 @@
 "use client";
 
+import { useAuthServerMutation } from "@/hooks/useMutation";
 import { UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Space, Typography, message } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import useSWRMutation from "swr/mutation";
 
 interface IUserArgs {
   username: string;
@@ -12,44 +12,33 @@ interface IUserArgs {
 
 interface IUserResponse {
   user_id: string;
-  message?: string;
-}
-
-async function user(key: string, { arg }: Readonly<{ arg: IUserArgs }>) {
-  const res = await fetch(process.env.NEXT_PUBLIC_AUTH_SERVER_URL + key, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(arg),
-  });
-  if (!res.ok) {
-    message.error("Credentials are incorrect. Please try again.");
-  } else {
-    return res.json();
-  }
+  message: string;
 }
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
-  const { trigger, isMutating } = useSWRMutation<
-    IUserResponse,
-    Error,
-    string,
-    IUserArgs
-  >("/api/forgot-password", user, {
+  const { trigger, isMutating } = useAuthServerMutation<
+    IUserArgs,
+    IUserResponse
+  >("/api/forgot-password", {
     onSuccess(data) {
-      if (data?.user_id) {
-        delete data.message;
+      if (data.user_id) {
         router.push(
           "/verify-otp?" +
-            new URLSearchParams({ ...data, next_path: "/reset-password" })
+            new URLSearchParams({
+              userId: data.user_id,
+              next_path: "/reset-password",
+            })
         );
       }
     },
+    onError() {
+      message.error("Credentials are incorrect. Please try again.");
+    },
   });
+
   return (
-    <Form onFinish={(data) => trigger(data)} size="large" disabled={isMutating}>
+    <Form onFinish={trigger} size="large" disabled={isMutating}>
       <Space direction="vertical" size="large" className="w-full">
         <Form.Item noStyle name="username">
           <Input

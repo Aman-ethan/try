@@ -1,6 +1,5 @@
 "use client";
 
-import useSWRMutation from "swr/mutation";
 import { useRouter } from "next/navigation";
 import {
   Button,
@@ -21,6 +20,7 @@ import {
   PlusOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { useAuthServerMutation } from "@/hooks/useMutation";
 
 interface ISignupResponse {
   id: string;
@@ -29,32 +29,13 @@ interface ISignupResponse {
 interface ISignupArgs {
   username: string;
   email: string;
-  phoneNumber: string;
-  countryCode: string;
+  phone_number: string;
+  country_code: string;
   media: string;
-  company: string;
+  company_name: string;
   designation: string;
   time: Date;
   source: string;
-}
-
-async function signup(key: string, { arg }: Readonly<{ arg: ISignupArgs }>) {
-  const { phoneNumber, source, media, time, ...rest } = arg;
-  const res = await fetch(
-    process.env.NEXT_PUBLIC_AUTH_SERVER_URL +
-      key +
-      new URLSearchParams({
-        ...rest,
-        phone_number: phoneNumber,
-        media: media === "Other" ? source : media,
-        time: time.toISOString(),
-      })
-  );
-  if (!res.ok) {
-    message.error("Something went wrong. Please try again.");
-  } else {
-    return res.json();
-  }
 }
 
 const REFERRAL_SOURCE = [
@@ -65,25 +46,21 @@ const REFERRAL_SOURCE = [
 ];
 
 export default function SignupForm() {
-  const router = useRouter();
   const [form] = Form.useForm<ISignupArgs>();
   const media = Form.useWatch("media", form);
-  console.log(media);
-  const { trigger, isMutating } = useSWRMutation<
-    ISignupResponse | void,
-    Error,
-    string,
-    ISignupArgs
-  >("/api/contact_us/?", signup, {
+
+  const { trigger, isMutating } = useAuthServerMutation<
+    ISignupArgs,
+    ISignupResponse
+  >("/api/contacts/", {
     onSuccess(data) {
-      if (data?.id) {
+      if (data.id) {
         form.resetFields();
         message.success("Thank you! Your data is recorded.");
-        fetch(
-          "/api/send_email/?" + new URLSearchParams({ contact_id: data.id })
-        );
-        router.push("/login");
       }
+    },
+    onError() {
+      message.error("Something went wrong. Please try again.");
     },
   });
 
@@ -91,8 +68,11 @@ export default function SignupForm() {
     <Form
       layout="vertical"
       form={form}
-      onFinish={(data) => trigger(data)}
       disabled={isMutating}
+      onFinish={(data) => {
+        const { source } = data;
+        trigger({ ...data, media: media === "Other" ? source : media });
+      }}
       size="large"
       labelCol={{ className: "font-medium -my-2" }}
     >
@@ -113,7 +93,7 @@ export default function SignupForm() {
           />
         </Form.Item>
         <Space.Compact block>
-          <Form.Item noStyle label="Country Code" name="code">
+          <Form.Item noStyle label="Country Code" name="country_code">
             <Input
               type="tel"
               placeholder="Country Code"
@@ -121,7 +101,7 @@ export default function SignupForm() {
               addonBefore={<PlusOutlined />}
             />
           </Form.Item>
-          <Form.Item noStyle label="Phone Number" name="phoneNumber">
+          <Form.Item noStyle label="Phone Number" name="phone_number">
             <Input
               type="tel"
               placeholder="Enter Phone Number"
@@ -129,7 +109,7 @@ export default function SignupForm() {
             />
           </Form.Item>
         </Space.Compact>
-        <Form.Item noStyle label="Enter Company Name" name="company">
+        <Form.Item noStyle label="Enter Company Name" name="company_name">
           <Input
             type="text"
             placeholder="Enter Company Name"

@@ -1,39 +1,23 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import useSWRMutation from "swr/mutation";
 import { Button, Form, Input, InputRef, Space, message } from "antd";
 import { ChangeEvent, KeyboardEvent, useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
+import { useAuthServerMutation } from "@/hooks/useMutation";
 
-interface IVerifyResponse {
+interface IVerifyOTPResponse {
   access_token: string;
   refresh_token: string;
 }
 
-interface IVerifyArgs {
-  userId: string;
-  otp: string[];
+interface IVerifyOTPArgs {
+  user_id: string;
+  otp: string;
 }
 
 interface IVerifyOTPFormProps {
   children: React.ReactNode;
-}
-
-async function verify(key: string, { arg }: Readonly<{ arg: IVerifyArgs }>) {
-  const res = await fetch(process.env.NEXT_PUBLIC_AUTH_SERVER_URL + key, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ otp: arg.otp.join(""), user_id: arg.userId }),
-  });
-
-  if (!res.ok) {
-    message.error("OTP is incorrect. Please try again.");
-  } else {
-    return res.json();
-  }
 }
 
 const OPT_LENGTH = 6;
@@ -46,21 +30,22 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
 
   const searchParams = useSearchParams();
   const userId = searchParams.get("user_id");
-  const nextPath = searchParams.get("next_path");
 
-  const { trigger, isMutating } = useSWRMutation<
-    IVerifyResponse | void,
-    Error,
-    string,
-    IVerifyArgs
-  >("/api/verify-otp", verify, {
+  const { trigger, isMutating } = useAuthServerMutation<
+    IVerifyOTPArgs,
+    IVerifyOTPResponse
+  >("/api/verify-otp", {
     onSuccess(data) {
-      if (data?.access_token && data.refresh_token) {
+      if (data.access_token && data.refresh_token) {
+        const nextPath = searchParams.get("next_path");
         switch (nextPath) {
           case "/reset-password":
-            // Using hash instead of query params to prevent the token from being sent to the server
-            replace(`${nextPath}#${new URLSearchParams({ ...data })}`);
-            return;
+            // setting a session cookie
+            setCookie("access_token", data.access_token, {
+              sameSite: "lax",
+              secure: true,
+            });
+            return replace(nextPath);
           default:
             const currentDate = Date.now();
             setCookie("access_token", data.access_token, {
@@ -74,9 +59,10 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
               expires: new Date(currentDate + 1000 * 60 * 60 * 2),
             });
         }
-      } else {
-        otpRef.current[OPT_LENGTH - 1]?.focus();
       }
+    },
+    onError() {
+      message.error("OTP is incorrect. Please try again.");
     },
   });
 
@@ -112,15 +98,13 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
       {children}
       <Form
         form={form}
-        onFinish={(data: IVerifyArgs) => trigger(data)}
+        onFinish={(data) =>
+          trigger({ otp: data.otp.join(""), user_id: userId })
+        }
         disabled={isMutating}
         size="large"
-        initialValues={{ userId }}
         className="space-y-10"
       >
-        <Form.Item noStyle name="userId">
-          <Input type="hidden" />
-        </Form.Item>
         <Space className="w-full justify-center">
           {Array.from({ length: OPT_LENGTH }).map((_, index) => (
             <Form.Item

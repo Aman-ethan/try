@@ -1,10 +1,10 @@
 "use client";
 
-import useSWRMutation from "swr/mutation";
 import { Button, Form, Input, Space, Typography, message } from "antd";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { useAuthServerMutation } from "@/hooks/useMutation";
 
 interface ILoginArgs {
   username: string;
@@ -16,44 +16,26 @@ interface ILoginResponse {
   message?: string;
 }
 
-async function login(key: string, { arg }: Readonly<{ arg: ILoginArgs }>) {
-  const res = await fetch(process.env.NEXT_PUBLIC_AUTH_SERVER_URL + key, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(arg),
-  });
-
-  if (!res.ok) {
-    message.error("Login credentials are incorrect. Please try again.");
-  } else {
-    return res.json();
-  }
-}
-
 export default function LoginForm() {
   const router = useRouter();
-
-  const { trigger, isMutating } = useSWRMutation<
-    ILoginResponse | void,
-    Error,
-    string,
-    ILoginArgs
-  >("/api/login", login, {
+  const { trigger, isMutating } = useAuthServerMutation<
+    ILoginArgs,
+    ILoginResponse
+  >("/api/login", {
     onSuccess(data) {
-      if (data?.user_id) {
-        delete data.message;
-        router.push("/verify-otp?" + new URLSearchParams({ ...data }));
+      if (data.user_id) {
+        router.push(
+          "/verify-otp?" + new URLSearchParams({ user_id: data.user_id })
+        );
       }
     },
+    onError() {
+      message.error("Login credentials are incorrect. Please try again.");
+    },
   });
+
   return (
-    <Form
-      onFinish={(data: ILoginArgs) => trigger(data)}
-      disabled={isMutating}
-      size="large"
-    >
+    <Form onFinish={trigger} disabled={isMutating} size="large">
       <Space direction="vertical" size="middle">
         <Form.Item noStyle name="username">
           <Input
