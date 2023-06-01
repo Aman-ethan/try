@@ -2,21 +2,23 @@
 
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface IAuthTemplateProps {
   children: React.ReactNode;
 }
 
 export default function AuthTemplate({ children }: IAuthTemplateProps) {
-  const { push } = useRouter();
+  const { replace } = useRouter();
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     if (isLoggedIn) {
-      push("/dashboard");
+      replace("/dashboard");
+    } else {
+      document.body.classList.remove("opacity-0");
     }
-  }, [isLoggedIn, push]);
+  }, [isLoggedIn, replace]);
 
-  return !isLoggedIn ? children : null;
+  return children;
 }

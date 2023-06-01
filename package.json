@@ -12,7 +12,7 @@
     "@ant-design/charts": "^1.4.2",
     "@ant-design/cssinjs": "^1.9.1",
     "@ant-design/icons": "^5.1.4",
-    "@mantine/hooks": "^6.0.13",
+    "@uidotdev/usehooks": "^2.0.1",
     "@zxcvbn-ts/core": "^3.0.1",
     "@zxcvbn-ts/language-common": "^3.0.2",
     "@zxcvbn-ts/language-en": "^3.0.1",

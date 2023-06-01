@@ -1,8 +1,5 @@
 import "tailwindcss/tailwind.css";
-import { Inter } from "next/font/google";
 import AppProvider from "@/context/AppProvider";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function MainRootLayout({
   children,
@@ -11,7 +8,7 @@ export default function MainRootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body id="layout" className="opacity-0 transition-opacity">
         <AppProvider>{children}</AppProvider>
       </body>
     </html>

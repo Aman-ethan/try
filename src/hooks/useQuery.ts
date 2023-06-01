@@ -14,3 +14,13 @@ export function useAuthServerQuery<Data>(
 ) {
   return useQuery<Data>(process.env.NEXT_PUBLIC_AUTH_SERVER_URL! + key, config);
 }
+
+export function useTransactionServerQuery<Data>(
+  key: Key,
+  config?: SWRConfiguration<Data, Error>
+) {
+  return useQuery<Data>(
+    process.env.NEXT_PUBLIC_TRANSACTION_SERVER_URL! + key,
+    config
+  );
+}

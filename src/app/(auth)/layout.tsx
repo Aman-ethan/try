@@ -13,7 +13,7 @@ export default function AuthRootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body id="layout" className="opacity-0 transition-opacity">
         <AppProvider>
           <Layout hasSider className="h-full">
             <Sider

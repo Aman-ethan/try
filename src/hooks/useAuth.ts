@@ -16,6 +16,7 @@ export default function useAuth() {
     "access_token",
     "refresh_token",
   ]);
+
   const { trigger } = useAuthServerMutation<
     ITokenRefreshArgs,
     ITokenRefreshResponse
@@ -29,6 +30,7 @@ export default function useAuth() {
       message.error("Failed to refresh the access token.");
     },
   });
+
   useEffect(() => {
     if (!access_token && refresh_token) {
       trigger({ refresh: refresh_token });

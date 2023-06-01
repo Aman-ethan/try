@@ -9,14 +9,16 @@ interface ITemplateProps {
 }
 
 export default function Template({ children }: ITemplateProps) {
-  const { push } = useRouter();
+  const { replace } = useRouter();
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      push("/login");
+    if (isLoggedIn) {
+      document.body.classList.remove("opacity-0");
+    } else {
+      replace("/login");
     }
-  }, [isLoggedIn, push]);
+  }, [isLoggedIn, replace]);
 
-  return isLoggedIn ? children : null;
+  return children;
 }

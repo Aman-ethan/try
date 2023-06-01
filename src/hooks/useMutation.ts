@@ -22,3 +22,13 @@ export function useAuthServerMutation<ExtraArgs, Data>(
     options
   );
 }
+
+export function useTransactionServerMutation<ExtraArgs, Data>(
+  key: string,
+  options?: SWRMutationConfiguration<Data, Error, ExtraArgs, string>
+) {
+  return useMutation<ExtraArgs, Data>(
+    process.env.NEXT_PUBLIC_TRANSACTION_SERVER_URL! + key,
+    options
+  );
+}
