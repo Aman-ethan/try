@@ -71,7 +71,7 @@ export default function ForgotPasswordForm() {
           </Button>
           <Typography.Text type="secondary">
             Try Login Again?{" "}
-            <Link href="/login" className="hover:underline">
+            <Link href="/login" className="hover:underline focus:underline">
               Log In
             </Link>
           </Typography.Text>

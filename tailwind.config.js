@@ -18,14 +18,9 @@ module.exports = {
       },
       colors: {
         "auth-blue": {
-          light: "#7bd3ef",
           DEFAULT: "#0fabe0",
           dark: "#0f80b0",
         },
-      },
-      boxShadow: {
-        "auth-input": "0.125rem 0.125rem 0.375rem rgba(159, 153, 153, 0.25)",
-        "auth-button": "0.125rem 0.125rem 0.5rem rgba(0, 0, 0, 0.25)",
       },
     },
   },

@@ -12,6 +12,7 @@ export default function ResetSuccessPage() {
       subTitle="You can now login to your account using your password"
       extra={[
         <Button
+          key="login"
           type="primary"
           size="large"
           onClick={() => router.replace("/login")}

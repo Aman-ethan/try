@@ -77,7 +77,7 @@ export default function LoginForm() {
             href="https://www.ethan-ai.com/privacy"
             target="_blank"
             rel="noreferrer"
-            className="hover:underline"
+            className="hover:underline focus:underline"
           >
             privacy policy
           </Typography.Link>
@@ -100,11 +100,14 @@ export default function LoginForm() {
           </Button>
           <Typography.Text type="secondary">
             Not a member?{" "}
-            <Link href="/signup" className="hover:underline">
+            <Link href="/signup" className="hover:underline focus:underline">
               Sign up
             </Link>
           </Typography.Text>
-          <Link href="/forgot-password" className="hover:underline">
+          <Link
+            href="/forgot-password"
+            className="hover:underline focus:underline"
+          >
             Forgot Password?
           </Link>
         </Space>

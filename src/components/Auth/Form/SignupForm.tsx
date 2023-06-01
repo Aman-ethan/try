@@ -184,7 +184,7 @@ export default function SignupForm() {
           </Button>
           <Typography.Text type="secondary">
             Already a member?{" "}
-            <Link href="/login" className="hover:underline">
+            <Link href="/login" className="hover:underline focus:underline">
               Login
             </Link>
           </Typography.Text>
