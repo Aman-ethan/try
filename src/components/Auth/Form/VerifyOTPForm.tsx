@@ -62,6 +62,7 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
       }
     },
     onError() {
+      otpRef.current[OPT_LENGTH - 1]?.focus();
       message.error("OTP is incorrect. Please try again.");
     },
   });

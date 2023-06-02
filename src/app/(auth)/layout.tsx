@@ -20,7 +20,7 @@ export default function AuthRootLayout({
               width="50%"
               className="bg-[#2b364e] bg-[url(/AuthCircles.svg)] bg-cover"
             >
-              <Link href="/dashboard">
+              <Link href="/login">
                 <Space
                   direction="horizontal"
                   size="middle"

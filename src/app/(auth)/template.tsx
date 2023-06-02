@@ -2,7 +2,7 @@
 
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 interface IAuthTemplateProps {
   children: React.ReactNode;

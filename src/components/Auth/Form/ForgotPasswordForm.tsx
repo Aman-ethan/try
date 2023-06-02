@@ -26,7 +26,7 @@ export default function ForgotPasswordForm() {
         router.push(
           "/verify-otp?" +
             new URLSearchParams({
-              userId: data.user_id,
+              user_id: data.user_id,
               next_path: "/reset-password",
             })
         );

@@ -6,6 +6,7 @@ import { createCache, extractStyle, StyleProvider } from "@ant-design/cssinjs";
 import { CookiesProvider } from "react-cookie";
 import { ConfigProvider } from "antd";
 import theme from "@/config/theme";
+import AuthProvider from "./AuthProvider";
 
 interface IStyleRegistryProps {
   children: React.ReactNode;
@@ -21,9 +22,11 @@ export default function AppProvider({ children }: IStyleRegistryProps) {
 
   return (
     <CookiesProvider>
-      <StyleProvider cache={cache}>
-        <ConfigProvider theme={theme}>{children}</ConfigProvider>
-      </StyleProvider>
+      <AuthProvider>
+        <StyleProvider cache={cache}>
+          <ConfigProvider theme={theme}>{children}</ConfigProvider>
+        </StyleProvider>
+      </AuthProvider>
     </CookiesProvider>
   );
 }
