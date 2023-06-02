@@ -20,4 +20,4 @@ export function formatNumber(type: NumberFormatType, value: string | number) {
   );
 }
 
-export const dateFormat = "dd/MM/yyyy";
+export const dateFormat = "DD-MM-YYYY";

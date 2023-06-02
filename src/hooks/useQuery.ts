@@ -1,26 +1,28 @@
 "use client";
 
 import { getFetcher } from "@/lib/fetcher";
-import useSWR, { Key } from "swr";
+import useSWR from "swr";
 import { SWRConfiguration } from "swr";
+import { useCookies } from "react-cookie";
 
-function useQuery<Data>(url: Key, config?: SWRConfiguration<Data, Error>) {
-  return useSWR<Data, Error>(url, getFetcher, config);
-}
-
-export function useAuthServerQuery<Data>(
-  key: Key,
+function useQuery<Data>(
+  key: string | null,
   config?: SWRConfiguration<Data, Error>
 ) {
-  return useQuery<Data>(process.env.NEXT_PUBLIC_AUTH_SERVER_URL! + key, config);
+  const { access_token } = useCookies(["access_token"])[0];
+  return useSWR<Data, Error>(
+    key && access_token ? [key, access_token] : null,
+    getFetcher,
+    config
+  );
 }
 
 export function useTransactionServerQuery<Data>(
-  key: Key,
+  key: string | null,
   config?: SWRConfiguration<Data, Error>
 ) {
   return useQuery<Data>(
-    process.env.NEXT_PUBLIC_TRANSACTION_SERVER_URL! + key,
+    key ? process.env.NEXT_PUBLIC_TRANSACTION_SERVER_URL! + key : null,
     config
   );
 }

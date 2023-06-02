@@ -1,21 +1,27 @@
 "use client";
 
 import { postFetcher } from "@/lib/fetcher";
+import { useCookies } from "react-cookie";
 import useSWRMutation, { SWRMutationConfiguration } from "swr/mutation";
 
 function useMutation<ExtraArgs, Data>(
-  url: string,
-  options?: SWRMutationConfiguration<Data, Error, ExtraArgs, string>
+  key: string,
+  options?: SWRMutationConfiguration<Data, Error, ExtraArgs, string[]>
 ) {
-  return useSWRMutation<Data, Error, string, ExtraArgs>(url, postFetcher, {
-    ...options,
-    throwOnError: false,
-  });
+  const { access_token } = useCookies(["access_token"])[0];
+  return useSWRMutation<Data, Error, string[], ExtraArgs>(
+    [key, access_token],
+    postFetcher,
+    {
+      ...options,
+      throwOnError: false,
+    }
+  );
 }
 
 export function useAuthServerMutation<ExtraArgs, Data>(
   key: string,
-  options?: SWRMutationConfiguration<Data, Error, ExtraArgs, string>
+  options?: SWRMutationConfiguration<Data, Error, ExtraArgs, string[]>
 ) {
   return useMutation<ExtraArgs, Data>(
     process.env.NEXT_PUBLIC_AUTH_SERVER_URL! + key,
@@ -25,7 +31,7 @@ export function useAuthServerMutation<ExtraArgs, Data>(
 
 export function useTransactionServerMutation<ExtraArgs, Data>(
   key: string,
-  options?: SWRMutationConfiguration<Data, Error, ExtraArgs, string>
+  options?: SWRMutationConfiguration<Data, Error, ExtraArgs, string[]>
 ) {
   return useMutation<ExtraArgs, Data>(
     process.env.NEXT_PUBLIC_TRANSACTION_SERVER_URL! + key,

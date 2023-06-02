@@ -14,7 +14,7 @@ export default function AuthTemplate({ children }: IAuthTemplateProps) {
 
   useEffect(() => {
     if (isLoggedIn) {
-      replace("/dashboard");
+      replace("/summary");
     } else {
       document.body.classList.remove("opacity-0");
     }

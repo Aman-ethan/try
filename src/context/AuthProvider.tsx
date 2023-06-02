@@ -8,7 +8,7 @@ interface ITokenRefreshArgs {
 }
 
 interface ITokenRefreshResponse {
-  access_token: string;
+  access: string;
 }
 
 interface IAuthProviderProps {
@@ -28,8 +28,8 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
     ITokenRefreshResponse
   >("/api/token/refresh/", {
     onSuccess(data) {
-      if (data.access_token) {
-        setCookie("access_token", data.access_token);
+      if (data.access) {
+        setCookie("access_token", data.access);
       }
     },
     onError() {
@@ -43,7 +43,7 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
     }
   }, [access_token, refresh_token]);
 
-  const isLoggedIn = Boolean(refresh_token);
+  const isLoggedIn = Boolean(access_token);
 
   const value = useMemo(
     () => ({

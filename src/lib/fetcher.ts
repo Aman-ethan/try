@@ -1,18 +1,9 @@
 "use client";
 
-import { Cookies } from "react-cookie";
-
-const cookies = new Cookies();
-
-function getAccessToken() {
-  return cookies.get("access_token");
-}
-
 export async function postFetcher<ExtraArgs>(
-  key: string,
+  [key, accessToken]: string[],
   options: Readonly<{ arg: ExtraArgs }>
 ) {
-  const accessToken = getAccessToken();
   try {
     const res = await fetch(key, {
       method: "POST",
@@ -35,8 +26,7 @@ export async function postFetcher<ExtraArgs>(
   }
 }
 
-export async function getFetcher(key: string) {
-  const accessToken = getAccessToken();
+export async function getFetcher([key, accessToken]: string[]) {
   try {
     const res = await fetch(key, {
       method: "GET",
@@ -50,7 +40,9 @@ export async function getFetcher(key: string) {
       throw new Error("An error occurred while fetching the data.");
     }
 
-    return res.json();
+    const json = await res.json();
+
+    return json.data;
   } catch (e) {
     if (e instanceof Error) {
       throw new Error(e.message);
