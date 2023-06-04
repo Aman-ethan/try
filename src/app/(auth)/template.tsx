@@ -2,7 +2,7 @@
 
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 interface IAuthTemplateProps {
   children: React.ReactNode;
@@ -12,7 +12,7 @@ export default function AuthTemplate({ children }: IAuthTemplateProps) {
   const { replace } = useRouter();
   const { isLoggedIn } = useAuth();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isLoggedIn) {
       replace("/summary");
     } else {

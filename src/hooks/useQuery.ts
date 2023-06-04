@@ -11,7 +11,7 @@ function useQuery<Data>(
 ) {
   const { access_token } = useCookies(["access_token"])[0];
   return useSWR<Data, Error>(
-    key && access_token ? [key, access_token] : null,
+    key ? [key, access_token] : null,
     getFetcher,
     config
   );

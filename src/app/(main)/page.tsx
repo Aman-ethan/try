@@ -2,15 +2,15 @@
 
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 export default function IndexPage() {
   const { isLoggedIn } = useAuth();
   const { replace } = useRouter();
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isLoggedIn) {
       replace("/summary");
     }
-  }, []);
+  }, [replace, isLoggedIn]);
   return null;
 }

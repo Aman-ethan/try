@@ -1,7 +1,8 @@
 "use client";
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import useSummaryParams from "@/hooks/useSummaryParams";
+import useSearchParams from "@/hooks/useSearchParams";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import dayjs, { ManipulateType, QUnitType } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 
@@ -29,15 +30,22 @@ const DURATION: IDuration[] = [
   { label: "1 Year", value: "y" },
 ];
 
+const DURATION_AMOUNT = 1;
+
 function useAssetNetWorth() {
-  const { selectedDate, selectedDuration } = useSummaryParams();
+  const { getSearchParams, updateSearchParams } = useSearchParams();
+  const selectedDate = getSearchParams("selected_date");
+  const selectedDuration = getSearchParams(
+    "selected_duration"
+  ) as ManipulateType;
+
   const { data, isLoading } = useTransactionServerQuery<IAssetNetWorthResponse>(
     selectedDate && selectedDuration
       ? "/position_history/asset_networth/?" +
-          new URLSearchParams({
+          buildURLSearchParams({
             to_date: dayjs(selectedDate).toISOString(),
             from_date: dayjs(selectedDate)
-              .subtract(1, selectedDuration)
+              .subtract(DURATION_AMOUNT, selectedDuration)
               .toISOString(),
           })
       : null

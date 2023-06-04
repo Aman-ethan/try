@@ -40,9 +40,7 @@ export async function getFetcher([key, accessToken]: string[]) {
       throw new Error("An error occurred while fetching the data.");
     }
 
-    const json = await res.json();
-
-    return json.data;
+    return res.json();
   } catch (e) {
     if (e instanceof Error) {
       throw new Error(e.message);

@@ -41,9 +41,9 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
     if (!access_token && refresh_token) {
       trigger({ refresh: refresh_token });
     }
-  }, [access_token, refresh_token]);
+  }, [access_token, refresh_token, trigger]);
 
-  const isLoggedIn = Boolean(access_token);
+  const isLoggedIn = Boolean(access_token && refresh_token);
 
   const value = useMemo(
     () => ({

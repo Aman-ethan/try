@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import useSummaryParams from "@/hooks/useSummaryParams";
+import useSearchParams from "@/hooks/useSearchParams";
 
 interface IDailySummaryResponse {
   client_id: number;
@@ -11,7 +11,8 @@ interface IDailySummaryResponse {
 }
 
 function useDailySummary() {
-  const { selectedDate } = useSummaryParams();
+  const { getSearchParams } = useSearchParams();
+  const selectedDate = getSearchParams("selected_date");
   const { data, isLoading } = useTransactionServerQuery<
     IDailySummaryResponse[]
   >(

@@ -1,49 +1,45 @@
 "use client";
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import useSummaryParams, {
-  IUpdateSummaryParams,
-  SummaryParams,
-} from "@/hooks/useSummaryParams";
+import useSearchParams, { IUpdateSearchParams } from "@/hooks/useSearchParams";
 import { dateFormat } from "@/lib/format";
-import { DatePicker as AntdDatePicker, Result, Skeleton } from "antd";
+import { DatePicker as AntdDatePicker, Result } from "antd";
 import dayjs, { Dayjs, ManipulateType } from "dayjs";
 
 interface IDateResponse {
-  first_date: string;
-  last_date: string;
+  data: { first_date: string; last_date: string };
 }
 
 const DEFAULT_DURATION: ManipulateType = "y";
+const PARAM_DATE_FORMAT = "YYYY-MM-DD";
 
 function useDatePicker() {
-  const { selectedDate, selectedDuration, updateSummaryParams } =
-    useSummaryParams();
+  const { updateSearchParams, getSearchParams } = useSearchParams();
+  const selectedDate = getSearchParams("selected_date");
+  const selectedDuration = getSearchParams("selected_duration");
 
   const { data, isLoading, error } = useTransactionServerQuery<IDateResponse>(
     `/position_history/asset_networth/date_parser/`,
     {
-      onSuccess(data) {
-        const selectedDateParams: IUpdateSummaryParams = [
-          SummaryParams.SelectedDate,
-          data.last_date,
-        ];
-        const selectedDurationParams: IUpdateSummaryParams = [
-          SummaryParams.SelectedDuration,
-          DEFAULT_DURATION,
-        ];
+      onSuccess({ data }) {
+        const selectedDateParams: IUpdateSearchParams = {
+          selected_date: data.last_date,
+        };
+        const selectedDurationParams: IUpdateSearchParams = {
+          selected_duration: DEFAULT_DURATION,
+        };
         if (!(selectedDate || selectedDuration))
-          return updateSummaryParams([
-            selectedDateParams,
-            selectedDurationParams,
-          ]);
-        if (!selectedDate) updateSummaryParams([selectedDateParams]);
-        if (!selectedDuration) updateSummaryParams([selectedDurationParams]);
+          return updateSearchParams({
+            ...selectedDateParams,
+            ...selectedDurationParams,
+          });
+        if (!selectedDate) updateSearchParams(selectedDateParams);
+        if (!selectedDuration) updateSearchParams(selectedDurationParams);
       },
     }
   );
 
-  const { first_date, last_date } = data || {};
+  const { first_date, last_date } = data?.data || {};
 
   function disabledDate(current: Dayjs) {
     return (
@@ -53,7 +49,9 @@ function useDatePicker() {
 
   function onChange(date: Dayjs | null) {
     if (!date) return;
-    updateSummaryParams([[SummaryParams.SelectedDate, date]]);
+    updateSearchParams({
+      selected_date: date.format(PARAM_DATE_FORMAT),
+    });
   }
 
   return {
@@ -69,7 +67,7 @@ export default function DatePicker() {
   const { isLoading, error, defaultValue, disabledDate, onChange } =
     useDatePicker();
 
-  if (isLoading) return <></>;
+  if (isLoading) return <AntdDatePicker key="date-picker-loading" disabled />;
 
   if (error) return <Result status="error" />;
 
