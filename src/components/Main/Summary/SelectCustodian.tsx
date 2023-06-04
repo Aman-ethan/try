@@ -9,13 +9,13 @@ interface ICustodianResponse {
   custodian_code: string;
 }
 
-export default function SelectCustodian() {
+function useSelectCustodian() {
   const { getSearchParams, updateSearchParams } = useSearchParams();
   const tradeClientId = getSearchParams("trade_client_id");
   const tradeCustodianId = getSearchParams("trade_custodian_id");
 
   const { data, isLoading } = useTransactionServerQuery<ICustodianResponse[]>(
-    "/custodian/?" + buildURLSearchParams({ client_id: tradeClientId })
+    "/custodian/" + buildURLSearchParams({ client_id: tradeClientId })
   );
 
   const options = data?.map(({ custodian_id, custodian_name }) => ({
@@ -29,6 +29,17 @@ export default function SelectCustodian() {
     });
   }
 
+  return {
+    isLoading,
+    options,
+    onSelect,
+    tradeCustodianId,
+  };
+}
+
+export default function SelectCustodian() {
+  const { isLoading, options, onSelect, tradeCustodianId } =
+    useSelectCustodian();
   return (
     <Select
       loading={isLoading}

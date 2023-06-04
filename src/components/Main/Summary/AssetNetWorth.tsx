@@ -3,6 +3,7 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { DATE_PARAM_FORMAT } from "@/lib/constant";
 import dayjs, { ManipulateType, QUnitType } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 
@@ -41,7 +42,7 @@ function useAssetNetWorth() {
 
   const { data, isLoading } = useTransactionServerQuery<IAssetNetWorthResponse>(
     selectedDate && selectedDuration
-      ? "/position_history/asset_networth/?" +
+      ? "/position_history/asset_networth/" +
           buildURLSearchParams({
             to_date: dayjs(selectedDate).toISOString(),
             from_date: dayjs(selectedDate)

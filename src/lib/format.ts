@@ -19,5 +19,3 @@ export function formatNumber(type: NumberFormatType, value: string | number) {
     String(value) as unknown as number
   );
 }
-
-export const dateFormat = "DD-MM-YYYY";

@@ -2,6 +2,7 @@
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
 
 interface IGainerResponse {
   count: number;
@@ -35,15 +36,13 @@ interface IGainerResponse {
   }[];
 }
 
-function useGainerLoser() {}
-
-export default function GainerLoser() {
+function useGainerLoser() {
   const { getSearchParams } = useSearchParams();
   const selectedDate = getSearchParams("selected_date");
   const { data, isLoading } = useTransactionServerQuery<IGainerResponse>(
     selectedDate
-      ? "/positions/top_gainer/?" +
-          new URLSearchParams({
+      ? "/positions/top_gainer/" +
+          buildURLSearchParams({
             report_date: selectedDate,
             limit: "5",
             ordering: "",
@@ -51,5 +50,9 @@ export default function GainerLoser() {
           })
       : null
   );
+}
+
+export default function GainerLoser() {
+  useGainerLoser();
   return <></>;
 }

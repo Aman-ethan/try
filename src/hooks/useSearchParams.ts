@@ -1,7 +1,6 @@
-import { ManipulateType } from "dayjs";
 import {
   usePathname,
-  useSearchParams as _useSearchParams,
+  useSearchParams as useNextSearchParams,
 } from "next/navigation";
 import { useRouter } from "next/navigation";
 
@@ -20,14 +19,12 @@ export type SearchParams =
   | "selected_date"
   | "selected_duration";
 
-export type IUpdateSearchParams = Partial<
-  Record<SearchParams, string | ManipulateType>
->;
+export type IUpdateSearchParams = Partial<Record<SearchParams, string | null>>;
 
 export default function useSearchParams() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = _useSearchParams();
+  const searchParams = useNextSearchParams();
 
   function updateSearchParams(params: IUpdateSearchParams) {
     const urlSearchParams = new URLSearchParams();

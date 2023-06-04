@@ -2,6 +2,7 @@
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
 
 interface IDailySummaryResponse {
   client_id: number;
@@ -17,8 +18,10 @@ function useDailySummary() {
     IDailySummaryResponse[]
   >(
     selectedDate
-      ? `/position_history/summary/daily/?` +
-          new URLSearchParams({ report_date: selectedDate })
+      ? `/position_history/summary/daily/` +
+          buildURLSearchParams({
+            report_date: selectedDate,
+          })
       : null
   );
   return {

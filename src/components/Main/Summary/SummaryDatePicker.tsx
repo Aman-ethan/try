@@ -2,18 +2,18 @@
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams, { IUpdateSearchParams } from "@/hooks/useSearchParams";
-import { dateFormat } from "@/lib/format";
-import { DatePicker as AntdDatePicker, Result } from "antd";
+import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/lib/constant";
+import { Result } from "antd";
 import dayjs, { Dayjs, ManipulateType } from "dayjs";
+import { DatePicker } from "../Common/DatePicker";
 
 interface IDateResponse {
   data: { first_date: string; last_date: string };
 }
 
 const DEFAULT_DURATION: ManipulateType = "y";
-const PARAM_DATE_FORMAT = "YYYY-MM-DD";
 
-function useDatePicker() {
+function useSummaryDatePicker() {
   const { updateSearchParams, getSearchParams } = useSearchParams();
   const selectedDate = getSearchParams("selected_date");
   const selectedDuration = getSearchParams("selected_duration");
@@ -50,7 +50,7 @@ function useDatePicker() {
   function onChange(date: Dayjs | null) {
     if (!date) return;
     updateSearchParams({
-      selected_date: date.format(PARAM_DATE_FORMAT),
+      selected_date: date.format(DATE_PARAM_FORMAT),
     });
   }
 
@@ -63,20 +63,19 @@ function useDatePicker() {
   };
 }
 
-export default function DatePicker() {
+export default function SummaryDatePicker() {
   const { isLoading, error, defaultValue, disabledDate, onChange } =
-    useDatePicker();
-
-  if (isLoading) return <AntdDatePicker key="date-picker-loading" disabled />;
+    useSummaryDatePicker();
 
   if (error) return <Result status="error" />;
 
   return (
-    <AntdDatePicker
+    <DatePicker
+      loading={isLoading}
       defaultValue={defaultValue}
       disabledDate={disabledDate}
       onChange={onChange}
-      format={dateFormat}
+      format={DATE_DISPLAY_FORMAT}
       allowClear={false}
     />
   );

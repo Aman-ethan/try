@@ -9,7 +9,7 @@ interface IClientResponse {
   rpt_currency: string;
 }
 
-export default function SelectClient() {
+function useSelectClient() {
   const { getSearchParams, updateSearchParams } = useSearchParams();
   const tradeClientId = getSearchParams("trade_client_id");
 
@@ -24,10 +24,20 @@ export default function SelectClient() {
   function onSelect(value: string) {
     updateSearchParams({
       trade_client_id: value,
-      trade_custodian_id: undefined,
+      trade_custodian_id: null,
     });
   }
 
+  return {
+    isLoading,
+    options,
+    onSelect,
+    tradeClientId,
+  };
+}
+
+export default function SelectClient() {
+  const { isLoading, options, onSelect, tradeClientId } = useSelectClient();
   return (
     <Select
       loading={isLoading}

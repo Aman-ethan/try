@@ -5,6 +5,7 @@ import SelectClient from "./SelectClient";
 import SelectCustodian from "./SelectCustodian";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useSearchParams from "@/hooks/useSearchParams";
+import TradeRangePicker from "./TradeRangePicker";
 
 interface IBlotterTradeResponse {
   count: number;
@@ -29,24 +30,37 @@ interface IBlotterTradeResponse {
     trade_id: number;
     trade_price: number;
     trade_qty: string;
+  }[];
+}
+
+function useBlotterTrade() {
+  const { updateSearchParams, getSearchParams } = useSearchParams();
+  const { isLoading, data, error } = useTransactionServerQuery<
+    IBlotterTradeResponse[]
+  >(
+    "/trades/" +
+      buildURLSearchParams({
+        limit: "10",
+        client_id: getSearchParams("trade_client_id"),
+        custodian_id: getSearchParams("trade_custodian_id"),
+        trade_date_from: getSearchParams("trade_date_from"),
+        trade_date_to: getSearchParams("trade_date_to"),
+      })
+  );
+  return {
+    isLoading,
+    data,
+    error,
   };
 }
 
-function useBlotterTrade() {}
-
 export default function BlotterTrade() {
-  const { updateSearchParams, getSearchParams } = useSearchParams();
-  const {} = useTransactionServerQuery<IBlotterTradeResponse[]>(
-    "/trades/?" +
-      buildURLSearchParams({
-        client_id: getSearchParams("trade_client_id"),
-        custodian_id: getSearchParams("trade_custodian_id"),
-      })
-  );
+  const {} = useBlotterTrade();
   return (
     <>
       <SelectClient />
       <SelectCustodian />
+      <TradeRangePicker />
     </>
   );
 }
