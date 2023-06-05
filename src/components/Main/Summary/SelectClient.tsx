@@ -43,7 +43,6 @@ export default function SelectClient() {
       loading={isLoading}
       placeholder="Select a client"
       options={options}
-      className="w-36"
       onSelect={onSelect}
       defaultValue={tradeClientId}
     />

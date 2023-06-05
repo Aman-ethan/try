@@ -12,6 +12,7 @@
     "@ant-design/charts": "^1.4.2",
     "@ant-design/cssinjs": "^1.9.1",
     "@ant-design/icons": "^5.1.4",
+    "@ant-design/pro-components": "^2.5.5",
     "@types/lodash": "^4.14.195",
     "@uidotdev/usehooks": "^2.0.1",
     "@zxcvbn-ts/core": "^3.0.1",

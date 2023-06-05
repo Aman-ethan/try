@@ -1,5 +1,8 @@
-import "tailwindcss/tailwind.css";
 import AppProvider from "@/context/AppProvider";
+
+import "antd/dist/reset.css";
+import "tailwindcss/tailwind.css";
+import Layout from "@/components/Main/Common/Layout";
 
 export default function MainRootLayout({
   children,
@@ -9,7 +12,9 @@ export default function MainRootLayout({
   return (
     <html lang="en">
       <body id="layout" className="opacity-0 transition-opacity">
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          <Layout>{children}</Layout>
+        </AppProvider>
       </body>
     </html>
   );

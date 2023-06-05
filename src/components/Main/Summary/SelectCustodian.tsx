@@ -45,7 +45,6 @@ export default function SelectCustodian() {
       loading={isLoading}
       options={options}
       placeholder="Select a custodian"
-      className="w-44"
       onSelect={onSelect}
       value={tradeCustodianId}
     />
