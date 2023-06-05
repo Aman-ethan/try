@@ -2,12 +2,15 @@ import { useTransactionServerQuery } from "@/hooks/useQuery";
 import Select from "../Common/Select";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useSearchParams from "@/hooks/useSearchParams";
+import { preloadTransactionServerQuery } from "@/lib/preload";
 
 interface ICustodianResponse {
   custodian_id: number;
   custodian_name: string;
   custodian_code: string;
 }
+
+preloadTransactionServerQuery("/custodian/");
 
 function useSelectCustodian() {
   const { getSearchParams, updateSearchParams } = useSearchParams();

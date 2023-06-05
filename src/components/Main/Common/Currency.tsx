@@ -2,6 +2,7 @@ import { Image, Space, Typography } from "antd";
 import { flags } from "@/constants/symbols";
 import { formatNumber } from "@/lib/format";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
+import { preloadTransactionServerQuery } from "@/lib/preload";
 
 type Currency = keyof typeof flags;
 
@@ -16,6 +17,11 @@ interface IClientResponse {
   id: number;
   name: string;
   rpt_currency: string;
+}
+
+interface ICompanyCurrencyProps {
+  amount: number | string;
+  clientId: number;
 }
 
 export default function Currency({
@@ -45,10 +51,7 @@ export default function Currency({
   );
 }
 
-interface ICompanyCurrencyProps {
-  amount: number | string;
-  clientId: number;
-}
+preloadTransactionServerQuery("/client/");
 
 export function ClientCurrency({ amount, clientId }: ICompanyCurrencyProps) {
   const { data, isLoading } =

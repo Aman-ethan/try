@@ -6,7 +6,7 @@ import { useLayoutEffect, useState } from "react";
 interface IUseSelectRow<T> {
   key: keyof T;
   defaultValue?: string | number;
-  onClick?: (record: T) => void;
+  onRowClick?: (record: T) => void;
 }
 
 type Key = string | number | null;
@@ -14,7 +14,7 @@ type Key = string | number | null;
 export function useSelectRow<T>({
   key,
   defaultValue,
-  onClick,
+  onRowClick,
 }: IUseSelectRow<T>) {
   const [selectedRowKey, setSelectedRowKey] = useState<Key>(null);
 
@@ -33,7 +33,7 @@ export function useSelectRow<T>({
     return {
       onClick() {
         setSelectedRowKey(record[key] as Key);
-        onClick?.(record);
+        onRowClick?.(record);
       },
     };
   }

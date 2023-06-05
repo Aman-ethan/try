@@ -76,7 +76,7 @@ export default function ClientNetWorth() {
   const { onRow, rowSelection } = useSelectRow<IClientNetWorthRow>({
     key: "client_id",
     defaultValue: data?.[0]?.client_id,
-    onClick(record) {
+    onRowClick(record) {
       updateSearchParams({
         client_id: record.client_id,
         client_name: record.client_name,

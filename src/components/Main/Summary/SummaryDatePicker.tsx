@@ -6,6 +6,7 @@ import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/lib/constant";
 import { Result } from "antd";
 import dayjs, { Dayjs, ManipulateType } from "dayjs";
 import { DatePicker } from "../Common/DatePicker";
+import { preloadTransactionServerQuery } from "@/lib/preload";
 
 interface IDateResponse {
   data: { first_date: string; last_date: string };
@@ -13,13 +14,15 @@ interface IDateResponse {
 
 const DEFAULT_DURATION: ManipulateType = "y";
 
+preloadTransactionServerQuery("/position_history/asset_networth/date_parser/");
+
 function useSummaryDatePicker() {
   const { updateSearchParams, getSearchParams } = useSearchParams();
   const selectedDate = getSearchParams("selected_date");
   const selectedDuration = getSearchParams("selected_duration");
 
   const { data, isLoading, error } = useTransactionServerQuery<IDateResponse>(
-    `/position_history/asset_networth/date_parser/`,
+    "/position_history/asset_networth/date_parser/",
     {
       onSuccess({ data }) {
         const selectedDateParams: IUpdateSearchParams = {
