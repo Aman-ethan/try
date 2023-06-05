@@ -71,6 +71,7 @@ export default function SummaryDatePicker() {
 
   return (
     <DatePicker
+      size="large"
       loading={isLoading}
       defaultValue={defaultValue}
       disabledDate={disabledDate}

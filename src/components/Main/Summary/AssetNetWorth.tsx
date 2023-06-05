@@ -3,7 +3,7 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { DATE_PARAM_FORMAT } from "@/lib/constant";
+import { Button, Card, Row } from "antd";
 import dayjs, { ManipulateType, QUnitType } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 
@@ -54,10 +54,46 @@ function useAssetNetWorth() {
 
   return {
     isLoading,
+    data: data?.data,
+    assets: data?.assets,
   };
 }
 
+function Extra() {
+  const { updateSearchParams, getSearchParams } = useSearchParams();
+  const selectedDuration = getSearchParams("selected_duration");
+
+  function onClick(value: string) {
+    return () => {
+      updateSearchParams({
+        selected_duration: value,
+      });
+    };
+  }
+
+  return (
+    <Row>
+      {DURATION.map(({ label, value }) => (
+        <Button
+          onClick={onClick(value)}
+          type={selectedDuration === value ? "link" : "text"}
+          key={value}
+        >
+          {label}
+        </Button>
+      ))}
+    </Row>
+  );
+}
+
 export default function AssetNetWorth() {
-  const { isLoading } = useAssetNetWorth();
-  return <></>;
+  const { isLoading, data, assets } = useAssetNetWorth();
+  return (
+    <Card
+      bordered={false}
+      extra={<Extra />}
+      title="TTS"
+      className="rounded-l-none h-full"
+    ></Card>
+  );
 }

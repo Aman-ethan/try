@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { Button, Form, Input, InputRef, Space, message } from "antd";
+import { Button, Form, Input, InputRef, Row, message } from "antd";
 import { ChangeEvent, KeyboardEvent, useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
 import { useAuthServerMutation } from "@/hooks/useMutation";
@@ -106,7 +106,7 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
         size="large"
         className="space-y-10"
       >
-        <Space className="w-full justify-center">
+        <Row justify="center">
           {Array.from({ length: OPT_LENGTH }).map((_, index) => (
             <Form.Item
               noStyle
@@ -127,8 +127,8 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
               />
             </Form.Item>
           ))}
-        </Space>
-        <Space className="w-full justify-center">
+        </Row>
+        <Row justify="center">
           <Button
             type="primary"
             htmlType="submit"
@@ -137,7 +137,7 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
           >
             Verify
           </Button>
-        </Space>
+        </Row>
       </Form>
     </>
   ) : null;

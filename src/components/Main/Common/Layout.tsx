@@ -11,10 +11,10 @@ import {
 import {
   DefaultFooter,
   MenuDataItem,
+  PageContainer,
   ProLayout,
-  enUSIntl,
 } from "@ant-design/pro-components";
-import { Button, ConfigProvider, Dropdown, MenuProps, Space } from "antd";
+import { Button, Dropdown, MenuProps, Space } from "antd";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
@@ -68,7 +68,7 @@ function renderMenuItem(
 function renderMenuFooter() {
   return (
     <Dropdown menu={{ items: MenuFooterItems }}>
-      <Button type="ghost" className="ml-auto block">
+      <Button type="text" className="ml-auto block">
         <SettingOutlined />
       </Button>
     </Dropdown>
@@ -80,7 +80,7 @@ function renderFooter() {
   return (
     <DefaultFooter
       links={FooterLink}
-      copyright={`ETHAN-AI ALL RIGHTS RESERVED ${currentDate.getFullYear()}`}
+      copyright={`ETHAN-AI. ALL RIGHTS RESERVED ${currentDate.getFullYear()}`}
     />
   );
 }
@@ -88,21 +88,19 @@ function renderFooter() {
 export default function Layout({ children }: ILayoutProps) {
   const pathname = usePathname();
   return (
-    <ConfigProvider locale={enUSIntl}>
-      <ProLayout
-        defaultCollapsed={false}
-        logo={<Logo className="w-12 h-12 text-black" />}
-        title="ethan.ai"
-        className="h-full"
-        menuItemRender={renderMenuItem}
-        menu={{ autoClose: false }}
-        selectedKeys={[pathname]}
-        route={ROUTE}
-        menuFooterRender={renderMenuFooter}
-        footerRender={renderFooter}
-      >
-        {children}
-      </ProLayout>
-    </ConfigProvider>
+    <ProLayout
+      defaultCollapsed={false}
+      logo={<Logo className="w-12 h-12 text-black" />}
+      title="ethan.ai"
+      className="h-full"
+      menuItemRender={renderMenuItem}
+      menu={{ autoClose: false }}
+      selectedKeys={[pathname]}
+      route={ROUTE}
+      menuFooterRender={renderMenuFooter}
+      footerRender={renderFooter}
+    >
+      {children}
+    </ProLayout>
   );
 }
