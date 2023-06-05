@@ -5,10 +5,7 @@ import useSearchParams from "@/hooks/useSearchParams";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { Card, TableColumnsType } from "antd";
 import Table, { useSelectRow } from "../Common/Table";
-import { useState } from "react";
-import Currency from "../Common/Currency";
-import { preload } from "swr";
-import { getFetcher } from "@/lib/fetcher";
+import { CompanyCurrency } from "../Common/Currency";
 
 interface IDailySummaryResponse {
   data: {
@@ -18,8 +15,6 @@ interface IDailySummaryResponse {
     total_pl: number;
   }[];
 }
-
-preload("/company/", getFetcher);
 
 function useNetWorth() {
   const { getSearchParams } = useSearchParams();
@@ -43,19 +38,22 @@ const columns: TableColumnsType = [
   {
     title: "Client Name",
     dataIndex: "client_name",
+    width: "20%",
   },
   {
     title: "Total PL",
     dataIndex: "total_pl",
+    width: "40%",
     render(value) {
-      return <Currency amount={value} />;
+      return <CompanyCurrency amount={value} />;
     },
   },
   {
     title: "Net Worth",
     dataIndex: "net_worth",
+    width: "40%",
     render(value) {
-      return <Currency amount={value} />;
+      return <CompanyCurrency amount={value} />;
     },
   },
 ];

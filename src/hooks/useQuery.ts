@@ -4,12 +4,13 @@ import { getFetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 import { SWRConfiguration } from "swr";
 import { useCookies } from "react-cookie";
+import { ACCESS_TOKEN_KEY, TRANSACTION_SERVER_URL } from "@/constants";
 
 function useQuery<Data>(
   key: string | null,
   config?: SWRConfiguration<Data, Error>
 ) {
-  const { access_token } = useCookies(["access_token"])[0];
+  const { access_token } = useCookies([ACCESS_TOKEN_KEY])[0];
   return useSWR<Data, Error>(
     key ? [key, access_token] : null,
     getFetcher,
@@ -21,8 +22,5 @@ export function useTransactionServerQuery<Data>(
   key: string | null,
   config?: SWRConfiguration<Data, Error>
 ) {
-  return useQuery<Data>(
-    key ? process.env.NEXT_PUBLIC_TRANSACTION_SERVER_URL! + key : null,
-    config
-  );
+  return useQuery<Data>(key ? TRANSACTION_SERVER_URL + key : null, config);
 }

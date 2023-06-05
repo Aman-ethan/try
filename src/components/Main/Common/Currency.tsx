@@ -1,13 +1,15 @@
-import { Image, Skeleton, Space, Typography } from "antd";
+import { Image, Space, Typography } from "antd";
 import { flags } from "@/constants/symbols";
 import { formatNumber } from "@/lib/format";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
+import { preloadTransactionServerQuery } from "@/lib/preload";
 
 type Currency = keyof typeof flags;
 
 interface ICurrencyProps {
-  currency?: Currency;
+  currency: Currency;
   amount: number | string;
+  loading?: boolean;
 }
 
 interface ICompanyResponse {
@@ -18,16 +20,15 @@ interface ICompanyResponse {
 }
 
 export default function Currency({
-  currency: _currency,
+  currency,
   amount,
+  loading,
 }: ICurrencyProps) {
-  const { data } = useTransactionServerQuery<ICompanyResponse[]>("/company/");
-  const currency =
-    _currency ||
-    (data?.[0].company_currency.toLowerCase() as Currency | undefined);
   return (
     <Space align="center">
-      {currency ? (
+      {loading ? (
+        <div className="w-12 h-6" />
+      ) : (
         <Space size={2} align="center" className="bg-gray-200 px-1 rounded">
           <Typography.Text className="text-xs">
             {currency.toUpperCase()}
@@ -39,10 +40,22 @@ export default function Currency({
             preview={false}
           />
         </Space>
-      ) : (
-        <div className="w-12 h-6" />
       )}
       <Typography.Text>{formatNumber("price", amount)}</Typography.Text>
     </Space>
   );
+}
+
+interface ICompanyCurrencyProps {
+  amount: number | string;
+}
+
+preloadTransactionServerQuery("/company/");
+
+export function CompanyCurrency({ amount }: ICompanyCurrencyProps) {
+  const { data, isLoading } =
+    useTransactionServerQuery<ICompanyResponse[]>("/company/");
+  const currency = data?.[0].company_currency.toLowerCase() as Currency;
+
+  return <Currency currency={currency} amount={amount} loading={isLoading} />;
 }
