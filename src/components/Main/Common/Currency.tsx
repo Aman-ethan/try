@@ -2,21 +2,20 @@ import { Image, Space, Typography } from "antd";
 import { flags } from "@/constants/symbols";
 import { formatNumber } from "@/lib/format";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import { preloadTransactionServerQuery } from "@/lib/preload";
 
 type Currency = keyof typeof flags;
 
 interface ICurrencyProps {
-  currency: Currency;
+  currency?: Currency;
   amount: number | string;
   loading?: boolean;
 }
 
-interface ICompanyResponse {
-  company_currency: Uppercase<Currency>;
-  company_name: string;
-  folder: string;
+interface IClientResponse {
+  client_id: number;
   id: number;
+  name: string;
+  rpt_currency: string;
 }
 
 export default function Currency({
@@ -26,7 +25,7 @@ export default function Currency({
 }: ICurrencyProps) {
   return (
     <Space align="center">
-      {loading ? (
+      {loading || !currency ? (
         <div className="w-12 h-6" />
       ) : (
         <Space size={2} align="center" className="bg-gray-200 px-1 rounded">
@@ -48,14 +47,16 @@ export default function Currency({
 
 interface ICompanyCurrencyProps {
   amount: number | string;
+  clientId: number;
 }
 
-preloadTransactionServerQuery("/company/");
-
-export function CompanyCurrency({ amount }: ICompanyCurrencyProps) {
+export function ClientCurrency({ amount, clientId }: ICompanyCurrencyProps) {
   const { data, isLoading } =
-    useTransactionServerQuery<ICompanyResponse[]>("/company/");
-  const currency = data?.[0].company_currency.toLowerCase() as Currency;
+    useTransactionServerQuery<IClientResponse[]>("/client/");
+
+  const currency = data
+    ?.find(({ client_id }) => client_id === clientId)
+    ?.rpt_currency?.toLowerCase() as Currency | undefined;
 
   return <Currency currency={currency} amount={amount} loading={isLoading} />;
 }

@@ -4,6 +4,8 @@ import {
 } from "next/navigation";
 import { useRouter } from "next/navigation";
 
+type NetWorthParams = "client_id" | "client_name";
+
 type TradeSearchParams =
   | "trade_search"
   | "trade_client_id"
@@ -15,11 +17,14 @@ type TradeSearchParams =
   | "trade_ordering";
 
 export type SearchParams =
+  | NetWorthParams
   | TradeSearchParams
   | "selected_date"
   | "selected_duration";
 
-export type IUpdateSearchParams = Partial<Record<SearchParams, string | null>>;
+export type IUpdateSearchParams = Partial<
+  Record<SearchParams, string | number | null>
+>;
 
 export default function useSearchParams() {
   const router = useRouter();
@@ -30,7 +35,7 @@ export default function useSearchParams() {
     const urlSearchParams = new URLSearchParams();
 
     for (const [key, value] of Object.entries(params)) {
-      if (value) urlSearchParams.append(key, value);
+      if (value !== null) urlSearchParams.append(key, String(value));
     }
 
     for (const [key, value] of searchParams) {
@@ -38,7 +43,7 @@ export default function useSearchParams() {
         urlSearchParams.append(key, value);
       }
     }
-
+    urlSearchParams.sort();
     router.push(pathname + "?" + urlSearchParams);
   }
 

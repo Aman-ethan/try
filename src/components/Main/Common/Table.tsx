@@ -3,15 +3,20 @@ import { RowSelectionType } from "antd/es/table/interface";
 import clsx from "clsx";
 import { useLayoutEffect, useState } from "react";
 
-interface IUseSelectRow {
-  key: string;
+interface IUseSelectRow<T> {
+  key: keyof T;
   defaultValue?: string | number;
+  onClick?: (record: T) => void;
 }
 
-export function useSelectRow({ key, defaultValue }: IUseSelectRow) {
-  const [selectedRowKey, setSelectedRowKey] = useState<string | number | null>(
-    null
-  );
+type Key = string | number | null;
+
+export function useSelectRow<T>({
+  key,
+  defaultValue,
+  onClick,
+}: IUseSelectRow<T>) {
+  const [selectedRowKey, setSelectedRowKey] = useState<Key>(null);
 
   useLayoutEffect(() => {
     if (defaultValue) setSelectedRowKey(defaultValue);
@@ -24,10 +29,11 @@ export function useSelectRow({ key, defaultValue }: IUseSelectRow) {
     columnWidth: 0,
   };
 
-  function onRow(record: Record<string, string | number>) {
+  function onRow(record: T) {
     return {
       onClick() {
-        setSelectedRowKey(record[key]);
+        setSelectedRowKey(record[key] as Key);
+        onClick?.(record);
       },
     };
   }

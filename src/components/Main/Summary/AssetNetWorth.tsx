@@ -6,6 +6,7 @@ import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { Button, Card, Row } from "antd";
 import dayjs, { ManipulateType, QUnitType } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
+import IndexChart from "./IndexChart";
 
 dayjs.extend(quarterOfYear);
 
@@ -39,15 +40,18 @@ function useAssetNetWorth() {
   const selectedDuration = getSearchParams(
     "selected_duration"
   ) as ManipulateType;
+  const clientName = getSearchParams("client_name");
+  const clientId = getSearchParams("client_id");
 
   const { data, isLoading } = useTransactionServerQuery<IAssetNetWorthResponse>(
-    selectedDate && selectedDuration
+    selectedDate && selectedDuration && clientId
       ? "/position_history/asset_networth/" +
           buildURLSearchParams({
             to_date: dayjs(selectedDate).toISOString(),
             from_date: dayjs(selectedDate)
               .subtract(DURATION_AMOUNT, selectedDuration)
               .toISOString(),
+            client_id: clientId,
           })
       : null
   );
@@ -56,6 +60,7 @@ function useAssetNetWorth() {
     isLoading,
     data: data?.data,
     assets: data?.assets,
+    clientName,
   };
 }
 
@@ -87,13 +92,16 @@ function Extra() {
 }
 
 export default function AssetNetWorth() {
-  const { isLoading, data, assets } = useAssetNetWorth();
+  const { isLoading, data, assets, clientName } = useAssetNetWorth();
+
   return (
     <Card
       bordered={false}
       extra={<Extra />}
-      title="TTS"
+      title={clientName}
       className="rounded-l-none h-full"
-    ></Card>
+    >
+      <IndexChart data={data} />
+    </Card>
   );
 }
