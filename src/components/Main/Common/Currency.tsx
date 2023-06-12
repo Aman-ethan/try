@@ -46,7 +46,9 @@ export default function Currency({
           />
         </Space>
       )}
-      <Typography.Text>{formatNumber("price", amount)}</Typography.Text>
+      <Typography.Text>
+        {formatNumber("price", amount, { currency: "USD" })}
+      </Typography.Text>
     </Space>
   );
 }

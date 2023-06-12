@@ -58,8 +58,12 @@ function useAssetNetWorth() {
 
   return {
     isLoading,
-    data: data?.data,
-    assets: data?.assets,
+    data:
+      data?.data?.map(({ report_date, net_worth, asset_class }) => ({
+        x: report_date,
+        y: net_worth,
+        z: asset_class,
+      })) || [],
     clientName,
   };
 }
@@ -92,7 +96,7 @@ function Extra() {
 }
 
 export default function AssetNetWorth() {
-  const { isLoading, data, assets, clientName } = useAssetNetWorth();
+  const { isLoading, data, clientName } = useAssetNetWorth();
 
   return (
     <Card

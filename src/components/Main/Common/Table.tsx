@@ -1,6 +1,5 @@
 import { Table as AntdTable, TableProps } from "antd";
 import { RowSelectionType } from "antd/es/table/interface";
-import clsx from "clsx";
 import { useLayoutEffect, useState } from "react";
 
 interface IUseSelectRow<T> {
@@ -44,17 +43,10 @@ export function useSelectRow<T>({
   };
 }
 
-export default function Table({
-  pagination,
-  className,
-  rowClassName,
-  rootClassName,
-  ...props
-}: TableProps<any>) {
+export default function Table({ pagination, ...props }: TableProps<any>) {
   return (
     <AntdTable
       pagination={{ hideOnSinglePage: true, ...pagination }}
-      rootClassName={clsx("initial:h-96", rootClassName)}
       {...props}
     />
   );

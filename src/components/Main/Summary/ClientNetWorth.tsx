@@ -50,12 +50,12 @@ const columns: TableColumnsType<IClientNetWorthRow> = [
   {
     title: "Client Name",
     dataIndex: "client_name",
-    width: "20%",
+    width: "10%",
   },
   {
     title: "Total PL",
     dataIndex: "total_pl",
-    width: "40%",
+    width: "45%",
     render(value, record) {
       return <ClientCurrency amount={value} clientId={record.client_id} />;
     },
@@ -63,7 +63,7 @@ const columns: TableColumnsType<IClientNetWorthRow> = [
   {
     title: "Net Worth",
     dataIndex: "net_worth",
-    width: "40%",
+    width: "45%",
     render(value, record) {
       return <ClientCurrency amount={value} clientId={record.client_id} />;
     },
@@ -93,6 +93,7 @@ export default function ClientNetWorth() {
         rowKey={(record) => record.client_id}
         onRow={onRow}
         rowSelection={rowSelection}
+        rootClassName="min-h-[26rem]"
       />
     </Card>
   );

@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import { RangePicker } from "../Common/DatePicker";
 import useSearchParams from "@/hooks/useSearchParams";
-import { DATE_PARAM_FORMAT } from "@/lib/constant";
+import { DATE_PARAM_FORMAT } from "@/constants/format";
 
 export default function TradeRangePicker() {
   const { updateSearchParams, getSearchParams } = useSearchParams();
