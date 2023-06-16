@@ -1,15 +1,13 @@
-import { Space } from "@/lib/antd";
-import SubHeading from "@/components/Auth/Common/SubHeading";
-import Heading from "@/components/Auth/Common/Heading";
 import VerifyOTPForm from "@/components/Auth/Form/VerifyOTPForm";
+import { Paragraph, Title } from "@/lib/antd";
 
 export default function VerifyOTPPage() {
   return (
-    <Space direction="vertical">
+    <div className="space-y-12">
+      <Title level={2}>OTP Verification</Title>
+      <Paragraph>Enter the OTP code sent to +</Paragraph>
       <VerifyOTPForm>
-        <Heading />
-        <SubHeading>Please enter the OTP</SubHeading>
       </VerifyOTPForm>
-    </Space>
+    </div>
   );
 }

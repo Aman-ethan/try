@@ -1,14 +1,14 @@
-import Heading from "@/components/Auth/Common/Heading";
-import SubHeading from "@/components/Auth/Common/SubHeading";
 import ForgotPasswordForm from "@/components/Auth/Form/ForgotPasswordForm";
-import { Space } from "@/lib/antd";
+import { Title, Paragraph } from "@/lib/antd";
 
 export default function ForgotPasswordPage() {
   return (
-    <Space direction="vertical">
-      <Heading />
-      <SubHeading />
+    <div className="space-y-12">
+      <div className="space-y-4">
+        <Title level={2}>Forgot your password?</Title>
+        <Paragraph className="text-neutral-9">To reset your password, enter the phone number of your account</Paragraph>
+      </div>
       <ForgotPasswordForm />
-    </Space>
+    </div>
   );
 }

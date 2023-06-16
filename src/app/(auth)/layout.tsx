@@ -1,10 +1,11 @@
 import Logo from "@/components/Auth/Common/Logo";
-import { Layout, Space, Title, Sider, Content } from "@/lib/antd";
+import { Layout, Sider, Content } from "@/lib/antd";
 import Link from "next/link";
 
 import "antd/dist/reset.css";
 import "tailwindcss/tailwind.css";
 import AppProvider from "@/context/AppProvider";
+import AuthIllustration from "@/components/Auth/Common/AuthIllustration";
 
 export default function AuthRootLayout({
   children,
@@ -18,21 +19,17 @@ export default function AuthRootLayout({
           <Layout hasSider className="h-full">
             <Sider
               width="50%"
-              className="bg-[#2b364e] bg-[url(/AuthCircles.svg)] bg-cover"
+              className="bg-primary-10 bg-[url(/AuthBackground.svg)] bg-cover"
             >
-              <Link href="/login">
-                <Space
-                  direction="horizontal"
-                  size="middle"
-                  className="h-full flex items-center justify-center"
-                >
-                  <Logo />
-                  <Title className="text-white font-normal">ethan</Title>
-                </Space>
-              </Link>
+              <div className="h-full flex justify-center items-center">
+                <AuthIllustration />
+              </div>
             </Sider>
-            <Content className="h-full flex flex-col justify-center px-8 max-w-xl mx-auto">
-              {children}
+            <Content className="px-24 pt-16 space-y-12 bg-white">
+              <Link href="/login">
+                <Logo />
+              </Link>
+              <div className="flex flex-col max-w-[26.5rem]">{children}</div>
             </Content>
           </Layout>
         </AppProvider>

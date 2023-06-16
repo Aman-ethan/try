@@ -25,10 +25,10 @@ export default function ForgotPasswordForm() {
       if (data.user_id) {
         router.push(
           "/verify-otp?" +
-            new URLSearchParams({
-              user_id: data.user_id,
-              next_path: "/reset-password",
-            })
+          new URLSearchParams({
+            user_id: data.user_id,
+            next_path: "/reset-password",
+          })
         );
       }
     },
@@ -38,34 +38,31 @@ export default function ForgotPasswordForm() {
   });
 
   return (
-    <Form onFinish={trigger} size="large" disabled={isMutating}>
-      <Space direction="vertical" size="large" className="w-full">
-        <Form.Item noStyle name="username">
-          <Input
-            required
-            type="text"
-            placeholder="Enter Username or Email ID"
-            addonBefore={<UserOutlined />}
-            autoFocus
-          />
-        </Form.Item>
-        <Space direction="vertical" align="center" className="w-full pt-6">
-          <Button
-            htmlType="submit"
-            type="primary"
-            loading={isMutating}
-            className="px-10"
-          >
-            Submit
-          </Button>
-          <Typography.Text type="secondary">
-            Try Login Again?{" "}
-            <Link href="/login" className="hover:underline focus:underline">
-              Log In
-            </Link>
-          </Typography.Text>
-        </Space>
-      </Space>
+    <Form onFinish={trigger} size="large" disabled={isMutating} layout="vertical" className="space-y-10">
+      <Form.Item label="Phone Number" name="username" className="font-medium">
+        <Input
+          required
+          type="text"
+          placeholder="1234-56789"
+          autoFocus
+        />
+      </Form.Item>
+      <div className="space-y-8">
+        <Button
+          htmlType="submit"
+          type="primary"
+          loading={isMutating}
+          className="px-10"
+          block
+        >
+          Submit
+        </Button>
+        <Typography.Paragraph>
+          <Link href="/login" className="hover:underline focus:underline">
+            Back to Login
+          </Link>
+        </Typography.Paragraph>
+      </div>
     </Form>
   );
 }

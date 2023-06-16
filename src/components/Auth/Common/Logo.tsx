@@ -1,6 +1,7 @@
 "use client";
 
-import SvgLogo from "@/icons/Logo.svg";
+import LogoSvg from "@/icons/Logo.svg";
+import { useToken } from "@/lib/antd";
 import clsx from "clsx";
 
 interface ILogoProps {
@@ -8,5 +9,5 @@ interface ILogoProps {
 }
 
 export default function Logo({ className }: ILogoProps) {
-  return <SvgLogo className={clsx("initial:w-24 initial:h-32", className)} />;
+  return <LogoSvg className={className} />;
 }
