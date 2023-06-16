@@ -1,3 +1,8 @@
+import { theme as AntdTheme } from "antd";
+import theme, { primaryColorName, primaryColor } from "./src/config/theme";
+
+const globalToken = AntdTheme.getDesignToken(theme);
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -6,9 +11,7 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/constants/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  corePlugins: {
-    preflight: false,
-  },
+  corePlugins: {},
   important: true,
   theme: {
     extend: {
@@ -18,9 +21,33 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        "auth-blue": {
-          DEFAULT: "#0fabe0",
-          dark: "#0f80b0",
+        primary: Object.entries(globalToken)
+          .filter(([key]) => key.startsWith(`${primaryColorName}-`))
+          .reduce(
+            (acc, [key, value]) => {
+              const shade = key.split("-")[1];
+              return {
+                ...acc,
+                [shade]: value,
+              };
+            },
+            { DEFAULT: primaryColor }
+          ),
+        neutral: {
+          DEFAULT: "#bfbfbf",
+          1: "#ffffff",
+          2: "#fafafa",
+          3: "#f5f5f5",
+          4: "#f0f0f0",
+          5: "#d9d9d9",
+          6: "#bfbfbf",
+          7: "#8c8c8c",
+          8: "#595959",
+          9: "#888484",
+          10: "#262626",
+          11: "#1f1f1f",
+          12: "#141414",
+          13: "#000000",
         },
       },
     },
