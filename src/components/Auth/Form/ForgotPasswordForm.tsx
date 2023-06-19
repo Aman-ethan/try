@@ -1,9 +1,7 @@
 "use client";
 
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import { UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space, Typography, message } from "antd";
-import Link from "next/link";
+import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
 
 interface IUserArgs {
@@ -46,8 +44,8 @@ export default function ForgotPasswordForm() {
       className="space-y-10"
       labelCol={{ className: "font-medium" }}
     >
-      <Form.Item label="Phone Number" name="username">
-        <Input required type="text" placeholder="1234-56789" autoFocus />
+      <Form.Item label="Phone Number" name="phone_number">
+        <Input required type="tel" placeholder="1234-56789" autoFocus />
       </Form.Item>
       <Button
         htmlType="submit"

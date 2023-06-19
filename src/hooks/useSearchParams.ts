@@ -4,7 +4,12 @@ import {
 } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-type LoginSearchParams = "username" | "password" | "phone_number";
+type AuthSearchParams =
+  | "username"
+  | "password"
+  | "phone_number"
+  | "user_id"
+  | "next_path";
 
 type NetWorthSearchParams = "client_id" | "client_name";
 
@@ -19,7 +24,7 @@ type TradeSearchParams =
   | "trade_ordering";
 
 export type SearchParams =
-  | LoginSearchParams
+  | AuthSearchParams
   | NetWorthSearchParams
   | TradeSearchParams
   | "selected_date"
