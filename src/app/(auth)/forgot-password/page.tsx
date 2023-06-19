@@ -1,14 +1,25 @@
+import Paragraph from "@/components/Auth/Common/Paragraph";
+import Title from "@/components/Auth/Common/Title";
 import ForgotPasswordForm from "@/components/Auth/Form/ForgotPasswordForm";
-import { Title, Paragraph } from "@/lib/antd";
+import Link from "next/link";
 
 export default function ForgotPasswordPage() {
   return (
-    <div className="space-y-12">
-      <div className="space-y-4">
-        <Title level={2}>Forgot your password?</Title>
-        <Paragraph className="text-neutral-9">To reset your password, enter the phone number of your account</Paragraph>
+    <div className="space-y-8">
+      <div className="space-y-12">
+        <div className="space-y-4">
+          <Title>Forgot your password?</Title>
+          <Paragraph>
+            To reset your password, enter the phone number of your account
+          </Paragraph>
+        </div>
+        <ForgotPasswordForm />
       </div>
-      <ForgotPasswordForm />
+      <Paragraph>
+        <Link href="/login" className="hover:underline focus:underline">
+          Back to Login
+        </Link>
+      </Paragraph>
     </div>
   );
 }

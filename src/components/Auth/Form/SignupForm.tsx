@@ -3,24 +3,21 @@
 import { useRouter } from "next/navigation";
 import {
   Button,
+  Checkbox,
   Form,
   Input,
   Radio,
+  Row,
+  Select,
   Space,
   TimePicker,
   Typography,
   message,
 } from "antd";
 import Link from "next/link";
-import {
-  BankOutlined,
-  IdcardOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  PlusOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
 import { useAuthServerMutation } from "@/hooks/useMutation";
+import Timezone from "@/constants/timezone";
+import Paragraph from "../Common/Paragraph";
 
 interface ISignupResponse {
   id: string;
@@ -74,102 +71,87 @@ export default function SignupForm() {
         trigger({ ...data, media: media === "Other" ? source : media });
       }}
       size="large"
-      labelCol={{ className: "font-medium -my-2" }}
+      labelCol={{ className: "font-medium" }}
+      className="space-y-10"
     >
-      <Space direction="vertical" size="small">
-        <Form.Item noStyle label="Enter Username" name="username">
-          <Input
-            type="text"
-            placeholder="Enter Username"
-            addonBefore={<UserOutlined />}
-            autoFocus
-          />
+      <div className="space-y-6">
+        <Row justify="space-between">
+          <Form.Item label="Username" name="username">
+            <Input type="text" placeholder="john doe" autoFocus />
+          </Form.Item>
+          <Form.Item label="Email" name="email">
+            <Input type="email" placeholder="john.doe@acme.com" />
+          </Form.Item>
+        </Row>
+        <Form.Item label="Phone Number" name="phone_number">
+          <Input type="tel" placeholder="123456789" />
         </Form.Item>
-        <Form.Item noStyle label="Enter Email ID" name="email">
-          <Input
-            type="email"
-            placeholder="Enter Email ID"
-            addonBefore={<MailOutlined />}
-          />
-        </Form.Item>
-        <Space.Compact block>
-          <Form.Item noStyle label="Country Code" name="country_code">
-            <Input
-              type="tel"
-              placeholder="Country Code"
-              className="w-3/5"
-              addonBefore={<PlusOutlined />}
+        <Row justify="space-between">
+          <Form.Item label="Company Name" name="company_name">
+            <Input type="text" placeholder="Acme Inc." />
+          </Form.Item>
+          <Form.Item label="Designation" name="designation">
+            <Input type="text" placeholder="Founder" />
+          </Form.Item>
+        </Row>
+        <Row className="gap-x-2">
+          <Form.Item
+            label="When can we contact you?"
+            name="time"
+            htmlFor="time"
+            className="flex-1"
+          >
+            <TimePicker
+              id="time"
+              format="HH:mm A"
+              placeholder="10:00 AM"
+              use12Hours
+              className="w-full"
             />
           </Form.Item>
-          <Form.Item noStyle label="Phone Number" name="phone_number">
-            <Input
-              type="tel"
-              placeholder="Enter Phone Number"
-              addonBefore={<PhoneOutlined />}
-            />
+          <Form.Item label=" " name="timezone" className="flex-1">
+            <Select placeholder="Select timezone">
+              {Timezone.map(({ abbr }) => (
+                <Select.Option key={abbr} value={abbr}>
+                  {abbr}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
-        </Space.Compact>
-        <Form.Item noStyle label="Enter Company Name" name="company_name">
-          <Input
-            type="text"
-            placeholder="Enter Company Name"
-            addonBefore={<BankOutlined />}
-          />
-        </Form.Item>
-        <Form.Item noStyle label="Enter Designation" name="designation">
-          <Input
-            type="text"
-            placeholder="Enter Designation"
-            addonBefore={<IdcardOutlined />}
-          />
-        </Form.Item>
-        <Form.Item label="When can we contact you?" name="time" htmlFor="time">
-          <TimePicker
-            id="time"
-            format="HH:mm A"
-            className="w-full"
-            placeholder="10:00 AM"
-            use12Hours
-          />
-        </Form.Item>
+        </Row>
         <Form.Item
-          label="How did you hear about us?"
+          label="Where did you hear about us?"
           htmlFor="media"
           name="media"
-          className="-mt-6 -mb-0.5"
         >
-          <Radio.Group id="media">
-            <Space direction="vertical">
-              {REFERRAL_SOURCE.map((source) => (
-                <Radio key={source} value={source}>
-                  {source}
-                </Radio>
-              ))}
-            </Space>
-          </Radio.Group>
+          <Select id="media" placeholder="Google">
+            {REFERRAL_SOURCE.map((source) => (
+              <Select.Option key={source} value={source}>
+                {source}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
         {media === "Other" && (
           <Form.Item noStyle label="State Here" name="source">
             <Input type="text" placeholder="State Here" />
           </Form.Item>
         )}
-        <Space direction="vertical" align="center" className="w-full pt-10">
-          <Button
-            htmlType="submit"
-            type="primary"
-            className="px-12"
-            loading={isMutating}
-          >
-            Submit
-          </Button>
-          <Typography.Text type="secondary">
-            Already a member?{" "}
-            <Link href="/login" className="hover:underline focus:underline">
-              Login
-            </Link>
-          </Typography.Text>
-        </Space>
-      </Space>
+        <Form.Item noStyle name="t&c">
+          <Row className="space-x-2">
+            <Checkbox />
+            <span className="text-neutral-13/80">
+              I agree to the{" "}
+              <Link href="/" className="font-medium">
+                Terms & Conditions
+              </Link>
+            </span>
+          </Row>
+        </Form.Item>
+      </div>
+      <Button htmlType="submit" type="primary" block loading={isMutating}>
+        Create Account
+      </Button>
     </Form>
   );
 }

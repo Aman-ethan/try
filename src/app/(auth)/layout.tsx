@@ -25,11 +25,11 @@ export default function AuthRootLayout({
                 <AuthIllustration />
               </div>
             </Sider>
-            <Content className="px-24 pt-16 space-y-12 bg-white">
+            <Content className="px-24 pt-16 space-y-12 bg-white max-h-screen overflow-y-scroll">
               <Link href="/login">
                 <Logo />
               </Link>
-              <div className="flex flex-col max-w-[26.5rem]">{children}</div>
+              <div className="max-w-[26.5rem]">{children}</div>
             </Content>
           </Layout>
         </AppProvider>

@@ -5,6 +5,8 @@ import { Button, Form, Input, InputRef, Row, message } from "antd";
 import { ChangeEvent, KeyboardEvent, useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
 import { useAuthServerMutation } from "@/hooks/useMutation";
+import Paragraph from "../Common/Paragraph";
+import ResendOTP from "../ResendOTP";
 
 interface IVerifyOTPResponse {
   access_token: string;
@@ -16,13 +18,9 @@ interface IVerifyOTPArgs {
   otp: string;
 }
 
-interface IVerifyOTPFormProps {
-  children: React.ReactNode;
-}
-
 const OPT_LENGTH = 6;
 
-export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
+export default function VerifyOTPForm() {
   const [form] = Form.useForm();
   const { push, replace } = useRouter();
   const otpRef = useRef<Record<string, InputRef | null>>({});
@@ -96,7 +94,6 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
 
   return userId ? (
     <>
-      {children}
       <Form
         form={form}
         onFinish={(data) =>
@@ -106,7 +103,7 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
         size="large"
         className="space-y-10"
       >
-        <Row justify="center">
+        <Row justify="space-between">
           {Array.from({ length: OPT_LENGTH }).map((_, index) => (
             <Form.Item
               noStyle
@@ -122,22 +119,19 @@ export default function VerifyOTPForm({ children }: IVerifyOTPFormProps) {
                 name={String(index)}
                 required
                 maxLength={1}
-                className="border-0 bg-transparent focus:border text-2xl w-14 h-14 text-center transition-none"
-                placeholder="•"
+                className="text-base border-primary w-12 h-12 text-center text-neutral-11 font-medium valid:bg-primary-1"
               />
             </Form.Item>
           ))}
         </Row>
-        <Row justify="center">
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="px-10"
-            loading={isMutating}
-          >
-            Verify
+        <div className="space-y-8">
+          <Button block type="primary" htmlType="submit" loading={isMutating}>
+            Verify & Proceed
           </Button>
-        </Row>
+          <Paragraph>
+            Didn&apos;t receive OTP? <ResendOTP />
+          </Paragraph>
+        </div>
       </Form>
     </>
   ) : null;
