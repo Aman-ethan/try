@@ -19,7 +19,7 @@ interface IClientNetWorthResponse {
 type IClientNetWorthRow = IClientNetWorthResponse["data"][0];
 
 function useClientNetWorth() {
-  const { getSearchParams, updateSearchParams } = useSearchParams();
+  const { get: getSearchParams, updateSearchParams } = useSearchParams();
   const selectedDate = getSearchParams("selected_date");
   const { data, isLoading } =
     useTransactionServerQuery<IClientNetWorthResponse>(

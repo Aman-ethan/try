@@ -4,7 +4,9 @@ import {
 } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-type NetWorthParams = "client_id" | "client_name";
+type LoginSearchParams = "username" | "password" | "phone_number";
+
+type NetWorthSearchParams = "client_id" | "client_name";
 
 type TradeSearchParams =
   | "trade_search"
@@ -17,7 +19,8 @@ type TradeSearchParams =
   | "trade_ordering";
 
 export type SearchParams =
-  | NetWorthParams
+  | LoginSearchParams
+  | NetWorthSearchParams
   | TradeSearchParams
   | "selected_date"
   | "selected_duration";
@@ -47,9 +50,9 @@ export default function useSearchParams() {
     router.push(pathname + "?" + urlSearchParams);
   }
 
-  function getSearchParams(name: SearchParams) {
+  function get(name: SearchParams) {
     return searchParams.get(name);
   }
 
-  return { getSearchParams, updateSearchParams };
+  return { get, updateSearchParams };
 }

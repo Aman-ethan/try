@@ -4,7 +4,7 @@ import useSearchParams from "@/hooks/useSearchParams";
 import { DATE_PARAM_FORMAT } from "@/constants/format";
 
 export default function TradeRangePicker() {
-  const { updateSearchParams, getSearchParams } = useSearchParams();
+  const { updateSearchParams, get: getSearchParams } = useSearchParams();
   const tradeDateFrom = getSearchParams("trade_date_from");
   const tradeDateTo = getSearchParams("trade_date_to");
 

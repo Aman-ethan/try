@@ -10,7 +10,7 @@ interface IClientResponse {
 }
 
 function useSelectClient() {
-  const { getSearchParams, updateSearchParams } = useSearchParams();
+  const { get: getSearchParams, updateSearchParams } = useSearchParams();
   const tradeClientId = getSearchParams("trade_client_id");
 
   const { data, isLoading } =

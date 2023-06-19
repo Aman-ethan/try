@@ -13,7 +13,7 @@ interface ICustodianResponse {
 preloadTransactionServerQuery("/custodian/");
 
 function useSelectCustodian() {
-  const { getSearchParams, updateSearchParams } = useSearchParams();
+  const { get: getSearchParams, updateSearchParams } = useSearchParams();
   const tradeClientId = getSearchParams("trade_client_id");
   const tradeCustodianId = getSearchParams("trade_custodian_id");
 

@@ -35,7 +35,7 @@ const DURATION: IDuration[] = [
 const DURATION_AMOUNT = 1;
 
 function useAssetNetWorth() {
-  const { getSearchParams } = useSearchParams();
+  const { get: getSearchParams } = useSearchParams();
   const selectedDate = getSearchParams("selected_date");
   const selectedDuration = getSearchParams(
     "selected_duration"
@@ -69,7 +69,7 @@ function useAssetNetWorth() {
 }
 
 function Extra() {
-  const { updateSearchParams, getSearchParams } = useSearchParams();
+  const { updateSearchParams, get: getSearchParams } = useSearchParams();
   const selectedDuration = getSearchParams("selected_duration");
 
   function onClick(value: string) {

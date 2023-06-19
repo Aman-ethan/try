@@ -103,7 +103,7 @@ export default function VerifyOTPForm() {
         size="large"
         className="space-y-10"
       >
-        <Row justify="space-between">
+        <Row justify="space-between" className="gap-2">
           {Array.from({ length: OPT_LENGTH }).map((_, index) => (
             <Form.Item
               noStyle

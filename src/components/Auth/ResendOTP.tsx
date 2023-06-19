@@ -10,14 +10,7 @@ export default function ResendOTP() {
   const resendOTPEnabled = seconds === 0;
 
   const { trigger } = useAuthServerMutation<ILoginArgs, ILoginResponse>(
-    "/api/login",
-    {
-      onSuccess(data) {
-        if (data.user_id) {
-          setSeconds(OTP_WAIT_TIME);
-        }
-      },
-    }
+    "/api/login"
   );
 
   useEffect(() => {
@@ -31,6 +24,7 @@ export default function ResendOTP() {
   }, []);
 
   function resendOTP() {
+    setSeconds(OTP_WAIT_TIME);
     const searchParams = new URLSearchParams(window.location.search);
     const username = searchParams.get("username");
     const password = searchParams.get("password");

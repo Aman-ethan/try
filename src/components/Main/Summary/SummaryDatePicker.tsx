@@ -17,7 +17,7 @@ const DEFAULT_DURATION: ManipulateType = "y";
 preloadTransactionServerQuery("/position_history/asset_networth/date_parser/");
 
 function useSummaryDatePicker() {
-  const { updateSearchParams, getSearchParams } = useSearchParams();
+  const { updateSearchParams, get: getSearchParams } = useSearchParams();
   const selectedDate = getSearchParams("selected_date");
   const selectedDuration = getSearchParams("selected_duration");
 

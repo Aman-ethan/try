@@ -30,6 +30,7 @@ interface ISignupArgs {
   designation: string;
   time: Date;
   source: string;
+  terms_and_conditions: boolean;
 }
 
 const REFERRAL_SOURCE = [
@@ -60,15 +61,21 @@ export default function SignupForm() {
     },
   });
 
+  function handleSignup(data: ISignupArgs) {
+    const { source, terms_and_conditions } = data;
+    if (!terms_and_conditions) {
+      message.error("Please accept the terms and conditions.");
+    } else {
+      trigger({ ...data, media: media === "Other" ? source : media });
+    }
+  }
+
   return (
     <Form
       layout="vertical"
       form={form}
       disabled={isMutating}
-      onFinish={(data) => {
-        const { source } = data;
-        trigger({ ...data, media: media === "Other" ? source : media });
-      }}
+      onFinish={handleSignup}
       size="large"
       labelCol={{ className: "font-medium" }}
       className="space-y-10"
@@ -134,7 +141,7 @@ export default function SignupForm() {
             <Input type="text" placeholder="State Here" />
           </Form.Item>
         )}
-        <Form.Item noStyle name="t&c">
+        <Form.Item noStyle name="terms_and_conditions">
           <Row className="space-x-2">
             <Checkbox />
             <span className="text-neutral-13/80">

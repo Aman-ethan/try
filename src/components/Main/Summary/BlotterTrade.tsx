@@ -34,7 +34,7 @@ interface IBlotterTradeResponse {
 }
 
 function useBlotterTrade() {
-  const { updateSearchParams, getSearchParams } = useSearchParams();
+  const { updateSearchParams, get: getSearchParams } = useSearchParams();
   const { isLoading, data, error } = useTransactionServerQuery<
     IBlotterTradeResponse[]
   >(

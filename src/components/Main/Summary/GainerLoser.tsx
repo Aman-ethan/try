@@ -37,7 +37,7 @@ interface IGainerResponse {
 }
 
 function useGainerLoser() {
-  const { getSearchParams } = useSearchParams();
+  const { get: getSearchParams } = useSearchParams();
   const selectedDate = getSearchParams("selected_date");
   const { data, isLoading } = useTransactionServerQuery<IGainerResponse>(
     selectedDate

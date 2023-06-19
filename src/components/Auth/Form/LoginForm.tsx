@@ -17,6 +17,7 @@ export default function LoginForm() {
           "/verify-otp?" +
             new URLSearchParams({
               user_id: data.user_id,
+              phone_number: data.phone_number,
               username: form.getFieldValue("username"),
               password: btoa(form.getFieldValue("password")),
             })
