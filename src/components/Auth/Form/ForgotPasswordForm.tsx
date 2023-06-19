@@ -3,6 +3,7 @@
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
+import PhoneInput from "../../Common/PhoneInput";
 
 interface IUserArgs {
   username: string;
@@ -44,9 +45,7 @@ export default function ForgotPasswordForm() {
       className="space-y-10"
       labelCol={{ className: "font-medium" }}
     >
-      <Form.Item label="Phone Number" name="phone_number">
-        <Input required type="tel" placeholder="1234-56789" autoFocus />
-      </Form.Item>
+      <PhoneInput />
       <Button
         htmlType="submit"
         type="primary"
