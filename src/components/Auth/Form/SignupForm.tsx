@@ -12,7 +12,7 @@ import {
 } from "antd";
 import Link from "next/link";
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import Timezone from "@/constants/timezones";
+import Timezones from "@/constants/timezones";
 import PhoneInput from "./PhoneInput";
 import { useRouter } from "next/navigation";
 
@@ -108,7 +108,7 @@ export default function SignupForm() {
           </Form.Item>
           <Form.Item label=" " name="timezone" className="flex-1">
             <Select placeholder="Select timezone">
-              {Timezone.map(({ text }) => (
+              {Timezones.map(({ text }) => (
                 <Select.Option key={text} value={text}>
                   {text}
                 </Select.Option>

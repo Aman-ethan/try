@@ -1,26 +1,21 @@
-"use client";
-
-import { Button, Result } from "antd";
+import Paragraph from "@/components/Auth/Common/Paragraph";
+import Title from "@/components/Auth/Common/Title";
 import { useRouter } from "next/navigation";
+import { Button } from "@/lib/antd";
+import Link from "next/link";
 
 export default function ResetSuccessPage() {
-  const router = useRouter();
   return (
-    <Result
-      status="success"
-      title="Password Reset Successful"
-      subTitle="You can now login to your account using your password"
-      extra={[
-        <Button
-          key="login"
-          type="primary"
-          size="large"
-          onClick={() => router.replace("/login")}
-          className="px-10"
-        >
-          Log In
-        </Button>,
-      ]}
-    />
+    <div className="space-y-12">
+      <div className="space-y-4">
+        <Title>Password Changed!</Title>
+        <Paragraph>You set up a new password for your account.</Paragraph>
+      </div>
+      <Link href="/login" className="block">
+        <Button type="primary" size="large" block>
+          Login
+        </Button>
+      </Link>
+    </div>
   );
 }

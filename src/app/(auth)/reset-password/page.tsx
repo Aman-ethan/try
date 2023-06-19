@@ -1,14 +1,15 @@
-import { Space } from "@/lib/antd";
-import Heading from "@/components/Auth/Common/Heading";
-import SubHeading from "@/components/Auth/Common/SubHeading";
 import ResetPasswordForm from "@/components/Auth/Form/ResetPasswordForm";
+import Title from "@/components/Auth/Common/Title";
+import Paragraph from "@/components/Auth/Common/Paragraph";
 
 export default function ResetPasswordPage() {
   return (
-    <Space direction="vertical">
-      <Heading>Reset Password</Heading>
-      <SubHeading>Enter a new password for your account</SubHeading>
+    <div className="space-y-12">
+      <div className="space-y-4">
+        <Title>Reset Password</Title>
+        <Paragraph>Enter a new password for your account</Paragraph>
+      </div>
       <ResetPasswordForm />
-    </Space>
+    </div>
   );
 }
