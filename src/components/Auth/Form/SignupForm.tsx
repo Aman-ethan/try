@@ -1,23 +1,20 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import {
   Button,
   Checkbox,
   Form,
   Input,
-  Radio,
   Row,
   Select,
-  Space,
   TimePicker,
-  Typography,
   message,
 } from "antd";
 import Link from "next/link";
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import Timezone from "@/constants/timezone";
-import Paragraph from "../Common/Paragraph";
+import Timezone from "@/constants/timezones";
+import PhoneInput from "./PhoneInput";
+import { useRouter } from "next/navigation";
 
 interface ISignupResponse {
   id: string;
@@ -43,6 +40,7 @@ const REFERRAL_SOURCE = [
 ];
 
 export default function SignupForm() {
+  const router = useRouter();
   const [form] = Form.useForm<ISignupArgs>();
   const media = Form.useWatch("media", form);
 
@@ -54,6 +52,7 @@ export default function SignupForm() {
       if (data.id) {
         form.resetFields();
         message.success("Thank you! Your data is recorded.");
+        router.replace("/signup-success");
       }
     },
     onError() {
@@ -83,9 +82,7 @@ export default function SignupForm() {
             <Input type="email" placeholder="john.doe@acme.com" />
           </Form.Item>
         </Row>
-        <Form.Item label="Phone Number" name="phone_number">
-          <Input type="tel" placeholder="123456789" />
-        </Form.Item>
+        <PhoneInput />
         <Row justify="space-between">
           <Form.Item label="Company Name" name="company_name">
             <Input type="text" placeholder="Acme Inc." />
@@ -111,9 +108,9 @@ export default function SignupForm() {
           </Form.Item>
           <Form.Item label=" " name="timezone" className="flex-1">
             <Select placeholder="Select timezone">
-              {Timezone.map(({ abbr }) => (
-                <Select.Option key={abbr} value={abbr}>
-                  {abbr}
+              {Timezone.map(({ text }) => (
+                <Select.Option key={text} value={text}>
+                  {text}
                 </Select.Option>
               ))}
             </Select>
