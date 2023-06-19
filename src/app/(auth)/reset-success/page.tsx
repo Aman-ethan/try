@@ -1,6 +1,5 @@
 import Paragraph from "@/components/Auth/Common/Paragraph";
 import Title from "@/components/Auth/Common/Title";
-import { useRouter } from "next/navigation";
 import { Button } from "@/lib/antd";
 import Link from "next/link";
 

@@ -37,7 +37,7 @@ export default function ResendOTP() {
     if (username && password && resendOTPEnabled) {
       trigger({
         username,
-        password: btoa(password),
+        password: atob(password),
       });
     }
   }

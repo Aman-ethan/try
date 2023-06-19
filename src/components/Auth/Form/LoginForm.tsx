@@ -18,12 +18,12 @@ export default function LoginForm() {
             new URLSearchParams({
               user_id: data.user_id,
               username: form.getFieldValue("username"),
-              password: atob(form.getFieldValue("password")),
+              password: btoa(form.getFieldValue("password")),
             })
         );
       }
     },
-    onError() {
+    onError(e) {
       message.error("Login credentials are incorrect. Please try again.");
     },
   });
