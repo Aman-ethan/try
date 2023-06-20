@@ -13,11 +13,11 @@ export default function Template({ children }: ITemplateProps) {
   const { isLoggedIn } = useAuth();
 
   useLayoutEffect(() => {
-    // if (isLoggedIn) {
-    //   document.body.classList.remove("opacity-0");
-    // } else {
-    //   replace("/login");
-    // }
+    if (isLoggedIn) {
+      document.body.classList.remove("opacity-0");
+    } else {
+      replace("/login");
+    }
   }, [isLoggedIn, replace]);
 
   return children;

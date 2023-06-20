@@ -11,7 +11,7 @@ export default function MainRootLayout({
 }) {
   return (
     <html lang="en">
-      <body id="layout" className="">
+      <body id="layout" className="opacity-0 transition-opacity">
         <AppProvider>
           <Layout>{children}</Layout>
         </AppProvider>

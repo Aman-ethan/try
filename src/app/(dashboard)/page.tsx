@@ -2,7 +2,7 @@
 
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export default function IndexPage() {
   const { isLoggedIn } = useAuth();
