@@ -1,66 +1,63 @@
-import PortfolioIcon from "@/icons/Portfolio.svg";
-import SummaryIcon from "@/icons/Summary.svg";
-import PositionIcon from "@/icons/Position.svg";
-import ClientMonthlyIcon from "@/icons/ClientMonthly.svg";
 import {
-  BankOutlined,
-  CloudOutlined,
-  RiseOutlined,
-  StockOutlined,
-  UploadOutlined,
+  DotChartOutlined,
+  FileSearchOutlined,
+  LineChartOutlined,
+  NodeIndexOutlined,
+  ProfileOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
-const ROUTE = {
-  path: "/",
-  routes: [
-    { path: "/summary", name: "Overview (T+1)", icon: <SummaryIcon /> },
-    { path: "/analysis", name: "Analysis (T+1)", icon: <PortfolioIcon /> },
-    {
-      path: "/position-search",
-      name: "Position Search",
-      icon: <PositionIcon />,
-    },
-    {
-      path: "/trade-search",
-      name: "Trade Search",
-      icon: <StockOutlined />,
-      routes: [
-        {
-          path: "/blotter-trades",
-          name: "Blotter Trades",
-          icon: <RiseOutlined />,
-        },
-        {
-          path: "/trade-statements",
-          name: "Trade Statements",
-          icon: <StockOutlined />,
-        },
-      ],
-    },
-    {
-      path: "/ethan-cloud",
-      name: "Ethan Cloud",
-      icon: <CloudOutlined />,
-      routes: [
-        { path: "/upload", name: "Upload", icon: <UploadOutlined /> },
-        {
-          path: "/client-monthly",
-          name: "Client Monthly",
-          icon: <ClientMonthlyIcon className="text-black" />,
-        },
-      ],
-    },
-    {
-      path: "/client-information",
-      name: "Client Information",
-      icon: <BankOutlined />,
-    },
-    {
-      path: "/blotter",
-      name: "Blotter",
-      icon: <RiseOutlined />,
-    },
-  ],
-};
+const ROUTE = [
+  { key: "/overview", label: "Overview", icon: <FileSearchOutlined /> },
+  {
+    key: "analytics",
+    label: "Analytics",
+    icon: <LineChartOutlined />,
+    children: [
+      { key: "/analytics/crude", label: "Crude Analytics" },
+      { key: "/analytics/generative", label: "Generative Analytics" },
+    ],
+  },
+  {
+    key: "/position-search",
+    label: "Position Search",
+    icon: <NodeIndexOutlined />,
+  },
+  {
+    key: "/blotter-trades",
+    label: "Blotter Trades",
+    icon: <DotChartOutlined />,
+  },
+  {
+    key: "statements",
+    label: "Statements",
+    icon: <ProfileOutlined />,
+    children: [
+      {
+        key: "/statements/bank",
+        label: "Bank Statement",
+      },
+      {
+        key: "/statements/trade",
+        label: "Trade Statement",
+      },
+      {
+        key: "/statements/position",
+        label: "Position Statement",
+      },
+    ],
+  },
+  {
+    key: "/customer-information",
+    label: "Customer Information",
+    icon: <UserOutlined />,
+  },
+  {
+    disabled: true,
+    key: "/market-and-rates",
+    label: "Market & Rates",
+    icon: <DotChartOutlined />,
+  },
+];
 
 export default ROUTE;

@@ -32,8 +32,6 @@ const theme: ThemeConfig = {
       marginXXL: 0,
       marginXXS: 0,
     },
-    Input: {},
-    Space: {},
   },
 };
 

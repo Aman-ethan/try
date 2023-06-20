@@ -43,7 +43,7 @@ export async function getFetcher([key, accessToken]: string[]) {
     return res.json();
   } catch (e) {
     if (e instanceof Error) {
-      throw new Error(e.message);
+      // throw new Error(e.message);
     }
   }
 }
