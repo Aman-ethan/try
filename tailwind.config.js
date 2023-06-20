@@ -37,7 +37,7 @@ module.exports = {
           DEFAULT: "#bfbfbf",
           1: "#ffffff",
           2: "#fafafa",
-          3: "#f5f5f5",
+          3: "#F1F2F5",
           4: "#f0f0f0",
           5: "#DAD8D8",
           6: "#bfbfbf",

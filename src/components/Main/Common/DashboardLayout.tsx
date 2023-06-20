@@ -82,7 +82,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
             />
           </div>
           <div className="gap-x-6 flex items-center">
-            <Tag className="py-1 px-2 space-x-2 flex items-center bg-neutral-2">
+            <Tag className="py-1 px-2 space-x-2 flex items-center bg-neutral-3">
               <Image alt="flag" src={flags["sgd"]} width={24} height={18} />
               <span className="text-neutral-10 text-xs">SGD</span>
             </Tag>
@@ -103,10 +103,12 @@ export default function DashboardLayout({ children }: ILayoutProps) {
             </Dropdown>
           </div>
         </Layout.Header>
-        <Layout.Content className="bg-neutral-5">{children}</Layout.Content>
-        <Layout.Footer>
-          ETHAN-AI. ALL RIGHTS RESERVED ${currentDate.getFullYear()}
-        </Layout.Footer>
+        <Layout.Content className="bg-neutral-3">
+          {children}
+          <Layout.Footer className="bg-neutral-3 flex justify-center">
+            ETHAN-AI &copy; ALL RIGHTS RESERVED {currentDate.getFullYear()}
+          </Layout.Footer>
+        </Layout.Content>
       </Layout>
     </Layout>
   );
