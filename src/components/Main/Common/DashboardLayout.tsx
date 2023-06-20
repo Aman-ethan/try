@@ -92,7 +92,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
               className="text-neutral-13/40 text-base"
             />
             <Input.Search
-              className="w-[22rem]"
+              className="max-w-[22rem]"
               size="middle"
               placeholder="Search for Position, Market Data..."
             />
@@ -119,7 +119,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           </div>
         </Layout.Header>
         <Layout.Content className="bg-neutral-3">
-          {children}
+          <div className="min-h-[calc(100%-70px)]">{children}</div>
           <Layout.Footer className="bg-neutral-3 flex justify-center">
             ETHAN-AI &copy; ALL RIGHTS RESERVED {currentDate.getFullYear()}
           </Layout.Footer>
