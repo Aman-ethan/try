@@ -25,6 +25,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 import CollapsedLogo from "./CollapsedLogo";
+import CurrencyTag from "./CurrencyTag";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -98,10 +99,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
             />
           </div>
           <div className="gap-x-6 flex items-center">
-            <Tag className="py-1 px-2 space-x-2 flex items-center bg-neutral-2">
-              <Image alt="flag" src={flags["sgd"]} width={24} height={18} />
-              <span className="text-neutral-10 text-xs">SGD</span>
-            </Tag>
+            <CurrencyTag currency="sgd" />
             <Divider type="vertical" className="text-neutral-13/5" />
             <Dropdown
               menu={{ items: ProfileItems }}
