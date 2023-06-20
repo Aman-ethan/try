@@ -4,28 +4,25 @@ import { useAuthServerMutation } from "@/hooks/useMutation";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
 import PhoneInput from "../../Common/PhoneInput";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
 
 interface IUserArgs {
   username: string;
-}
-
-interface IUserResponse {
-  user_id: string;
-  message: string;
 }
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
   const { trigger, isMutating } = useAuthServerMutation<
     IUserArgs,
-    IUserResponse
+    ILoginResponse
   >("/api/forgot-password", {
     onSuccess(data) {
       if (data.user_id) {
         router.push(
-          "/verify-otp?" +
-            new URLSearchParams({
-              user_id: data.user_id,
+          "/verify-otp" +
+            buildURLSearchParams({
+              phone_number: data.phone_number,
+              user_id: data.user_id.toString(),
               next_path: "/reset-password",
             })
         );

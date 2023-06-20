@@ -4,7 +4,7 @@ interface ILoginArgs {
 }
 
 interface ILoginResponse {
-  user_id: string;
+  user_id: number;
   phone_number: string;
   message?: string;
 }

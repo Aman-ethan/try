@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuthServerMutation } from "@/hooks/useMutation";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
 
@@ -12,11 +13,12 @@ export default function LoginForm() {
     ILoginResponse
   >("/api/login", {
     onSuccess(data) {
+      console.log(data);
       if (data.user_id) {
         router.push(
-          "/verify-otp?" +
-            new URLSearchParams({
-              user_id: data.user_id,
+          "/verify-otp" +
+            buildURLSearchParams({
+              user_id: data.user_id.toString(),
               phone_number: data.phone_number,
               username: form.getFieldValue("username"),
               password: btoa(form.getFieldValue("password")),
@@ -24,7 +26,7 @@ export default function LoginForm() {
         );
       }
     },
-    onError(e) {
+    onError() {
       message.error("Login credentials are incorrect. Please try again.");
     },
   });
