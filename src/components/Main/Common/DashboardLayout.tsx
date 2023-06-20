@@ -5,8 +5,10 @@ import ROUTE from "@/constants/route";
 import { flags } from "@/constants/symbols";
 import {
   CaretDownFilled,
+  LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  SyncOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -37,7 +39,21 @@ const FooterLink = [
   },
 ];
 
-const ProfileItems: MenuProps["items"] = [{ label: "Ravi", key: "" }];
+const labelClassName = "text-neutral-13/80";
+const iconClassName = "text-neutral-11";
+
+const ProfileItems: MenuProps["items"] = [
+  {
+    label: <span className={labelClassName}>Change Password</span>,
+    key: "change-password",
+    icon: <SyncOutlined className={iconClassName} />,
+  },
+  {
+    label: <span className={labelClassName}>Logout</span>,
+    key: "logout",
+    icon: <LogoutOutlined className={iconClassName} />,
+  },
+];
 const currentDate = new Date();
 
 export default function DashboardLayout({ children }: ILayoutProps) {
@@ -52,7 +68,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         collapsed={collapsed}
         onCollapse={() => setCollapsed(true)}
         collapsible
-        className="bg-white"
+        className="bg-neutral-1"
         width={240}
       >
         <div className="pt-4 pb-6 px-6">
@@ -67,27 +83,26 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         />
       </Layout.Sider>
       <Layout>
-        <Layout.Header className="bg-white pl-6 pr-12 flex">
+        <Layout.Header className="flex bg-neutral-1 pl-6 pr-12">
           <div className="gap-x-6 flex flex-1 items-center">
             <Button
               onClick={() => setCollapsed((prev) => !prev)}
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              className="text-black/40 text-base"
+              className="text-neutral-13/40 text-base"
             />
             <Input.Search
-              className="w-1/2"
+              className="w-[22rem]"
               size="middle"
               placeholder="Search for Position, Market Data..."
             />
           </div>
           <div className="gap-x-6 flex items-center">
-            <Tag className="py-1 px-2 space-x-2 flex items-center bg-neutral-3">
+            <Tag className="py-1 px-2 space-x-2 flex items-center bg-neutral-2">
               <Image alt="flag" src={flags["sgd"]} width={24} height={18} />
               <span className="text-neutral-10 text-xs">SGD</span>
             </Tag>
-            <Divider type="vertical" className="text-black/5" />
-
+            <Divider type="vertical" className="text-neutral-13/5" />
             <Dropdown
               menu={{ items: ProfileItems }}
               trigger={["click"]}

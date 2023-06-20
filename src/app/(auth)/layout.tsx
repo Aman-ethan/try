@@ -25,7 +25,7 @@ export default function AuthRootLayout({
                 <AuthIllustration />
               </div>
             </Sider>
-            <Content className="px-24 pt-16 space-y-12 bg-white max-h-screen overflow-y-scroll">
+            <Content className="px-24 pt-16 space-y-12 bg-neutral-1 max-h-screen overflow-y-scroll">
               <Link href="/login">
                 <Logo />
               </Link>
