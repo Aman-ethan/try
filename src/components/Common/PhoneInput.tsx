@@ -17,7 +17,7 @@ export default function PhoneInput() {
         initialValue={DEFAULT_COUNTRY_CODE}
         className="w-1/4"
       >
-        <Select>
+        <Select showSearch>
           {UniqueCallingCodes.map((code) => (
             <Select.Option key={code} value={code}>
               {code}

@@ -2,7 +2,6 @@
 
 import Logo from "@/components/Auth/Common/Logo";
 import ROUTE from "@/constants/route";
-import { flags } from "@/constants/symbols";
 import {
   CaretDownFilled,
   LogoutOutlined,
@@ -19,9 +18,8 @@ import {
   Layout,
   Menu,
   MenuProps,
-  Tag,
+  Row,
 } from "antd";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 import CollapsedLogo from "./CollapsedLogo";
@@ -85,7 +83,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
       </Layout.Sider>
       <Layout>
         <Layout.Header className="flex bg-neutral-1 pl-6 pr-12">
-          <div className="gap-x-6 flex flex-1 items-center">
+          <Row className="gap-x-6" align="middle">
             <Button
               onClick={() => setCollapsed((prev) => !prev)}
               type="text"
@@ -97,8 +95,8 @@ export default function DashboardLayout({ children }: ILayoutProps) {
               size="middle"
               placeholder="Search for Position, Market Data..."
             />
-          </div>
-          <div className="gap-x-6 flex items-center">
+          </Row>
+          <Row className="gap-x-6" align="middle">
             <CurrencyTag currency="sgd" />
             <Divider type="vertical" className="text-neutral-13/5" />
             <Dropdown
@@ -114,7 +112,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
                 <CaretDownFilled />
               </div>
             </Dropdown>
-          </div>
+          </Row>
         </Layout.Header>
         <Layout.Content className="bg-neutral-3">
           <div className="min-h-[calc(100%-70px)]">{children}</div>

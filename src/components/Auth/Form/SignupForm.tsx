@@ -81,20 +81,24 @@ export default function SignupForm() {
       className="space-y-10"
     >
       <div className="space-y-6">
-        <Row justify="space-between">
-          <Form.Item label="Username" name="username">
+        <Row justify="space-between" className="gap-x-4">
+          <Form.Item label="Username" name="username" className="flex-1">
             <Input type="text" placeholder="john doe" autoFocus />
           </Form.Item>
-          <Form.Item label="Email" name="email">
+          <Form.Item label="Email" name="email" className="flex-1">
             <Input type="email" placeholder="john.doe@acme.com" />
           </Form.Item>
         </Row>
         <PhoneInput />
-        <Row justify="space-between">
-          <Form.Item label="Company Name" name="company_name">
+        <Row justify="space-between" className="gap-x-4">
+          <Form.Item
+            label="Company Name"
+            name="company_name"
+            className="flex-1"
+          >
             <Input type="text" placeholder="Acme Inc." />
           </Form.Item>
-          <Form.Item label="Designation" name="designation">
+          <Form.Item label="Designation" name="designation" className="flex-1">
             <Input type="text" placeholder="Founder" />
           </Form.Item>
         </Row>
@@ -141,16 +145,15 @@ export default function SignupForm() {
             <Input type="text" placeholder="State Here" />
           </Form.Item>
         )}
-        <Form.Item noStyle name="terms_and_conditions">
-          <Row className="space-x-2">
-            <Checkbox />
+        <Form.Item name="terms_and_conditions">
+          <Checkbox>
             <span className="text-neutral-13/80">
               I agree to the{" "}
               <Link href="/" className="font-medium">
                 Terms & Conditions
               </Link>
             </span>
-          </Row>
+          </Checkbox>
         </Form.Item>
       </div>
       <Button htmlType="submit" type="primary" block loading={isMutating}>
