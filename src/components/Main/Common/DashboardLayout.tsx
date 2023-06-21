@@ -83,7 +83,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
       </Layout.Sider>
       <Layout>
         <Layout.Header className="flex bg-neutral-1 pl-6 pr-12">
-          <Row className="gap-x-6" align="middle">
+          <Row className="gap-x-6 flex-1" align="middle">
             <Button
               onClick={() => setCollapsed((prev) => !prev)}
               type="text"
