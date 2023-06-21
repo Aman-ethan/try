@@ -4,7 +4,7 @@ import { Radio } from "antd";
 
 export default function ClientDetailsView(){
     return(
-        <div className="mt-10">
+        <div className="py-5">
             <Radio.Group size="large">
                 <Radio.Button value="goals">Goals</Radio.Button>
                 <Radio.Button value="estate">Estate</Radio.Button>

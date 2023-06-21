@@ -28,7 +28,7 @@ export default function AddClient() {
       }}
       submitter={false}
     >
-        <div className="flex gap-2 mb-4">
+        <div className="space-x-2 mb-4">
             <InfoCircleTwoTone style={{fontSize:'1.5rem'}}/>
             <h3 className="font-medium">Please provide a file similar to the provided sample</h3>
         </div>

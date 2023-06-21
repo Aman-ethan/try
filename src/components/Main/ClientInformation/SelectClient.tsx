@@ -35,7 +35,6 @@ export default function SelectClient() {
       loading={isLoading}
       placeholder="Select a client"
       options={options}
-      className="w-[300px]"
         // onSelect={}
       defaultValue={options && options[0]?.value}
     />

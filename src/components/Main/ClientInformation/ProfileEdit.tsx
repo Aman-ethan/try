@@ -71,11 +71,7 @@ export default function ProfileEdit() {
             width="lg"
             name="phone_number"
             label="Phone Number"
-            fieldProps={
-              {
-                type: "number",
-              } as any
-            }
+            rules={[{type:"number"}]}
           />
           <ProFormTextArea width="lg" name="address" label="Address" />
           <ProFormText width="lg" name="city" label="City" />
