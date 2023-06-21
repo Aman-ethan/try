@@ -10,6 +10,10 @@ interface ICustodianResponse {
   custodian_code: string;
 }
 
+interface IPlaceholderProps {
+  placeholder?: string;
+}
+
 preloadTransactionServerQuery("/custodian/");
 
 function useSelectCustodian() {
@@ -40,14 +44,14 @@ function useSelectCustodian() {
   };
 }
 
-export default function SelectCustodian() {
+export default function SelectCustodian({ placeholder }: IPlaceholderProps) {
   const { isLoading, options, onSelect, tradeCustodianId } =
     useSelectCustodian();
   return (
     <Select
       loading={isLoading}
       options={options}
-      placeholder="All Custodian"
+      placeholder={placeholder}
       onSelect={onSelect}
       value={tradeCustodianId}
     />

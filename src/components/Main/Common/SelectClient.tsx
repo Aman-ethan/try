@@ -9,6 +9,10 @@ interface IClientResponse {
   rpt_currency: string;
 }
 
+interface ISelectClientProps {
+  placeholder?: string;
+}
+
 function useSelectClient() {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
   const tradeClientId = getSearchParams("trade_client_id");
@@ -36,12 +40,12 @@ function useSelectClient() {
   };
 }
 
-export default function SelectClient() {
+export default function SelectClient({ placeholder }: ISelectClientProps) {
   const { isLoading, options, onSelect, tradeClientId } = useSelectClient();
   return (
     <Select
       loading={isLoading}
-      placeholder="All Clients"
+      placeholder={placeholder}
       options={options}
       onSelect={onSelect}
       defaultValue={tradeClientId}

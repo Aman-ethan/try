@@ -3,7 +3,7 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams, { IUpdateSearchParams } from "@/hooks/useSearchParams";
 import dayjs, { Dayjs, ManipulateType } from "dayjs";
-import { DatePicker } from "./DatePicker";
+import { DatePicker } from "../Common/DatePicker";
 import { preloadTransactionServerQuery } from "@/lib/preload";
 import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/constants/format";
 
@@ -15,7 +15,7 @@ const DEFAULT_DURATION: ManipulateType = "y";
 
 preloadTransactionServerQuery("/position_history/asset_networth/date_parser/");
 
-function useReportDatePicker() {
+function useStatementDatePicker() {
   const { updateSearchParams, get: getSearchParams } = useSearchParams();
   const selectedDate = getSearchParams("selected_date");
   const selectedDuration = getSearchParams("selected_duration");
@@ -65,9 +65,9 @@ function useReportDatePicker() {
   };
 }
 
-export default function ReportDatePicker() {
+export default function StatementDatePicker() {
   const { isLoading, defaultValue, disabledDate, onChange } =
-    useReportDatePicker();
+    useStatementDatePicker();
 
   return (
     <DatePicker
