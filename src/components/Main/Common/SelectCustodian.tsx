@@ -45,13 +45,11 @@ export default function SelectCustodian() {
     useSelectCustodian();
   return (
     <Select
-      showSearch
       loading={isLoading}
       options={options}
-      placeholder="Select a custodian"
+      placeholder="All Custodian"
       onSelect={onSelect}
       value={tradeCustodianId}
-      className="w-full"
     />
   );
 }

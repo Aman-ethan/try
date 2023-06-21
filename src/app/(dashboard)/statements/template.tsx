@@ -2,6 +2,7 @@
 
 import Title from "@/components/Auth/Common/Title";
 import { DatePicker } from "@/components/Main/Common/DatePicker";
+import ReportDatePicker from "@/components/Main/Common/ReportDatePicker";
 import SelectClient from "@/components/Main/Common/SelectClient";
 import SelectCustodian from "@/components/Main/Common/SelectCustodian";
 import { Button, Row } from "antd";
@@ -18,14 +19,10 @@ export default function StatementLayout() {
         </Button>
       </Row>
       <Row className="max-w-3xl space-x-4">
-        <div className="flex-1">
-          <SelectClient />
-        </div>
-        <div className="flex-1">
-          <SelectCustodian />
-        </div>
-        <div className="w-52">
-          <DatePicker />
+        <SelectClient />
+        <SelectCustodian />
+        <div className="w-48">
+          <ReportDatePicker />
         </div>
       </Row>
     </div>

@@ -2,9 +2,8 @@
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams, { IUpdateSearchParams } from "@/hooks/useSearchParams";
-import { Result } from "antd";
 import dayjs, { Dayjs, ManipulateType } from "dayjs";
-import { DatePicker } from "../Common/DatePicker";
+import { DatePicker } from "./DatePicker";
 import { preloadTransactionServerQuery } from "@/lib/preload";
 import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/constants/format";
 
@@ -16,7 +15,7 @@ const DEFAULT_DURATION: ManipulateType = "y";
 
 preloadTransactionServerQuery("/position_history/asset_networth/date_parser/");
 
-function useSummaryDatePicker() {
+function useReportDatePicker() {
   const { updateSearchParams, get: getSearchParams } = useSearchParams();
   const selectedDate = getSearchParams("selected_date");
   const selectedDuration = getSearchParams("selected_duration");
@@ -66,21 +65,19 @@ function useSummaryDatePicker() {
   };
 }
 
-export default function SummaryDatePicker() {
-  const { isLoading, error, defaultValue, disabledDate, onChange } =
-    useSummaryDatePicker();
-
-  if (error) return <Result status="error" />;
+export default function ReportDatePicker() {
+  const { isLoading, defaultValue, disabledDate, onChange } =
+    useReportDatePicker();
 
   return (
     <DatePicker
-      size="large"
       loading={isLoading}
       defaultValue={defaultValue}
       disabledDate={disabledDate}
       onChange={onChange}
       format={DATE_DISPLAY_FORMAT}
       allowClear={false}
+      placeholder="Report Month"
     />
   );
 }

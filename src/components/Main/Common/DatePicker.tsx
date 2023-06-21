@@ -8,6 +8,7 @@ export function DatePicker({
   defaultValue,
   value,
   className,
+  size = "large",
   ...props
 }: DatePickerProps & { loading?: boolean }) {
   const datePickerId = useId();
@@ -17,7 +18,8 @@ export function DatePicker({
       defaultValue={loading ? undefined : defaultValue}
       value={loading ? undefined : value}
       disabled={loading}
-      className={clsx("w-full", className)}
+      className={clsx("flex-1", className)}
+      size={size}
       {...props}
     />
   );
@@ -37,7 +39,7 @@ export function RangePicker({
       defaultValue={loading ? undefined : defaultValue}
       value={loading ? undefined : value}
       disabled={loading}
-      className={clsx("w-full", className)}
+      className={clsx("flex-1", className)}
       {...props}
     />
   );

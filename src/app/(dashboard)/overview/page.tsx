@@ -2,7 +2,7 @@ import AssetNetWorth from "@/components/Main/Summary/AssetNetWorth";
 import BlotterTrade from "@/components/Main/Summary/BlotterTrade";
 import ClientNetWorth from "@/components/Main/Summary/ClientNetWorth";
 import GainerLoser from "@/components/Main/Summary/GainerLoser";
-import SummaryDatePicker from "@/components/Main/Summary/SummaryDatePicker";
+import SummaryDatePicker from "@/components/Main/Common/ReportDatePicker";
 import { Col, Row, Space } from "@/lib/antd";
 
 export default function Home() {

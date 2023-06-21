@@ -40,13 +40,11 @@ export default function SelectClient() {
   const { isLoading, options, onSelect, tradeClientId } = useSelectClient();
   return (
     <Select
-      showSearch
       loading={isLoading}
-      placeholder="Select a client"
+      placeholder="All Clients"
       options={options}
       onSelect={onSelect}
       defaultValue={tradeClientId}
-      className="w-full"
     />
   );
 }
