@@ -1,5 +1,5 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import Select from "../Common/Select";
+import Select from "./Select";
 import useSearchParams from "@/hooks/useSearchParams";
 
 interface IClientResponse {
@@ -40,11 +40,13 @@ export default function SelectClient() {
   const { isLoading, options, onSelect, tradeClientId } = useSelectClient();
   return (
     <Select
+      showSearch
       loading={isLoading}
       placeholder="Select a client"
       options={options}
       onSelect={onSelect}
       defaultValue={tradeClientId}
+      className="w-full"
     />
   );
 }

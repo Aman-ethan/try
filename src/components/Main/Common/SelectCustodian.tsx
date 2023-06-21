@@ -1,5 +1,5 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import Select from "../Common/Select";
+import Select from "./Select";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useSearchParams from "@/hooks/useSearchParams";
 import { preloadTransactionServerQuery } from "@/lib/preload";
@@ -45,11 +45,13 @@ export default function SelectCustodian() {
     useSelectCustodian();
   return (
     <Select
+      showSearch
       loading={isLoading}
       options={options}
       placeholder="Select a custodian"
       onSelect={onSelect}
       value={tradeCustodianId}
+      className="w-full"
     />
   );
 }

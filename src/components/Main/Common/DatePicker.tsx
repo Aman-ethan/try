@@ -1,11 +1,13 @@
 import { DatePicker as AntdDatePicker, DatePickerProps } from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
+import clsx from "clsx";
 import { useId } from "react";
 
 export function DatePicker({
   loading,
   defaultValue,
   value,
+  className,
   ...props
 }: DatePickerProps & { loading?: boolean }) {
   const datePickerId = useId();
@@ -15,6 +17,7 @@ export function DatePicker({
       defaultValue={loading ? undefined : defaultValue}
       value={loading ? undefined : value}
       disabled={loading}
+      className={clsx("w-full", className)}
       {...props}
     />
   );
@@ -24,6 +27,7 @@ export function RangePicker({
   loading,
   defaultValue,
   value,
+  className,
   ...props
 }: RangePickerProps & { loading?: boolean }) {
   const rangePickerId = useId();
@@ -33,6 +37,7 @@ export function RangePicker({
       defaultValue={loading ? undefined : defaultValue}
       value={loading ? undefined : value}
       disabled={loading}
+      className={clsx("w-full", className)}
       {...props}
     />
   );

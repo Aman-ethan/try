@@ -1,9 +1,13 @@
-import { ReactNode } from "react"
+import clsx from "clsx";
+import { ReactNode } from "react";
 
 interface ITitleProps {
-  children: ReactNode
+  children: ReactNode;
+  className?: string;
 }
 
-export default function Title({ children }: ITitleProps) {
-  return <h2 className="text-3xl font-medium">{children}</h2>
+export default function Title({ children, className }: ITitleProps) {
+  return (
+    <h2 className={clsx("text-3xl font-medium", className)}>{children}</h2>
+  );
 }
