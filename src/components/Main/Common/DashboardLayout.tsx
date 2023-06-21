@@ -67,7 +67,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         collapsed={collapsed}
         onCollapse={() => setCollapsed(true)}
         collapsible
-        className="bg-neutral-1"
+        className="bg-neutral-1 fixed h-screen"
         width={240}
       >
         <div className="pt-4 pb-6 px-6">
@@ -81,8 +81,8 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           mode="inline"
         />
       </Layout.Sider>
-      <Layout>
-        <Layout.Header className="flex bg-neutral-1 pl-6 pr-12">
+      <Layout className={collapsed ? "ml-20" : "ml-60"}>
+        <Layout.Header className="flex bg-neutral-1 pl-6 pr-12 sticky top-0 z-10">
           <Row className="gap-x-6 flex-1" align="middle">
             <Button
               onClick={() => setCollapsed((prev) => !prev)}
