@@ -30,7 +30,9 @@ export default function StatementLayout({ children }: IStatementLayoutProps) {
           </div>
         </Row>
       </div>
-      {children}
+      <div className="bg-neutral-1 w-full h-[calc(100vh-16rem)] overflow-y-scroll p-6 rounded-lg">
+        {children}
+      </div>
     </div>
   );
 }
