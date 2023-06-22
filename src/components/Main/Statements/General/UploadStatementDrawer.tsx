@@ -7,9 +7,7 @@ import { lazy, useState } from "react";
 const UploadPositionStatement = lazy(
   () => import("../Form/UploadPositionStatement")
 );
-const UploadTradeStatement = lazy(
-  () => import("../Form/UploadTradeStatement")
-);
+const UploadTradeStatement = lazy(() => import("../Form/UploadTradeStatement"));
 const UploadBankStatement = lazy(() => import("../Form/UploadBankStatement"));
 
 function StatementForm() {
@@ -31,12 +29,8 @@ export default function UploadStatementDrawer() {
   const layoutSegment = useSelectedLayoutSegment();
 
   const title = (
-    <span className="text-xl font-medium">
-      Upload{" "}
-      {layoutSegment
-        ? layoutSegment[0].toUpperCase() + layoutSegment.slice(1)
-        : ""}{" "}
-      Statement
+    <span className="text-xl font-medium capitalize">
+      Upload {layoutSegment} Statement
     </span>
   );
   return (

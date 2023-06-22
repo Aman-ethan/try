@@ -11,7 +11,7 @@ import StatementDatePicker from "../Input/StatementDatePicker";
 export default function StatementFilter() {
   const layoutSegment = useSelectedLayoutSegment();
   return (
-    <>
+    <div className="space-y-6">
       <Row justify="space-between">
         <Title className="capitalize">{layoutSegment} Statement</Title>
         <UploadStatementDrawer />
@@ -23,6 +23,6 @@ export default function StatementFilter() {
           <StatementDatePicker />
         </div>
       </Row>
-    </>
+    </div>
   );
 }

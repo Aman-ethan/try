@@ -24,7 +24,7 @@ const ROUTE = [
     icon: <NodeIndexOutlined />,
   },
   {
-    key: "/blotter-trades",
+    key: "/trades/blotter-trades",
     label: "Blotter Trades",
     icon: <DotChartOutlined />,
   },
