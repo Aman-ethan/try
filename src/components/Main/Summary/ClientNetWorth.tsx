@@ -4,7 +4,7 @@ import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { Card, TableColumnsType } from "antd";
-import Table, { useSelectRow } from "../Common/Table";
+import Table, { useSelectRow } from "../Statements/Tables/Table";
 import { ClientCurrency } from "../Common/Currency";
 
 interface IClientNetWorthResponse {

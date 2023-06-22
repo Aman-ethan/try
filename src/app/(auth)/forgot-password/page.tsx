@@ -1,6 +1,6 @@
-import Paragraph from "@/components/Auth/Common/Paragraph";
-import Title from "@/components/Auth/Common/Title";
-import ForgotPasswordForm from "@/components/Auth/Form/ForgotPasswordForm";
+import Paragraph from "@/components/Auth/Typography/Paragraph";
+import Title from "@/components/Auth/Typography/Title";
+import ForgotPasswordForm from "@/components/Auth/Forms/ForgotPasswordForm";
 import Link from "next/link";
 
 export default function ForgotPasswordPage() {

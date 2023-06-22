@@ -1,6 +1,6 @@
-import ResetPasswordForm from "@/components/Auth/Form/ResetPasswordForm";
-import Title from "@/components/Auth/Common/Title";
-import Paragraph from "@/components/Auth/Common/Paragraph";
+import ResetPasswordForm from "@/components/Auth/Forms/ResetPasswordForm";
+import Title from "@/components/Auth/Typography/Title";
+import Paragraph from "@/components/Auth/Typography/Paragraph";
 
 export default function ResetPasswordPage() {
   return (

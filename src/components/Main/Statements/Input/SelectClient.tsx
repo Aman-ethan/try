@@ -11,6 +11,7 @@ interface IClientResponse {
 
 interface ISelectClientProps {
   placeholder?: string;
+  className?: string;
 }
 
 function useSelectClient() {
@@ -40,7 +41,10 @@ function useSelectClient() {
   };
 }
 
-export default function SelectClient({ placeholder }: ISelectClientProps) {
+export default function SelectClient({
+  placeholder,
+  className,
+}: ISelectClientProps) {
   const { isLoading, options, onSelect, tradeClientId } = useSelectClient();
   return (
     <Select
@@ -49,6 +53,7 @@ export default function SelectClient({ placeholder }: ISelectClientProps) {
       options={options}
       onSelect={onSelect}
       defaultValue={tradeClientId}
+      className={className}
     />
   );
 }

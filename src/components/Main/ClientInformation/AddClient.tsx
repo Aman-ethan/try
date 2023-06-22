@@ -1,6 +1,6 @@
 "use client";
 
-import Title from "@/components/Auth/Common/Title";
+import Title from "@/components/Auth/Typography/Title";
 import Icon, { DownloadOutlined, InfoCircleTwoTone } from "@ant-design/icons";
 import { DrawerForm } from "@ant-design/pro-components";
 import { Upload, Button, Form, message, Typography } from "antd";
@@ -28,25 +28,27 @@ export default function AddClient() {
       }}
       submitter={false}
     >
-        <div className="space-x-2 mb-4">
-            <InfoCircleTwoTone style={{fontSize:'1.5rem'}}/>
-            <h3 className="font-medium">Please provide a file similar to the provided sample</h3>
-        </div>
-        <Button icon={<DownloadOutlined />} size='large' className="mb-8">
-            Download Sample
-         </Button>
+      <div className="space-x-2 mb-4">
+        <InfoCircleTwoTone style={{ fontSize: "1.5rem" }} />
+        <h3 className="font-medium">
+          Please provide a file similar to the provided sample
+        </h3>
+      </div>
+      <Button icon={<DownloadOutlined />} size="large" className="mb-8">
+        Download Sample
+      </Button>
       <Dragger>
         <p className="ant-upload-drag-icon">
-            <Icon type="inbox" />
+          <Icon type="inbox" />
         </p>
         <p className="ant-upload-text">
           Click or drag file to this area to upload
         </p>
-        <p className="ant-upload-hint">
-          Supported Formats: pdf, xls, csv
-        </p>
+        <p className="ant-upload-hint">Supported Formats: pdf, xls, csv</p>
       </Dragger>
-      <Button type="primary" size="large" className="mt-8">Upload</Button>
+      <Button type="primary" size="large" className="mt-8">
+        Upload
+      </Button>
     </DrawerForm>
   );
 }

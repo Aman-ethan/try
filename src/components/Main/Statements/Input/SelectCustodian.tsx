@@ -12,6 +12,7 @@ interface ICustodianResponse {
 
 interface IPlaceholderProps {
   placeholder?: string;
+  className?: string;
 }
 
 preloadTransactionServerQuery("/custodian/");
@@ -44,7 +45,10 @@ function useSelectCustodian() {
   };
 }
 
-export default function SelectCustodian({ placeholder }: IPlaceholderProps) {
+export default function SelectCustodian({
+  placeholder,
+  className,
+}: IPlaceholderProps) {
   const { isLoading, options, onSelect, tradeCustodianId } =
     useSelectCustodian();
   return (
@@ -54,6 +58,7 @@ export default function SelectCustodian({ placeholder }: IPlaceholderProps) {
       placeholder={placeholder}
       onSelect={onSelect}
       value={tradeCustodianId}
+      className={className}
     />
   );
 }

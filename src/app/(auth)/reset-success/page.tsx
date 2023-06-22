@@ -1,5 +1,5 @@
-import Paragraph from "@/components/Auth/Common/Paragraph";
-import Title from "@/components/Auth/Common/Title";
+import Paragraph from "@/components/Auth/Typography/Paragraph";
+import Title from "@/components/Auth/Typography/Title";
 import { Button } from "@/lib/antd";
 import Link from "next/link";
 

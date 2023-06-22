@@ -1,4 +1,4 @@
-import Logo from "@/components/Auth/Common/Logo";
+import Logo from "@/components/Common/Icons/Logo";
 
 import "antd/dist/reset.css";
 import "tailwindcss/tailwind.css";

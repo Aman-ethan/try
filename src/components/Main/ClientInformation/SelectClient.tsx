@@ -1,14 +1,11 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import Select from "../Common/Select";
-
+import Select from "../Statements/Input/Select";
 
 interface IClientResponse {
   client_id: number;
   id: number;
   name: string;
 }
-
-
 
 function useSelectClient() {
   const { data, isLoading } =
@@ -18,7 +15,6 @@ function useSelectClient() {
     label: name,
     value: String(client_id),
   }));
-
 
   return {
     isLoading,
@@ -35,7 +31,7 @@ export default function SelectClient() {
       loading={isLoading}
       placeholder="Select a client"
       options={options}
-        // onSelect={}
+      // onSelect={}
       defaultValue={options && options[0]?.value}
     />
   );

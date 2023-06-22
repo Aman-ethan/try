@@ -1,6 +1,6 @@
 "use client";
 
-import Logo from "@/components/Auth/Common/Logo";
+import Logo from "@/components/Common/Icons/Logo";
 import ROUTE from "@/constants/route";
 import {
   CaretDownFilled,
@@ -22,7 +22,7 @@ import {
 } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
-import CollapsedLogo from "./CollapsedLogo";
+import CollapsedLogo from "../Icons/CollapsedLogo";
 import CurrencyTag from "./CurrencyTag";
 
 interface ILayoutProps {

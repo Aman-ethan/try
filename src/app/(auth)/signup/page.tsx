@@ -1,6 +1,6 @@
-import Paragraph from "@/components/Auth/Common/Paragraph";
-import Title from "@/components/Auth/Common/Title";
-import SignupForm from "@/components/Auth/Form/SignupForm";
+import Paragraph from "@/components/Auth/Typography/Paragraph";
+import Title from "@/components/Auth/Typography/Title";
+import SignupForm from "@/components/Auth/Forms/SignupForm";
 import Link from "next/link";
 
 export default function SignupPage() {

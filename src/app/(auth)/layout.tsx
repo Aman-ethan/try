@@ -1,11 +1,11 @@
-import Logo from "@/components/Auth/Common/Logo";
+import Logo from "@/components/Common/Icons/Logo";
 import { Layout, Sider, Content } from "@/lib/antd";
 import Link from "next/link";
 
 import "antd/dist/reset.css";
 import "tailwindcss/tailwind.css";
 import AppProvider from "@/context/AppProvider";
-import AuthIllustration from "@/components/Auth/Common/AuthIllustration";
+import AuthIllustration from "@/components/Auth/Icon/AuthIllustration";
 
 export default function AuthRootLayout({
   children,

@@ -1,4 +1,4 @@
-import { Table as AntdTable, TableProps } from "antd";
+import { Table as AntdTable, Empty, TableProps } from "antd";
 import { RowSelectionType } from "antd/es/table/interface";
 import { useLayoutEffect, useState } from "react";
 
@@ -47,6 +47,15 @@ export default function Table({ pagination, ...props }: TableProps<any>) {
   return (
     <AntdTable
       pagination={{ hideOnSinglePage: true, ...pagination }}
+      locale={{
+        emptyText: (
+          <div
+            className={`${props.scroll?.y} flex justify-center items-center`}
+          >
+            <Empty />
+          </div>
+        ),
+      }}
       {...props}
     />
   );

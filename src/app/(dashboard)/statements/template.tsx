@@ -1,13 +1,13 @@
 "use client";
 
 import { Row } from "antd";
-import Title from "@/components/Auth/Common/Title";
-import StatementDatePicker from "@/components/Main/Statements/StatementDatePicker";
-import SelectClient from "@/components/Main/Common/SelectClient";
-import SelectCustodian from "@/components/Main/Common/SelectCustodian";
+import Title from "@/components/Auth/Typography/Title";
+import StatementDatePicker from "@/components/Main/Statements/Input/StatementDatePicker";
+import SelectClient from "@/components/Main/Statements/Input/SelectClient";
+import SelectCustodian from "@/components/Main/Statements/Input/SelectCustodian";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { ReactElement } from "react";
-import StatementDrawer from "@/components/Main/Statements/StatementDrawer";
+import StatementDrawer from "@/components/Main/Statements/Common/UploadStatementDrawer";
 
 interface IStatementLayoutProps {
   children: ReactElement;
@@ -23,14 +23,14 @@ export default function StatementLayout({ children }: IStatementLayoutProps) {
           <StatementDrawer />
         </Row>
         <Row className="max-w-3xl space-x-4">
-          <SelectClient placeholder="All Client" />
-          <SelectCustodian placeholder="All Custodian" />
+          <SelectClient placeholder="All Client" className="flex-1" />
+          <SelectCustodian placeholder="All Custodian" className="flex-1" />
           <div className="flex w-48">
             <StatementDatePicker />
           </div>
         </Row>
       </div>
-      <div className="bg-neutral-1 w-full h-[calc(100vh-16rem)] overflow-y-scroll p-6 rounded-lg">
+      <div className="bg-neutral-1 w-full h-[calc(100vh-16rem)] p-6 rounded-lg">
         {children}
       </div>
     </div>

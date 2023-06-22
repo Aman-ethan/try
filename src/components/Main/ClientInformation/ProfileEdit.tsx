@@ -1,6 +1,6 @@
 "use client";
 
-import Title from "@/components/Auth/Common/Title";
+import Title from "@/components/Auth/Typography/Title";
 import {
   ProForm,
   ProFormText,
@@ -12,7 +12,7 @@ import {
 export default function ProfileEdit() {
   return (
     <>
-    <Title>Edit Profile</Title>
+      <Title>Edit Profile</Title>
       <ProForm>
         <ProForm.Group style={{ margin: "2em" }}>
           <ProFormText width="lg" name="first_name" label="First Name" />
@@ -71,7 +71,7 @@ export default function ProfileEdit() {
             width="lg"
             name="phone_number"
             label="Phone Number"
-            rules={[{type:"number"}]}
+            rules={[{ type: "number" }]}
           />
           <ProFormTextArea width="lg" name="address" label="Address" />
           <ProFormText width="lg" name="city" label="City" />

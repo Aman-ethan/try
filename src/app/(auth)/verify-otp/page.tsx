@@ -1,7 +1,7 @@
-import Paragraph from "@/components/Auth/Common/Paragraph";
-import Title from "@/components/Auth/Common/Title";
-import VerifyOTPForm from "@/components/Auth/Form/VerifyOTPForm";
-import PhoneNumber from "@/components/Auth/PhoneNumber";
+import Paragraph from "@/components/Auth/Typography/Paragraph";
+import Title from "@/components/Auth/Typography/Title";
+import VerifyOTPForm from "@/components/Auth/Forms/VerifyOTPForm";
+import PhoneNumber from "@/components/Auth/Common/PhoneNumber";
 
 export default function VerifyOTPPage() {
   return (

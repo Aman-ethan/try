@@ -1,8 +1,8 @@
 "use client";
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import SelectClient from "../Common/SelectClient";
-import SelectCustodian from "../Common/SelectCustodian";
+import SelectClient from "../Statements/Input/SelectClient";
+import SelectCustodian from "../Statements/Input/SelectCustodian";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useSearchParams from "@/hooks/useSearchParams";
 import TradeRangePicker from "./TradeRangePicker";
