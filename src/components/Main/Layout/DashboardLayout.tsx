@@ -74,7 +74,6 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           {collapsed ? <CollapsedLogo /> : <Logo />}
         </div>
         <Menu
-          onClick={({ key }) => router.push(key)}
           defaultSelectedKeys={[pathname]}
           defaultOpenKeys={[pathname.split("/")[1]]}
           items={ROUTE}

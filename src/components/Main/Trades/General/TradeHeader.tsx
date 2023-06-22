@@ -1,12 +1,13 @@
 "use client";
 
 import Title from "@/components/Typography/Title";
-import { Breadcrumb, Button, Dropdown, MenuProps, Row } from "antd";
+import { Breadcrumb, Dropdown, MenuProps, Row } from "antd";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import SelectClient from "../../Input/SelectClient";
 import SelectCustodian from "../../Input/SelectCustodian";
 import { CaretDownFilled } from "@ant-design/icons";
+import AddTradeDrawer from "./AddTradeDrawer";
 
 const TradeRoutes: MenuProps["items"] = [
   {
@@ -20,8 +21,8 @@ const TradeRoutes: MenuProps["items"] = [
 ];
 
 export default function TradeHeader() {
-  const layoutSegment = useSelectedLayoutSegment();
-  const title = layoutSegment?.split("-").join(" ");
+  const selectedLayoutSegment = useSelectedLayoutSegment();
+  const title = selectedLayoutSegment?.split("-").join(" ");
   return (
     <div className="space-y-6">
       <Breadcrumb
@@ -40,7 +41,7 @@ export default function TradeHeader() {
           menu={{
             items: TradeRoutes,
             selectable: true,
-            defaultSelectedKeys: [layoutSegment as string],
+            defaultSelectedKeys: [selectedLayoutSegment as string],
           }}
           trigger={["click"]}
         >
@@ -49,9 +50,7 @@ export default function TradeHeader() {
             <CaretDownFilled />
           </button>
         </Dropdown>
-        <Button type="primary" size="large">
-          Add Blotter Trade
-        </Button>
+        <AddTradeDrawer />
       </Row>
       <Row className="max-w-xl gap-x-6">
         <SelectClient placeholder="Select a Client" className="flex-1" />
