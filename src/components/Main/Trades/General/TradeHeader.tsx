@@ -1,7 +1,7 @@
 "use client";
 
 import Title from "@/components/Typography/Title";
-import { Breadcrumb, Dropdown, MenuProps, Row } from "antd";
+import { Breadcrumb, Button, Dropdown, MenuProps, Row } from "antd";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import SelectClient from "../../Input/SelectClient";
@@ -36,7 +36,7 @@ export default function TradeHeader() {
           },
         ]}
       />
-      <Row justify="space-between">
+      <Row justify="space-between" align="middle">
         <Dropdown
           menu={{
             items: TradeRoutes,
@@ -45,10 +45,10 @@ export default function TradeHeader() {
           }}
           trigger={["click"]}
         >
-          <button className="flex gap-x-3 items-center">
+          <Button type="text" className="flex items-center gap-x-3 px-0">
             <Title className="capitalize">{title}</Title>
             <CaretDownFilled />
-          </button>
+          </Button>
         </Dropdown>
         <AddTradeDrawer />
       </Row>

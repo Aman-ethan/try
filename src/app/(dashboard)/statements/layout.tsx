@@ -6,9 +6,9 @@ interface IStatementLayoutProps {
 
 export default function StatementLayout({ children }: IStatementLayoutProps) {
   return (
-    <div className="px-12 pt-6 flex flex-col flex-1">
+    <div className="px-12 py-6 space-y-8">
       <StatementHeader />
-      <div className="bg-neutral-1 flex-1 p-6 rounded-lg my-8">{children}</div>
+      <div className="bg-neutral-1 p-6 rounded-lg">{children}</div>
     </div>
   );
 }
