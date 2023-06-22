@@ -1,9 +1,9 @@
 "use client";
 
-import { ColumnsType } from "antd/es/table";
 import Statement from "./Statement";
+import { TableColumnsType } from "antd";
 
-const Columns: ColumnsType = [
+const Columns: TableColumnsType = [
   {
     title: "Client Name",
     key: "client-name",
