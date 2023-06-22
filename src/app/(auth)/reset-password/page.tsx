@@ -1,4 +1,4 @@
-import ResetPasswordForm from "@/components/Auth/Forms/ResetPasswordForm";
+import ResetPasswordForm from "@/components/Auth/Form/ResetPasswordForm";
 import Title from "@/components/Auth/Typography/Title";
 import Paragraph from "@/components/Auth/Typography/Paragraph";
 

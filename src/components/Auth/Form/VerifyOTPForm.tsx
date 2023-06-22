@@ -6,7 +6,7 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import Paragraph from "../Typography/Paragraph";
-import ResendOTP from "../Common/ResendOTP";
+import ResendOTP from "../General/ResendOTP";
 import useSearchParams from "@/hooks/useSearchParams";
 
 interface IVerifyOTPResponse {

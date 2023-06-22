@@ -1,4 +1,4 @@
-import Logo from "@/components/Common/Icons/Logo";
+import Logo from "@/components/Icon/Logo";
 import { Layout, Sider, Content } from "@/lib/antd";
 import Link from "next/link";
 

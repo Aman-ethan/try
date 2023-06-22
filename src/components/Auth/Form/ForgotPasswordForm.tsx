@@ -3,7 +3,7 @@
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
-import PhoneInput from "../../Common/Input/PhoneInput";
+import PhoneInput from "../../Input/PhoneInput";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 
 interface IUserArgs {

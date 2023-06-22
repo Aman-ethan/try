@@ -1,9 +1,9 @@
 import { Form, Input, Row } from "antd";
-import SelectClient from "../Input/SelectClient";
-import { DatePicker } from "../Input/DatePicker";
-import SelectCustodian from "../Input/SelectCustodian";
-import Upload from "../Input/Upload";
-import UploadButton from "../Common/UploadButton";
+import SelectClient from "../../Input/SelectClient";
+import { DatePicker } from "../../Input/DatePicker";
+import SelectCustodian from "../../Input/SelectCustodian";
+import Upload from "../../Input/Upload";
+import UploadButton from "../General/UploadButton";
 
 export default function UploadBankStatement() {
   return (

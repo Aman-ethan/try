@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnsType } from "antd/es/table";
-import Table from "./Table";
+import Table from "../../Table/Table";
 import { MoreOutlined, ThunderboltOutlined } from "@ant-design/icons";
 
 const Columns: ColumnsType = [
@@ -55,7 +55,7 @@ const Columns: ColumnsType = [
   },
 ];
 
-export default function PositionStatementTable() {
+export default function TradeStatement() {
   return (
     <Table
       size="middle"

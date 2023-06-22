@@ -13,7 +13,7 @@ import {
 import Link from "next/link";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import Timezones from "@/constants/timezones";
-import PhoneInput from "../../Common/Input/PhoneInput";
+import PhoneInput from "../../Input/PhoneInput";
 import { useRouter } from "next/navigation";
 
 interface ISignupResponse {

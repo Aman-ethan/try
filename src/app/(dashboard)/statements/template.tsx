@@ -3,11 +3,11 @@
 import { Row } from "antd";
 import Title from "@/components/Auth/Typography/Title";
 import StatementDatePicker from "@/components/Main/Statements/Input/StatementDatePicker";
-import SelectClient from "@/components/Main/Statements/Input/SelectClient";
-import SelectCustodian from "@/components/Main/Statements/Input/SelectCustodian";
+import SelectClient from "@/components/Main/Input/SelectClient";
+import SelectCustodian from "@/components/Main/Input/SelectCustodian";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { ReactElement } from "react";
-import StatementDrawer from "@/components/Main/Statements/Common/UploadStatementDrawer";
+import StatementDrawer from "@/components/Main/Statements/General/UploadStatementDrawer";
 
 interface IStatementLayoutProps {
   children: ReactElement;

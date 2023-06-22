@@ -1,5 +1,5 @@
 import { Upload as AntdUpload, Col, Row } from "antd";
-import UploadIcon from "../Icons/UploadIcon";
+import UploadIcon from "../Icon/UploadIcon";
 
 import { CSSProperties } from "react";
 

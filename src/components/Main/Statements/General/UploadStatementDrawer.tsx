@@ -5,12 +5,12 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import { lazy, useState } from "react";
 
 const UploadPositionStatement = lazy(
-  () => import("../Forms/UploadPositionStatement")
+  () => import("../Form/UploadPositionStatement")
 );
 const UploadTradeStatement = lazy(
-  () => import("../Forms/UploadTradeStatement")
+  () => import("../Form/UploadTradeStatement")
 );
-const UploadBankStatement = lazy(() => import("../Forms/UploadBankStatement"));
+const UploadBankStatement = lazy(() => import("../Form/UploadBankStatement"));
 
 function StatementForm() {
   const layoutSegment = useSelectedLayoutSegment();

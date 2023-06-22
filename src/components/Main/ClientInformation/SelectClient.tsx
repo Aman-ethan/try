@@ -1,5 +1,5 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import Select from "../Statements/Input/Select";
+import Select from "../Input/Select";
 
 interface IClientResponse {
   client_id: number;

@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { RangePicker } from "../Statements/Input/DatePicker";
+import { RangePicker } from "../Input/DatePicker";
 import useSearchParams from "@/hooks/useSearchParams";
 import { DATE_PARAM_FORMAT } from "@/constants/format";
 

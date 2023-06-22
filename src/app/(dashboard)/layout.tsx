@@ -2,7 +2,7 @@ import AppProvider from "@/context/AppProvider";
 
 import "antd/dist/reset.css";
 import "tailwindcss/tailwind.css";
-import Layout from "@/components/Main/Common/DashboardLayout";
+import Layout from "@/components/Main/General/DashboardLayout";
 
 export default function MainRootLayout({
   children,
