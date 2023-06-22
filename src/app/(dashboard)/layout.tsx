@@ -1,8 +1,8 @@
+import DashboardLayout from "@/components/Main/Layout/DashboardLayout";
 import AppProvider from "@/context/AppProvider";
 
 import "antd/dist/reset.css";
 import "tailwindcss/tailwind.css";
-import Layout from "@/components/Main/General/DashboardLayout";
 
 export default function MainRootLayout({
   children,
@@ -13,7 +13,7 @@ export default function MainRootLayout({
     <html lang="en">
       <body id="layout" className="opacity-0 transition-opacity">
         <AppProvider>
-          <Layout>{children}</Layout>
+          <DashboardLayout>{children}</DashboardLayout>
         </AppProvider>
       </body>
     </html>

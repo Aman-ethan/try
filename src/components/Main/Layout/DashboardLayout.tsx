@@ -23,7 +23,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
 import CollapsedLogo from "../Icon/CollapsedLogo";
-import CurrencyTag from "./CurrencyTag";
+import CurrencyTag from "../General/CurrencyTag";
 
 interface ILayoutProps {
   children: ReactNode;

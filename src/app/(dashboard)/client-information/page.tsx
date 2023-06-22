@@ -2,7 +2,7 @@
 
 import SelectClient from "@/components/Main/ClientInformation/SelectClient";
 import ClientInfoCard from "@/components/Main/ClientInformation/ClientInfoCard";
-import Title from "@/components/Auth/Typography/Title";
+import Title from "@/components/Typography/Title";
 import { Col, Row, Space } from "@/lib/antd";
 import AddClient from "@/components/Main/ClientInformation/AddClient";
 

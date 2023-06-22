@@ -1,10 +1,9 @@
 "use client";
 
-import { ColumnsType } from "antd/es/table";
-import Table from "../../Table/Table";
-import { MoreOutlined, ThunderboltOutlined } from "@ant-design/icons";
+import Statement from "./Statement";
+import { TableColumnsType } from "antd";
 
-const Columns: ColumnsType = [
+const Columns: TableColumnsType = [
   {
     title: "Asset Class",
     key: "asset-class",
@@ -45,25 +44,8 @@ const Columns: ColumnsType = [
     key: "market-value",
     width: 135,
   },
-  {
-    title: <ThunderboltOutlined />,
-    key: "action",
-    fixed: "right",
-    render: () => <MoreOutlined />,
-    width: 55,
-    align: "center",
-  },
 ];
 
 export default function PositionStatement() {
-  return (
-    <Table
-      size="middle"
-      columns={Columns}
-      scroll={{
-        x: Columns.reduce((acc, { width }) => acc + Number(width), 0),
-        y: "h-[calc(100vh-24rem)]",
-      }}
-    />
-  );
+  return <Statement columns={Columns} />;
 }

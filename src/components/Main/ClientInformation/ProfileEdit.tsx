@@ -1,6 +1,6 @@
 "use client";
 
-import Title from "@/components/Auth/Typography/Title";
+import Title from "@/components/Typography/Title";
 import {
   ProForm,
   ProFormText,

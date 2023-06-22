@@ -1,6 +1,6 @@
 "use client";
 
-import Title from "@/components/Auth/Typography/Title";
+import Title from "@/components/Typography/Title";
 import Icon, { DownloadOutlined, InfoCircleTwoTone } from "@ant-design/icons";
 import { DrawerForm } from "@ant-design/pro-components";
 import { Upload, Button, Form, message, Typography } from "antd";

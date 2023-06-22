@@ -1,6 +1,6 @@
 "use client";
 
-import Title from "@/components/Auth/Typography/Title";
+import Title from "@/components/Typography/Title";
 import { flags } from "@/constants/symbols";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Card, Image, Typography } from "antd";
