@@ -21,8 +21,9 @@ export default function Drawer({
         closeIcon={null}
         open={isDrawerOpen}
         width={width}
+        onClose={() => setIsDrawerOpen(false)}
         title={
-          <Row justify="space-between">
+          <Row justify="space-between" className="-ml-2">
             <h4 className="text-xl font-medium">{title}</h4>
             <Button
               onClick={() => setIsDrawerOpen(false)}

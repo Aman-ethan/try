@@ -1,8 +1,8 @@
 import DashboardLayout from "@/components/Main/Layout/DashboardLayout";
 import AppProvider from "@/context/AppProvider";
 
-import "@/styles/global.css";
 import "antd/dist/reset.css";
+import "@/styles/global.css";
 
 export default function MainRootLayout({
   children,

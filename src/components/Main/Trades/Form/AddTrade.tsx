@@ -3,7 +3,6 @@ import SelectClient from "../../Input/SelectClient";
 import { DatePicker } from "../../Input/DatePicker";
 import SelectCustodian from "../../Input/SelectCustodian";
 import AddSecurity from "../General/AddSecurity";
-import DrawerAction from "../../General/DrawerAction";
 
 export default function AddTrade() {
   return (

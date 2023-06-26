@@ -21,24 +21,22 @@ export default function AddSecurity() {
         title="Search New Security"
         onCancel={() => setIsModalOpen(false)}
       >
-        <div className="space-y-6 pt-4">
-          <Form layout="vertical" size="large">
-            <Row className="gap-x-6">
-              <Form.Item
-                label="ISIN/Ticker"
-                name="isin_ticker"
-                className="flex-1"
-              >
-                <Input placeholder="Enter security ticker/ISIN" />
-              </Form.Item>
-              <Form.Item label="&nbsp;">
-                <Button className="px-8">Search</Button>
-              </Form.Item>
-            </Row>
-          </Form>
+        <Form layout="vertical" size="large" className="space-y-6 pt-4">
+          <Row className="gap-x-6">
+            <Form.Item
+              label="ISIN/Ticker"
+              name="isin_ticker"
+              className="flex-1"
+            >
+              <Input placeholder="Enter security ticker/ISIN" />
+            </Form.Item>
+            <Form.Item label="&nbsp;">
+              <Button className="px-8">Search</Button>
+            </Form.Item>
+          </Row>
           <SecurityDetails />
           <Button type="primary">Confirm New Security</Button>
-        </div>
+        </Form>
       </Modal>
     </>
   );

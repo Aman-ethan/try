@@ -4,8 +4,8 @@ import Link from "next/link";
 import AppProvider from "@/context/AppProvider";
 import AuthIllustration from "@/components/Auth/Icon/AuthIllustration";
 
-import "@/styles/global.css";
 import "antd/dist/reset.css";
+import "@/styles/global.css";
 
 export default function AuthRootLayout({
   children,
