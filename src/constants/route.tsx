@@ -11,8 +11,9 @@ import Link from "next/link";
 const ROUTE = [
   {
     key: "/overview",
-    label: <Link href="/overview">Overview</Link>,
+    label: "Overview",
     icon: <FileSearchOutlined />,
+    disabled: true,
   },
   {
     key: "analytics",
@@ -24,14 +25,16 @@ const ROUTE = [
         label: <Link href="/analytics/crude">Crude Analytics</Link>,
       },
       {
+        disabled: true,
         key: "/analytics/generative",
-        label: <Link href="/analytics/generative">Generative Analytics</Link>,
+        label: "Generative Analytics",
       },
     ],
   },
   {
+    disabled: true,
     key: "/position-search",
-    label: <Link href="/position-search">Position Search</Link>,
+    label: "Position Search",
     icon: <NodeIndexOutlined />,
   },
   {
@@ -66,7 +69,7 @@ const ROUTE = [
   {
     disabled: true,
     key: "/market-and-rates",
-    label: <Link href="/market-and-rates">Market & Rates</Link>,
+    label: "Market & Rates",
     icon: <DotChartOutlined />,
   },
 ];
