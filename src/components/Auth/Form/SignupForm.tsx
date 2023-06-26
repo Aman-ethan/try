@@ -13,8 +13,8 @@ import {
 import Link from "next/link";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import Timezones from "@/constants/timezones";
-import PhoneInput from "../../Input/PhoneInput";
 import { useRouter } from "next/navigation";
+import PhoneInput from "../../Input/PhoneInput";
 
 interface ISignupResponse {
   id: string;
@@ -61,14 +61,14 @@ export default function SignupForm() {
     },
   });
 
-  function handleSignup(data: ISignupArgs) {
+  const handleSignup = (data: ISignupArgs) => {
     const { source, terms_and_conditions } = data;
     if (!terms_and_conditions) {
       message.error("Please accept the terms and conditions.");
     } else {
       trigger({ ...data, media: media === "Other" ? source : media });
     }
-  }
+  };
 
   return (
     <Form

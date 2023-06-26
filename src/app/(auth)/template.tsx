@@ -2,10 +2,10 @@
 
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect } from "react";
+import { ReactNode, useLayoutEffect } from "react";
 
 interface IAuthTemplateProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function AuthTemplate({ children }: IAuthTemplateProps) {

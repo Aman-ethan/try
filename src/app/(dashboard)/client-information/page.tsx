@@ -8,7 +8,11 @@ import AddClient from "@/components/Main/ClientInformation/AddClient";
 
 export default function ClientInformationPage() {
   return (
-    <Space direction="vertical" size="large" className="w-full h-screen overflow-scroll p-10">
+    <Space
+      direction="vertical"
+      size="large"
+      className="w-full h-screen overflow-scroll p-10"
+    >
       <Row justify="space-between">
         <Col>
           <Title>Customer Information</Title>

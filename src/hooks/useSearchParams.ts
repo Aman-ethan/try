@@ -1,8 +1,8 @@
 import {
   usePathname,
   useSearchParams as useNextSearchParams,
+  useRouter,
 } from "next/navigation";
-import { useRouter } from "next/navigation";
 
 type AuthSearchParams =
   | "username"
@@ -42,17 +42,18 @@ export default function useSearchParams() {
   function updateSearchParams(params: IUpdateSearchParams) {
     const urlSearchParams = new URLSearchParams();
 
-    for (const [key, value] of Object.entries(params)) {
+    Object.entries(params).forEach(([key, value]) => {
       if (value !== null) urlSearchParams.append(key, String(value));
-    }
+    });
 
-    for (const [key, value] of searchParams) {
+    searchParams.forEach((value, key) => {
       if (!Object.keys(params).includes(key)) {
         urlSearchParams.append(key, value);
       }
-    }
+    });
+
     urlSearchParams.sort();
-    router.push(pathname + "?" + urlSearchParams);
+    router.push(`${pathname}?${urlSearchParams}`);
   }
 
   function get(name: SearchParams) {

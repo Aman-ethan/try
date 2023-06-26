@@ -3,9 +3,9 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams, { IUpdateSearchParams } from "@/hooks/useSearchParams";
 import dayjs, { Dayjs, ManipulateType } from "dayjs";
-import { DatePicker } from "../../Input/DatePicker";
 import { preloadTransactionServerQuery } from "@/lib/preload";
 import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/constants/format";
+import { DatePicker } from "../../Input/DatePicker";
 
 interface IDateResponse {
   data: { first_date: string; last_date: string };
@@ -23,20 +23,22 @@ function useStatementDatePicker() {
   const { data, isLoading, error } = useTransactionServerQuery<IDateResponse>(
     "/position_history/asset_networth/date_parser/",
     {
-      onSuccess({ data }) {
+      onSuccess({ data: date }) {
         const selectedDateParams: IUpdateSearchParams = {
-          selected_date: data.last_date,
+          selected_date: date.last_date,
         };
         const selectedDurationParams: IUpdateSearchParams = {
           selected_duration: DEFAULT_DURATION,
         };
-        if (!(selectedDate || selectedDuration))
-          return updateSearchParams({
+        if (!(selectedDate || selectedDuration)) {
+          updateSearchParams({
             ...selectedDateParams,
             ...selectedDurationParams,
           });
-        if (!selectedDate) updateSearchParams(selectedDateParams);
-        if (!selectedDuration) updateSearchParams(selectedDurationParams);
+        } else {
+          if (!selectedDate) updateSearchParams(selectedDateParams);
+          if (!selectedDuration) updateSearchParams(selectedDurationParams);
+        }
       },
     }
   );

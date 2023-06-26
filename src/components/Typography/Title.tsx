@@ -1,3 +1,4 @@
+import { ITypographyProps } from "@/interface/Typography";
 import clsx from "clsx";
 
 export default function Title({ children, className }: ITypographyProps) {

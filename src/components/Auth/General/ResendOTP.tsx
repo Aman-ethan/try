@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuthServerMutation } from "@/hooks/useMutation";
+import { ILoginArgs, ILoginResponse } from "@/interface/Auth";
 import { useEffect, useState } from "react";
 
 const OTP_WAIT_TIME = 60;
@@ -15,8 +16,8 @@ export default function ResendOTP() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setSeconds((seconds) => {
-        return seconds > 0 ? seconds - 1 : 0;
+      setSeconds((prevSeconds) => {
+        return prevSeconds > 0 ? prevSeconds - 1 : 0;
       });
     }, 1000);
 
@@ -37,7 +38,8 @@ export default function ResendOTP() {
   }
 
   return (
-    <span
+    <button
+      type="button"
       onClick={resendOTP}
       className={
         resendOTPEnabled
@@ -46,6 +48,6 @@ export default function ResendOTP() {
       }
     >
       Resend Code{resendOTPEnabled ? "" : ` (0:${seconds})`}
-    </span>
+    </button>
   );
 }

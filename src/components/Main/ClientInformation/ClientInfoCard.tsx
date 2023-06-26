@@ -4,8 +4,8 @@ import Title from "@/components/Typography/Title";
 import { flags } from "@/constants/symbols";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Card, Image, Typography } from "antd";
-import ClientDetailsView from "./ClientDetailsView";
 import { useState } from "react";
+import ClientDetailsView from "./ClientDetailsView";
 import ProfileEdit from "./ProfileEdit";
 
 export default function ClientInfoCard() {
@@ -24,7 +24,7 @@ export default function ClientInfoCard() {
           <Typography.Text strong className="text-lg">
             Vineet Alphaquest
           </Typography.Text>
-          <Image alt={"flag"} src={flags["usd"]} width={12} preview={false} />
+          <Image alt="flag" src={flags.usd} width={12} preview={false} />
         </div>
         <p className="text-lg text-neutral-9">New York, United States</p>
       </div>

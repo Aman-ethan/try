@@ -1,8 +1,7 @@
 "use client";
 
 import { getFetcher } from "@/lib/fetcher";
-import useSWR from "swr";
-import { SWRConfiguration } from "swr";
+import useSWR, { SWRConfiguration } from "swr";
 import { useCookies } from "react-cookie";
 import { ACCESS_TOKEN_KEY, TRANSACTION_SERVER_URL } from "@/constants/strings";
 
@@ -22,3 +21,5 @@ export function useTransactionServerQuery<Data>(
 ) {
   return useQuery<Data>(key ? TRANSACTION_SERVER_URL + key : null, config);
 }
+
+export function useAnalyticsServerQuery() {}

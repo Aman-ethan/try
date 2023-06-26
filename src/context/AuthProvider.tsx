@@ -1,6 +1,6 @@
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import { message } from "antd";
-import { createContext, useEffect, useMemo } from "react";
+import { ReactNode, createContext, useEffect, useMemo } from "react";
 import { useCookies } from "react-cookie";
 
 interface ITokenRefreshArgs {
@@ -12,7 +12,7 @@ interface ITokenRefreshResponse {
 }
 
 interface IAuthProviderProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const AuthContext = createContext({ isLoggedIn: false });

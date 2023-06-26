@@ -1,8 +1,6 @@
 "use client";
 
 import LogoSvg from "@/icons/Logo.svg";
-import { useToken } from "@/lib/antd";
-import clsx from "clsx";
 
 interface ILogoProps {
   className?: string;

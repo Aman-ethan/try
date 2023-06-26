@@ -45,14 +45,13 @@ function useAssetNetWorth() {
 
   const { data, isLoading } = useTransactionServerQuery<IAssetNetWorthResponse>(
     selectedDate && selectedDuration && clientId
-      ? "/position_history/asset_networth/" +
-          buildURLSearchParams({
-            to_date: dayjs(selectedDate).toISOString(),
-            from_date: dayjs(selectedDate)
-              .subtract(DURATION_AMOUNT, selectedDuration)
-              .toISOString(),
-            client_id: clientId,
-          })
+      ? `/position_history/asset_networth/${buildURLSearchParams({
+          to_date: dayjs(selectedDate).toISOString(),
+          from_date: dayjs(selectedDate)
+            .subtract(DURATION_AMOUNT, selectedDuration)
+            .toISOString(),
+          client_id: clientId,
+        })}`
       : null
   );
 
@@ -96,7 +95,7 @@ function Extra() {
 }
 
 export default function AssetNetWorth() {
-  const { isLoading, data, clientName } = useAssetNetWorth();
+  const { data, clientName } = useAssetNetWorth();
 
   return (
     <Card

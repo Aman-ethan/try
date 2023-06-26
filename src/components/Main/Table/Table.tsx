@@ -5,6 +5,7 @@ import { useLayoutEffect, useState } from "react";
 interface IUseSelectRow<T> {
   key: keyof T;
   defaultValue?: string | number;
+  // eslint-disable-next-line no-unused-vars
   onRowClick?: (record: T) => void;
 }
 

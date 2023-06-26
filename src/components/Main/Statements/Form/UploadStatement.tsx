@@ -4,12 +4,12 @@ import SelectClient from "../../Input/SelectClient";
 import Upload from "../../Input/Upload";
 
 interface IUploadStatementFormProps {
-  sampleLink: string;
+  // sampleLink: string;
   onFinish: () => void;
 }
 
 export default function UploadStatement({
-  sampleLink,
+  // sampleLink,
   onFinish,
 }: IUploadStatementFormProps) {
   return (

@@ -21,3 +21,5 @@ export function formatNumber(
     ...options,
   }).format(String(value) as unknown as number);
 }
+
+export function formatDate() {}

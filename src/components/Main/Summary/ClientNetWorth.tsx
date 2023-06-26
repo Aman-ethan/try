@@ -24,14 +24,13 @@ function useClientNetWorth() {
   const { data, isLoading } =
     useTransactionServerQuery<IClientNetWorthResponse>(
       selectedDate
-        ? `/position_history/summary/daily/` +
-            buildURLSearchParams({
-              report_date: selectedDate,
-            })
+        ? `/position_history/summary/daily/${buildURLSearchParams({
+            report_date: selectedDate,
+          })}`
         : null,
       {
-        onSuccess(data) {
-          const selectedClient = data.data[0];
+        onSuccess({ data: clients }) {
+          const selectedClient = clients[0];
           updateSearchParams({
             client_id: selectedClient?.client_id,
             client_name: selectedClient?.client_name,
@@ -41,7 +40,7 @@ function useClientNetWorth() {
     );
 
   return {
-    isLoading: isLoading,
+    isLoading,
     data: data?.data,
   };
 }

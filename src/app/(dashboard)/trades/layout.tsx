@@ -1,7 +1,8 @@
 import TradeHeader from "@/components/Main/Trades/General/TradeHeader";
+import { ReactNode } from "react";
 
 interface ITradeLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function TradeLayout({ children }: ITradeLayoutProps) {

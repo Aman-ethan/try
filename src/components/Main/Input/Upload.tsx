@@ -1,7 +1,6 @@
-import { Upload as AntdUpload, Col, Row } from "antd";
-import UploadIcon from "../Icon/UploadIcon";
-
+import { Upload as AntdUpload, Row } from "antd";
 import { CSSProperties } from "react";
+import UploadIcon from "../Icon/UploadIcon";
 
 const DraggerStyle: CSSProperties = {
   backgroundColor: "rgba(230, 247, 255, 0.5)",

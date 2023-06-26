@@ -20,7 +20,7 @@ import {
   MenuProps,
   Row,
 } from "antd";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 import CurrencyTag from "../General/CurrencyTag";
@@ -29,14 +29,14 @@ interface ILayoutProps {
   children: ReactNode;
 }
 
-const FooterLink = [
-  { key: "faq", title: "FAQ", href: "https://www.ethan-ai.com/faq2" },
-  {
-    key: "privacy_policy",
-    title: "Privacy Policy",
-    href: "https://www.ethan-ai.com/privacy",
-  },
-];
+// const FooterLink = [
+//   { key: "faq", title: "FAQ", href: "https://www.ethan-ai.com/faq2" },
+//   {
+//     key: "privacy_policy",
+//     title: "Privacy Policy",
+//     href: "https://www.ethan-ai.com/privacy",
+//   },
+// ];
 
 const labelClassName = "text-neutral-13/80";
 const iconClassName = "text-neutral-11";
@@ -57,7 +57,6 @@ const currentDate = new Date();
 
 export default function DashboardLayout({ children }: ILayoutProps) {
   const pathname = usePathname();
-  const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
 
   return (

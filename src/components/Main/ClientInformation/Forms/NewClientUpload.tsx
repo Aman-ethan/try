@@ -1,15 +1,14 @@
 import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
 import { Button, Form, Row } from "antd";
-import Upload from "../../Statements/Input/Upload";
-import UploadButton from "../../Statements/Common/UploadButton";
+import Upload from "../../Input/Upload";
 
 interface IUploadStatementFormProps {
-  sampleLink: string;
+  // sampleLink: string;
   onFinish: () => void;
 }
 
 export default function NewClientUpload({
-  sampleLink,
+  // sampleLink,
   onFinish,
 }: IUploadStatementFormProps) {
   return (
@@ -33,7 +32,7 @@ export default function NewClientUpload({
         <Form.Item name="statement">
           <Upload />
         </Form.Item>
-        <UploadButton />
+        {/* <UploadButton /> */}
       </Form>
     </div>
   );

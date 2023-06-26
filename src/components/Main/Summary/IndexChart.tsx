@@ -39,16 +39,16 @@ function fillMissingData({ data, xticks }: IFillMissingDataParams) {
             const found = value.find((item) => item.x === tick);
             if (found) {
               return found;
-            } else {
-              return {
-                x: tick,
-                y: value[value.length - 1].y,
-                z: key,
-              };
             }
+            return {
+              x: tick,
+              y: value[value.length - 1].y,
+              z: key,
+            };
           }),
         };
-      } else return result;
+      }
+      return result;
     },
     data
   );
@@ -73,82 +73,80 @@ export default function IndexChart({ data }: IIndexChartProps) {
     const xticks = sortBy(
       uniqBy(data, "x").map((item) => item.x),
       [
-        function (o) {
+        function sortByDate(o) {
           return new Date(o);
         },
       ]
     );
 
-    const groupedData = groupBy(absoluteData, "z");
+    const _groupedData = groupBy(absoluteData, "z");
     const filledGroupedData = fillMissingData({
-      data: groupedData,
+      data: _groupedData,
       xticks,
     });
-    const filledData = Object.values(filledGroupedData).flat();
+    const _filledData = Object.values(filledGroupedData).flat();
 
-    return [filledData, filledGroupedData];
+    return [_filledData, filledGroupedData];
   }, [data]);
 
   useEffect(() => {
-    if (filledData.length > 0) {
-      const maxDomain =
-        (max(
-          map(
-            groupedData,
-            (item) =>
-              (maxBy(item, "y") as Data).y / (minBy(item, "y") as Data).y
+    if (filledData.length === 0) return undefined;
+    const maxDomain =
+      (max(
+        map(
+          groupedData,
+          (item) => (maxBy(item, "y") as Data).y / (minBy(item, "y") as Data).y
+        )
+      ) as number) + OFFSET;
+
+    const options = Plot.normalizeY(
+      (Y: number[]) => {
+        return Y[normalizeIndex];
+      },
+      {
+        x: "x",
+        y: "y",
+        stroke: "z",
+      }
+    );
+    const chart = Plot.plot({
+      style: {
+        overflow: "visible",
+      },
+      color: {
+        legend: true,
+      },
+      x: {
+        type: "utc",
+      },
+      y: {
+        type: "log",
+        tickFormat: (
+          (f) => (y) =>
+            f(y - 1)
+        )(format(".6~s")),
+        label: "",
+        domain: [1 / maxDomain, maxDomain],
+      },
+      marks: [
+        Plot.ruleY([1]),
+        Plot.lineY(filledData, options),
+        Plot.crosshairX(filledData, { ...options, y: undefined }),
+      ],
+    });
+
+    chart.oninput = () => {
+      const selectedValue = chart.value;
+      if (selectedValue) {
+        setNormalizeIndex(() =>
+          groupedData[selectedValue.z]?.findIndex((item) =>
+            isEqual(item, selectedValue)
           )
-        ) as number) + OFFSET;
-
-      const options = Plot.normalizeY(
-        (Y: number[]) => {
-          return Y[normalizeIndex];
-        },
-        {
-          x: "x",
-          y: "y",
-          stroke: "z",
-        }
-      );
-      const chart = Plot.plot({
-        style: {
-          overflow: "visible",
-        },
-        color: {
-          legend: true,
-        },
-        x: {
-          type: "utc",
-        },
-        y: {
-          type: "log",
-          tickFormat: (
-            (f) => (y) =>
-              f(y - 1)
-          )(format(".6~s")),
-          label: "",
-          domain: [1 / maxDomain, maxDomain],
-        },
-        marks: [
-          Plot.ruleY([1]),
-          Plot.lineY(filledData, options),
-          Plot.crosshairX(filledData, { ...options, y: undefined }),
-        ],
-      });
-
-      chart.oninput = () => {
-        const selectedValue = chart.value;
-        if (selectedValue) {
-          setNormalizeIndex(() =>
-            groupedData[selectedValue.z]?.findIndex((item) =>
-              isEqual(item, selectedValue)
-            )
-          );
-        }
-      };
-      chartRef.current?.append(chart);
-      return () => chart.remove();
-    }
+        );
+      }
+    };
+    chartRef.current?.append(chart);
+    return () => chart.remove();
   }, [normalizeIndex, filledData, groupedData]);
 
   return <div ref={chartRef} />;

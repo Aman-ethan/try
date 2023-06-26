@@ -1,7 +1,8 @@
 import StatementHeader from "@/components/Main/Statements/General/StatementHeader";
+import { ReactNode } from "react";
 
 interface IStatementLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function StatementLayout({ children }: IStatementLayoutProps) {

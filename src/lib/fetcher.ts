@@ -9,19 +9,21 @@ export async function postFetcher<ExtraArgs>(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: accessToken ? "Bearer " + accessToken : "",
+        Authorization: accessToken ? `Bearer ${accessToken}` : "",
       },
       body: JSON.stringify(options.arg),
     });
 
     if (!res.ok) {
-      throw new Error("An error occurred while fetching the data.");
+      throw new Error("An error occurred while posting the data.");
     }
 
     return res.json();
   } catch (e) {
     if (e instanceof Error) {
       throw new Error(e.message);
+    } else {
+      throw new Error("An error has occurred while posting the data.");
     }
   }
 }
@@ -32,7 +34,7 @@ export async function getFetcher([key, accessToken]: string[]) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: accessToken ? "Bearer " + accessToken : "",
+        Authorization: accessToken ? `Bearer ${accessToken}` : "",
       },
     });
 
@@ -43,7 +45,9 @@ export async function getFetcher([key, accessToken]: string[]) {
     return res.json();
   } catch (e) {
     if (e instanceof Error) {
-      // throw new Error(e.message);
+      throw new Error(e.message);
+    } else {
+      throw new Error("An error occurred while fetching the data.");
     }
   }
 }

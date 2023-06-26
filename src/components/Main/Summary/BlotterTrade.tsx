@@ -1,10 +1,10 @@
 "use client";
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import SelectClient from "../Input/SelectClient";
-import SelectCustodian from "../Input/SelectCustodian";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useSearchParams from "@/hooks/useSearchParams";
+import SelectClient from "../Input/SelectClient";
+import SelectCustodian from "../Input/SelectCustodian";
 import TradeRangePicker from "./TradeRangePicker";
 
 interface IBlotterTradeResponse {
@@ -34,18 +34,17 @@ interface IBlotterTradeResponse {
 }
 
 function useBlotterTrade() {
-  const { updateSearchParams, get: getSearchParams } = useSearchParams();
+  const { get: getSearchParams } = useSearchParams();
   const { isLoading, data, error } = useTransactionServerQuery<
     IBlotterTradeResponse[]
   >(
-    "/trades/" +
-      buildURLSearchParams({
-        limit: "10",
-        client_id: getSearchParams("trade_client_id"),
-        custodian_id: getSearchParams("trade_custodian_id"),
-        trade_date_from: getSearchParams("trade_date_from"),
-        trade_date_to: getSearchParams("trade_date_to"),
-      })
+    `/trades/${buildURLSearchParams({
+      limit: "10",
+      client_id: getSearchParams("trade_client_id"),
+      custodian_id: getSearchParams("trade_custodian_id"),
+      trade_date_from: getSearchParams("trade_date_from"),
+      trade_date_to: getSearchParams("trade_date_to"),
+    })}`
   );
   return {
     isLoading,
@@ -55,7 +54,7 @@ function useBlotterTrade() {
 }
 
 export default function BlotterTrade() {
-  const {} = useBlotterTrade();
+  useBlotterTrade();
   return (
     <>
       <SelectClient />

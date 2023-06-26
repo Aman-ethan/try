@@ -24,7 +24,7 @@ interface ICompanyCurrencyProps {
   clientId: number;
 }
 
-export default function Currency({
+export default function CurrencyTag({
   currency,
   amount,
   loading,
@@ -38,12 +38,7 @@ export default function Currency({
           <Typography.Text className="text-xs">
             {currency.toUpperCase()}
           </Typography.Text>
-          <Image
-            alt={"flag"}
-            src={flags[currency]}
-            width={12}
-            preview={false}
-          />
+          <Image alt="flag" src={flags[currency]} width={12} preview={false} />
         </Space>
       )}
       <Typography.Text>
@@ -63,5 +58,7 @@ export function ClientCurrency({ amount, clientId }: ICompanyCurrencyProps) {
     ?.find(({ client_id }) => client_id === clientId)
     ?.rpt_currency?.toLowerCase() as Currency | undefined;
 
-  return <Currency currency={currency} amount={amount} loading={isLoading} />;
+  return (
+    <CurrencyTag currency={currency} amount={amount} loading={isLoading} />
+  );
 }

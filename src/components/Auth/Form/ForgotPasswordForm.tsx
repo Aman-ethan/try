@@ -1,10 +1,11 @@
 "use client";
 
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, message } from "antd";
 import { useRouter } from "next/navigation";
-import PhoneInput from "../../Input/PhoneInput";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { ILoginResponse } from "@/interface/Auth";
+import PhoneInput from "../../Input/PhoneInput";
 
 interface IUserArgs {
   username: string;
@@ -19,12 +20,11 @@ export default function ForgotPasswordForm() {
     onSuccess(data) {
       if (data.user_id) {
         router.push(
-          "/verify-otp" +
-            buildURLSearchParams({
-              phone_number: data.phone_number,
-              user_id: data.user_id.toString(),
-              next_path: "/reset-password",
-            })
+          `/verify-otp${buildURLSearchParams({
+            phone_number: data.phone_number,
+            user_id: data.user_id.toString(),
+            next_path: "/reset-password",
+          })}`
         );
       }
     },

@@ -6,12 +6,9 @@ import AuthIllustration from "@/components/Auth/Icon/AuthIllustration";
 
 import "antd/dist/reset.css";
 import "@/styles/global.css";
+import { ReactNode } from "react";
 
-export default function AuthRootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AuthRootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body id="layout" className="opacity-0 transition-opacity">

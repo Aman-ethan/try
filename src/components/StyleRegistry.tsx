@@ -13,6 +13,7 @@ export default function StyleRegistry({ children }: IStyleRegistryProps) {
 
   useServerInsertedHTML(() => {
     const styles = extractStyle(cache, true);
+    // eslint-disable-next-line react/no-danger
     return <style dangerouslySetInnerHTML={{ __html: styles }} />;
   });
 

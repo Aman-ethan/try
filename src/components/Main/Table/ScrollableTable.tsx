@@ -1,8 +1,8 @@
 "use client";
 
 import { TableColumnsType, TableProps } from "antd";
-import Table from "./Table";
 import { ThunderboltOutlined } from "@ant-design/icons";
+import Table from "./Table";
 import MoreMenu from "../General/MoreMenu";
 
 const Action: TableColumnsType = [

@@ -1,8 +1,8 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import Select from "./Select";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useSearchParams from "@/hooks/useSearchParams";
 import { preloadTransactionServerQuery } from "@/lib/preload";
+import Select from "./Select";
 
 interface ICustodianResponse {
   custodian_id: number;
@@ -23,7 +23,7 @@ function useSelectCustodian() {
   const tradeCustodianId = getSearchParams("trade_custodian_id");
 
   const { data, isLoading } = useTransactionServerQuery<ICustodianResponse[]>(
-    "/custodian/" + buildURLSearchParams({ client_id: tradeClientId })
+    `/custodian/${buildURLSearchParams({ client_id: tradeClientId })}`
   );
 
   const options = data?.map(({ custodian_id, custodian_name }) => ({

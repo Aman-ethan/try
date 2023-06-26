@@ -1,6 +1,5 @@
 "use client";
 
-
 import { Button, Drawer } from "antd";
 import { useState } from "react";
 import NewClientUpload from "./Forms/NewClientUpload";
@@ -9,7 +8,12 @@ export default function AddClient() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   return (
     <>
-      <Button type="primary" size="large" block onClick={() => setIsDrawerOpen(true)}>
+      <Button
+        type="primary"
+        size="large"
+        block
+        onClick={() => setIsDrawerOpen(true)}
+      >
         Add Clients
       </Button>
       <Drawer
@@ -18,7 +22,7 @@ export default function AddClient() {
         onClose={() => setIsDrawerOpen(false)}
         title="Add Client"
       >
-        <NewClientUpload sampleLink="" onFinish={() => {}}/>
+        <NewClientUpload sampleLink="" onFinish={() => {}} />
       </Drawer>
     </>
   );

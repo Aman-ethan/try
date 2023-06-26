@@ -41,18 +41,21 @@ function useGainerLoser() {
   const selectedDate = getSearchParams("selected_date");
   const { data, isLoading } = useTransactionServerQuery<IGainerResponse>(
     selectedDate
-      ? "/positions/top_gainer/" +
-          buildURLSearchParams({
-            report_date: selectedDate,
-            limit: "5",
-            ordering: "",
-            offset: "0",
-          })
+      ? `/positions/top_gainer/${buildURLSearchParams({
+          report_date: selectedDate,
+          limit: "5",
+          ordering: "",
+          offset: "0",
+        })}`
       : null
   );
+  return {
+    data,
+    isLoading,
+  };
 }
 
 export default function GainerLoser() {
   useGainerLoser();
-  return <></>;
+  return null;
 }

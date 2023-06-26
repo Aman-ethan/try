@@ -3,8 +3,8 @@
 import { Button, Spin } from "antd";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { Suspense, lazy } from "react";
-import Drawer from "../../General/Drawer";
 import { capitalize } from "lodash";
+import Drawer from "../../General/Drawer";
 
 const UploadPositionStatement = lazy(
   () => import("../Form/UploadPositionStatement")

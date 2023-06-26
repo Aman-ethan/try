@@ -13,6 +13,7 @@ export default function Template({ children }: ITemplateProps) {
   const { isLoggedIn } = useAuth();
 
   useLayoutEffect(() => {
+    // eslint-disable-next-line no-constant-condition
     if (true) {
       document.body.classList.remove("opacity-0");
     } else {
