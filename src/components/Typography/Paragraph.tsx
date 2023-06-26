@@ -5,5 +5,5 @@ interface IParagraphProps {
 }
 
 export default function Paragraph({ children }: IParagraphProps) {
-  return <p className="text-sm text-neutral-9 my-0">{children}</p>;
+  return <p className="text-sm text-neutral-9">{children}</p>;
 }

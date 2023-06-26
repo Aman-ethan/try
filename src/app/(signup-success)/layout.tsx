@@ -1,8 +1,8 @@
 import Logo from "@/components/Icon/Logo";
-
-import "antd/dist/reset.css";
-import "tailwindcss/tailwind.css";
 import AppProvider from "@/context/AppProvider";
+
+import "@/styles/global.css";
+import "antd/dist/reset.css";
 
 export default function AuthRootLayout({
   children,
