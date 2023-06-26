@@ -11,7 +11,6 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/constants/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  corePlugins: {},
   important: true,
   theme: {
     extend: {
