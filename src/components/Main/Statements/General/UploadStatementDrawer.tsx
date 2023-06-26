@@ -1,9 +1,10 @@
 "use client";
 
-import DrawerTitle from "@/components/Typography/DrawerTitle";
-import { Button, Drawer, Spin } from "antd";
+import { Button, Spin } from "antd";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy } from "react";
+import Drawer from "../../General/Drawer";
+import { capitalize } from "lodash";
 
 const UploadPositionStatement = lazy(
   () => import("../Form/UploadPositionStatement")
@@ -26,29 +27,24 @@ function StatementForm() {
 }
 
 export default function UploadStatementDrawer() {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const layoutSegment = useSelectedLayoutSegment();
+  const layoutSegment = useSelectedLayoutSegment() as string;
 
-  const title = (
-    <DrawerTitle className="capitalize">
-      Upload {layoutSegment} Statement
-    </DrawerTitle>
-  );
+  const title = `Upload ${capitalize(layoutSegment)} Statement`;
+
   return (
-    <>
-      <Button type="primary" size="large" onClick={() => setIsDrawerOpen(true)}>
-        Add a Statement
-      </Button>
-      <Drawer
-        width={720}
-        open={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        title={title}
-      >
-        <Suspense fallback={<Spin size="large" />}>
-          <StatementForm />
-        </Suspense>
-      </Drawer>
-    </>
+    <Drawer
+      buttonText="Add a Statement"
+      width={720}
+      title={title}
+      footer={
+        <Button type="primary" size="large" className="px-7" htmlType="submit">
+          Upload
+        </Button>
+      }
+    >
+      <Suspense fallback={<Spin size="large" />}>
+        <StatementForm />
+      </Suspense>
+    </Drawer>
   );
 }

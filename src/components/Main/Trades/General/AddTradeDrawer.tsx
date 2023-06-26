@@ -1,24 +1,26 @@
-import DrawerTitle from "@/components/Typography/DrawerTitle";
-import { Button, Drawer } from "antd";
-import { useState } from "react";
+import { Button } from "antd";
 import AddTrade from "../Form/AddTrade";
+import Drawer from "../../General/Drawer";
 
 export default function AddTradeDrawer() {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const title = <DrawerTitle>Add a Trade</DrawerTitle>;
+  const title = "Add a Trade";
   return (
-    <>
-      <Button type="primary" size="large" onClick={() => setIsDrawerOpen(true)}>
-        Add Blotter Trade
-      </Button>
-      <Drawer
-        open={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        width={720}
-        title={title}
-      >
-        <AddTrade />
-      </Drawer>
-    </>
+    <Drawer
+      buttonText="Add Blotter Trade"
+      width={720}
+      title={title}
+      footer={
+        <div className="space-x-4">
+          <Button type="primary" htmlType="submit" size="large">
+            Save Trade
+          </Button>
+          <Button htmlType="reset" size="large">
+            Clear All
+          </Button>
+        </div>
+      }
+    >
+      <AddTrade />
+    </Drawer>
   );
 }

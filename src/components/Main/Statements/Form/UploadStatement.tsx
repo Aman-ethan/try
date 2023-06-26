@@ -2,7 +2,6 @@ import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
 import { Button, Form, Row } from "antd";
 import SelectClient from "../../Input/SelectClient";
 import Upload from "../../Input/Upload";
-import UploadButton from "../General/UploadStatementButton";
 
 interface IUploadStatementFormProps {
   sampleLink: string;
@@ -14,7 +13,7 @@ export default function UploadStatement({
   onFinish,
 }: IUploadStatementFormProps) {
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-6">
       <div className="space-y-2">
         <Row className="gap-x-2">
           <InfoCircleFilled className="text-primary" />
@@ -37,7 +36,6 @@ export default function UploadStatement({
         <Form.Item name="statement">
           <Upload />
         </Form.Item>
-        <UploadButton />
       </Form>
     </div>
   );

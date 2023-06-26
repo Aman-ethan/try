@@ -76,12 +76,6 @@ export default function AddTrade() {
       <Form.Item label="Add Tag" name="tags" className="w-1/2 pr-4">
         <Input placeholder="Add some tags" />
       </Form.Item>
-      <DrawerAction className="space-x-4">
-        <Button type="primary" htmlType="submit">
-          Save Trade
-        </Button>
-        <Button htmlType="reset">Clear All</Button>
-      </DrawerAction>
     </Form>
   );
 }

@@ -3,11 +3,10 @@ import SelectClient from "../../Input/SelectClient";
 import { DatePicker } from "../../Input/DatePicker";
 import SelectCustodian from "../../Input/SelectCustodian";
 import Upload from "../../Input/Upload";
-import UploadButton from "../General/UploadStatementButton";
 
 export default function UploadBankStatement() {
   return (
-    <Form layout="vertical" size="large" className="space-y-6 pb-20">
+    <Form layout="vertical" size="large" className="space-y-6">
       <Row className="gap-x-8">
         <Form.Item label="Client" name="client" className="flex-1">
           <SelectClient placeholder="Choose the client" />
@@ -47,7 +46,6 @@ export default function UploadBankStatement() {
       <Form.Item name="statement">
         <Upload />
       </Form.Item>
-      <UploadButton />
     </Form>
   );
 }
