@@ -22,7 +22,7 @@ export default function AddClient() {
         onClose={() => setIsDrawerOpen(false)}
         title="Add Client"
       >
-        <NewClientUpload sampleLink="" onFinish={() => {}} />
+        <NewClientUpload onFinish={() => {}} />
       </Drawer>
     </>
   );

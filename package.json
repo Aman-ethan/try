@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ./src --fix",
+    "compile": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "@ant-design/charts": "^1.4.2",
