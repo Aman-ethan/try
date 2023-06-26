@@ -1,4 +1,3 @@
-/* eslint-disable import/no-import-module-exports */
 import { theme as AntdTheme } from "antd";
 import theme, { primaryColorName, primaryColor } from "./src/config/theme";
 
