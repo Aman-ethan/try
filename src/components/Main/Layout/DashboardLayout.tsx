@@ -98,12 +98,8 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           <Row className="gap-x-6" align="middle">
             <CurrencyTag currency="sgd" />
             <Divider type="vertical" className="text-neutral-13/5" />
-            <Dropdown
-              menu={{ items: ProfileItems }}
-              trigger={["click"]}
-              className="cursor-pointer"
-            >
-              <div className="space-x-2">
+            <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
+              <div className="space-x-2 cursor-pointer">
                 <Avatar />
                 <span className="text-sm text-neutral-13 font-medium">
                   Ravi

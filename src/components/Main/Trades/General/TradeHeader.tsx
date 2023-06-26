@@ -8,6 +8,7 @@ import SelectClient from "../../Input/SelectClient";
 import SelectCustodian from "../../Input/SelectCustodian";
 import { CaretDownFilled } from "@ant-design/icons";
 import AddTradeDrawer from "./AddTradeDrawer";
+import { useState } from "react";
 
 const TradeRoutes: MenuProps["items"] = [
   {
@@ -23,6 +24,9 @@ const TradeRoutes: MenuProps["items"] = [
 export default function TradeHeader() {
   const selectedLayoutSegment = useSelectedLayoutSegment();
   const title = selectedLayoutSegment?.split("-").join(" ");
+  const [dropdownWidth, setDropdownWidth] = useState<undefined | number>(
+    undefined
+  );
   return (
     <div className="space-y-6">
       <Breadcrumb
@@ -37,19 +41,33 @@ export default function TradeHeader() {
         ]}
       />
       <Row justify="space-between" align="middle">
-        <Dropdown
-          menu={{
-            items: TradeRoutes,
-            selectable: true,
-            defaultSelectedKeys: [selectedLayoutSegment as string],
+        <Row
+          ref={(el) => {
+            setDropdownWidth(el?.getBoundingClientRect().width);
           }}
-          trigger={["click"]}
+          align="middle"
+          className="space-x-2"
         >
-          <Button type="ghost" className="flex items-center gap-x-3 px-0">
-            <Title className="capitalize">{title}</Title>
-            <CaretDownFilled />
-          </Button>
-        </Dropdown>
+          <Title className="capitalize">{title}</Title>
+          <Dropdown
+            menu={{
+              items: TradeRoutes,
+              selectable: true,
+              defaultSelectedKeys: [selectedLayoutSegment as string],
+              style: {
+                width: dropdownWidth,
+              },
+            }}
+            placement="bottomRight"
+            trigger={["click"]}
+          >
+            <Button
+              type="text"
+              shape="circle"
+              icon={<CaretDownFilled className="text-xl mt-0.5" />}
+            />
+          </Dropdown>
+        </Row>
         <AddTradeDrawer />
       </Row>
       <Row className="max-w-xl gap-x-6">
