@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import { ILoginArgs, ILoginResponse } from "@/interface/Auth";
+import { ILoginArgs, ILoginResponse } from "@/interfaces/Auth";
 import { useEffect, useState } from "react";
 
 const OTP_WAIT_TIME = 60;

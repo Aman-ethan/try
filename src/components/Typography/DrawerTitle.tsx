@@ -1,4 +1,4 @@
-import { ITypographyProps } from "@/interface/Typography";
+import { ITypographyProps } from "@/interfaces/Typography";
 import clsx from "clsx";
 
 export default function DrawerTitle({ className, children }: ITypographyProps) {

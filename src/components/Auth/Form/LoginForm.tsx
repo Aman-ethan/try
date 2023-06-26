@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import { ILoginArgs, ILoginResponse } from "@/interface/Auth";
+import { ILoginArgs, ILoginResponse } from "@/interfaces/Auth";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";

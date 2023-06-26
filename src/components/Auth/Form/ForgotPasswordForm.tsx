@@ -4,7 +4,7 @@ import { useAuthServerMutation } from "@/hooks/useMutation";
 import { Button, Form, message } from "antd";
 import { useRouter } from "next/navigation";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { ILoginResponse } from "@/interface/Auth";
+import { ILoginResponse } from "@/interfaces/Auth";
 import PhoneInput from "../../Input/PhoneInput";
 
 interface IUserArgs {
