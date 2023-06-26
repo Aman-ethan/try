@@ -1,3 +1,5 @@
+import BlotterTrade from "@/components/Main/Trades/Table/BlotterTrade";
+
 export default function BlottterTradesPage() {
-  return <h1>Blotter Trades</h1>;
+  return <BlotterTrade />;
 }
