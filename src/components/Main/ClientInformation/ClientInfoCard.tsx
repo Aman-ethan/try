@@ -11,7 +11,7 @@ import ProfileEdit from "./ProfileEdit";
 export default function ClientInfoCard() {
   const [editClicked, setEditClicked] = useState<boolean>(false);
   return (
-    <Card className="rounded-lg h-screen w-full overflow-scroll">
+    <Card className="rounded-lg h-full w-full">
       <div className="space-y-6 border-b-2 py-6 mb-5">
         <div className="space-x-4 flex items-center">
           <Title>CA_CH</Title>
