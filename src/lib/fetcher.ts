@@ -1,10 +1,14 @@
 "use client";
 
+import { ACCESS_TOKEN_KEY } from "@/constants/strings";
+import { Cookies } from "react-cookie";
+
 export async function postFetcher<ExtraArgs>(
-  [key, accessToken]: string[],
+  key: string,
   options: Readonly<{ arg: ExtraArgs }>
 ) {
   try {
+    const accessToken = new Cookies().get(ACCESS_TOKEN_KEY);
     const res = await fetch(key, {
       method: "POST",
       headers: {
