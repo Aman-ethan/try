@@ -25,7 +25,7 @@ export default function PhoneInput() {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item label=" " name="phone_number" className="flex-1">
+      <Form.Item label="&nbsp;" name="phone_number" className="flex-1">
         <Input type="tel" placeholder="1234-56789" />
       </Form.Item>
     </Space.Compact>

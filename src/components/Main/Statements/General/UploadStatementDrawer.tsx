@@ -1,8 +1,9 @@
 "use client";
 
-import { Button, Drawer } from "antd";
+import DrawerTitle from "@/components/Typography/DrawerTitle";
+import { Button, Drawer, Spin } from "antd";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { lazy, useState } from "react";
+import { Suspense, lazy, useState } from "react";
 
 const UploadPositionStatement = lazy(
   () => import("../Form/UploadPositionStatement")
@@ -29,9 +30,9 @@ export default function UploadStatementDrawer() {
   const layoutSegment = useSelectedLayoutSegment();
 
   const title = (
-    <span className="text-xl font-medium capitalize">
+    <DrawerTitle className="capitalize">
       Upload {layoutSegment} Statement
-    </span>
+    </DrawerTitle>
   );
   return (
     <>
@@ -44,7 +45,9 @@ export default function UploadStatementDrawer() {
         onClose={() => setIsDrawerOpen(false)}
         title={title}
       >
-        <StatementForm />
+        <Suspense fallback={<Spin size="large" />}>
+          <StatementForm />
+        </Suspense>
       </Drawer>
     </>
   );

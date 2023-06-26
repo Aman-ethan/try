@@ -2,7 +2,7 @@ import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
 import { Button, Form, Row } from "antd";
 import SelectClient from "../../Input/SelectClient";
 import Upload from "../../Input/Upload";
-import UploadButton from "../General/UploadButton";
+import UploadButton from "../General/UploadStatementButton";
 
 interface IUploadStatementFormProps {
   sampleLink: string;

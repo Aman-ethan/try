@@ -117,7 +117,7 @@ export default function SignupForm() {
               className="w-full"
             />
           </Form.Item>
-          <Form.Item label=" " name="timezone" className="flex-1">
+          <Form.Item label="&nbsp;" name="timezone" className="flex-1">
             <Select placeholder="Select timezone">
               {Timezones.map(({ text }) => (
                 <Select.Option key={text} value={text}>

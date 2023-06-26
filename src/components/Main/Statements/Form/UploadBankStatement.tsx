@@ -3,7 +3,7 @@ import SelectClient from "../../Input/SelectClient";
 import { DatePicker } from "../../Input/DatePicker";
 import SelectCustodian from "../../Input/SelectCustodian";
 import Upload from "../../Input/Upload";
-import UploadButton from "../General/UploadButton";
+import UploadButton from "../General/UploadStatementButton";
 
 export default function UploadBankStatement() {
   return (

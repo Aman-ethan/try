@@ -1,7 +1,7 @@
 "use client";
 
-import Statement from "./Statement";
 import { TableColumnsType } from "antd";
+import Statement from "./Statement";
 
 const Columns: TableColumnsType = [
   {

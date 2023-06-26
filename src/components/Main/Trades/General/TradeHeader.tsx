@@ -45,7 +45,7 @@ export default function TradeHeader() {
           }}
           trigger={["click"]}
         >
-          <Button type="text" className="flex items-center gap-x-3 px-0">
+          <Button type="ghost" className="flex items-center gap-x-3 px-0">
             <Title className="capitalize">{title}</Title>
             <CaretDownFilled />
           </Button>
