@@ -68,9 +68,9 @@ function UserProfile() {
   ];
   return (
     <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
-      <div className="space-x-2 cursor-pointer">
+      <div className="cursor-pointer space-x-2">
         <Avatar />
-        <span className="text-sm text-neutral-13 font-medium">Ravi</span>
+        <span className="text-sm font-medium text-neutral-13">Ravi</span>
         <CaretDownFilled />
       </div>
     </Dropdown>
@@ -88,10 +88,10 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         collapsed={collapsed}
         onCollapse={() => setCollapsed(true)}
         collapsible
-        className="bg-neutral-1 fixed h-screen"
+        className="fixed h-screen bg-neutral-1"
         width={240}
       >
-        <div className="pt-4 pb-6 px-6">
+        <div className="px-6 pb-6 pt-4">
           {collapsed ? <CollapsedLogo /> : <Logo />}
         </div>
         <Menu
@@ -102,13 +102,13 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         />
       </Layout.Sider>
       <Layout className={collapsed ? "ml-20" : "ml-60"}>
-        <Layout.Header className="flex bg-neutral-1 pl-6 pr-12 sticky top-0 z-10">
-          <Row className="gap-x-6 flex-1" align="middle">
+        <Layout.Header className="sticky top-0 z-10 flex bg-neutral-1 pl-6 pr-12">
+          <Row className="flex-1 gap-x-6" align="middle">
             <Button
               onClick={() => setCollapsed((prev) => !prev)}
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              className="text-neutral-13/40 text-base"
+              className="text-base text-neutral-13/40"
             />
             <Input.Search
               className="max-w-[22rem]"
@@ -124,7 +124,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         </Layout.Header>
         <Layout.Content className="bg-neutral-3">
           <div className="min-h-full">{children}</div>
-          <Layout.Footer className="bg-neutral-3 flex justify-center">
+          <Layout.Footer className="flex justify-center bg-neutral-3">
             ETHAN-AI &copy; ALL RIGHTS RESERVED {currentDate.getFullYear()}
           </Layout.Footer>
         </Layout.Content>

@@ -21,8 +21,10 @@ const ROUTE = [
     icon: <LineChartOutlined />,
     children: [
       {
-        key: "/analytics/crude",
-        label: <Link href="/analytics/crude">Crude Analytics</Link>,
+        key: "/analytics/crude/gross-allocations",
+        label: (
+          <Link href="/analytics/crude/gross-allocations">Crude Analytics</Link>
+        ),
       },
       {
         disabled: true,

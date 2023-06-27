@@ -13,11 +13,11 @@ import AddTradeDrawer from "./AddTradeDrawer";
 const TradeRoutes: MenuProps["items"] = [
   {
     key: "blotter-trades",
-    label: <Link href="blotter-trades">Blotter Trades</Link>,
+    label: <Link href="/trades/blotter-trades">Blotter Trades</Link>,
   },
   {
     key: "active-positions",
-    label: <Link href="active-positions">Active Positions</Link>,
+    label: <Link href="/trades/active-positions">Active Positions</Link>,
   },
 ];
 
