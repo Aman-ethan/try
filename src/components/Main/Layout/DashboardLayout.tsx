@@ -22,12 +22,9 @@ import {
 } from "antd";
 import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
+import useAuth from "@/hooks/useAuth";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 import CurrencyTag from "../General/CurrencyTag";
-import useLogout from "@/hooks/useLogout";
-import logout from "@/lib/logout";
-import { Cookies } from "react-cookie";
-import { ACCESS_TOKEN_KEY } from "@/constants/strings";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -48,6 +45,7 @@ const iconClassName = "text-neutral-11";
 const currentDate = new Date();
 
 function UserProfile() {
+  const { logout } = useAuth();
   const ProfileItems: MenuProps["items"] = [
     {
       label: (
@@ -60,11 +58,7 @@ function UserProfile() {
     },
     {
       label: (
-        <button
-          type="button"
-          onClick={() => new Cookies().remove(ACCESS_TOKEN_KEY)}
-          className={labelClassName}
-        >
+        <button type="button" onClick={logout} className={labelClassName}>
           Logout
         </button>
       ),

@@ -7,6 +7,7 @@ import { useCookies } from "react-cookie";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import useSearchParams from "@/hooks/useSearchParams";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/strings";
+import { cookieOptions } from "@/constants/cookie";
 import Paragraph from "../../Typography/Paragraph";
 import ResendOTP from "../General/ResendOTP";
 
@@ -41,23 +42,18 @@ export default function VerifyOTPForm() {
         switch (nextPath) {
           case "/reset-password": {
             // setting a session cookie
-            setCookie(ACCESS_TOKEN_KEY, data.access_token, {
-              sameSite: "lax",
-              secure: true,
-            });
+            setCookie(ACCESS_TOKEN_KEY, data.access_token, cookieOptions);
             replace(nextPath);
             break;
           }
           default: {
             const currentDate = Date.now();
             setCookie(ACCESS_TOKEN_KEY, data.access_token, {
-              sameSite: "lax",
-              secure: true,
+              ...cookieOptions,
               expires: new Date(currentDate + 1000 * 60 * 60),
             });
             setCookie(REFRESH_TOKEN_KEY, data.refresh_token, {
-              sameSite: "lax",
-              secure: true,
+              ...cookieOptions,
               expires: new Date(currentDate + 1000 * 60 * 60 * 2),
             });
           }
