@@ -8,3 +8,11 @@ export interface ILoginResponse {
   phone_number: string;
   message?: string;
 }
+
+export interface IUserArgs {
+  username: string;
+}
+
+export interface IResendOTPProps {
+  forgotPassword?: boolean;
+}

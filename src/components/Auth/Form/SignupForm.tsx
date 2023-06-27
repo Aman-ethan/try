@@ -10,7 +10,6 @@ import {
   TimePicker,
   message,
 } from "antd";
-import Link from "next/link";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import Timezones from "@/constants/timezones";
 import { useRouter } from "next/navigation";
@@ -149,14 +148,25 @@ export default function SignupForm() {
           <Checkbox>
             <span className="text-neutral-13/80">
               I agree to the{" "}
-              <Link href="/" className="font-medium">
+              <a
+                href="https://www.ethan-ai.com/privacy"
+                className="font-medium"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Terms & Conditions
-              </Link>
+              </a>
             </span>
           </Checkbox>
         </Form.Item>
       </div>
-      <Button htmlType="submit" type="primary" block loading={isMutating}>
+      <Button
+        disabled
+        htmlType="submit"
+        type="primary"
+        block
+        loading={isMutating}
+      >
         Create Account
       </Button>
     </Form>

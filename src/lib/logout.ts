@@ -1,8 +1,11 @@
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/strings";
 import { Cookies } from "react-cookie";
 
-const cookies = new Cookies();
-
 export default function logout() {
-  cookies.remove("access_token");
-  cookies.remove("refresh_token");
+  const cookies = new Cookies();
+  const options = {
+    path: "/",
+  };
+  cookies.remove(ACCESS_TOKEN_KEY, options);
+  cookies.remove(REFRESH_TOKEN_KEY, options);
 }

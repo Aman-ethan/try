@@ -1,3 +1,4 @@
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/strings";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import { message } from "antd";
 import { ReactNode, createContext, useEffect, useMemo } from "react";
@@ -19,8 +20,8 @@ export const AuthContext = createContext({ isLoggedIn: false });
 
 export default function AuthProvider({ children }: IAuthProviderProps) {
   const [{ access_token, refresh_token }, setCookie] = useCookies([
-    "access_token",
-    "refresh_token",
+    ACCESS_TOKEN_KEY,
+    REFRESH_TOKEN_KEY,
   ]);
 
   const { trigger } = useAuthServerMutation<
@@ -29,7 +30,7 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
   >("/api/token/refresh/", {
     onSuccess(data) {
       if (data.access) {
-        setCookie("access_token", data.access);
+        setCookie(ACCESS_TOKEN_KEY, data.access);
       }
     },
     onError() {

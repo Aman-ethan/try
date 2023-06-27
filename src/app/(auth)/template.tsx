@@ -14,7 +14,7 @@ export default function AuthTemplate({ children }: IAuthTemplateProps) {
 
   useLayoutEffect(() => {
     if (isLoggedIn) {
-      replace("/summary");
+      replace("/statements/bank");
     } else {
       document.body.classList.remove("opacity-0");
     }

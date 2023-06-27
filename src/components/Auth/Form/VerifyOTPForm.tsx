@@ -6,6 +6,7 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef } from "react";
 import { useCookies } from "react-cookie";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import useSearchParams from "@/hooks/useSearchParams";
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/strings";
 import Paragraph from "../../Typography/Paragraph";
 import ResendOTP from "../General/ResendOTP";
 
@@ -29,6 +30,7 @@ export default function VerifyOTPForm() {
 
   const searchParams = useSearchParams();
   const userId = searchParams.get("user_id");
+  const nextPath = searchParams.get("next_path");
 
   const { trigger, isMutating } = useAuthServerMutation<
     IVerifyOTPArgs,
@@ -36,11 +38,10 @@ export default function VerifyOTPForm() {
   >("/api/verify-otp", {
     onSuccess(data) {
       if (data.access_token && data.refresh_token) {
-        const nextPath = searchParams.get("next_path");
         switch (nextPath) {
           case "/reset-password": {
             // setting a session cookie
-            setCookie("access_token", data.access_token, {
+            setCookie(ACCESS_TOKEN_KEY, data.access_token, {
               sameSite: "lax",
               secure: true,
             });
@@ -49,12 +50,12 @@ export default function VerifyOTPForm() {
           }
           default: {
             const currentDate = Date.now();
-            setCookie("access_token", data.access_token, {
+            setCookie(ACCESS_TOKEN_KEY, data.access_token, {
               sameSite: "lax",
               secure: true,
               expires: new Date(currentDate + 1000 * 60 * 60),
             });
-            setCookie("refresh_token", data.refresh_token, {
+            setCookie(REFRESH_TOKEN_KEY, data.refresh_token, {
               sameSite: "lax",
               secure: true,
               expires: new Date(currentDate + 1000 * 60 * 60 * 2),
@@ -130,7 +131,8 @@ export default function VerifyOTPForm() {
           Verify & Proceed
         </Button>
         <Paragraph>
-          Didn&apos;t receive OTP? <ResendOTP />
+          Didn&apos;t receive OTP?{" "}
+          <ResendOTP forgotPassword={nextPath === "/reset-password"} />
         </Paragraph>
       </div>
     </Form>

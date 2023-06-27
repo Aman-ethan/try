@@ -1,18 +1,15 @@
 "use client";
 
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import { Button, Form, message } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { ILoginResponse } from "@/interfaces/Auth";
-import PhoneInput from "../../Input/PhoneInput";
-
-interface IUserArgs {
-  username: string;
-}
+import { ILoginResponse, IUserArgs } from "@/interfaces/Auth";
+// import PhoneInput from "../../Input/PhoneInput";
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
+  const [form] = Form.useForm();
   const { trigger, isMutating } = useAuthServerMutation<
     IUserArgs,
     ILoginResponse
@@ -21,6 +18,7 @@ export default function ForgotPasswordForm() {
       if (data.user_id) {
         router.push(
           `/verify-otp${buildURLSearchParams({
+            username: form.getFieldValue("username"),
             phone_number: data.phone_number,
             user_id: data.user_id.toString(),
             next_path: "/reset-password",
@@ -35,6 +33,7 @@ export default function ForgotPasswordForm() {
 
   return (
     <Form
+      form={form}
       onFinish={trigger}
       size="large"
       disabled={isMutating}
@@ -42,7 +41,9 @@ export default function ForgotPasswordForm() {
       className="space-y-10"
       labelCol={{ className: "font-medium" }}
     >
-      <PhoneInput />
+      <Form.Item label="Username" name="username">
+        <Input placeholder="Enter your username" required />
+      </Form.Item>
       <Button
         htmlType="submit"
         type="primary"

@@ -1,18 +1,24 @@
 "use client";
 
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import { ILoginArgs, ILoginResponse } from "@/interfaces/Auth";
+import {
+  ILoginArgs,
+  ILoginResponse,
+  IResendOTPProps,
+  IUserArgs,
+} from "@/interfaces/Auth";
 import { useEffect, useState } from "react";
 
 const OTP_WAIT_TIME = 60;
 
-export default function ResendOTP() {
+export default function ResendOTP({ forgotPassword }: IResendOTPProps) {
   const [seconds, setSeconds] = useState(OTP_WAIT_TIME);
   const resendOTPEnabled = seconds === 0;
 
-  const { trigger } = useAuthServerMutation<ILoginArgs, ILoginResponse>(
-    "/api/login"
-  );
+  const { trigger } = useAuthServerMutation<
+    ILoginArgs | IUserArgs,
+    ILoginResponse
+  >(forgotPassword ? "/api/forgot-password" : "/api/login");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -27,9 +33,16 @@ export default function ResendOTP() {
   function resendOTP() {
     setSeconds(OTP_WAIT_TIME);
     const searchParams = new URLSearchParams(window.location.search);
+    if (!resendOTPEnabled) return;
     const username = searchParams.get("username");
+    if (forgotPassword && username) {
+      trigger({
+        username,
+      });
+      return;
+    }
     const password = searchParams.get("password");
-    if (username && password && resendOTPEnabled) {
+    if (username && password) {
       trigger({
         username,
         password: atob(password),
@@ -47,7 +60,8 @@ export default function ResendOTP() {
           : "text-neutral-12/25 cursor-not-allowed"
       }
     >
-      Resend Code{resendOTPEnabled ? "" : ` (0:${seconds})`}
+      Resend Code
+      {resendOTPEnabled ? "" : ` (0:${seconds.toString().padStart(2, "0")})`}
     </button>
   );
 }

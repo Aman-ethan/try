@@ -24,6 +24,10 @@ import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 import CurrencyTag from "../General/CurrencyTag";
+import useLogout from "@/hooks/useLogout";
+import logout from "@/lib/logout";
+import { Cookies } from "react-cookie";
+import { ACCESS_TOKEN_KEY } from "@/constants/strings";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -41,19 +45,43 @@ interface ILayoutProps {
 const labelClassName = "text-neutral-13/80";
 const iconClassName = "text-neutral-11";
 
-const ProfileItems: MenuProps["items"] = [
-  {
-    label: <span className={labelClassName}>Change Password</span>,
-    key: "change-password",
-    icon: <SyncOutlined className={iconClassName} />,
-  },
-  {
-    label: <span className={labelClassName}>Logout</span>,
-    key: "logout",
-    icon: <LogoutOutlined className={iconClassName} />,
-  },
-];
 const currentDate = new Date();
+
+function UserProfile() {
+  const ProfileItems: MenuProps["items"] = [
+    {
+      label: (
+        <button type="button" className={labelClassName}>
+          Change Password
+        </button>
+      ),
+      key: "change-password",
+      icon: <SyncOutlined className={iconClassName} />,
+    },
+    {
+      label: (
+        <button
+          type="button"
+          onClick={() => new Cookies().remove(ACCESS_TOKEN_KEY)}
+          className={labelClassName}
+        >
+          Logout
+        </button>
+      ),
+      key: "logout",
+      icon: <LogoutOutlined className={iconClassName} />,
+    },
+  ];
+  return (
+    <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
+      <div className="space-x-2 cursor-pointer">
+        <Avatar />
+        <span className="text-sm text-neutral-13 font-medium">Ravi</span>
+        <CaretDownFilled />
+      </div>
+    </Dropdown>
+  );
+}
 
 export default function DashboardLayout({ children }: ILayoutProps) {
   const pathname = usePathname();
@@ -97,15 +125,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           <Row className="gap-x-6" align="middle">
             <CurrencyTag currency="sgd" />
             <Divider type="vertical" className="text-neutral-13/5" />
-            <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
-              <div className="space-x-2 cursor-pointer">
-                <Avatar />
-                <span className="text-sm text-neutral-13 font-medium">
-                  Ravi
-                </span>
-                <CaretDownFilled />
-              </div>
-            </Dropdown>
+            <UserProfile />
           </Row>
         </Layout.Header>
         <Layout.Content className="bg-neutral-3">
