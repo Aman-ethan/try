@@ -3,5 +3,5 @@ export const cookieOptions = {
   path: "/",
   sameSite: "lax" as "lax",
   secure: true,
-  domain: process.env.NEXT_PUBLIC_DOMAIN,
+  domain: global.window?.location.hostname,
 };
