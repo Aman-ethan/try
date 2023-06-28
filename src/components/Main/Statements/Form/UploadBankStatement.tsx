@@ -7,7 +7,7 @@ import SelectClient from "../../Input/SelectClient";
 import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
 
 export default function UploadBankStatement() {
-  const { id } = useStatementForm();
+  const formId = useStatementForm();
   const [form] = Form.useForm();
   const custodian_id = Form.useWatch("custodian_id", form);
   const client_id = Form.useWatch("client_id", form);
@@ -15,7 +15,7 @@ export default function UploadBankStatement() {
   return (
     <Form
       form={form}
-      id={id}
+      id={formId}
       layout="vertical"
       size="large"
       className="space-y-6"

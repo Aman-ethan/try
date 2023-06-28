@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 
 export interface IStatementFormContext {
-  id: string;
-  setIsLoading: Dispatch<SetStateAction<boolean>>;
+  formId: string;
+  setIsMutating: Dispatch<SetStateAction<boolean>>;
 }
 
 const StatementFormContext = createContext<IStatementFormContext>({
-  id: "",
-  setIsLoading: () => {},
+  formId: "",
+  setIsMutating: () => {},
 });
 
 export default StatementFormContext;

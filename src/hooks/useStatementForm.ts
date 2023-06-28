@@ -1,6 +1,17 @@
 import StatementFormContext from "@/context/StatementFormContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
-export default function useStatementForm() {
-  return useContext(StatementFormContext);
+interface IStatementFormParams {
+  isMutating: boolean;
+}
+
+export default function useStatementForm(params?: IStatementFormParams) {
+  const { setIsMutating, formId } = useContext(StatementFormContext);
+  const isMutating = params?.isMutating;
+
+  useEffect(() => {
+    setIsMutating(!!isMutating);
+  }, [isMutating, setIsMutating]);
+
+  return formId;
 }

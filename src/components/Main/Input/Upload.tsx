@@ -1,4 +1,4 @@
-import { Upload as AntdUpload, Row } from "antd";
+import { Upload as AntdUpload, Row, UploadProps } from "antd";
 import { CSSProperties } from "react";
 import UploadIcon from "../Icon/UploadIcon";
 
@@ -7,9 +7,9 @@ const DraggerStyle: CSSProperties = {
   borderColor: "#1890FF",
 };
 
-export default function Upload() {
+export default function Upload({ beforeUpload }: UploadProps) {
   return (
-    <AntdUpload.Dragger style={DraggerStyle} action={(file) => file.name}>
+    <AntdUpload.Dragger style={DraggerStyle} beforeUpload={beforeUpload}>
       <Row align="middle" className="flex-col gap-y-4 py-7">
         <UploadIcon />
         <div className="space-y-2">

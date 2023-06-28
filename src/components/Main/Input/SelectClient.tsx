@@ -8,10 +8,11 @@ export default function SelectClient({
   params,
   reset,
   ...props
-}: SelectProps & {
-  params?: TSelectClientParams;
-  reset: () => void;
-}) {
+}: SelectProps &
+  Partial<{
+    params: TSelectClientParams;
+    reset: () => void;
+  }>) {
   const { isLoading, options } = useSelectClient(params);
   useDependentSelect({
     dependsOn: params?.custodian_id,

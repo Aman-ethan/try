@@ -7,19 +7,16 @@ import { capitalize } from "lodash";
 import StatementFormContext from "@/context/StatementFormContext";
 import Drawer from "../../General/Drawer";
 
-const UploadPositionStatement = lazy(
-  () => import("../Form/UploadPositionStatement")
-);
-const UploadTradeStatement = lazy(() => import("../Form/UploadTradeStatement"));
+const UploadStatement = lazy(() => import("../Form/UploadStatement"));
 const UploadBankStatement = lazy(() => import("../Form/UploadBankStatement"));
 
 function StatementForm() {
   const layoutSegment = useSelectedLayoutSegment();
   switch (layoutSegment) {
     case "position":
-      return <UploadPositionStatement />;
+      return <UploadStatement urlKey="/statement/position/upload/" />;
     case "trade":
-      return <UploadTradeStatement />;
+      return <UploadStatement urlKey="/statement/trade/upload/" />;
     case "bank":
       return <UploadBankStatement />;
     default:
@@ -28,14 +25,14 @@ function StatementForm() {
 }
 
 export default function UploadStatementDrawer() {
-  const id = useId();
-  const [isLoading, setIsLoading] = useState(false);
+  const formId = useId();
+  const [isMutating, setIsMutating] = useState(false);
 
   const layoutSegment = useSelectedLayoutSegment() as string;
 
   const title = `Upload ${capitalize(layoutSegment)} Statement`;
 
-  const contextValue = useMemo(() => ({ id, setIsLoading }), [id]);
+  const contextValue = useMemo(() => ({ formId, setIsMutating }), [formId]);
 
   return (
     <Drawer
@@ -44,13 +41,13 @@ export default function UploadStatementDrawer() {
       title={title}
       footer={
         <Button
-          form={id}
+          form={formId}
           type="primary"
           size="large"
           className="px-7"
           htmlType="submit"
-          loading={isLoading}
-          disabled={isLoading}
+          loading={isMutating}
+          disabled={isMutating}
         >
           Upload
         </Button>

@@ -37,6 +37,7 @@ function useStatementDatePicker() {
           if (!selectedDuration) updateSearchParams(selectedDurationParams);
         }
       },
+      shouldRetryOnError: false,
     }
   );
 
