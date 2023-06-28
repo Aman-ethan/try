@@ -23,10 +23,13 @@ type TradeSearchParams =
   | "trade_offset"
   | "trade_ordering";
 
+type StatementSearchParams = "page_size";
+
 export type SearchParams =
   | AuthSearchParams
   | NetWorthSearchParams
   | TradeSearchParams
+  | StatementSearchParams
   | "selected_date"
   | "selected_duration";
 

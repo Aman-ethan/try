@@ -18,21 +18,24 @@ const Action: TableColumnsType = [
 
 export default function ScrollableTable({
   columns,
-  action = true,
   scroll,
-}: Pick<TableProps<any>, "columns" | "scroll"> & { action?: boolean }) {
+  action = true,
+  size = "middle",
+  ...props
+}: TableProps<unknown> & { action?: boolean }) {
   const columnsWithAction = action ? columns?.concat(Action) : columns;
   return (
     <Table
-      size="middle"
       columns={columnsWithAction}
       scroll={{
-        ...scroll,
+        y: scroll?.y,
         x: columnsWithAction?.reduce(
           (acc, { width }) => acc + Number(width),
           0
         ),
       }}
+      size={size}
+      {...props}
     />
   );
 }

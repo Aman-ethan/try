@@ -46,13 +46,20 @@ export function useSelectRow<T>({
 export default function Table({ pagination, ...props }: TableProps<any>) {
   return (
     <AntdTable
-      pagination={{ hideOnSinglePage: true, ...pagination }}
+      pagination={{
+        hideOnSinglePage: true,
+        showSizeChanger: false,
+        ...pagination,
+      }}
       locale={{
         emptyText: (
           <div
-            className={`${props.scroll?.y} flex items-center justify-center`}
+            style={{
+              height: props.scroll?.y,
+            }}
+            className="flex justify-center items-center"
           >
-            <Empty />
+            {props.loading ? null : <Empty />}
           </div>
         ),
       }}

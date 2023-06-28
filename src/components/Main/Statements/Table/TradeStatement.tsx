@@ -55,5 +55,5 @@ const Columns: TableColumnsType = [
 ];
 
 export default function TradeStatement() {
-  return <Statement columns={Columns} />;
+  return <Statement urlKey="/statement/trade/" columns={Columns} />;
 }

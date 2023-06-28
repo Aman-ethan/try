@@ -42,5 +42,5 @@ const Columns: TableColumnsType = [
 ];
 
 export default function BankStatement() {
-  return <Statement columns={Columns} />;
+  return <Statement urlKey="/statement/bank/" columns={Columns} />;
 }
