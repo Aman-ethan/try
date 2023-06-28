@@ -3,8 +3,8 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useSearchParams from "@/hooks/useSearchParams";
-import SelectClient from "../General/SelectClientWithParams";
-import SelectCustodian from "../General/SelectCustodianWithParams";
+import SelectClient from "../Input/SelectClientWithParams";
+import SelectCustodian from "../Input/SelectCustodianWithParams";
 import TradeRangePicker from "./TradeRangePicker";
 
 interface IBlotterTradeResponse {

@@ -1,20 +1,23 @@
 import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
 import { Button, Form, Row } from "antd";
+import useStatementForm from "@/hooks/useStatementForm";
 import Upload from "../../Input/Upload";
 import SelectClient from "../../Input/SelectClient";
 import SelectCustodian from "../../Input/SelectCustodian";
 
 interface IUploadStatementFormProps {
   sampleLink?: string;
-  onFinish?: () => void;
-  id: string;
+  onFinish: () => void;
+  isLoading?: boolean;
 }
 
 export default function UploadStatement({
-  id,
   onFinish,
   sampleLink,
+  isLoading,
 }: IUploadStatementFormProps) {
+  const { id } = useStatementForm();
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -34,20 +37,29 @@ export default function UploadStatement({
           Download Sample
         </Button>
       </div>
-      <Form id={id} onFinish={onFinish} layout="vertical" className="space-y-6">
+      <Form
+        id={id}
+        onFinish={onFinish}
+        layout="vertical"
+        className="space-y-6"
+        disabled={isLoading}
+      >
         <Form.Item
           label="Client"
           name="client_id"
           dependencies={["custodian_id"]}
         >
-          <SelectClient placeholder="Select the client" />
+          <SelectClient disabled={isLoading} placeholder="Select the client" />
         </Form.Item>
         <Form.Item
           label="Custodian"
           name="custodian_id"
           dependencies={["client_id"]}
         >
-          <SelectCustodian placeholder="Select the custodian" />
+          <SelectCustodian
+            disabled={isLoading}
+            placeholder="Select the custodian"
+          />
         </Form.Item>
         <Form.Item name="file">
           <Upload />

@@ -1,10 +1,10 @@
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { IClientResponse } from "@/interfaces/Main";
+import { IClientResponse, TSelectClientParams } from "@/interfaces/Main";
 import { useTransactionServerQuery } from "./useQuery";
 
-export default function useSelectClient(custodianId?: string | null) {
+export default function useSelectClient(params?: TSelectClientParams) {
   const { data, isLoading } = useTransactionServerQuery<IClientResponse[]>(
-    `/client/${buildURLSearchParams({ custodian_id: custodianId })}`
+    `/client/${buildURLSearchParams(params)}`
   );
 
   const options = data?.map(({ id, name }) => ({

@@ -1,21 +1,17 @@
 import useSelectClientWithParams from "@/hooks/useSelectClientWithParams";
-import { ISelectClientProps } from "@/interfaces/Main";
-import Select from "../Input/Select";
+import { SelectProps } from "antd";
+import Select from "./Select";
 
-export default function SelectClientWithParams({
-  placeholder,
-  className,
-}: ISelectClientProps) {
+export default function SelectClientWithParams(props: SelectProps) {
   const { isLoading, options, onChange, clientId } =
     useSelectClientWithParams();
   return (
     <Select
       loading={isLoading}
-      placeholder={placeholder}
       options={options}
       onChange={onChange}
       value={clientId}
-      className={className}
+      {...props}
     />
   );
 }

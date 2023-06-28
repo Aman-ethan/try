@@ -1,4 +1,4 @@
-export interface ICustodianResponse {
+export interface ICustodian {
   id: string;
   name: string;
 }
@@ -6,19 +6,8 @@ export interface ICustodianResponse {
 export interface IClientResponse {
   id: string;
   name: string;
-  custodians: ICustodianResponse[];
+  custodians: ICustodian[];
 }
 
-export interface ISelectClientProps {
-  placeholder?: string;
-  className?: string;
-}
-
-export interface ISelectCustodianProps {
-  placeholder?: string;
-  className?: string;
-}
-
-export interface IStatementFormProps {
-  id: string;
-}
+export type TSelectClientParams = Record<"custodian_id", string | null>;
+export type TSelectCustodianParams = Record<"client_id", string | null>;

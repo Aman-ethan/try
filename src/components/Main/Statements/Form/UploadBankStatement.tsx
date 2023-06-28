@@ -1,31 +1,64 @@
 import { Form, Input, Row } from "antd";
-import { IStatementFormProps } from "@/interfaces/Main";
-import SelectClient from "../../General/SelectClientWithParams";
+import useStatementForm from "@/hooks/useStatementForm";
 import { DatePicker } from "../../Input/DatePicker";
 import Upload from "../../Input/Upload";
 import SelectCustodian from "../../Input/SelectCustodian";
+import SelectClient from "../../Input/SelectClient";
+import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
 
-export default function UploadBankStatement({ id }: IStatementFormProps) {
+export default function UploadBankStatement() {
+  const { id } = useStatementForm();
+  const [form] = Form.useForm();
+  const custodian_id = Form.useWatch("custodian_id", form);
+  const client_id = Form.useWatch("client_id", form);
+
   return (
-    <Form id={id} layout="vertical" size="large" className="space-y-6">
+    <Form
+      form={form}
+      id={id}
+      layout="vertical"
+      size="large"
+      className="space-y-6"
+    >
       <Row className="gap-x-8">
-        <Form.Item label="Client" name="client" className="flex-1">
-          <SelectClient placeholder="Choose the client" />
+        <Form.Item label="Client" name="client_id" className="flex-1">
+          <SelectClient
+            params={{ custodian_id }}
+            placeholder="Choose the client"
+            reset={() => {
+              form.resetFields(["client_id"]);
+            }}
+          />
         </Form.Item>
-        <Form.Item label="Date" name="date" className="flex-1">
+        <Form.Item label="Date" name="statement_date" className="flex-1">
           <DatePicker placeholder="Select date" />
         </Form.Item>
       </Row>
       <Row className="gap-x-8">
-        <Form.Item label="Custodian" name="custodian" className="flex-1">
-          <SelectCustodian placeholder="Choose the custodian" />
+        <Form.Item label="Custodian" name="custodian_id" className="flex-1">
+          <SelectCustodian
+            params={{ client_id }}
+            placeholder="Choose the custodian"
+            reset={() => {
+              form.resetFields(["custodian_id"]);
+            }}
+          />
         </Form.Item>
         <Form.Item
           label="Relationship Number"
           name="relationship_number"
           className="flex-1"
         >
-          <Input placeholder="Enter the relationship number" />
+          <SelectRelationshipNumber
+            params={{
+              client_id,
+              custodian_id,
+            }}
+            reset={() => {
+              form.resetFields(["relationship_number"]);
+            }}
+            placeholder="Enter the relationship number"
+          />
         </Form.Item>
       </Row>
       <Row className="gap-x-8">
@@ -44,7 +77,7 @@ export default function UploadBankStatement({ id }: IStatementFormProps) {
           <Input placeholder="Enter the cash account number" />
         </Form.Item>
       </Row>
-      <Form.Item name="statement">
+      <Form.Item name="file">
         <Upload />
       </Form.Item>
     </Form>

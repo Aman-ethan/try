@@ -1,7 +1,13 @@
+import { DATE_DISPLAY_FORMAT } from "@/constants/format";
 import { DatePicker as AntdDatePicker, DatePickerProps } from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
 import clsx from "clsx";
+import dayjs, { Dayjs } from "dayjs";
 import { useId } from "react";
+
+function disabledDate(current: Dayjs) {
+  return dayjs(current).isAfter(dayjs());
+}
 
 export function DatePicker({
   loading,
@@ -12,6 +18,7 @@ export function DatePicker({
   ...props
 }: DatePickerProps & { loading?: boolean }) {
   const datePickerId = useId();
+
   return (
     <AntdDatePicker
       key={loading ? undefined : datePickerId}
@@ -20,6 +27,8 @@ export function DatePicker({
       disabled={loading}
       className={clsx("w-full", className)}
       size={size}
+      disabledDate={disabledDate}
+      format={DATE_DISPLAY_FORMAT}
       {...props}
     />
   );

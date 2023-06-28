@@ -1,21 +1,17 @@
 import useSelectCustodianWithParams from "@/hooks/useSelectCustodianWithParams";
-import { ISelectClientProps } from "@/interfaces/Main";
-import Select from "../Input/Select";
+import { SelectProps } from "antd";
+import Select from "./Select";
 
-export default function SelectCustodianWithParams({
-  placeholder,
-  className,
-}: ISelectClientProps) {
+export default function SelectCustodianWithParams(props: SelectProps) {
   const { isLoading, options, onChange, custodianId } =
     useSelectCustodianWithParams();
   return (
     <Select
       loading={isLoading}
       options={options}
-      placeholder={placeholder}
       onChange={onChange}
       value={custodianId}
-      className={className}
+      {...props}
     />
   );
 }

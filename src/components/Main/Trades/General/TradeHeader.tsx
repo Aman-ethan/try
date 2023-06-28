@@ -6,8 +6,8 @@ import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { CaretDownFilled } from "@ant-design/icons";
 import { useState } from "react";
-import SelectClient from "../../General/SelectClientWithParams";
-import SelectCustodian from "../../General/SelectCustodianWithParams";
+import SelectClient from "../../Input/SelectClientWithParams";
+import SelectCustodian from "../../Input/SelectCustodianWithParams";
 import AddTradeDrawer from "./AddTradeDrawer";
 
 const TradeRoutes: MenuProps["items"] = [

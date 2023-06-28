@@ -1,4 +1,4 @@
-import usePrevious from "./usePrevious";
+import useDependentSelect from "./useDependentSelect";
 import useSearchParams from "./useSearchParams";
 import useSelectClient from "./useSelectClient";
 
@@ -7,17 +7,21 @@ export default function useSelectClientWithParams() {
   const clientId = getSearchParams("client_id");
   const custodianId = getSearchParams("custodian_id");
 
-  const { isLoading, options } = useSelectClient(custodianId);
+  const { isLoading, options } = useSelectClient({ custodian_id: custodianId });
 
-  const { isEqual } = usePrevious({ value: custodianId, update: !isLoading });
-
-  if (!isEqual) {
-    if (!options?.find(({ value }) => value === clientId)) {
-      updateSearchParams({
-        client_id: null,
-      });
-    }
-  }
+  useDependentSelect({
+    dependsOn: custodianId,
+    dependentProps: {
+      value: clientId,
+      options,
+      isLoading,
+      reset: () => {
+        updateSearchParams({
+          client_id: null,
+        });
+      },
+    },
+  });
 
   function onChange(value: string) {
     updateSearchParams({
