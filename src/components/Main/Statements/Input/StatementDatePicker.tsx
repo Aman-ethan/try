@@ -3,7 +3,6 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams, { IUpdateSearchParams } from "@/hooks/useSearchParams";
 import dayjs, { Dayjs, ManipulateType } from "dayjs";
-import { preloadTransactionServerQuery } from "@/lib/preload";
 import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/constants/format";
 import { DatePicker } from "../../Input/DatePicker";
 
@@ -12,8 +11,6 @@ interface IDateResponse {
 }
 
 const DEFAULT_DURATION: ManipulateType = "y";
-
-preloadTransactionServerQuery("/position_history/asset_networth/date_parser/");
 
 function useStatementDatePicker() {
   const { updateSearchParams, get: getSearchParams } = useSearchParams();

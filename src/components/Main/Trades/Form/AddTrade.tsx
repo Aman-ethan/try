@@ -1,7 +1,7 @@
 import { Form, Input, InputNumber, Row } from "antd";
-import SelectClient from "../../Input/SelectClient";
+import SelectClient from "../../General/SelectClientWithParams";
 import { DatePicker } from "../../Input/DatePicker";
-import SelectCustodian from "../../Input/SelectCustodian";
+import SelectCustodian from "../../General/SelectCustodianWithParams";
 import AddSecurity from "../General/AddSecurity";
 
 export default function AddTrade() {

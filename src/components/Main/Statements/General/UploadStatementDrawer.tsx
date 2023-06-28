@@ -2,8 +2,9 @@
 
 import { Button, Spin } from "antd";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useId } from "react";
 import { capitalize } from "lodash";
+import { IStatementFormProps } from "@/interfaces/Main";
 import Drawer from "../../General/Drawer";
 
 const UploadPositionStatement = lazy(
@@ -12,21 +13,22 @@ const UploadPositionStatement = lazy(
 const UploadTradeStatement = lazy(() => import("../Form/UploadTradeStatement"));
 const UploadBankStatement = lazy(() => import("../Form/UploadBankStatement"));
 
-function StatementForm() {
+function StatementForm({ id }: IStatementFormProps) {
   const layoutSegment = useSelectedLayoutSegment();
   switch (layoutSegment) {
     case "position":
-      return <UploadPositionStatement />;
+      return <UploadPositionStatement id={id} />;
     case "trade":
-      return <UploadTradeStatement />;
+      return <UploadTradeStatement id={id} />;
     case "bank":
-      return <UploadBankStatement />;
+      return <UploadBankStatement id={id} />;
     default:
       return null;
   }
 }
 
 export default function UploadStatementDrawer() {
+  const id = useId();
   const layoutSegment = useSelectedLayoutSegment() as string;
 
   const title = `Upload ${capitalize(layoutSegment)} Statement`;
@@ -37,13 +39,19 @@ export default function UploadStatementDrawer() {
       width={720}
       title={title}
       footer={
-        <Button type="primary" size="large" className="px-7" htmlType="submit">
+        <Button
+          form={id}
+          type="primary"
+          size="large"
+          className="px-7"
+          htmlType="submit"
+        >
           Upload
         </Button>
       }
     >
       <Suspense fallback={<Spin size="large" />}>
-        <StatementForm />
+        <StatementForm id={id} />
       </Suspense>
     </Drawer>
   );

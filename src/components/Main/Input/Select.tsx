@@ -15,7 +15,7 @@ export default function Select({
   return (
     <AntdSelect
       showSearch
-      key={loading ? undefined : selectId}
+      key={loading ? selectId : undefined}
       defaultValue={loading ? undefined : defaultValue}
       value={loading ? undefined : value}
       disabled={loading}

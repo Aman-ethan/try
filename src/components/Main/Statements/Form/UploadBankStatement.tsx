@@ -1,12 +1,13 @@
 import { Form, Input, Row } from "antd";
-import SelectClient from "../../Input/SelectClient";
+import { IStatementFormProps } from "@/interfaces/Main";
+import SelectClient from "../../General/SelectClientWithParams";
 import { DatePicker } from "../../Input/DatePicker";
-import SelectCustodian from "../../Input/SelectCustodian";
 import Upload from "../../Input/Upload";
+import SelectCustodian from "../../Input/SelectCustodian";
 
-export default function UploadBankStatement() {
+export default function UploadBankStatement({ id }: IStatementFormProps) {
   return (
-    <Form layout="vertical" size="large" className="space-y-6">
+    <Form id={id} layout="vertical" size="large" className="space-y-6">
       <Row className="gap-x-8">
         <Form.Item label="Client" name="client" className="flex-1">
           <SelectClient placeholder="Choose the client" />

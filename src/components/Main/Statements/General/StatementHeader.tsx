@@ -4,8 +4,8 @@ import Title from "@/components/Typography/Title";
 import { Row } from "antd";
 import { useSelectedLayoutSegment } from "next/navigation";
 import UploadStatementDrawer from "./UploadStatementDrawer";
-import SelectClient from "../../Input/SelectClient";
-import SelectCustodian from "../../Input/SelectCustodian";
+import SelectClient from "../../General/SelectClientWithParams";
+import SelectCustodian from "../../General/SelectCustodianWithParams";
 import StatementDatePicker from "../Input/StatementDatePicker";
 
 export default function StatementFilter() {

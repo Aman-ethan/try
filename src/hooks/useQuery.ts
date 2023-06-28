@@ -10,9 +10,13 @@ function useQuery<Data>(
   config?: SWRConfiguration<Data, Error>
 ) {
   const { access_token } = useCookies([ACCESS_TOKEN_KEY])[0];
-  return useSWR<Data, Error>(key ? [key, access_token] : null, getFetcher, {
-    ...config,
-  });
+  return useSWR<Data, Error>(
+    key ? [key, "6e51548cebfc07b7531c540ebe5fbe18fbf00beb"] : null,
+    getFetcher,
+    {
+      ...config,
+    }
+  );
 }
 
 export function useTransactionServerQuery<Data>(

@@ -9,7 +9,7 @@ const DraggerStyle: CSSProperties = {
 
 export default function Upload() {
   return (
-    <AntdUpload.Dragger style={DraggerStyle}>
+    <AntdUpload.Dragger style={DraggerStyle} action={(file) => file.name}>
       <Row align="middle" className="flex-col gap-y-4 py-7">
         <UploadIcon />
         <div className="space-y-2">

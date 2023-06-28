@@ -15,8 +15,8 @@ type NetWorthSearchParams = "client_id" | "client_name";
 
 type TradeSearchParams =
   | "trade_search"
-  | "trade_client_id"
-  | "trade_custodian_id"
+  | "client_id"
+  | "custodian_id"
   | "trade_date_from"
   | "trade_date_to"
   | "trade_limit"

@@ -2,7 +2,6 @@ import { Image, Space, Typography } from "antd";
 import { flags } from "@/constants/symbols";
 import { formatNumber } from "@/lib/format";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import { preloadTransactionServerQuery } from "@/lib/preload";
 
 type Currency = keyof typeof flags;
 
@@ -47,8 +46,6 @@ export default function CurrencyTag({
     </Space>
   );
 }
-
-preloadTransactionServerQuery("/client/");
 
 export function ClientCurrency({ amount, clientId }: ICompanyCurrencyProps) {
   const { data, isLoading } =

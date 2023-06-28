@@ -8,12 +8,12 @@ export async function postFetcher<ExtraArgs>(
   options: Readonly<{ arg: ExtraArgs }>
 ) {
   try {
-    const accessToken = new Cookies().get(ACCESS_TOKEN_KEY);
+    const accessToken = "6e51548cebfc07b7531c540ebe5fbe18fbf00beb";
     const res = await fetch(key, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: accessToken ? `Bearer ${accessToken}` : "",
+        Authorization: accessToken ? `Token ${accessToken}` : "",
       },
       body: JSON.stringify(options.arg),
     });
@@ -38,7 +38,7 @@ export async function getFetcher([key, accessToken]: string[]) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: accessToken ? `Bearer ${accessToken}` : "",
+        Authorization: accessToken ? `Token ${accessToken}` : "",
       },
     });
 
