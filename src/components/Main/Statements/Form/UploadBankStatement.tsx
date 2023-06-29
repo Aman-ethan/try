@@ -1,16 +1,43 @@
 import { Form, Input, Row } from "antd";
 import useStatementForm from "@/hooks/useStatementForm";
+import { DATE_PARAM_FORMAT } from "@/constants/format";
+import { useTransactionServerMutation } from "@/hooks/useMutation";
 import { DatePicker } from "../../Input/DatePicker";
 import Upload from "../../Input/Upload";
 import SelectCustodian from "../../Input/SelectCustodian";
 import SelectClient from "../../Input/SelectClient";
 import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
 
+interface IUploadBankStatementResponse {
+  url: string;
+}
+
+interface IUploadBankStatementForm {
+  client_id: string;
+  client_name: string;
+  custodian_id: string;
+  custodian_name: string;
+  relationship_number: string;
+  statement_date: string;
+  file: File;
+}
+
 export default function UploadBankStatement() {
   const formId = useStatementForm();
   const [form] = Form.useForm();
   const custodian_id = Form.useWatch("custodian_id", form);
   const client_id = Form.useWatch("client_id", form);
+  const { trigger } = useTransactionServerMutation<
+    IUploadBankStatementForm,
+    IUploadBankStatementResponse
+  >("/statement/bank/upload_url/", {
+    onSuccess(data) {
+      fetch(data.url, {
+        method: "PUT",
+        body: form.getFieldValue("file"),
+      });
+    },
+  });
 
   return (
     <Form
@@ -21,12 +48,12 @@ export default function UploadBankStatement() {
       className="space-y-6"
     >
       <Row className="gap-x-8">
-        <Form.Item label="Client" name="client_id" className="flex-1">
+        <Form.Item label="Client" name="client_name" className="flex-1">
           <SelectClient
             params={{ custodian_id }}
             placeholder="Choose the client"
             reset={() => {
-              form.resetFields(["client_id"]);
+              form.resetFields(["client_name"]);
             }}
           />
         </Form.Item>
@@ -35,12 +62,12 @@ export default function UploadBankStatement() {
         </Form.Item>
       </Row>
       <Row className="gap-x-8">
-        <Form.Item label="Custodian" name="custodian_id" className="flex-1">
+        <Form.Item label="Custodian" name="custodian_name" className="flex-1">
           <SelectCustodian
             params={{ client_id }}
             placeholder="Choose the custodian"
             reset={() => {
-              form.resetFields(["custodian_id"]);
+              form.resetFields(["custodian_name"]);
             }}
           />
         </Form.Item>
@@ -78,7 +105,18 @@ export default function UploadBankStatement() {
         </Form.Item>
       </Row>
       <Form.Item name="file">
-        <Upload />
+        <Upload
+          beforeUpload={(file) => {
+            trigger({
+              ...form.getFieldsValue(),
+              statement_date: form
+                .getFieldValue("statement_date")
+                .format(DATE_PARAM_FORMAT),
+            });
+            form.setFieldValue("file", file);
+            return false;
+          }}
+        />
       </Form.Item>
     </Form>
   );

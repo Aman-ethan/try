@@ -11,10 +11,15 @@ interface IStatementResponse<T> {
   results: T[];
 }
 
+interface IURLs {
+  get: string;
+  delete?: string;
+}
+
 export default function Statement<T extends { id: string }>({
-  urlKey,
+  urls,
   columns,
-}: Pick<TableProps<unknown>, "columns"> & { urlKey: string }) {
+}: Pick<TableProps<unknown>, "columns"> & { urls: IURLs }) {
   const { updateSearchParams, get: getSearchParams } = useSearchParams();
 
   const page_size = getSearchParams("page_size");
@@ -22,7 +27,7 @@ export default function Statement<T extends { id: string }>({
   const custodian_id = getSearchParams("custodian_id");
 
   const { data, isLoading } = useTransactionServerQuery<IStatementResponse<T>>(
-    `${urlKey}${buildURLSearchParams({ page_size, client_id, custodian_id })}`
+    `${urls.get}${buildURLSearchParams({ page_size, client_id, custodian_id })}`
   );
 
   return (

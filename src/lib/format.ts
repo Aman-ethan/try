@@ -1,12 +1,15 @@
-type NumberFormatType = "price" | "assetsQuantity";
+import dayjs from "dayjs";
+
+type NumberFormatType = "price" | "quantity";
 
 const numberFormatOptions: Record<NumberFormatType, Intl.NumberFormatOptions> =
   {
     price: {
       style: "currency",
+      minimumFractionDigits: 0,
       maximumFractionDigits: 4,
     },
-    assetsQuantity: {
+    quantity: {
       maximumFractionDigits: 20,
     },
   };
@@ -14,7 +17,7 @@ const numberFormatOptions: Record<NumberFormatType, Intl.NumberFormatOptions> =
 export function formatNumber(
   type: NumberFormatType,
   value: string | number,
-  options: Intl.NumberFormatOptions
+  options?: Intl.NumberFormatOptions
 ) {
   return new Intl.NumberFormat("en-US", {
     ...numberFormatOptions[type],
@@ -22,4 +25,6 @@ export function formatNumber(
   }).format(String(value) as unknown as number);
 }
 
-export function formatDate() {}
+export function formatTableDate(date: Date) {
+  return dayjs(date).format("D MMM YYYY");
+}

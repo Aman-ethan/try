@@ -5,17 +5,6 @@ import { ThunderboltOutlined } from "@ant-design/icons";
 import Table from "./Table";
 import MoreMenu from "../General/MoreMenu";
 
-const Action: TableColumnsType = [
-  {
-    title: <ThunderboltOutlined />,
-    key: "action",
-    fixed: "right",
-    render: () => <MoreMenu />,
-    width: 55,
-    align: "center",
-  },
-];
-
 export default function ScrollableTable({
   columns,
   scroll,
@@ -23,6 +12,16 @@ export default function ScrollableTable({
   size = "middle",
   ...props
 }: TableProps<unknown> & { action?: boolean }) {
+  const Action: TableColumnsType = [
+    {
+      title: <ThunderboltOutlined />,
+      key: "action",
+      fixed: "right",
+      render: ({ id }) => <MoreMenu id={id} />,
+      width: 55,
+      align: "center",
+    },
+  ];
   const columnsWithAction = action ? columns?.concat(Action) : columns;
   return (
     <Table
