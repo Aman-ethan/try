@@ -1,9 +1,9 @@
 import { MoreOutlined } from "@ant-design/icons";
 import { Button, Dropdown, MenuProps } from "antd";
 
-interface IMoreMenuProps {
-  id: string;
-}
+// interface IMoreMenuProps {
+//   id: string;
+// }
 
 const MoreItems: MenuProps["items"] = [
   {
@@ -20,7 +20,7 @@ const MoreItems: MenuProps["items"] = [
   },
 ];
 
-export default function MoreMenu({ id }: IMoreMenuProps) {
+export default function MoreMenu() {
   return (
     <Dropdown menu={{ items: MoreItems }}>
       <Button type="text" icon={<MoreOutlined />} />
