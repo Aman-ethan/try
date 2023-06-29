@@ -17,7 +17,7 @@ export default function ScrollableTable({
       title: <ThunderboltOutlined />,
       key: "action",
       fixed: "right",
-      render: ({ id }) => <MoreMenu id={id} />,
+      render: () => <MoreMenu />,
       width: 55,
       align: "center",
     },
