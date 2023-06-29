@@ -16,9 +16,10 @@ const numberFormatOptions: Record<NumberFormatType, Intl.NumberFormatOptions> =
 
 export function formatNumber(
   type: NumberFormatType,
-  value: string | number,
+  value?: string | number,
   options?: Intl.NumberFormatOptions
 ) {
+  if (Number.isNaN(Number(value))) return null;
   return new Intl.NumberFormat("en-US", {
     ...numberFormatOptions[type],
     ...options,
