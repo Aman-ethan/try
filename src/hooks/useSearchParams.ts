@@ -46,7 +46,7 @@ export default function useSearchParams() {
     const urlSearchParams = new URLSearchParams();
 
     Object.entries(params).forEach(([key, value]) => {
-      if (value !== null) urlSearchParams.append(key, String(value));
+      if (value != null) urlSearchParams.append(key, String(value));
     });
 
     searchParams.forEach((value, key) => {

@@ -14,6 +14,7 @@ export default function Select({
 
   return (
     <AntdSelect
+      allowClear
       showSearch
       key={loading ? selectId : undefined}
       defaultValue={loading ? undefined : defaultValue}
