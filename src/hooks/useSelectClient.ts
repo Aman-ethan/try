@@ -6,7 +6,6 @@ export default function useSelectClient(params?: TSelectClientParams) {
   const { data, isLoading } = useTransactionServerQuery<IClientResponse[]>(
     `/client/${buildURLSearchParams(params)}`
   );
-
   const options = data?.map(({ id, name }) => ({
     label: name,
     value: id,

@@ -7,6 +7,7 @@ import { CookiesProvider } from "react-cookie";
 import { ConfigProvider } from "antd";
 import theme from "@/config/theme";
 import { enUSIntl } from "@ant-design/pro-components";
+import { SWRConfig } from "swr";
 import AuthProvider from "./AuthProvider";
 
 interface IStyleRegistryProps {
@@ -27,7 +28,9 @@ export default function AppProvider({ children }: IStyleRegistryProps) {
       <AuthProvider>
         <StyleProvider cache={cache}>
           <ConfigProvider locale={enUSIntl} theme={theme}>
-            {children}
+            <SWRConfig value={{ revalidateOnFocus: false }}>
+              {children}
+            </SWRConfig>
           </ConfigProvider>
         </StyleProvider>
       </AuthProvider>

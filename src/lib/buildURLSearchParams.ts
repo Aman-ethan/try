@@ -1,10 +1,11 @@
 import { isString, pickBy } from "lodash";
 
 export default function buildURLSearchParams(
-  params?: Record<string, string | null | undefined>
+  params?: Record<string, string | null | undefined> | string
 ) {
   const urlSearchParams = new URLSearchParams(
-    pickBy(params, isString)
-  ).toString();
+    typeof params === "string" ? params : pickBy(params, isString)
+  );
+  urlSearchParams.sort();
   return urlSearchParams ? `?${urlSearchParams}` : "";
 }

@@ -14,9 +14,9 @@ function StatementForm() {
   const layoutSegment = useSelectedLayoutSegment();
   switch (layoutSegment) {
     case "position":
-      return <UploadStatement urlKey="/statement/position/upload/" />;
+      return <UploadStatement urlKey="/statement/position/" />;
     case "trade":
-      return <UploadStatement urlKey="/statement/trade/upload/" />;
+      return <UploadStatement urlKey="/statement/trade/" />;
     case "bank":
       return <UploadBankStatement />;
     default:

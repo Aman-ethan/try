@@ -6,6 +6,7 @@ import Select from "../../Input/Select";
 
 interface IBankAccount {
   relationship_number: string;
+  id: string;
 }
 
 type TSelectRelationshipNumberParams = Record<
@@ -18,9 +19,9 @@ function useSelectRelationshipNumber(params?: TSelectRelationshipNumberParams) {
     `/bank_account/${buildURLSearchParams(params)}`
   );
 
-  const options = data?.map(({ relationship_number }) => ({
+  const options = data?.map(({ id, relationship_number }) => ({
     label: relationship_number,
-    value: relationship_number,
+    value: id,
   }));
 
   return {

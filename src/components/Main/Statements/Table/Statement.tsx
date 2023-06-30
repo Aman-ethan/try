@@ -27,7 +27,7 @@ export default function Statement<T extends { id: string }>({
   const custodian_id = getSearchParams("custodian_id");
 
   const { data, isLoading } = useTransactionServerQuery<IStatementResponse<T>>(
-    `${urls.get}${buildURLSearchParams({ page_size, client_id, custodian_id })}`
+    urls.get + buildURLSearchParams({ client_id, custodian_id, page_size })
   );
 
   return (

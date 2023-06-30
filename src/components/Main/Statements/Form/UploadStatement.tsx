@@ -3,6 +3,8 @@ import { Button, Form, FormRule, Row, message } from "antd";
 import useStatementForm from "@/hooks/useStatementForm";
 import { IUploadStatementForm } from "@/interfaces/Main";
 import { useTransactionServerUploadMutation } from "@/hooks/useMutation";
+import { useSWRConfig } from "swr";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import Upload from "../../Input/Upload";
 import SelectClient from "../../Input/SelectClient";
 import SelectCustodian from "../../Input/SelectCustodian";
@@ -27,13 +29,15 @@ export default function UploadStatement({
   urlKey,
 }: IUploadStatementFormProps) {
   const [form] = Form.useForm();
+  const { mutate } = useSWRConfig();
   const { isMutating, trigger } = useTransactionServerUploadMutation<
     IUploadStatementForm,
     IUploadStatementResponse
-  >(urlKey, {
+  >(`${urlKey}upload/`, {
     onSuccess(data) {
       message.success(data.message);
       form.resetFields();
+      mutate(urlKey + buildURLSearchParams(window.location.search));
     },
     onError(error) {
       message.error(error.message);
@@ -106,9 +110,11 @@ export default function UploadStatement({
         </Form.Item>
         <Form.Item name="file" rules={FormRules.file}>
           <Upload
-            beforeUpload={(file) => {
-              form.setFieldValue("file", file);
+            beforeUpload={() => {
               return false;
+            }}
+            onChange={(info) => {
+              form.setFieldValue("file", info.file);
             }}
           />
         </Form.Item>

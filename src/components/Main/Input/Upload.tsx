@@ -7,12 +7,23 @@ const DraggerStyle: CSSProperties = {
   borderColor: "#1890FF",
 };
 
-export default function Upload({ beforeUpload }: UploadProps) {
+export default function Upload({
+  action,
+  beforeUpload,
+  disabled,
+  onChange,
+  method = "PUT",
+}: UploadProps) {
   return (
     <AntdUpload.Dragger
       maxCount={1}
       style={DraggerStyle}
+      method={method}
+      action={action}
       beforeUpload={beforeUpload}
+      disabled={disabled}
+      onChange={onChange}
+      multiple={false}
     >
       <Row align="middle" className="flex-col gap-y-4 py-7">
         <UploadIcon />

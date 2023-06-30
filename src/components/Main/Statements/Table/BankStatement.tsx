@@ -51,7 +51,7 @@ const Columns: TableColumnsType = [
     title: "Relationship Number",
     key: "relationship-number",
     width: 170,
-    dataIndex: "relationship_number",
+    dataIndex: "relationship_number_string",
   },
 ];
 
