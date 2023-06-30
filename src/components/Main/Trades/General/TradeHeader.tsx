@@ -64,7 +64,7 @@ export default function TradeHeader() {
             <Button
               type="text"
               shape="circle"
-              icon={<CaretDownFilled className="text-xl mt-0.5" />}
+              icon={<CaretDownFilled className="mt-0.5 text-xl" />}
             />
           </Dropdown>
         </Row>

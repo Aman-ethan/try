@@ -102,7 +102,7 @@ export default function AssetNetWorth() {
       bordered={false}
       extra={<Extra />}
       title={clientName}
-      className="rounded-l-none h-full"
+      className="h-full rounded-l-none"
     >
       <IndexChart data={data} />
     </Card>

@@ -1,8 +1,5 @@
 "use client";
 
-import { ACCESS_TOKEN_KEY } from "@/constants/strings";
-import { Cookies } from "react-cookie";
-
 export async function postFetcher<ExtraArgs>(
   key: string,
   options: Readonly<{ arg: ExtraArgs }>

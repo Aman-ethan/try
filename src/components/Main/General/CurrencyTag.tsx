@@ -8,9 +8,9 @@ interface ICurrencyTagProps {
 
 export default function CurrencyTag({ currency }: ICurrencyTagProps) {
   return (
-    <Tag className="py-1 px-2 space-x-2 flex items-center bg-neutral-2">
+    <Tag className="flex items-center space-x-2 bg-neutral-2 px-2 py-1">
       <Image alt="flag" src={flags[currency]} width={24} height={18} />
-      <span className="text-neutral-10 text-xs">{currency.toUpperCase()}</span>
+      <span className="text-xs text-neutral-10">{currency.toUpperCase()}</span>
     </Tag>
   );
 }

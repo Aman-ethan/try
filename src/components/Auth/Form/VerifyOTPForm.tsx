@@ -117,7 +117,7 @@ export default function VerifyOTPForm() {
               name={String(index)}
               required
               maxLength={1}
-              className="text-base border-primary w-12 h-12 text-center text-neutral-11 font-medium valid:bg-primary-1"
+              className="h-12 w-12 border-primary text-center text-base font-medium text-neutral-11"
             />
           </Form.Item>
         ))}

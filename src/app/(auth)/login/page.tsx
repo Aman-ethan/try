@@ -19,7 +19,7 @@ export default function LoginPage() {
       <div className="space-y-8">
         <Link
           href="/forgot-password"
-          className="hover:underline focus:underline inline-block"
+          className="inline-block hover:underline focus:underline"
         >
           Forgot Password?
         </Link>
@@ -27,7 +27,7 @@ export default function LoginPage() {
           Not registered yet?&nbsp;
           <Link
             href="/signup"
-            className="hover:underline focus:underline font-medium"
+            className="font-medium hover:underline focus:underline"
           >
             Create an account
           </Link>

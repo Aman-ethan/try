@@ -10,7 +10,7 @@ export default function VerifyOTPPage() {
         <Title>OTP Verification</Title>
         <Paragraph>
           Enter the OTP code sent to{" "}
-          <span className="text-neutral-11 font-medium">
+          <span className="font-medium text-neutral-11">
             <PhoneNumber />
           </span>
         </Paragraph>

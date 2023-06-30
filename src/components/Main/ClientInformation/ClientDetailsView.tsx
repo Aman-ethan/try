@@ -28,7 +28,7 @@ export default function ClientDetailsView() {
     setType(e.target.value);
   };
   return (
-    <div className="py-5 space-y-8">
+    <div className="space-y-8 py-5">
       <div className="flex justify-between">
         <Radio.Group size="large" value={type} onChange={handleTypeChange}>
           <Radio.Button value="goals">Goals</Radio.Button>

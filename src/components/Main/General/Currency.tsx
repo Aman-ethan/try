@@ -31,9 +31,9 @@ export default function CurrencyTag({
   return (
     <Space align="center">
       {loading || !currency ? (
-        <div className="w-12 h-6" />
+        <div className="h-6 w-12" />
       ) : (
-        <Space size={2} align="center" className="bg-gray-200 px-1 rounded">
+        <Space size={2} align="center" className="rounded bg-gray-200 px-1">
           <Typography.Text className="text-xs">
             {currency.toUpperCase()}
           </Typography.Text>

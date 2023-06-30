@@ -18,11 +18,11 @@ export default function AuthRootLayout({ children }: { children: ReactNode }) {
               width="50%"
               className="bg-primary-10 bg-[url(/AuthBackground.svg)] bg-cover"
             >
-              <div className="h-full flex justify-center items-center">
+              <div className="flex h-full items-center justify-center">
                 <AuthIllustration />
               </div>
             </Sider>
-            <Content className="px-24 pt-16 space-y-12 bg-neutral-1 max-h-screen overflow-y-scroll">
+            <Content className="max-h-screen space-y-12 overflow-y-scroll bg-neutral-1 px-24 pt-16">
               <Link href="/login">
                 <Logo />
               </Link>

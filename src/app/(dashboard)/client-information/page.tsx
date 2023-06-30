@@ -11,7 +11,7 @@ export default function ClientInformationPage() {
     <Space
       direction="vertical"
       size="large"
-      className="w-full h-screen overflow-scroll p-10"
+      className="h-screen w-full overflow-scroll p-10"
     >
       <Row justify="space-between">
         <Col>

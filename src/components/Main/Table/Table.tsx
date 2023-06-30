@@ -51,7 +51,7 @@ export default function Table({ pagination, ...props }: TableProps<any>) {
       locale={{
         emptyText: (
           <div
-            className={`${props.scroll?.y} flex justify-center items-center`}
+            className={`${props.scroll?.y} flex items-center justify-center`}
           >
             <Empty />
           </div>

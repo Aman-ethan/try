@@ -7,9 +7,9 @@ interface ITradeLayoutProps {
 
 export default function TradeLayout({ children }: ITradeLayoutProps) {
   return (
-    <div className="px-12 py-6 space-y-8">
+    <div className="space-y-8 px-12 py-6">
       <TradeHeader />
-      <div className="bg-neutral-1 p-6 rounded-lg">{children}</div>
+      <div className="rounded-lg bg-neutral-1 p-6">{children}</div>
     </div>
   );
 }

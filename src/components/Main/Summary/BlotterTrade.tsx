@@ -40,8 +40,6 @@ function useBlotterTrade() {
   >(
     `/trades/${buildURLSearchParams({
       limit: "10",
-      client_id: getSearchParams("trade_client_id"),
-      custodian_id: getSearchParams("trade_custodian_id"),
       trade_date_from: getSearchParams("trade_date_from"),
       trade_date_to: getSearchParams("trade_date_to"),
     })}`

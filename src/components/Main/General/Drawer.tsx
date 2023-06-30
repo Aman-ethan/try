@@ -34,7 +34,7 @@ export default function Drawer({
         }
       >
         <div className="pb-20">{children}</div>
-        <div className="fixed bottom-0 bg-neutral-1 w-full py-6">{footer}</div>
+        <div className="fixed bottom-0 w-full bg-neutral-1 py-6">{footer}</div>
       </AntdDrawer>
     </>
   );

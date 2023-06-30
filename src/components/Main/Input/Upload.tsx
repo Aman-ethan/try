@@ -16,7 +16,7 @@ export default function Upload() {
           <p className="font-medium text-neutral-13/80">
             Drag & drop files or <span className="text-primary-7">Browse</span>
           </p>
-          <p className="text-neutral-13/60 text-xs">
+          <p className="text-xs text-neutral-13/60">
             Supported Formats: pdf, xls, csv
           </p>
         </div>

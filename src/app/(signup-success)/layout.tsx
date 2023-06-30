@@ -9,10 +9,10 @@ export default function AuthRootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body id="layout">
-        <main className="p-16 flex flex-col items-center h-full">
+        <main className="flex h-full flex-col items-center p-16">
           <AppProvider>
             <Logo />
-            <section className="flex-1 flex items-center">{children}</section>
+            <section className="flex flex-1 items-center">{children}</section>
           </AppProvider>
         </main>
       </body>

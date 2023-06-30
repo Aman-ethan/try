@@ -11,9 +11,9 @@ import ProfileEdit from "./ProfileEdit";
 export default function ClientInfoCard() {
   const [editClicked, setEditClicked] = useState<boolean>(false);
   return (
-    <Card className="rounded-lg h-full w-full">
-      <div className="space-y-6 border-b-2 py-6 mb-5">
-        <div className="space-x-4 flex items-center">
+    <Card className="h-full w-full rounded-lg">
+      <div className="mb-5 space-y-6 border-b-2 py-6">
+        <div className="flex items-center space-x-4">
           <Title>CA_CH</Title>
           <Button className="flex items-center justify-center">
             <EditOutlined onClick={() => setEditClicked(!editClicked)} />

@@ -14,7 +14,7 @@ const DescriptionItems = [
 
 export default function SecurityDetails() {
   return (
-    <div className="bg-neutral-2 p-4 space-y-4 text-neutral-13/80 rounded-md border border-neutral-3">
+    <div className="space-y-4 rounded-md border border-neutral-3 bg-neutral-2 p-4 text-neutral-13/80">
       <div className="space-y-2">
         <h5 className="text-base font-medium">Security Details</h5>
         <Divider className="bg-neutral-4" />

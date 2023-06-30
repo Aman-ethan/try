@@ -56,8 +56,8 @@ export default function ResendOTP({ forgotPassword }: IResendOTPProps) {
       onClick={resendOTP}
       className={
         resendOTPEnabled
-          ? "text-primary hover:underline cursor-pointer"
-          : "text-neutral-12/25 cursor-not-allowed"
+          ? "cursor-pointer text-primary hover:underline"
+          : "cursor-not-allowed text-neutral-12/25"
       }
     >
       Resend Code
