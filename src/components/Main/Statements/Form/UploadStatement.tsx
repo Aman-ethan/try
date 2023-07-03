@@ -3,8 +3,7 @@ import { Button, Form, FormRule, Row, message } from "antd";
 import useStatementForm from "@/hooks/useStatementForm";
 import { IUploadStatementForm } from "@/interfaces/Main";
 import { useTransactionServerUploadMutation } from "@/hooks/useMutation";
-import { useSWRConfig } from "swr";
-import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import revalidate from "@/lib/revalidate";
 import Upload from "../../Input/Upload";
 import SelectClient from "../../Input/SelectClient";
 import SelectCustodian from "../../Input/SelectCustodian";
@@ -29,7 +28,6 @@ export default function UploadStatement({
   urlKey,
 }: IUploadStatementFormProps) {
   const [form] = Form.useForm();
-  const { mutate } = useSWRConfig();
   const { isMutating, trigger } = useTransactionServerUploadMutation<
     IUploadStatementForm,
     IUploadStatementResponse
@@ -37,7 +35,7 @@ export default function UploadStatement({
     onSuccess(data) {
       message.success(data.message);
       form.resetFields();
-      mutate(urlKey + buildURLSearchParams(window.location.search));
+      revalidate(urlKey);
     },
     onError(error) {
       message.error(error.message);

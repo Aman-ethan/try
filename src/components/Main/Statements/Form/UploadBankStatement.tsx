@@ -4,8 +4,7 @@ import { DATE_PARAM_FORMAT } from "@/constants/format";
 import { useTransactionServerMutation } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { Dayjs } from "dayjs";
-import { useSWRConfig } from "swr";
-import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import revalidate from "@/lib/revalidate";
 import { DatePicker } from "../../Input/DatePicker";
 import Upload from "../../Input/Upload";
 import SelectCustodian from "../../Input/SelectCustodian";
@@ -54,7 +53,6 @@ export default function UploadBankStatement() {
   const [form] = Form.useForm();
   const custodian_id = Form.useWatch("custodian_id", form);
   const client_id = Form.useWatch("client_id", form);
-  const { mutate: globalMutate } = useSWRConfig();
   const { data, isLoading, mutate } =
     useTransactionServerQuery<IUploadUrlResponse>(
       "/statement/bank/upload_url/"
@@ -66,9 +64,7 @@ export default function UploadBankStatement() {
     onSuccess: () => {
       message.success("Bank statement uploaded successfully");
       form.resetFields();
-      globalMutate(
-        `/statement/bank/${buildURLSearchParams(window.location.search)}`
-      );
+      revalidate("/statement/bank/");
     },
   });
   const formId = useStatementForm({ isMutating });
