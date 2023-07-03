@@ -55,7 +55,7 @@ export default function useUpdatePassword({
   });
 
   return {
-    progress: {
+    progressProps: {
       percent: (passwordScore / 4) * 100,
       strokeColor: strengthStrokeColor[passwordScore],
     },

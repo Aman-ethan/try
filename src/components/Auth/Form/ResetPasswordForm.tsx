@@ -6,13 +6,14 @@ import { useRouter } from "next/navigation";
 
 export default function ResetPasswordForm() {
   const router = useRouter();
-  const { form, trigger, isMutating, helpText, progress } = useUpdatePassword({
-    onSuccess(data) {
-      if (data) {
-        router.replace("/reset-success");
-      }
-    },
-  });
+  const { form, trigger, isMutating, helpText, progressProps } =
+    useUpdatePassword({
+      onSuccess(data) {
+        if (data) {
+          router.replace("/reset-success");
+        }
+      },
+    });
   return (
     <Form
       form={form}
@@ -32,7 +33,7 @@ export default function ResetPasswordForm() {
         />
       </Form.Item>
       <Form.Item label="Password Strength">
-        <Progress steps={4} showInfo={false} {...progress} />
+        <Progress steps={4} showInfo={false} {...progressProps} />
       </Form.Item>
       <Button htmlType="submit" type="primary" loading={isMutating} block>
         Change Password
