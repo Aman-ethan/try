@@ -91,3 +91,33 @@ export function getFetcher(baseURL: string) {
       error: "An error occurred while getting the data.",
     });
 }
+
+export function putFetcher(baseURL: string) {
+  return <ExtraArgs>(key: string, options: Readonly<{ arg: ExtraArgs }>) =>
+    fetcher({
+      url: baseURL + key,
+      init: {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(options.arg),
+      },
+      error: "An error occurred while replacing the data.",
+    });
+}
+
+export function patchFetcher(baseURL: string) {
+  return <ExtraArgs>(key: string, options: Readonly<{ arg: ExtraArgs }>) =>
+    fetcher({
+      url: baseURL + key,
+      init: {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(options.arg),
+      },
+      error: "An error occurred while modifying the data.",
+    });
+}

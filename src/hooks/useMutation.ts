@@ -1,7 +1,13 @@
 "use client";
 
 import { TRANSACTION_SERVER_URL } from "@/constants/strings";
-import { deleteFetcher, postFormFetcher, postJsonFetcher } from "@/lib/fetcher";
+import {
+  deleteFetcher,
+  postFormFetcher,
+  postJsonFetcher,
+  putFetcher,
+  patchFetcher,
+} from "@/lib/fetcher";
 import useSWRMutation, { SWRMutationConfiguration } from "swr/mutation";
 
 function useMutation<ExtraArgs, Data>(
@@ -26,7 +32,7 @@ export function useAuthServerMutation<ExtraArgs, Data>(
   );
 }
 
-export function useTransactionServerUploadMutation<ExtraArgs, Data>(
+export function useTransactionServerFormMutation<ExtraArgs, Data>(
   key: string,
   options?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
 ) {
@@ -55,6 +61,28 @@ export function useTransactionServerDeleteMutation<Data>(
   return useMutation<unknown, Data>(
     key,
     deleteFetcher(TRANSACTION_SERVER_URL),
+    options
+  );
+}
+
+export function useTransactionServerPutMutation<Data>(
+  key: string,
+  options?: SWRMutationConfiguration<Data, Error, string>
+) {
+  return useMutation<unknown, Data>(
+    key,
+    putFetcher(TRANSACTION_SERVER_URL),
+    options
+  );
+}
+
+export function useTransactionServerPatchMutation<Data>(
+  key: string,
+  options?: SWRMutationConfiguration<Data, Error, string>
+) {
+  return useMutation<unknown, Data>(
+    key,
+    patchFetcher(TRANSACTION_SERVER_URL),
     options
   );
 }
