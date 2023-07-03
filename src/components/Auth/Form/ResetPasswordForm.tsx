@@ -1,63 +1,18 @@
 "use client";
 
-import { Button, Form, Input, Progress, message } from "antd";
+import useUpdatePassword from "@/hooks/useUpdatePassword";
+import { Button, Form, Input, Progress } from "antd";
 import { useRouter } from "next/navigation";
-import { zxcvbn, zxcvbnOptions } from "@zxcvbn-ts/core";
-import * as zxcvbnCommonPackage from "@zxcvbn-ts/language-common";
-import * as zxcvbnEnPackage from "@zxcvbn-ts/language-en";
-import { useAuthServerMutation } from "@/hooks/useMutation";
-
-interface IUpdatePasswordArgs {
-  new_password: string;
-  confirm_new_password: string;
-}
-
-interface IUpdatePasswordResponse {}
-
-const options = {
-  translations: zxcvbnEnPackage.translations,
-  graphs: zxcvbnCommonPackage.adjacencyGraphs,
-  dictionary: {
-    ...zxcvbnCommonPackage.dictionary,
-    ...zxcvbnEnPackage.dictionary,
-  },
-};
-
-zxcvbnOptions.setOptions(options);
-const strengthStrokeColor = [
-  "#f5222d",
-  "#fa8c16",
-  "#fadb14",
-  "#a0d911",
-  "#52c41a",
-];
 
 export default function ResetPasswordForm() {
   const router = useRouter();
-
-  const [form] = Form.useForm<IUpdatePasswordArgs>();
-  const password = Form.useWatch("new_password", form);
-  const passwordInfo = zxcvbn(password || "");
-  const passwordScore = passwordInfo.score;
-  const helpText = password
-    ? passwordInfo.feedback.warning ||
-      passwordInfo.feedback.suggestions.join(" ")
-    : undefined;
-
-  const { trigger, isMutating } = useAuthServerMutation<
-    IUpdatePasswordArgs,
-    IUpdatePasswordResponse
-  >("/api/reset-password", {
+  const { form, trigger, isMutating, helpText, progress } = useUpdatePassword({
     onSuccess(data) {
       if (data) {
         router.replace("/reset-success");
       }
     },
-    onError() {
-      message.error("Password reset failed. Please try again.");
-    },
   });
-
   return (
     <Form
       form={form}
@@ -77,12 +32,7 @@ export default function ResetPasswordForm() {
         />
       </Form.Item>
       <Form.Item label="Password Strength">
-        <Progress
-          steps={4}
-          percent={(passwordScore / 4) * 100}
-          showInfo={false}
-          strokeColor={strengthStrokeColor[passwordScore]}
-        />
+        <Progress steps={4} showInfo={false} {...progress} />
       </Form.Item>
       <Button htmlType="submit" type="primary" loading={isMutating} block>
         Change Password

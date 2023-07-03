@@ -22,9 +22,10 @@ import {
 } from "antd";
 import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
-import useAuth from "@/hooks/useAuth";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 import CurrencyTag from "../General/CurrencyTag";
+import Logout from "../General/Logout";
+import ChangePassword from "../General/ChangePassword";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -38,34 +39,24 @@ interface ILayoutProps {
 //     href: "https://www.ethan-ai.com/privacy",
 //   },
 // ];
-
-const labelClassName = "text-neutral-13/80";
 const iconClassName = "text-neutral-11";
 
 const currentDate = new Date();
 
+const ProfileItems: MenuProps["items"] = [
+  {
+    label: <ChangePassword />,
+    key: "change-password",
+    icon: <SyncOutlined className={iconClassName} />,
+  },
+  {
+    label: <Logout />,
+    key: "logout",
+    icon: <LogoutOutlined className={iconClassName} />,
+  },
+];
+
 function UserProfile() {
-  const { logout } = useAuth();
-  const ProfileItems: MenuProps["items"] = [
-    {
-      label: (
-        <button type="button" className={labelClassName}>
-          Change Password
-        </button>
-      ),
-      key: "change-password",
-      icon: <SyncOutlined className={iconClassName} />,
-    },
-    {
-      label: (
-        <button type="button" onClick={logout} className={labelClassName}>
-          Logout
-        </button>
-      ),
-      key: "logout",
-      icon: <LogoutOutlined className={iconClassName} />,
-    },
-  ];
   return (
     <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
       <div className="cursor-pointer space-x-2">

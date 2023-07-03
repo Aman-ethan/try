@@ -64,8 +64,8 @@ const ROUTE = [
     ],
   },
   {
-    key: "/customer-information",
-    label: <Link href="/customer-information">Customer Information</Link>,
+    key: "/client-information",
+    label: <Link href="/client-information">Customer Information</Link>,
     icon: <UserOutlined />,
   },
   {
