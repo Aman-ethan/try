@@ -2,8 +2,8 @@ import Title from "@/components/Typography/Title";
 import { Row } from "antd";
 import DetailsSummary from "./DetailsSummary";
 import PositionListItems from "./PositionListItems";
-import SelectClient from "../General/SelectClientWithParams";
-import SelectCustodian from "../General/SelectCustodianWithParams";
+import SelectClient from "../Input/SelectClientWithParams";
+import SelectCustodian from "../Input/SelectCustodianWithParams";
 import SelectAssetClass from "../Input/SelectAssetClass";
 
 export default function PositionList() {
