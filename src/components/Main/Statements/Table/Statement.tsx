@@ -16,7 +16,7 @@ interface IURLs {
   delete?: string;
 }
 
-export default function Statement<T extends { id: string }>({
+export default function Statement<T>({
   urls,
   columns,
 }: Pick<TableProps<unknown>, "columns"> & { urls: IURLs }) {

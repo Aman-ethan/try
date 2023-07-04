@@ -92,7 +92,7 @@ export default function UploadBankStatement() {
           rules={FormRules.client}
         >
           <SelectClient
-            params={{ custodian }}
+            params={{ custodian_id: custodian }}
             placeholder="Choose the client"
             disabled={isMutating}
             reset={() => {
@@ -117,7 +117,7 @@ export default function UploadBankStatement() {
           rules={FormRules.custodian}
         >
           <SelectCustodian
-            params={{ client }}
+            params={{ client_id: client }}
             placeholder="Choose the custodian"
             disabled={isMutating}
             reset={() => {
@@ -134,8 +134,8 @@ export default function UploadBankStatement() {
           <SelectRelationshipNumber
             disabled={isMutating}
             params={{
-              client,
-              custodian,
+              client_id: client,
+              custodian_id: custodian,
             }}
             reset={() => {
               form.resetFields(["relationship_number"]);

@@ -82,7 +82,7 @@ export default function UploadStatement({
         <Form.Item label="Client" name="client" rules={FormRules.client}>
           <SelectClient
             params={{
-              custodian,
+              custodian_id: custodian,
             }}
             reset={() => {
               form.resetFields(["client"]);
@@ -97,7 +97,7 @@ export default function UploadStatement({
           rules={FormRules.custodian}
         >
           <SelectCustodian
-            params={{ client }}
+            params={{ client_id: client }}
             reset={() => {
               form.resetFields(["custodian"]);
             }}

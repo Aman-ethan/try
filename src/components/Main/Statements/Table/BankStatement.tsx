@@ -1,10 +1,12 @@
 "use client";
 
-import { TableColumnsType } from "antd";
+import { MenuProps, TableColumnsType } from "antd";
 import { formatTableDate } from "@/lib/format";
+import { ThunderboltOutlined } from "@ant-design/icons";
 import Statement from "./Statement";
 import StatusTag from "../../General/StatusTag";
 import CurrencyTag from "../../General/CurrencyTag";
+import MoreMenu, { DeleteItem, DownloadItem } from "../../General/MoreMenu";
 
 const Columns: TableColumnsType = [
   {
@@ -52,6 +54,28 @@ const Columns: TableColumnsType = [
     key: "relationship-number",
     width: 170,
     dataIndex: "relationship_number_string",
+  },
+  {
+    fixed: "right",
+    title: <ThunderboltOutlined />,
+    key: "actions",
+    width: 55,
+    dataIndex: "id",
+    align: "center",
+    render: (id) => (
+      <MoreMenu
+        items={[
+          {
+            key: "download",
+            label: <DownloadItem url={`/statement/bank/${id}/download/`} />,
+          },
+          {
+            key: "delete",
+            label: <DeleteItem url={`/statement/bank/${id}/`} />,
+          },
+        ]}
+      />
+    ),
   },
 ];
 

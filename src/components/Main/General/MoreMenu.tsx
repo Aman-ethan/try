@@ -1,29 +1,61 @@
+import {
+  useTransactionServerDeleteMutation,
+  useTransactionServerMutation,
+} from "@/hooks/useMutation";
 import { MoreOutlined } from "@ant-design/icons";
 import { Button, Dropdown, MenuProps } from "antd";
 
-// interface IMoreMenuProps {
-//   id: string;
-// }
+interface IMoreMenuProps {
+  items: MenuProps["items"];
+}
 
-const MoreItems: MenuProps["items"] = [
-  {
-    label: <button type="button">Download</button>,
-    key: "download",
-  },
-  {
-    label: (
-      <button type="button" className="text-red-500">
-        Delete
-      </button>
-    ),
-    key: "delete",
-  },
-];
+interface IDownloadItemProps {
+  key: string;
+  id: string;
+}
 
-export default function MoreMenu() {
+interface IDeleteItemProps {
+  key: string;
+}
+
+interface IDownloadItemResponse {
+  url: string;
+}
+
+interface IDownloadItemArgs {
+  id: string;
+}
+
+export default function MoreMenu({ items }: IMoreMenuProps) {
   return (
-    <Dropdown menu={{ items: MoreItems }}>
+    <Dropdown menu={{ items }}>
       <Button type="text" icon={<MoreOutlined />} />
     </Dropdown>
+  );
+}
+
+export function DownloadItem({ key, id }: IDownloadItemProps) {
+  const { data, trigger, isMutating } = useTransactionServerMutation<
+    IDownloadItemArgs,
+    IDownloadItemResponse
+  >(key);
+  return (
+    <button type="button" onClick={() => trigger({ id })} disabled={isMutating}>
+      Download
+    </button>
+  );
+}
+
+export function DeleteItem({ key }: IDeleteItemProps) {
+  const { trigger, isMutating } = useTransactionServerDeleteMutation(key);
+  return (
+    <button
+      disabled={isMutating}
+      onClick={trigger}
+      type="button"
+      className="text-red-500"
+    >
+      Delete
+    </button>
   );
 }

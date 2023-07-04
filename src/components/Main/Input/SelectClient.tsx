@@ -15,7 +15,7 @@ export default function SelectClient({
   }>) {
   const { isLoading, options } = useSelectClient(params);
   useDependentSelect({
-    dependsOn: params?.custodian,
+    dependsOn: params?.custodian_id,
     dependentProps: {
       isLoading,
       options,
