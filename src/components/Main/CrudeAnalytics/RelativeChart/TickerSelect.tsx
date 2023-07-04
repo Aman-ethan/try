@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Tag, message } from "antd";
-import Select from "../../Input/Select";
+import { Tag, message, Select } from "antd";
 
 const MAX_SELECTIONS = 5;
 
@@ -16,17 +15,18 @@ export default function TickerSelect() {
     }
     setSelectedOptions(Array.from(new Set([...selectedOptions, value])));
   };
-
+  
   const handleTagClose = (removedTag: string) => {
     const updatedOptions = selectedOptions.filter((tag) => tag !== removedTag);
     setSelectedOptions(updatedOptions);
   };
 
   return (
-    <div className="flex items-center space-x-6">
+    <div className="flex items-center space-x-4">
+      <p className="text-lg font-medium">Ticker</p>
       <Select
         placeholder="Select Ticker"
-        onChange={handleOptionChange}
+        onSelect={handleOptionChange}
         // options will change dynamically with api data
         options={[
           { value: "BABA UN", label: "BABA UN" },
