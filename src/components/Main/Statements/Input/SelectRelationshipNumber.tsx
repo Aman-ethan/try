@@ -9,10 +9,7 @@ interface IBankAccount {
   id: string;
 }
 
-type TSelectRelationshipNumberParams = Record<
-  "client_id" | "custodian_id",
-  string
->;
+type TSelectRelationshipNumberParams = Record<"client" | "custodian", string>;
 
 function useSelectRelationshipNumber(params?: TSelectRelationshipNumberParams) {
   const { data, isLoading } = useTransactionServerQuery<IBankAccount[]>(
@@ -46,11 +43,11 @@ export default function SelectRelationshipNumber({
     reset,
   };
   useDependentSelect({
-    dependsOn: params?.client_id,
+    dependsOn: params?.client,
     dependentProps,
   });
   useDependentSelect({
-    dependsOn: params?.custodian_id,
+    dependsOn: params?.custodian,
     dependentProps,
   });
   return <Select options={options} loading={isLoading} {...props} />;

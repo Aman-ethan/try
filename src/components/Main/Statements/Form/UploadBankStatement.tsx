@@ -16,19 +16,18 @@ interface IUploadBankStatementResponse {
 }
 
 interface IUploadBankStatementForm {
-  client_id: string;
-  custodian_id: string;
+  client: string;
+  custodian: string;
   relationship_number: string;
   portfolio_number: string;
-  cash_account_number: string;
   statement_date: string;
-  s3_object_name: string;
+  s3_url: string;
   statement_type: string;
 }
 
 const FormRules: Partial<Record<keyof IUploadBankStatementForm, FormRule[]>> = {
-  client_id: [{ required: true, message: "Please select a client" }],
-  custodian_id: [{ required: true, message: "Please select a custodian" }],
+  client: [{ required: true, message: "Please select a client" }],
+  custodian: [{ required: true, message: "Please select a custodian" }],
   statement_date: [
     { required: true, message: "Please select a statement date" },
   ],
@@ -38,21 +37,18 @@ const FormRules: Partial<Record<keyof IUploadBankStatementForm, FormRule[]>> = {
   portfolio_number: [
     { required: true, message: "Please input a portfolio number" },
   ],
-  cash_account_number: [
-    { required: true, message: "Please input a cash account number" },
-  ],
-  s3_object_name: [{ required: true, message: "Please upload a file" }],
+  s3_url: [{ required: true, message: "Please upload a file" }],
 };
 
 interface IUploadUrlResponse {
   url: string;
-  s3_object_name: string;
+  s3_url: string;
 }
 
 export default function UploadBankStatement() {
   const [form] = Form.useForm();
-  const custodian_id = Form.useWatch("custodian_id", form);
-  const client_id = Form.useWatch("client_id", form);
+  const custodian = Form.useWatch("custodian_id", form);
+  const client = Form.useWatch("client_id", form);
   const { data, isLoading, mutate } =
     useTransactionServerQuery<IUploadUrlResponse>(
       "/statement/bank/upload_url/"
@@ -93,10 +89,10 @@ export default function UploadBankStatement() {
           label="Client"
           name="client_id"
           className="flex-1"
-          rules={FormRules.client_id}
+          rules={FormRules.client}
         >
           <SelectClient
-            params={{ custodian_id }}
+            params={{ custodian }}
             placeholder="Choose the client"
             disabled={isMutating}
             reset={() => {
@@ -118,10 +114,10 @@ export default function UploadBankStatement() {
           label="Custodian"
           name="custodian_id"
           className="flex-1"
-          rules={FormRules.custodian_id}
+          rules={FormRules.custodian}
         >
           <SelectCustodian
-            params={{ client_id }}
+            params={{ client }}
             placeholder="Choose the custodian"
             disabled={isMutating}
             reset={() => {
@@ -138,8 +134,8 @@ export default function UploadBankStatement() {
           <SelectRelationshipNumber
             disabled={isMutating}
             params={{
-              client_id,
-              custodian_id,
+              client,
+              custodian,
             }}
             reset={() => {
               form.resetFields(["relationship_number"]);
@@ -157,22 +153,14 @@ export default function UploadBankStatement() {
         >
           <Input placeholder="Enter the portfolio number" />
         </Form.Item>
-        <Form.Item
-          label="Cash Account Number"
-          name="cash_account_number"
-          className="flex-1"
-          rules={FormRules.cash_account_number}
-        >
-          <Input placeholder="Enter the cash account number" />
-        </Form.Item>
       </Row>
-      <Form.Item name="s3_object_name" rules={FormRules.s3_object_name}>
+      <Form.Item name="s3_url" rules={FormRules.s3_url}>
         <Upload
           action={data?.url}
           disabled={isLoading || isMutating}
           onChange={({ file }) => {
             if (file.status === "error") {
-              form.setFieldValue("s3_object_name", data?.s3_object_name);
+              form.setFieldValue("s3_url", data?.s3_url);
               mutate();
             }
           }}

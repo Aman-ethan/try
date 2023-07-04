@@ -9,11 +9,5 @@ export interface IClientResponse {
   custodians: ICustodian[];
 }
 
-export interface IUploadStatementForm {
-  client_id: string;
-  custodian_id: string;
-  file: File;
-}
-
-export type TSelectClientParams = Record<"custodian_id", string | null>;
-export type TSelectCustodianParams = Record<"client_id", string | null>;
+export type TSelectClientParams = Record<"custodian", string | null>;
+export type TSelectCustodianParams = Record<"client", string | null>;

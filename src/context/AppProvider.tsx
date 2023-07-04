@@ -5,8 +5,8 @@ import { useServerInsertedHTML } from "next/navigation";
 import { createCache, extractStyle, StyleProvider } from "@ant-design/cssinjs";
 import { CookiesProvider } from "react-cookie";
 import { ConfigProvider } from "antd";
+import enUS from "antd/locale/en_US";
 import theme from "@/config/theme";
-import { enUSIntl } from "@ant-design/pro-components";
 import { SWRConfig } from "swr";
 import AuthProvider from "./AuthProvider";
 
@@ -27,7 +27,7 @@ export default function AppProvider({ children }: IStyleRegistryProps) {
     <CookiesProvider>
       <AuthProvider>
         <StyleProvider cache={cache}>
-          <ConfigProvider locale={enUSIntl} theme={theme}>
+          <ConfigProvider locale={enUS} theme={theme}>
             <SWRConfig value={{ revalidateOnFocus: false }}>
               {children}
             </SWRConfig>

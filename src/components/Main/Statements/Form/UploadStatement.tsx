@@ -1,7 +1,6 @@
 import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
 import { Button, Form, FormRule, Row, message } from "antd";
 import useStatementForm from "@/hooks/useStatementForm";
-import { IUploadStatementForm } from "@/interfaces/Main";
 import { useTransactionServerUploadMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
 import Upload from "../../Input/Upload";
@@ -17,9 +16,15 @@ interface IUploadStatementResponse {
   message: string;
 }
 
+interface IUploadStatementForm {
+  client: string;
+  custodian: string;
+  file: File;
+}
+
 const FormRules: Partial<Record<keyof IUploadStatementForm, FormRule[]>> = {
-  client_id: [{ required: true, message: "Please select a client" }],
-  custodian_id: [{ required: true, message: "Please select a custodian" }],
+  client: [{ required: true, message: "Please select a client" }],
+  custodian: [{ required: true, message: "Please select a custodian" }],
   file: [{ required: true, message: "Please upload a file" }],
 };
 
@@ -43,8 +48,8 @@ export default function UploadStatement({
   });
 
   const formId = useStatementForm({ isMutating });
-  const client_id = Form.useWatch("client_id", form);
-  const custodian_id = Form.useWatch("custodian_id", form);
+  const client = Form.useWatch("client", form);
+  const custodian = Form.useWatch("custodian", form);
 
   return (
     <div className="space-y-6">
@@ -74,18 +79,13 @@ export default function UploadStatement({
         disabled={isMutating}
         requiredMark={false}
       >
-        <Form.Item
-          label="Client"
-          name="client_id"
-          dependencies={["custodian_id"]}
-          rules={FormRules.client_id}
-        >
+        <Form.Item label="Client" name="client" rules={FormRules.client}>
           <SelectClient
             params={{
-              custodian_id,
+              custodian,
             }}
             reset={() => {
-              form.resetFields(["client_id"]);
+              form.resetFields(["client"]);
             }}
             disabled={isMutating}
             placeholder="Select the client"
@@ -93,14 +93,13 @@ export default function UploadStatement({
         </Form.Item>
         <Form.Item
           label="Custodian"
-          name="custodian_id"
-          dependencies={["client_id"]}
-          rules={FormRules.custodian_id}
+          name="custodian"
+          rules={FormRules.custodian}
         >
           <SelectCustodian
-            params={{ client_id }}
+            params={{ client }}
             reset={() => {
-              form.resetFields(["custodian_id"]);
+              form.resetFields(["custodian"]);
             }}
             disabled={isMutating}
             placeholder="Select the custodian"
