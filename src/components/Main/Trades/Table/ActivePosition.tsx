@@ -50,5 +50,5 @@ const Columns: TableColumnsType = [
 ];
 
 export default function ActivePosition() {
-  return <Trade columns={Columns} action={false} />;
+  return <Trade columns={Columns} />;
 }
