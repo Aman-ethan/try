@@ -7,7 +7,7 @@ export default function useSelectCustodianWithParams() {
   const clientId = getSearchParams("client_id");
   const custodianId = getSearchParams("custodian_id");
 
-  const { options, isLoading } = useSelectCustodian({ client_id: clientId });
+  const { options, isLoading } = useSelectCustodian({ clientId });
 
   useDependentSelect({
     dependsOn: clientId,

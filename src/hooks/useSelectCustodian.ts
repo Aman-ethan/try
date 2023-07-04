@@ -4,7 +4,9 @@ import { useTransactionServerQuery } from "./useQuery";
 
 export default function useSelectCustodian(params?: TSelectCustodianParams) {
   const { data, isLoading } = useTransactionServerQuery<ICustodian[]>(
-    `/custodian/${buildURLSearchParams(params)}`
+    `/custodian/${buildURLSearchParams({
+      client__id: params?.clientId,
+    })}`
   );
 
   const options = data?.map(({ id, name }) => ({

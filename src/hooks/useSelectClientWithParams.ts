@@ -7,7 +7,7 @@ export default function useSelectClientWithParams() {
   const clientId = getSearchParams("client_id");
   const custodianId = getSearchParams("custodian_id");
 
-  const { isLoading, options } = useSelectClient({ custodian_id: custodianId });
+  const { isLoading, options } = useSelectClient({ custodianId });
 
   useDependentSelect({
     dependsOn: custodianId,

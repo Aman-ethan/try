@@ -11,7 +11,7 @@ export default function SelectCustodian({
 }: SelectProps & { params?: TSelectCustodianParams; reset: () => void }) {
   const { isLoading, options } = useSelectCustodian(params);
   useDependentSelect({
-    dependsOn: params?.client_id,
+    dependsOn: params?.clientId,
     dependentProps: {
       isLoading,
       options,

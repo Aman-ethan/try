@@ -1,4 +1,4 @@
-import { Form, FormRule, Input, Row, message } from "antd";
+import { Form, FormRule, Row, message } from "antd";
 import useStatementForm from "@/hooks/useStatementForm";
 import { DATE_PARAM_FORMAT } from "@/constants/format";
 import { useTransactionServerMutation } from "@/hooks/useMutation";
@@ -10,6 +10,8 @@ import Upload from "../../Input/Upload";
 import SelectCustodian from "../../Input/SelectCustodian";
 import SelectClient from "../../Input/SelectClient";
 import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
+import SelectPortfolioNumber from "../Input/SelectPortfolioNumber";
+import SelectStatementType from "../Input/SelectStatementType";
 
 interface IUploadBankStatementResponse {
   url: string;
@@ -38,6 +40,9 @@ const FormRules: Partial<Record<keyof IUploadBankStatementForm, FormRule[]>> = {
     { required: true, message: "Please input a portfolio number" },
   ],
   s3_url: [{ required: true, message: "Please upload a file" }],
+  statement_type: [
+    { required: true, message: "Please select a statement type" },
+  ],
 };
 
 interface IUploadUrlResponse {
@@ -47,8 +52,8 @@ interface IUploadUrlResponse {
 
 export default function UploadBankStatement() {
   const [form] = Form.useForm();
-  const custodian = Form.useWatch("custodian_id", form);
-  const client = Form.useWatch("client_id", form);
+  const custodianId = Form.useWatch("custodian", form);
+  const clientId = Form.useWatch("client", form);
   const { data, isLoading, mutate } =
     useTransactionServerQuery<IUploadUrlResponse>(
       "/statement/bank/upload_url/"
@@ -79,7 +84,6 @@ export default function UploadBankStatement() {
           statement_date: (values.statement_date as Dayjs).format(
             DATE_PARAM_FORMAT
           ),
-          statement_type: "combined",
         });
       }}
       requiredMark={false}
@@ -87,16 +91,16 @@ export default function UploadBankStatement() {
       <Row className="gap-x-8">
         <Form.Item
           label="Client"
-          name="client_id"
+          name="client"
           className="flex-1"
           rules={FormRules.client}
         >
           <SelectClient
-            params={{ custodian_id: custodian }}
+            params={{ custodianId }}
             placeholder="Choose the client"
             disabled={isMutating}
             reset={() => {
-              form.resetFields(["client_id"]);
+              form.resetFields(["client"]);
             }}
           />
         </Form.Item>
@@ -112,16 +116,16 @@ export default function UploadBankStatement() {
       <Row className="gap-x-8">
         <Form.Item
           label="Custodian"
-          name="custodian_id"
+          name="custodian"
           className="flex-1"
           rules={FormRules.custodian}
         >
           <SelectCustodian
-            params={{ client_id: client }}
+            params={{ clientId }}
             placeholder="Choose the custodian"
             disabled={isMutating}
             reset={() => {
-              form.resetFields(["custodian_id"]);
+              form.resetFields(["custodian"]);
             }}
           />
         </Form.Item>
@@ -134,8 +138,8 @@ export default function UploadBankStatement() {
           <SelectRelationshipNumber
             disabled={isMutating}
             params={{
-              client_id: client,
-              custodian_id: custodian,
+              clientId,
+              custodianId,
             }}
             reset={() => {
               form.resetFields(["relationship_number"]);
@@ -151,15 +155,32 @@ export default function UploadBankStatement() {
           className="flex-1"
           rules={FormRules.portfolio_number}
         >
-          <Input placeholder="Enter the portfolio number" />
+          <SelectPortfolioNumber
+            placeholder="Select the portfolio number"
+            params={{
+              clientId,
+              custodianId,
+            }}
+            reset={() => {
+              form.resetFields(["portfolio_number"]);
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Statement Type"
+          name="statement_type"
+          className="flex-1"
+          rules={FormRules.statement_type}
+        >
+          <SelectStatementType placeholder="Select statement type" />
         </Form.Item>
       </Row>
-      <Form.Item name="s3_url" rules={FormRules.s3_url}>
+      <Form.Item name="file" rules={FormRules.s3_url}>
         <Upload
           action={data?.url}
           disabled={isLoading || isMutating}
           onChange={({ file }) => {
-            if (file.status === "error") {
+            if (file.status === "done") {
               form.setFieldValue("s3_url", data?.s3_url);
               mutate();
             }

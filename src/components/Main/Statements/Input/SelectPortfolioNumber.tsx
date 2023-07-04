@@ -1,21 +1,20 @@
-import { SelectProps } from "antd";
-import useDependentSelect from "@/hooks/useDependentSelect";
 import useBankAccount from "@/hooks/useBankAccount";
+import useDependentSelect from "@/hooks/useDependentSelect";
 import { TBankAccountParams } from "@/interfaces/Main";
-import Select from "../../Input/Select";
+import { Select, SelectProps } from "antd";
 
-export default function SelectRelationshipNumber({
+export default function SelectPortfolioNumber({
   params,
   reset,
   ...props
 }: SelectProps & {
-  params?: TBankAccountParams;
+  params: TBankAccountParams;
   reset: () => void;
 }) {
-  const { relationshipNumberOptions, isLoading } = useBankAccount(params);
+  const { portfolioNumberOptions, isLoading } = useBankAccount(params);
   const dependentProps = {
     isLoading,
-    relationshipNumberOptions,
+    portfolioNumberOptions,
     value: props.value,
     reset,
   };
@@ -28,10 +27,6 @@ export default function SelectRelationshipNumber({
     dependentProps,
   });
   return (
-    <Select
-      options={relationshipNumberOptions}
-      loading={isLoading}
-      {...props}
-    />
+    <Select options={portfolioNumberOptions} loading={isLoading} {...props} />
   );
 }

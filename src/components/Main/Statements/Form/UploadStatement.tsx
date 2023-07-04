@@ -48,8 +48,8 @@ export default function UploadStatement({
   });
 
   const formId = useStatementForm({ isMutating });
-  const client = Form.useWatch("client", form);
-  const custodian = Form.useWatch("custodian", form);
+  const clientId = Form.useWatch("client", form);
+  const custodianId = Form.useWatch("custodian", form);
 
   return (
     <div className="space-y-6">
@@ -82,7 +82,7 @@ export default function UploadStatement({
         <Form.Item label="Client" name="client" rules={FormRules.client}>
           <SelectClient
             params={{
-              custodian_id: custodian,
+              custodianId,
             }}
             reset={() => {
               form.resetFields(["client"]);
@@ -97,7 +97,7 @@ export default function UploadStatement({
           rules={FormRules.custodian}
         >
           <SelectCustodian
-            params={{ client_id: client }}
+            params={{ clientId }}
             reset={() => {
               form.resetFields(["custodian"]);
             }}

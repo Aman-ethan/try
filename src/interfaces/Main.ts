@@ -9,5 +9,9 @@ export interface IClientResponse {
   custodians: ICustodian[];
 }
 
-export type TSelectClientParams = Record<"custodian_id", string | null>;
-export type TSelectCustodianParams = Record<"client_id", string | null>;
+export type TSelectClientParams = Record<"custodianId", string | null>;
+export type TSelectCustodianParams = Record<"clientId", string | null>;
+export type TBankAccountParams = Record<
+  "clientId" | "custodianId",
+  string | null
+>;
