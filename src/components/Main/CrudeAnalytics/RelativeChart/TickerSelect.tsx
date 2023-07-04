@@ -15,7 +15,7 @@ export default function TickerSelect() {
     }
     setSelectedOptions(Array.from(new Set([...selectedOptions, value])));
   };
-  
+
   const handleTagClose = (removedTag: string) => {
     const updatedOptions = selectedOptions.filter((tag) => tag !== removedTag);
     setSelectedOptions(updatedOptions);

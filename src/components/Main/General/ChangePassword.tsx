@@ -30,7 +30,7 @@ export default function ChangePassword() {
         onCancel={closeModal}
         open={isModalOpen}
         title={
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <Title>Change Password</Title>
             <Button
               type="text"
