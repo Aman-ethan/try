@@ -19,7 +19,7 @@ interface IURLs {
 export default function Statement<T>({
   urls,
   columns,
-}: Pick<TableProps<unknown>, "columns"> & { urls: IURLs }) {
+}: Pick<TableProps<T>, "columns"> & { urls: IURLs }) {
   const { updateSearchParams, get: getSearchParams } = useSearchParams();
 
   const page_size = getSearchParams("page_size");
@@ -31,7 +31,7 @@ export default function Statement<T>({
   );
 
   return (
-    <ScrollableTable
+    <ScrollableTable<T>
       scroll={{ y: "calc(100vh - 25rem)" }}
       style={{ height: "calc(100vh - 20rem)" }}
       dataSource={data?.results}

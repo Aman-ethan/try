@@ -1,29 +1,18 @@
-import {
-  useTransactionServerDeleteMutation,
-  useTransactionServerMutation,
-} from "@/hooks/useMutation";
+import { useTransactionServerDeleteMutation } from "@/hooks/useMutation";
 import { MoreOutlined } from "@ant-design/icons";
 import { Button, Dropdown, MenuProps } from "antd";
+// import Drawer from "./Drawer";
 
 interface IMoreMenuProps {
   items: MenuProps["items"];
 }
 
 interface IDownloadItemProps {
-  key: string;
-  id: string;
-}
-
-interface IDeleteItemProps {
-  key: string;
-}
-
-interface IDownloadItemResponse {
   url: string;
 }
 
-interface IDownloadItemArgs {
-  id: string;
+interface IDeleteItemProps {
+  urlKey: string;
 }
 
 export default function MoreMenu({ items }: IMoreMenuProps) {
@@ -34,20 +23,16 @@ export default function MoreMenu({ items }: IMoreMenuProps) {
   );
 }
 
-export function DownloadItem({ key, id }: IDownloadItemProps) {
-  const { data, trigger, isMutating } = useTransactionServerMutation<
-    IDownloadItemArgs,
-    IDownloadItemResponse
-  >(key);
+export function DownloadItem({ url }: IDownloadItemProps) {
   return (
-    <button type="button" onClick={() => trigger({ id })} disabled={isMutating}>
+    <a href={url} download>
       Download
-    </button>
+    </a>
   );
 }
 
-export function DeleteItem({ key }: IDeleteItemProps) {
-  const { trigger, isMutating } = useTransactionServerDeleteMutation(key);
+export function DeleteItem({ urlKey }: IDeleteItemProps) {
+  const { trigger, isMutating } = useTransactionServerDeleteMutation(urlKey);
   return (
     <button
       disabled={isMutating}
@@ -59,3 +44,7 @@ export function DeleteItem({ key }: IDeleteItemProps) {
     </button>
   );
 }
+
+// export function EditItem() {
+//   return <Drawer />;
+// }

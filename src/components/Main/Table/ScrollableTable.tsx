@@ -3,11 +3,11 @@
 import { TableProps } from "antd";
 import Table from "./Table";
 
-export default function ScrollableTable({
+export default function ScrollableTable<T>({
   scroll,
   size = "middle",
   ...props
-}: TableProps<unknown>) {
+}: TableProps<T>) {
   return (
     <Table
       scroll={{
