@@ -1,6 +1,6 @@
-import { useTransactionServerDeleteMutation } from "@/hooks/useMutation";
 import { MoreOutlined } from "@ant-design/icons";
 import { Button, Dropdown, MenuProps } from "antd";
+import { ButtonHTMLAttributes } from "react";
 // import Drawer from "./Drawer";
 
 interface IMoreMenuProps {
@@ -9,10 +9,6 @@ interface IMoreMenuProps {
 
 interface IDownloadItemProps {
   url: string;
-}
-
-interface IDeleteItemProps {
-  urlKey: string;
 }
 
 export default function MoreMenu({ items }: IMoreMenuProps) {
@@ -31,12 +27,14 @@ export function DownloadItem({ url }: IDownloadItemProps) {
   );
 }
 
-export function DeleteItem({ urlKey }: IDeleteItemProps) {
-  const { trigger, isMutating } = useTransactionServerDeleteMutation(urlKey);
+export function DeleteItem({
+  disabled,
+  onClick,
+}: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      disabled={isMutating}
-      onClick={trigger}
+      disabled={disabled}
+      onClick={onClick}
       type="button"
       className="text-red-500"
     >

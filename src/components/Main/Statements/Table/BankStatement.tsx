@@ -3,6 +3,8 @@
 import { TableColumnsType } from "antd";
 import { formatTableDate } from "@/lib/format";
 import { ThunderboltOutlined } from "@ant-design/icons";
+import revalidate from "@/lib/revalidate";
+import { useTransactionServerDeleteMutation } from "@/hooks/useMutation";
 import Statement from "./Statement";
 import StatusTag from "../../General/StatusTag";
 import CurrencyTag from "../../General/CurrencyTag";
@@ -31,6 +33,14 @@ const URLs = {
 };
 
 function Action({ id, downloadUrl }: IActionProps) {
+  const { trigger, isMutating } = useTransactionServerDeleteMutation(
+    URLs.delete.replace("{id}", id),
+    {
+      onSuccess: () => {
+        revalidate(URLs.get);
+      },
+    }
+  );
   return (
     <MoreMenu
       items={[
@@ -40,7 +50,7 @@ function Action({ id, downloadUrl }: IActionProps) {
         },
         {
           key: "delete",
-          label: <DeleteItem urlKey={URLs.delete.replace("{id}", id)} />,
+          label: <DeleteItem disabled={isMutating} onClick={trigger} />,
         },
       ]}
     />
@@ -99,7 +109,7 @@ const Columns: TableColumnsType<IBankStatement> = [
     title: <ThunderboltOutlined />,
     key: "actions",
     width: 55,
-    dataIndex: ["id", "s3_url"],
+    dataIndex: "id",
     align: "center",
     render: (id, { s3_url }) => <Action id={id} downloadUrl={s3_url} />,
   },

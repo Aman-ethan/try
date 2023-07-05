@@ -5,6 +5,7 @@ import { useTransactionServerMutation } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { Dayjs } from "dayjs";
 import revalidate from "@/lib/revalidate";
+import { UploadChangeParam, UploadFile } from "antd/es/upload";
 import { DatePicker } from "../../Input/DatePicker";
 import Upload from "../../Input/Upload";
 import SelectCustodian from "../../Input/SelectCustodian";
@@ -22,7 +23,7 @@ interface IUploadBankStatementForm {
   custodian: string;
   relationship_number: string;
   portfolio_number: string;
-  statement_date: string;
+  statement_date: unknown;
   s3_url: string;
   statement_type: string;
 }
@@ -54,6 +55,7 @@ export default function UploadBankStatement() {
   const [form] = Form.useForm();
   const custodianId = Form.useWatch("custodian", form);
   const clientId = Form.useWatch("client", form);
+
   const { data, isLoading, mutate } =
     useTransactionServerQuery<IUploadUrlResponse>(
       "/statement/bank/upload_url/"
@@ -70,6 +72,26 @@ export default function UploadBankStatement() {
   });
   const formId = useStatementForm({ isMutating });
 
+  const onFileChange = ({ file }: UploadChangeParam<UploadFile>) => {
+    switch (file.status) {
+      case "done":
+        form.setFieldValue("s3_url", data?.s3_url);
+        mutate();
+        break;
+      default:
+        form.setFieldValue("s3_url", undefined);
+    }
+  };
+
+  const onFinish = (values: IUploadBankStatementForm) => {
+    trigger({
+      ...values,
+      statement_date: (values.statement_date as Dayjs).format(
+        DATE_PARAM_FORMAT
+      ),
+    });
+  };
+
   return (
     <Form
       form={form}
@@ -78,14 +100,7 @@ export default function UploadBankStatement() {
       size="large"
       className="space-y-6"
       disabled={isMutating}
-      onFinish={(values) => {
-        trigger({
-          ...values,
-          statement_date: (values.statement_date as Dayjs).format(
-            DATE_PARAM_FORMAT
-          ),
-        });
-      }}
+      onFinish={onFinish}
       requiredMark={false}
     >
       <Row className="gap-x-8">
@@ -175,16 +190,11 @@ export default function UploadBankStatement() {
           <SelectStatementType placeholder="Select statement type" />
         </Form.Item>
       </Row>
-      <Form.Item name="file" rules={FormRules.s3_url}>
+      <Form.Item name="s3_url" rules={FormRules.s3_url}>
         <Upload
           action={data?.url}
           disabled={isLoading || isMutating}
-          onChange={({ file }) => {
-            if (file.status === "done") {
-              form.setFieldValue("s3_url", data?.s3_url);
-              mutate();
-            }
-          }}
+          onChange={onFileChange}
         />
       </Form.Item>
     </Form>

@@ -8,22 +8,19 @@ const DraggerStyle: CSSProperties = {
 };
 
 export default function Upload({
-  action,
-  beforeUpload,
-  disabled,
-  onChange,
   method = "PUT",
-}: UploadProps) {
+  ...props
+}: Pick<
+  UploadProps,
+  "action" | "beforeUpload" | "disabled" | "onChange" | "method"
+>) {
   return (
     <AntdUpload.Dragger
       maxCount={1}
       style={DraggerStyle}
       method={method}
-      action={action}
-      beforeUpload={beforeUpload}
-      disabled={disabled}
-      onChange={onChange}
       multiple={false}
+      {...props}
     >
       <Row align="middle" className="flex-col gap-y-4 py-7">
         <UploadIcon />
