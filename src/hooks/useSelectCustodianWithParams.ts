@@ -4,8 +4,8 @@ import useSelectCustodian from "./useSelectCustodian";
 
 export default function useSelectCustodianWithParams() {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
-  const clientId = getSearchParams("client_id");
-  const custodianId = getSearchParams("custodian_id");
+  const clientId = getSearchParams("client");
+  const custodianId = getSearchParams("custodian");
 
   const { options, isLoading } = useSelectCustodian({ clientId });
 
@@ -17,7 +17,7 @@ export default function useSelectCustodianWithParams() {
       isLoading,
       reset: () => {
         updateSearchParams({
-          custodian_id: null,
+          custodian: null,
         });
       },
     },
@@ -25,7 +25,7 @@ export default function useSelectCustodianWithParams() {
 
   function onChange(value: string) {
     updateSearchParams({
-      custodian_id: value,
+      custodian: value,
     });
   }
 

@@ -15,6 +15,7 @@ export function DatePicker({
   value,
   className,
   size = "large",
+  format = DATE_DISPLAY_FORMAT,
   ...props
 }: DatePickerProps & { loading?: boolean }) {
   const datePickerId = useId();
@@ -28,7 +29,8 @@ export function DatePicker({
       className={clsx("w-full", className)}
       size={size}
       disabledDate={disabledDate}
-      format={DATE_DISPLAY_FORMAT}
+      format={format}
+      allowClear
       {...props}
     />
   );

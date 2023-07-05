@@ -1,83 +1,48 @@
 "use client";
 
-import { useTransactionServerQuery } from "@/hooks/useQuery";
-import useSearchParams, { IUpdateSearchParams } from "@/hooks/useSearchParams";
-import dayjs, { Dayjs, ManipulateType } from "dayjs";
-import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/constants/format";
+import useSearchParams from "@/hooks/useSearchParams";
+import dayjs, { Dayjs } from "dayjs";
+import {
+  DATE_PARAM_FORMAT,
+  STATEMENT_DATE_FILTER_FORMAT,
+} from "@/constants/format";
 import { DatePicker } from "../../Input/DatePicker";
-
-interface IDateResponse {
-  data: { first_date: string; last_date: string };
-}
-
-const DEFAULT_DURATION: ManipulateType = "y";
 
 function useStatementDatePicker() {
   const { updateSearchParams, get: getSearchParams } = useSearchParams();
-  const selectedDate = getSearchParams("selected_date");
-  const selectedDuration = getSearchParams("selected_duration");
 
-  const { data, isLoading, error } = useTransactionServerQuery<IDateResponse>(
-    "/position_history/asset_networth/date_parser/",
-    {
-      onSuccess({ data: date }) {
-        const selectedDateParams: IUpdateSearchParams = {
-          selected_date: date.last_date,
-        };
-        const selectedDurationParams: IUpdateSearchParams = {
-          selected_duration: DEFAULT_DURATION,
-        };
-        if (!(selectedDate || selectedDuration)) {
-          updateSearchParams({
-            ...selectedDateParams,
-            ...selectedDurationParams,
-          });
-        } else {
-          if (!selectedDate) updateSearchParams(selectedDateParams);
-          if (!selectedDuration) updateSearchParams(selectedDurationParams);
-        }
-      },
-      shouldRetryOnError: false,
-    }
-  );
-
-  const { first_date, last_date } = data?.data || {};
-
-  function disabledDate(current: Dayjs) {
-    return (
-      dayjs(current).isBefore(first_date) || dayjs(current).isAfter(last_date)
-    );
-  }
+  const statementDate = getSearchParams("statement_date__gte");
 
   function onChange(date: Dayjs | null) {
-    if (!date) return;
-    updateSearchParams({
-      selected_date: date.format(DATE_PARAM_FORMAT),
-    });
+    if (date) {
+      updateSearchParams({
+        statement_date__gte: date.startOf("month").format(DATE_PARAM_FORMAT),
+        statement_date__lte: date.endOf("month").format(DATE_PARAM_FORMAT),
+      });
+    } else {
+      updateSearchParams({
+        statement_date__gte: null,
+        statement_date__lte: null,
+      });
+    }
   }
 
   return {
-    isLoading,
-    error,
-    disabledDate,
     onChange,
-    defaultValue: dayjs(selectedDate || last_date),
+    value: statementDate ? dayjs(statementDate) : undefined,
   };
 }
 
 export default function StatementDatePicker() {
-  const { isLoading, defaultValue, disabledDate, onChange } =
-    useStatementDatePicker();
+  const { onChange, value } = useStatementDatePicker();
 
   return (
     <DatePicker
-      loading={isLoading}
-      defaultValue={defaultValue}
-      disabledDate={disabledDate}
+      value={value}
       onChange={onChange}
-      format={DATE_DISPLAY_FORMAT}
-      allowClear={false}
+      format={STATEMENT_DATE_FILTER_FORMAT}
       placeholder="Report Month"
+      picker="month"
     />
   );
 }

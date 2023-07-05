@@ -22,12 +22,21 @@ export default function Statement<T>({
 }: Pick<TableProps<T>, "columns"> & { urls: IURLs }) {
   const { updateSearchParams, get: getSearchParams } = useSearchParams();
 
-  const page_size = getSearchParams("page_size");
-  const client_id = getSearchParams("client_id");
-  const custodian_id = getSearchParams("custodian_id");
+  const pageSize = getSearchParams("page_size");
+  const clientId = getSearchParams("client");
+  const custodianId = getSearchParams("custodian");
+  const statementDateGTE = getSearchParams("statement_date__gte");
+  const statementDateLTE = getSearchParams("statement_date__lte");
 
   const { data, isLoading } = useTransactionServerQuery<IStatementResponse<T>>(
-    urls.get + buildURLSearchParams({ client_id, custodian_id, page_size })
+    urls.get +
+      buildURLSearchParams({
+        client: clientId,
+        custodian: custodianId,
+        page_size: pageSize,
+        statement_date__gte: statementDateGTE,
+        statement_date__lte: statementDateLTE,
+      })
   );
 
   return (
@@ -40,7 +49,7 @@ export default function Statement<T>({
       rowKey="id"
       pagination={{
         position: ["bottomRight"],
-        current: Number(page_size) || 1,
+        current: Number(pageSize) || 1,
         pageSize: 10,
         total: data?.count,
         onChange(page) {

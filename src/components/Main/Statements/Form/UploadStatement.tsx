@@ -5,7 +5,6 @@ import { useTransactionServerUploadMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
 import Upload from "../../Input/Upload";
 import SelectClient from "../../Input/SelectClient";
-import SelectCustodian from "../../Input/SelectCustodian";
 
 interface IUploadStatementFormProps {
   sampleLink?: string;
@@ -48,8 +47,6 @@ export default function UploadStatement({
   });
 
   const formId = useStatementForm({ isMutating });
-  const clientId = Form.useWatch("client", form);
-  const custodianId = Form.useWatch("custodian", form);
 
   return (
     <div className="space-y-6">
@@ -81,28 +78,11 @@ export default function UploadStatement({
       >
         <Form.Item label="Client" name="client" rules={FormRules.client}>
           <SelectClient
-            params={{
-              custodianId,
-            }}
             reset={() => {
               form.resetFields(["client"]);
             }}
             disabled={isMutating}
             placeholder="Select the client"
-          />
-        </Form.Item>
-        <Form.Item
-          label="Custodian"
-          name="custodian"
-          rules={FormRules.custodian}
-        >
-          <SelectCustodian
-            params={{ clientId }}
-            reset={() => {
-              form.resetFields(["custodian"]);
-            }}
-            disabled={isMutating}
-            placeholder="Select the custodian"
           />
         </Form.Item>
         <Form.Item name="file" rules={FormRules.file}>

@@ -4,8 +4,8 @@ import useSelectClient from "./useSelectClient";
 
 export default function useSelectClientWithParams() {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
-  const clientId = getSearchParams("client_id");
-  const custodianId = getSearchParams("custodian_id");
+  const clientId = getSearchParams("client");
+  const custodianId = getSearchParams("custodian");
 
   const { isLoading, options } = useSelectClient({ custodianId });
 
@@ -17,7 +17,7 @@ export default function useSelectClientWithParams() {
       isLoading,
       reset: () => {
         updateSearchParams({
-          client_id: null,
+          client: null,
         });
       },
     },
@@ -25,7 +25,7 @@ export default function useSelectClientWithParams() {
 
   function onChange(value: string) {
     updateSearchParams({
-      client_id: value,
+      client: value,
     });
   }
 

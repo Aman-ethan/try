@@ -11,27 +11,16 @@ type AuthSearchParams =
   | "user_id"
   | "next_path";
 
-type NetWorthSearchParams = "client_id" | "client_name";
-
-type TradeSearchParams =
-  | "trade_search"
-  | "client_id"
-  | "custodian_id"
-  | "trade_date_from"
-  | "trade_date_to"
-  | "trade_limit"
-  | "trade_offset"
-  | "trade_ordering";
-
-type StatementSearchParams = "page_size";
+type StatementSearchParams =
+  | "page_size"
+  | "statement_date__gte"
+  | "statement_date__lte";
 
 export type SearchParams =
   | AuthSearchParams
-  | NetWorthSearchParams
-  | TradeSearchParams
   | StatementSearchParams
-  | "selected_date"
-  | "selected_duration";
+  | "client"
+  | "custodian";
 
 export type IUpdateSearchParams = Partial<
   Record<SearchParams, string | number | null>
