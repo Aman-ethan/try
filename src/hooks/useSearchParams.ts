@@ -12,15 +12,18 @@ type AuthSearchParams =
   | "next_path";
 
 type StatementSearchParams =
-  | "page_size"
+  | "page"
   | "statement_date__gte"
-  | "statement_date__lte";
+  | "statement_date__lte"
+  | "ordering";
 
 export type SearchParams =
   | AuthSearchParams
   | StatementSearchParams
   | "client"
-  | "custodian";
+  | "custodian"
+  | "asset_duration"
+  | "gain_loss_duration";
 
 export type IUpdateSearchParams = Partial<
   Record<SearchParams, string | number | null>
@@ -49,7 +52,7 @@ export default function useSearchParams() {
   }
 
   function get(name: SearchParams) {
-    return searchParams.get(name);
+    return searchParams.get(name) ?? undefined;
   }
 
   return { get, updateSearchParams };

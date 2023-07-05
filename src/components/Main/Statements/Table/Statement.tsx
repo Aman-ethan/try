@@ -2,6 +2,7 @@ import { TableProps } from "antd";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useSearchParams from "@/hooks/useSearchParams";
+import { SorterResult } from "antd/es/table/interface";
 import ScrollableTable from "../../Table/ScrollableTable";
 
 interface IStatementResponse<T> {
@@ -22,18 +23,20 @@ export default function Statement<T>({
 }: Pick<TableProps<T>, "columns"> & { urls: IURLs }) {
   const { updateSearchParams, get: getSearchParams } = useSearchParams();
 
-  const pageSize = getSearchParams("page_size");
-  const clientId = getSearchParams("client");
-  const custodianId = getSearchParams("custodian");
+  const page = getSearchParams("page");
+  const client = getSearchParams("client");
+  const custodian = getSearchParams("custodian");
+  const ordering = getSearchParams("ordering");
   const statementDateGTE = getSearchParams("statement_date__gte");
   const statementDateLTE = getSearchParams("statement_date__lte");
 
   const { data, isLoading } = useTransactionServerQuery<IStatementResponse<T>>(
     urls.get +
       buildURLSearchParams({
-        client: clientId,
-        custodian: custodianId,
-        page_size: pageSize,
+        client,
+        custodian,
+        page,
+        ordering,
         statement_date__gte: statementDateGTE,
         statement_date__lte: statementDateLTE,
       })
@@ -41,20 +44,23 @@ export default function Statement<T>({
 
   return (
     <ScrollableTable<T>
-      scroll={{ y: "calc(100vh - 25rem)" }}
-      style={{ height: "calc(100vh - 20rem)" }}
+      scroll={{ y: "calc(100vh - 22rem)" }}
       dataSource={data?.results}
       loading={isLoading}
       columns={columns}
       rowKey="id"
+      onChange={(pagination, _, sorter) => {
+        const { field, order } = sorter as SorterResult<T>;
+        updateSearchParams({
+          page: String(pagination.current),
+          ordering: order === "ascend" ? field?.toString() : `-${field}`,
+        });
+      }}
       pagination={{
         position: ["bottomRight"],
-        current: Number(pageSize) || 1,
+        current: Number(page) || 1,
         pageSize: 10,
         total: data?.count,
-        onChange(page) {
-          updateSearchParams({ page_size: String(page) });
-        },
       }}
     />
   );

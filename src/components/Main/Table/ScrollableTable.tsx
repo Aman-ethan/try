@@ -1,11 +1,10 @@
 "use client";
 
 import { TableProps } from "antd";
-import Table from "./Table";
+import Table from ".";
 
 export default function ScrollableTable<T>({
   scroll,
-  size = "middle",
   ...props
 }: TableProps<T>) {
   return (
@@ -14,7 +13,6 @@ export default function ScrollableTable<T>({
         y: scroll?.y,
         x: props.columns?.reduce((acc, { width }) => acc + Number(width), 0),
       }}
-      size={size}
       {...props}
     />
   );

@@ -76,6 +76,7 @@ const Columns: TableColumnsType<IBankStatement> = [
     width: 145,
     dataIndex: "statement_date",
     render: formatTableDate,
+    sorter: true,
   },
   {
     title: "Upload Date",
@@ -83,6 +84,7 @@ const Columns: TableColumnsType<IBankStatement> = [
     width: 145,
     dataIndex: "upload_date",
     render: formatTableDate,
+    sorter: true,
   },
   {
     title: "Status",

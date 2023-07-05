@@ -1,3 +1,4 @@
+import { format } from "d3";
 import dayjs from "dayjs";
 
 type NumberFormatType = "price" | "quantity";
@@ -28,4 +29,14 @@ export function formatNumber(
 
 export function formatTableDate(date: Date) {
   return dayjs(date).format("D MMM YYYY");
+}
+
+const f = format("~s");
+
+export function formatCompactNumber(num: number | string) {
+  if (Number.isNaN(Number(num))) return num;
+  return f(Number(num))
+    .replace("k", " K")
+    .replace("G", " B")
+    .replace("M", " M");
 }

@@ -16,7 +16,8 @@ async function fetcher({ url, init, error }: IFetcherParams) {
     const res = await fetch(url, {
       ...init,
       headers: {
-        Authorization: accessToken ? `Bearer ${accessToken}` : "",
+        // Authorization: accessToken ? `Bearer ${accessToken}` : "",
+        Authorization: "Token 5df62ba1cb1e86fd3d12886c4ae5d1e3c67fb2df",
         ...init.headers,
       },
     });
@@ -25,7 +26,19 @@ async function fetcher({ url, init, error }: IFetcherParams) {
       throw new Error(error);
     }
 
-    return res.json();
+    let json;
+
+    try {
+      json = await res.json();
+    } catch (e) {
+      return {};
+    }
+
+    if (json.error) {
+      throw new Error(json.error);
+    }
+
+    return json;
   } catch (e) {
     if (e instanceof Error) {
       throw new Error(e.message);

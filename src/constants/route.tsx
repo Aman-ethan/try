@@ -11,9 +11,8 @@ import Link from "next/link";
 const ROUTE = [
   {
     key: "/overview",
-    label: "Overview",
+    label: <Link href="/overview">Overview</Link>,
     icon: <FileSearchOutlined />,
-    disabled: true,
   },
   {
     key: "analytics",

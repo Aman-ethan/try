@@ -43,7 +43,11 @@ export function useSelectRow<T>({
   };
 }
 
-export default function Table({ pagination, ...props }: TableProps<any>) {
+export default function Table({
+  pagination,
+  size = "middle",
+  ...props
+}: TableProps<any>) {
   return (
     <AntdTable
       pagination={{
@@ -63,6 +67,7 @@ export default function Table({ pagination, ...props }: TableProps<any>) {
           </div>
         ),
       }}
+      size={size}
       {...props}
     />
   );

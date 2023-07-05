@@ -1,30 +1,44 @@
-import AssetNetWorth from "@/components/Main/Summary/AssetNetWorth";
-import BlotterTrade from "@/components/Main/Summary/BlotterTrade";
-import ClientNetWorth from "@/components/Main/Summary/ClientNetWorth";
-import GainerLoser from "@/components/Main/Summary/GainerLoser";
-import SummaryDatePicker from "@/components/Main/Statements/Input/StatementDatePicker";
-import { Col, Row, Space } from "@/lib/antd";
+import CurrencyTag from "@/components/Main/General/CurrencyTag";
+import AssetNetWorth from "@/components/Main/Overview/AssetNetWorth";
+import ClientNetWorth from "@/components/Main/Overview/ClientNetWorth";
+import GainerLoser from "@/components/Main/Overview/GainerLoser";
+import Title from "@/components/Typography/Title";
 
 export default function Home() {
   return (
-    <Space direction="vertical" size="large">
-      <Row justify="end">
-        <SummaryDatePicker />
-      </Row>
-      <Row>
-        <Col span={12}>
+    <div className="px-12 py-6 space-y-8">
+      <Title>Overview</Title>
+      <div className="flex gap-x-8">
+        <div className="w-2/5 py-6 px-8 bg-white rounded-lg space-y-4">
+          <div className="flex justify-between items-center">
+            <Title level={4}>Net Worth</Title>
+            <CurrencyTag currency="sgd" />
+          </div>
           <ClientNetWorth />
-        </Col>
-        <Col span={12}>
+        </div>
+        <div className="flex-1 bg-white rounded-lg p-6">
           <AssetNetWorth />
-        </Col>
-      </Row>
-      <Row>
-        <GainerLoser />
-      </Row>
-      <Row>
-        <BlotterTrade />
-      </Row>
-    </Space>
+        </div>
+      </div>
+      <div className="bg-white p-6 space-y-6 rounded-lg">
+        <div className="space-y-4">
+          <div className="flex justify-between">
+            <Title level={4}>Gainer/Loser</Title>
+            <CurrencyTag currency="sgd" />
+          </div>
+          <div className="h-1 border-b border-neutral-5" />
+        </div>
+        <div className="flex gap-x-10">
+          <div className="flex-1 space-y-6">
+            <Title level={5}>Gainer</Title>
+            <GainerLoser urlKey="/positions/top_gainer/" />
+          </div>
+          <div className="flex-1 space-y-6">
+            <Title level={5}>Loser</Title>
+            <GainerLoser urlKey="/positions/top_loser/" />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

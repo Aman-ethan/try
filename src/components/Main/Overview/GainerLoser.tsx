@@ -3,6 +3,9 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { TableColumnsType } from "antd";
+import { formatCompactNumber } from "@/lib/format";
+import Table from "../Table";
 
 interface IGainerResponse {
   count: number;
@@ -36,18 +39,49 @@ interface IGainerResponse {
   }[];
 }
 
-function useGainerLoser() {
+interface IGainerLoserProps {
+  urlKey: string;
+}
+
+const Columns: TableColumnsType = [
+  {
+    title: "Client",
+    dataIndex: "client_name",
+    key: "client-name",
+    width: "15%",
+  },
+  {
+    title: "Title",
+    dataIndex: "title",
+    key: "title",
+    width: "49%",
+  },
+  {
+    title: "Total PL",
+    dataIndex: "total_pl",
+    key: "total-pl",
+    width: "18%",
+    render: formatCompactNumber,
+  },
+  {
+    title: "Net Worth",
+    dataIndex: "net_worth",
+    key: "net-worth",
+    width: "18%",
+    render: formatCompactNumber,
+  },
+];
+
+function useGainerLoser({ urlKey }: IGainerLoserProps) {
   const { get: getSearchParams } = useSearchParams();
-  const selectedDate = getSearchParams("selected_date");
+  const duration = getSearchParams("gain_loss_duration");
   const { data, isLoading } = useTransactionServerQuery<IGainerResponse>(
-    selectedDate
-      ? `/positions/top_gainer/${buildURLSearchParams({
-          report_date: selectedDate,
-          limit: "5",
-          ordering: "",
-          offset: "0",
-        })}`
-      : null
+    urlKey +
+      buildURLSearchParams({
+        duration,
+        limit: "5",
+        offset: "0",
+      })
   );
   return {
     data,
@@ -55,7 +89,10 @@ function useGainerLoser() {
   };
 }
 
-export default function GainerLoser() {
-  useGainerLoser();
-  return null;
+const tableClassName = "h-[36rem]";
+const scroll = { y: "33rem" };
+
+export default function GainerLoser({ urlKey }: IGainerLoserProps) {
+  useGainerLoser({ urlKey });
+  return <Table columns={Columns} className={tableClassName} scroll={scroll} />;
 }

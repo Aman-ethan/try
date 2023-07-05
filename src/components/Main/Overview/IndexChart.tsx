@@ -12,6 +12,7 @@ import {
   sortBy,
   uniqBy,
 } from "lodash";
+import { Spin } from "antd";
 
 interface Data {
   x: string;
@@ -21,6 +22,7 @@ interface Data {
 
 interface IIndexChartProps {
   data: Data[];
+  loading?: boolean;
 }
 
 interface IFillMissingDataParams {
@@ -56,7 +58,7 @@ function fillMissingData({ data, xticks }: IFillMissingDataParams) {
 
 const OFFSET = 1;
 
-export default function IndexChart({ data }: IIndexChartProps) {
+export default function IndexChart({ data, loading }: IIndexChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const [normalizeIndex, setNormalizeIndex] = useState<any>(0);
 
@@ -148,6 +150,11 @@ export default function IndexChart({ data }: IIndexChartProps) {
     chartRef.current?.append(chart);
     return () => chart.remove();
   }, [normalizeIndex, filledData, groupedData]);
-
+  if (loading)
+    return (
+      <div className="h-full flex items-center justify-center">
+        <Spin />
+      </div>
+    );
   return <div ref={chartRef} />;
 }
