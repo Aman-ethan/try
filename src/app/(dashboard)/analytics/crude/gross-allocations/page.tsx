@@ -1,7 +1,11 @@
+import FinanceResult from "@/components/Main/CrudeAnalytics/GrossPage/FinanceResult";
+import GrossAllocations from "@/components/Main/CrudeAnalytics/GrossPage/GrossAllocations";
+
 export default function CrudeAnalyticsPage() {
   return (
-    <div>
-      <h1>Gross Page</h1>
+    <div className="space-y-8">
+      <GrossAllocations />
+      <FinanceResult />
     </div>
   );
 }

@@ -18,7 +18,7 @@ const DURATION: IDuration[] = [
 
 export default function RelativeChart() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 rounded-lg bg-neutral-1 p-6">
       <div className="flex items-center justify-between">
         <div className="space-x-4">
           <Button type="primary" size="large">
