@@ -50,6 +50,13 @@ module.exports = {
           13: "#000000",
         },
       },
+      screens: {
+        xs: "450px",
+        sm: "640px", 
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+      },
     },
   },
   plugins: [
