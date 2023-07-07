@@ -51,11 +51,10 @@ module.exports = {
         },
       },
       screens: {
-        xs: "450px",
-        sm: "640px",
-        md: "768px",
-        lg: "1024px",
-        xl: "1280px",
+        tab: "640px", // Tablet devices
+        lap: "1024px", // Laptop devices
+        mob: "375px", // Mobile devices
+        desk: "1440px", // Desktop devices
       },
     },
   },
