@@ -1,8 +1,8 @@
 {
+  "root": true,
   "extends": [
     "next/core-web-vitals",
     "airbnb",
-    "airbnb/hooks",
     "plugin:react/jsx-runtime",
     "plugin:prettier/recommended"
   ],
