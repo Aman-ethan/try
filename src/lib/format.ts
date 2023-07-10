@@ -24,6 +24,7 @@ export function formatNumber(
   return new Intl.NumberFormat("en-US", {
     ...numberFormatOptions[type],
     ...options,
+    currency: options?.currency || "USD",
   }).format(String(value) as unknown as number);
 }
 

@@ -7,7 +7,11 @@ const DraggerStyle: CSSProperties = {
   borderColor: "#1890FF",
 };
 
-export default function Upload({ method = "PUT", ...props }: UploadProps) {
+export default function Upload({
+  method = "PUT",
+  value,
+  ...props
+}: UploadProps & Partial<{ value: Record<string, File | FileList> }>) {
   return (
     <AntdUpload.Dragger
       maxCount={1}

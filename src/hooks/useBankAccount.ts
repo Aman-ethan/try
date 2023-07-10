@@ -20,10 +20,12 @@ export default function useBankAccount(params?: TBankAccountParams) {
     value: relationship_number,
   }));
 
-  const portfolioNumberOptions = data?.map(({ portfolio_number }) => ({
-    label: portfolio_number,
-    value: portfolio_number,
-  }));
+  const portfolioNumberOptions = data
+    ?.filter(({ portfolio_number }) => Boolean(portfolio_number))
+    .map(({ portfolio_number }) => ({
+      label: portfolio_number,
+      value: portfolio_number,
+    }));
 
   return {
     relationshipNumberOptions,
