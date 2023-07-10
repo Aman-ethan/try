@@ -8,7 +8,8 @@ export default function SelectCustodian({
   params,
   reset,
   ...props
-}: SelectProps & { params?: TSelectCustodianParams; reset: () => void }) {
+}: SelectProps &
+  Partial<{ params: TSelectCustodianParams; reset: () => void }>) {
   const { isLoading, options } = useSelectCustodian(params);
   useDependentSelect({
     dependsOn: params?.clientId,

@@ -14,9 +14,9 @@ function StatementForm() {
   const layoutSegment = useSelectedLayoutSegment();
   switch (layoutSegment) {
     case "position":
-      return <UploadStatement urlKey="/statement/position/" />;
     case "trade":
-      return <UploadStatement urlKey="/statement/trade/" />;
+      return <UploadStatement />;
+
     case "bank":
       return <UploadBankStatement />;
     default:
@@ -40,17 +40,28 @@ export default function UploadStatementDrawer() {
       width={720}
       title={title}
       footer={
-        <Button
-          form={formId}
-          type="primary"
-          size="large"
-          className="px-7"
-          htmlType="submit"
-          loading={isMutating}
-          disabled={isMutating}
-        >
-          Upload
-        </Button>
+        <div className="space-x-4">
+          <Button
+            form={formId}
+            size="large"
+            className="px-7"
+            htmlType="reset"
+            disabled={isMutating}
+          >
+            Clear All
+          </Button>
+          <Button
+            form={formId}
+            type="primary"
+            size="large"
+            className="px-7"
+            htmlType="submit"
+            loading={isMutating}
+            disabled={isMutating}
+          >
+            Upload
+          </Button>
+        </div>
       }
     >
       <StatementFormContext.Provider value={contextValue}>

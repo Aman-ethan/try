@@ -8,10 +8,11 @@ export default function SelectRelationshipNumber({
   params,
   reset,
   ...props
-}: SelectProps & {
-  params?: TBankAccountParams;
-  reset: () => void;
-}) {
+}: SelectProps &
+  Partial<{
+    params: TBankAccountParams;
+    reset: () => void;
+  }>) {
   const { relationshipNumberOptions, isLoading } = useBankAccount(params);
   const dependentProps = {
     isLoading,

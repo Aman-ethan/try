@@ -34,7 +34,12 @@ export default function Drawer({
         }
       >
         <div className="pb-20">{children}</div>
-        <div className="fixed bottom-0 w-full bg-neutral-1 py-6">{footer}</div>
+        <div
+          style={{ width }}
+          className="fixed bottom-0 right-0 bg-neutral-1 py-6 px-6 flex justify-end"
+        >
+          {footer}
+        </div>
       </AntdDrawer>
     </>
   );

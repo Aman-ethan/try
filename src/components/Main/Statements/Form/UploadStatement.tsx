@@ -1,14 +1,17 @@
-import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
-import { Button, Form, FormRule, Row, message } from "antd";
+import { useTransactionServerFormMutation } from "@/hooks/useMutation";
 import useStatementForm from "@/hooks/useStatementForm";
-import { useTransactionServerUploadMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
-import Upload from "../../Input/Upload";
+import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
+import { Button, Form, FormRule, Radio, Row, message } from "antd";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { lazy, useState } from "react";
 import SelectClient from "../../Input/SelectClient";
+import Upload from "../../Input/Upload";
+
+const ManualEntry = lazy(() => import("./ManualEntry"));
 
 interface IUploadStatementFormProps {
   sampleLink?: string;
-  urlKey: string;
 }
 
 interface IUploadStatementResponse {
@@ -21,18 +24,24 @@ interface IUploadStatementForm {
   file: File;
 }
 
+type TUpload = "bulk" | "manual";
+
 const FormRules: Partial<Record<keyof IUploadStatementForm, FormRule[]>> = {
   client: [{ required: true, message: "Please select a client" }],
   custodian: [{ required: true, message: "Please select a custodian" }],
   file: [{ required: true, message: "Please upload a file" }],
 };
 
-export default function UploadStatement({
-  sampleLink,
-  urlKey,
-}: IUploadStatementFormProps) {
+const UploadTypeOptions = [
+  { label: "Bulk Upload", value: "bulk" },
+  { label: "Manual Entry", value: "manual" },
+];
+
+function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
   const [form] = Form.useForm();
-  const { isMutating, trigger } = useTransactionServerUploadMutation<
+  const layoutSegment = useSelectedLayoutSegment();
+  const urlKey = `/statement/${layoutSegment}/`;
+  const { isMutating, trigger } = useTransactionServerFormMutation<
     IUploadStatementForm,
     IUploadStatementResponse
   >(`${urlKey}upload/`, {
@@ -47,9 +56,8 @@ export default function UploadStatement({
   });
 
   const formId = useStatementForm({ isMutating });
-
   return (
-    <div className="space-y-6">
+    <>
       <div className="space-y-2">
         <Row className="gap-x-2">
           <InfoCircleFilled className="text-primary" />
@@ -96,6 +104,28 @@ export default function UploadStatement({
           />
         </Form.Item>
       </Form>
+    </>
+  );
+}
+
+export default function UploadStatement(props: IUploadStatementFormProps) {
+  const [uploadType, setUploadType] = useState<TUpload>("bulk");
+
+  return (
+    <div className="space-y-8">
+      <Radio.Group
+        options={UploadTypeOptions}
+        optionType="button"
+        buttonStyle="solid"
+        value={uploadType}
+        onChange={(e) => {
+          setUploadType(e.target.value);
+        }}
+        size="large"
+      />
+      <div className="space-y-6">
+        {uploadType === "bulk" ? <BulkUpload {...props} /> : <ManualEntry />}
+      </div>
     </div>
   );
 }
