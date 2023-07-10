@@ -22,7 +22,9 @@ const ROUTE = [
       {
         key: "/analytics/crude/gross-allocations",
         label: (
-          <Link href="/analytics/crude/gross-allocations">Crude Analytics</Link>
+          <Link href="/analytics/crude/gross-allocations">
+            Present Analytics
+          </Link>
         ),
       },
       {
@@ -33,19 +35,28 @@ const ROUTE = [
     ],
   },
   {
-    disabled: true,
     key: "/position-search",
-    label: "Position Search",
+    label: <Link href="/position-search">Balance Sheet</Link>,
     icon: <NodeIndexOutlined />,
   },
   {
-    key: "/trades/blotter-trades",
-    label: <Link href="/trades/blotter-trades">Blotter Trades</Link>,
-    icon: <DotChartOutlined />,
+    key: "t+1",
+    label: "T+1",
+    icon: <LineChartOutlined />,
+    children: [
+      {
+        key: "/trades/blotter-trades",
+        label: <Link href="/trades/blotter-trades">Transaction</Link>,
+      },
+      {
+        key: "/trades/active-positions",
+        label: <Link href="/trades/active-positions">Active Positions</Link>,
+      },
+    ],
   },
   {
     key: "statements",
-    label: "Statements",
+    label: "Document VaultZ",
     icon: <ProfileOutlined />,
     children: [
       {
@@ -64,7 +75,7 @@ const ROUTE = [
   },
   {
     key: "/client-information",
-    label: <Link href="/client-information">Customer Information</Link>,
+    label: <Link href="/client-information">Investor Profile</Link>,
     icon: <UserOutlined />,
   },
   {

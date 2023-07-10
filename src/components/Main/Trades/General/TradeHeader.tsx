@@ -1,13 +1,14 @@
 "use client";
 
-import { Breadcrumb, MenuProps, Row } from "antd";
+import { Breadcrumb, Input, MenuProps, Row } from "antd";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import Title from "@/components/Typography/Title";
 import Dropdown from "../../General/Dropdown";
-import SelectClient from "../../Input/SelectClientWithParams";
-import SelectCustodian from "../../Input/SelectCustodianWithParams";
 import AddTradeDrawer from "./AddTradeDrawer";
+import SelectCustodianWithParams from "../../Input/SelectCustodianWithParams";
+import SelectClientWithParams from "../../Input/SelectClientWithParams";
+import SelectAssetClass from "../../Input/SelectAssetClass";
 
 const TradeRoutes: MenuProps["items"] = [
   {
@@ -36,20 +37,28 @@ export default function TradeHeader() {
           },
         ]}
       />
-      <Row justify="space-between" align="middle">
-        <Dropdown
+      <Row justify="end" align="middle">
+        {/* <Dropdown
           menu={{
             items: TradeRoutes,
             defaultSelectedKeys: [selectedLayoutSegment as string],
           }}
         >
           <Title className="capitalize">{title}</Title>
-        </Dropdown>
+        </Dropdown> */}
         <AddTradeDrawer />
       </Row>
-      <Row className="max-w-xl gap-x-6">
-        <SelectClient placeholder="Select a Client" className="flex-1" />
-        <SelectCustodian placeholder="All Custodian" className="flex-1" />
+      <Row className="gap-x-6 justify-between">
+        <SelectClientWithParams
+          placeholder="Select a Client"
+          className="w-1/4"
+        />
+        <SelectCustodianWithParams
+          placeholder="All Custodian"
+          className="w-1/4"
+        />
+        <Input className="w-1/5" placeholder="Enter Security ID" />
+        <SelectAssetClass className="w-1/5" placeholder="All Asset" />
       </Row>
     </div>
   );

@@ -1,69 +1,78 @@
 "use client";
 
 import { TableColumnsType } from "antd";
-import { formatNumber, formatTableDate } from "@/lib/format";
-import { capitalize } from "lodash";
+import { formatTableDate } from "@/lib/format";
 import Statement from "./Statement";
-import CurrencyTag from "../../General/CurrencyTag";
+import { ThunderboltOutlined } from "@ant-design/icons";
+import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
 
 const Columns: TableColumnsType = [
   {
-    title: "Trade Action",
-    key: "trade-action",
-    dataIndex: "trade_action",
+    title: "Client",
+    key: "client",
+    dataIndex: "client_name",
     width: 105,
-    render: (action) => (
-      <span className="font-medium text-neutral-13/80">
-        {action ? "Buy" : "Sell"}
-      </span>
-    ),
+  },
+  {
+    title: "Custodian",
+    key: "custodian",
+    dataIndex: "custodian",
+    width: 165,
+    filtered: true,
+  },
+  {
+    title: "Relationship Number",
+    key: "relationship-number",
+    dataIndex: "relationship_number",
+    width: 165,
+  },
+  {
+    title: "Statement Date",
+    key: "statement-date",
+    dataIndex: "statement_date",
+    render: formatTableDate,
+    sorter: true,
+    width: 150,
+  },
+  {
+    title: "Reference Number",
+    key: "reference-number",
+    dataIndex: "reference_number",
+    width: 150,
+  },
+  {
+    title: "Security ID",
+    key: "security-id",
+    dataIndex: "security_id",
+    width: 140,
   },
   {
     title: "Asset Class",
     key: "asset-class",
     dataIndex: "asset_class",
-    width: 105,
-    render: capitalize,
+    width: 130,
   },
   {
-    title: "ISIN",
-    key: "isin",
-    dataIndex: "isin",
-    width: 125,
-  },
-  {
-    title: "Description",
-    key: "description",
-    dataIndex: "description",
-    width: 220,
-  },
-  {
-    title: "Currency",
-    key: "currency",
-    width: 105,
-    dataIndex: "currency",
-    render: (currency) => <CurrencyTag currency={currency} />,
-  },
-  {
-    title: "Trade Date",
-    key: "trade-date",
-    dataIndex: "trade_date",
-    width: 125,
-    render: formatTableDate,
-  },
-  {
-    title: "Settlement Date",
-    key: "settlement-date",
-    dataIndex: "settlement_date",
-    width: 150,
-    render: formatTableDate,
-  },
-  {
-    title: "Quantity",
-    key: "quantity",
-    dataIndex: "quantity",
-    width: 125,
-    render: (quantity) => formatNumber("quantity", quantity),
+    fixed: "right",
+    title: <ThunderboltOutlined />,
+    key: "actions",
+    width: 55,
+    dataIndex: "id",
+    align: "center",
+    render: () => (
+      <MoreMenu
+        items={[
+          {
+            key: "edit",
+            label: <button>Edit</button>,
+          },
+          {
+            key: "delete",
+            label: <DeleteItem />,
+          },
+        ]}
+      />
+    ),
   },
 ];
 

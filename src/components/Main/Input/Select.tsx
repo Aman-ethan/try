@@ -20,7 +20,7 @@ export default function Select({
       defaultValue={loading ? undefined : defaultValue}
       value={loading ? undefined : value}
       disabled={loading}
-      className={clsx("w-full", className)}
+      className={clsx("initial:w-full", className)}
       size={size}
       {...props}
     />

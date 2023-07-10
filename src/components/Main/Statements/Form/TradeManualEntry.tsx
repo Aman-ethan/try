@@ -4,7 +4,7 @@ import SelectClient from "../../Input/SelectClient";
 import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
 import { DatePicker } from "../../Input/DatePicker";
 import SelectAssetClass from "../../Input/SelectAssetClass";
-import Select from "../../Input/Select";
+import SelectCurrency from "../../Input/SelectCurrency";
 
 export default function TradeManualEntry() {
   const [form] = Form.useForm();
@@ -85,7 +85,7 @@ export default function TradeManualEntry() {
           <Input placeholder="Enter description" />
         </Form.Item>
         <Form.Item label="Currency" name="currency" className="flex-1">
-          <Select placeholder="Select currency" />
+          <SelectCurrency placeholder="Select currency" />
         </Form.Item>
       </Row>
       <Row className="gap-x-8">

@@ -1,6 +1,6 @@
 import { Image, Space, Typography } from "antd";
 import { flags } from "@/constants/symbols";
-import { formatNumber } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 
 type Currency = keyof typeof flags;
@@ -40,9 +40,7 @@ export default function CurrencyTag({
           <Image alt="flag" src={flags[currency]} width={12} preview={false} />
         </Space>
       )}
-      <Typography.Text>
-        {formatNumber("price", amount, { currency: "USD" })}
-      </Typography.Text>
+      <Typography.Text>{formatPrice(amount, "USD")}</Typography.Text>
     </Space>
   );
 }

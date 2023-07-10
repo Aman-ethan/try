@@ -26,9 +26,15 @@ import CollapsedLogo from "../Icon/CollapsedLogo";
 import CurrencyTag from "../General/CurrencyTag";
 import Logout from "../General/Logout";
 import ChangePassword from "../General/ChangePassword";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
 
 interface ILayoutProps {
   children: ReactNode;
+}
+
+interface IUser {
+  name: string;
+  username: string;
 }
 
 // const FooterLink = [
@@ -56,12 +62,24 @@ const ProfileItems: MenuProps["items"] = [
   },
 ];
 
+function User() {
+  const { data } = useTransactionServerQuery<IUser>("/users/me/");
+  const { name, username } = data || {};
+  return (
+    <>
+      <Avatar />
+      <span className="text-sm font-medium text-neutral-13 capitalize">
+        {name || username}
+      </span>
+    </>
+  );
+}
+
 function UserProfile() {
   return (
     <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
       <div className="cursor-pointer space-x-2">
-        <Avatar />
-        <span className="text-sm font-medium text-neutral-13">Ravi</span>
+        <User />
         <CaretDownFilled />
       </div>
     </Dropdown>

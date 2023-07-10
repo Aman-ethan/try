@@ -15,7 +15,7 @@ const numberFormatOptions: Record<NumberFormatType, Intl.NumberFormatOptions> =
     },
   };
 
-export function formatNumber(
+function formatNumber(
   type: NumberFormatType,
   value?: string | number,
   options?: Intl.NumberFormatOptions
@@ -24,8 +24,17 @@ export function formatNumber(
   return new Intl.NumberFormat("en-US", {
     ...numberFormatOptions[type],
     ...options,
-    currency: options?.currency || "USD",
   }).format(String(value) as unknown as number);
+}
+
+export function formatPrice(price: number | string, currency: string) {
+  return formatNumber("price", price, {
+    currency,
+  });
+}
+
+export function formatQuantity(quantity: number) {
+  return formatNumber("quantity", quantity);
 }
 
 export function formatTableDate(date: Date) {
@@ -35,7 +44,7 @@ export function formatTableDate(date: Date) {
 const f = format("~s");
 
 export function formatCompactNumber(num: number | string) {
-  if (Number.isNaN(Number(num))) return num;
+  if (Number.isNaN(Number(num))) return null;
   return f(Number(num))
     .replace("k", " K")
     .replace("G", " B")

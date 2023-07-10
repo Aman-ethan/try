@@ -13,7 +13,7 @@ interface ICurrencyTagProps {
 export default function CurrencyTag({ currency }: ICurrencyTagProps) {
   if (!currency) return null;
   return (
-    <Tag className="py-1 px-2 space-x-2 flex items-center bg-neutral-2 -mr-0.5">
+    <Tag className="py-1 px-2 space-x-2 flex items-center bg-neutral-2 -mr-0.5 w-max">
       <Image
         alt="flag"
         src={flags[currency.toLowerCase() as Currency]}

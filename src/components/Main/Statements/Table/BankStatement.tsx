@@ -19,6 +19,7 @@ interface IBankStatement {
   status: string;
   reporting_currency: string;
   relationship_number: string;
+  portfolio_number: string;
   s3_url: string;
 }
 
@@ -103,8 +104,14 @@ const Columns: TableColumnsType<IBankStatement> = [
   {
     title: "Relationship Number",
     key: "relationship-number",
-    width: 170,
     dataIndex: "relationship_number",
+    width: 170,
+  },
+  {
+    title: "Portfoilio Number",
+    key: "portfolio-number",
+    dataIndex: "portfolio_number",
+    width: 170,
   },
   {
     fixed: "right",

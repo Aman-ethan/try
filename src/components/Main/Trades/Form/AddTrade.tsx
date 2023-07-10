@@ -3,6 +3,9 @@ import SelectClient from "../../Input/SelectClientWithParams";
 import { DatePicker } from "../../Input/DatePicker";
 import SelectCustodian from "../../Input/SelectCustodianWithParams";
 import AddSecurity from "../General/AddSecurity";
+import Select from "../../Input/Select";
+import SelectAssetClass from "../../Input/SelectAssetClass";
+import SelectRelationshipNumber from "../../Statements/Input/SelectRelationshipNumber";
 
 export default function AddTrade() {
   return (
@@ -24,7 +27,7 @@ export default function AddTrade() {
           name="relationship_number"
           className="flex-1"
         >
-          <Input placeholder="Enter the relationship number" />
+          <SelectRelationshipNumber placeholder="Enter the relationship number" />
         </Form.Item>
       </Row>
       <Row className="gap-x-4">
@@ -40,10 +43,10 @@ export default function AddTrade() {
           <Input placeholder="Security ID" disabled />
         </Form.Item>
         <Form.Item label="Currency" name="currency" className="flex-1">
-          <Input placeholder="Currency" disabled />
+          <Select placeholder="Currency" disabled />
         </Form.Item>
         <Form.Item label="Asset Type" name="asset_type" className="flex-1">
-          <Input placeholder="Asset Type" disabled />
+          <SelectAssetClass placeholder="Asset Type" disabled />
         </Form.Item>
       </Row>
       <Row className="gap-x-8">

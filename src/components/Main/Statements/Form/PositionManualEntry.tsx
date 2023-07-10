@@ -5,7 +5,7 @@ import { DatePicker } from "../../Input/DatePicker";
 import SelectAssetClass from "../../Input/SelectAssetClass";
 import SelectCustodian from "../../Input/SelectCustodian";
 import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
-import Select from "../../Input/Select";
+import SelectCurrency from "../../Input/SelectCurrency";
 
 export default function PositionManualEntry() {
   const formId = useStatementForm();
@@ -52,7 +52,7 @@ export default function PositionManualEntry() {
           name="original_currency"
           className="flex-1"
         >
-          <Select placeholder="Select original currency" />
+          <SelectCurrency placeholder="Select original currency" />
         </Form.Item>
         <Form.Item label="Quantity" name="quantity" className="flex-1">
           <InputNumber className="w-full" placeholder="Enter the quantity" />
