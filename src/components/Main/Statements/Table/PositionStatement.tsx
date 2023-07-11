@@ -29,8 +29,8 @@ const Columns: TableColumnsType<IPositionStatement> = [
     width: 105,
   },
   {
-    title: "Settlement Date",
-    key: "settlement-date",
+    title: "Statement Date",
+    key: "statement-date",
     dataIndex: "statement_date",
     width: 145,
     sorter: true,

@@ -24,6 +24,7 @@ export default function TradeManualEntry() {
   const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
     onSuccess() {
       message.success("Trade added successfully");
+      form.resetFields();
       revalidate(URLs.get);
     },
     onError() {

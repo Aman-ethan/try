@@ -26,7 +26,7 @@ export default function Statement<T>({
   const page = getSearchParams("page");
   const client = getSearchParams("client");
   const custodian = getSearchParams("custodian");
-  const ordering = getSearchParams("ordering");
+  const ordering = getSearchParams("ordering") || "-statement_date";
   const statementDateGTE = getSearchParams("statement_date__gte");
   const statementDateLTE = getSearchParams("statement_date__lte");
 
@@ -54,7 +54,11 @@ export default function Statement<T>({
         const { field, order } = sorter as SorterResult<T>;
         updateSearchParams({
           page: String(pagination.current),
-          ordering: order === "descend" ? `-${field}` : field?.toString(),
+          ordering: order
+            ? order === "descend"
+              ? `-${field}`
+              : field?.toString()
+            : undefined,
         });
       }}
       pagination={{

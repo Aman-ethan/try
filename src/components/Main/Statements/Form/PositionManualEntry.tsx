@@ -24,8 +24,8 @@ export default function PositionManualEntry() {
   const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
     onSuccess() {
       message.success("Position added successfully");
-      revalidate(URLs.get);
       form.resetFields();
+      revalidate(URLs.get);
     },
     onError() {
       message.error("Error adding position");
