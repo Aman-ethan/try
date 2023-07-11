@@ -12,7 +12,7 @@ export default function LoginForm() {
   const { trigger, isMutating } = useAuthServerMutation<
     ILoginArgs,
     ILoginResponse
-  >("/login/", {
+  >("/login", {
     onSuccess(data) {
       if (data.user_id) {
         router.push(

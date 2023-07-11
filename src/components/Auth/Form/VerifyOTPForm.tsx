@@ -36,7 +36,7 @@ export default function VerifyOTPForm() {
   const { trigger, isMutating } = useAuthServerMutation<
     IVerifyOTPArgs,
     IVerifyOTPResponse
-  >("/verify-otp/", {
+  >("/verify-otp", {
     onSuccess(data) {
       if (data.access_token && data.refresh_token) {
         switch (nextPath) {

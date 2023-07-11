@@ -12,7 +12,7 @@ export default function ForgotPasswordForm() {
   const { trigger, isMutating } = useAuthServerMutation<
     IUserArgs,
     ILoginResponse
-  >("/forgot-password/", {
+  >("/forgot-password", {
     onSuccess(data) {
       if (data.user_id) {
         router.push(
