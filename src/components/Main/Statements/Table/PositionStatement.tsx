@@ -1,11 +1,12 @@
 "use client";
 
-import { TableColumnsType } from "antd";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
 import { ThunderboltOutlined } from "@ant-design/icons";
-import Statement from "./Statement";
-import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
+import { TableColumnsType } from "antd";
 import CurrencyTag from "../../General/CurrencyTag";
+import MoreMenu, { DeleteItem, EditItem } from "../../General/MoreMenu";
+import Statement from ".";
+import PositionStatementForm from "../Form/PositionStatementForm";
 
 interface IPositionStatement {
   id: string;
@@ -23,6 +24,7 @@ interface IPositionStatement {
 
 const URLs = {
   get: "/statement/position/",
+  put: "/statement/position/{id}/",
   delete: "/statement/position/{id}/",
 };
 
@@ -32,7 +34,14 @@ function Action({ id }: { id: string }) {
       items={[
         {
           key: "edit",
-          label: <button type="button">Edit</button>,
+          label: (
+            <EditItem
+              id={id}
+              form={PositionStatementForm}
+              drawerTitle="Edit Position Statement"
+              urls={URLs}
+            />
+          ),
         },
         {
           key: "delete",

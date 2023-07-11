@@ -1,15 +1,42 @@
-import { useId, useMemo, useState } from "react";
-import { IDrawerProps } from "@/interfaces/Main";
-import { Button } from "antd";
 import FormContext from "@/context/FormContext";
+import { TUpload } from "@/interfaces/Main";
+import { Button } from "antd";
+import { ReactNode, useId, useMemo, useState } from "react";
 import Drawer from "./Drawer";
 
-export default function FormDrawer({ children, ...props }: IDrawerProps) {
+interface IFormDrawerProps {
+  buttonText: string;
+  title: string;
+  children: ReactNode;
+  edit?: boolean;
+}
+
+export default function FormDrawer({
+  buttonText,
+  children,
+  edit,
+  ...props
+}: IFormDrawerProps) {
   const formId = useId();
   const [isMutating, setIsMutating] = useState(false);
-  const contextValue = useMemo(() => ({ formId, setIsMutating }), [formId]);
+  const [uploadType, setUploadType] = useState<TUpload>(
+    edit ? "single" : "bulk"
+  );
+  const contextValue = useMemo(
+    () => ({ formId, setIsMutating, uploadType, setUploadType }),
+    [formId, uploadType]
+  );
   return (
     <Drawer
+      button={
+        edit ? (
+          <button type="button">{buttonText}</button>
+        ) : (
+          <Button type="primary" size="large">
+            {buttonText}
+          </Button>
+        )
+      }
       width={720}
       footer={
         <div className="space-x-4">
@@ -20,7 +47,7 @@ export default function FormDrawer({ children, ...props }: IDrawerProps) {
             htmlType="reset"
             disabled={isMutating}
           >
-            Clear All
+            {edit ? "Reset" : "Clear All"}
           </Button>
           <Button
             form={formId}
@@ -31,7 +58,7 @@ export default function FormDrawer({ children, ...props }: IDrawerProps) {
             loading={isMutating}
             disabled={isMutating}
           >
-            Upload
+            {uploadType === "single" ? "Submit" : "Upload"}
           </Button>
         </div>
       }

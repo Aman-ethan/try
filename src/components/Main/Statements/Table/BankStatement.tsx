@@ -3,7 +3,7 @@
 import { TableColumnsType } from "antd";
 import { formatTableDate } from "@/lib/format";
 import { ThunderboltOutlined } from "@ant-design/icons";
-import Statement from "./Statement";
+import Statement from ".";
 import StatusTag from "../../General/StatusTag";
 import CurrencyTag from "../../General/CurrencyTag";
 import MoreMenu, { DeleteItem, DownloadItem } from "../../General/MoreMenu";

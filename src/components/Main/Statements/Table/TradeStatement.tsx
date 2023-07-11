@@ -3,8 +3,9 @@
 import { TableColumnsType } from "antd";
 import { formatTableDate } from "@/lib/format";
 import { ThunderboltOutlined } from "@ant-design/icons";
-import Statement from "./Statement";
-import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
+import Statement from ".";
+import MoreMenu, { DeleteItem, EditItem } from "../../General/MoreMenu";
+import TradeStatementForm from "../Form/TradeStatementForm";
 
 interface IActionProps {
   id: string;
@@ -13,6 +14,7 @@ interface IActionProps {
 const URLs = {
   get: "/statement/trade/",
   delete: "/statement/trade/{id}/",
+  put: "/statement/trade/{id}/",
 };
 
 function Action({ id }: IActionProps) {
@@ -21,7 +23,14 @@ function Action({ id }: IActionProps) {
       items={[
         {
           key: "edit",
-          label: <button type="button">Edit</button>,
+          label: (
+            <EditItem
+              id={id}
+              urls={URLs}
+              form={TradeStatementForm}
+              drawerTitle="Edit Trade Statement"
+            />
+          ),
         },
         {
           key: "delete",

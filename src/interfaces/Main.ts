@@ -1,4 +1,5 @@
-import { DrawerProps } from "antd";
+import { DrawerProps, FormInstance } from "antd";
+import { ReactElement } from "react";
 
 export interface ICustodian {
   id: string;
@@ -11,9 +12,18 @@ export interface IClientResponse {
   custodians: ICustodian[];
 }
 
+export interface IStatementForm {
+  form: FormInstance;
+  isMutating: boolean;
+  initialValues?: Record<string, string>;
+  trigger: (_values: Record<string, string>) => void;
+}
+
+export type TUpload = "bulk" | "single";
+
 export interface IDrawerProps
   extends Pick<DrawerProps, "children" | "footer" | "title" | "width"> {
-  buttonText: string;
+  button: ReactElement;
 }
 
 export type TSelectClientParams = Record<"custodianId", string | undefined>;

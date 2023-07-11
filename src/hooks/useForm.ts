@@ -6,12 +6,13 @@ interface IFormParams {
 }
 
 export default function useForm(params?: IFormParams) {
-  const { setIsMutating, formId } = useContext(FormContext);
+  const { setIsMutating, formId, uploadType, setUploadType } =
+    useContext(FormContext);
   const isMutating = params?.isMutating;
 
   useEffect(() => {
     setIsMutating(!!isMutating);
   }, [isMutating, setIsMutating]);
 
-  return formId;
+  return { formId, uploadType, setUploadType };
 }

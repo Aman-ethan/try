@@ -1,10 +1,10 @@
 import { IDrawerProps } from "@/interfaces/Main";
 import { CloseOutlined } from "@ant-design/icons";
 import { Drawer as AntdDrawer, Button, Row } from "antd";
-import { useState } from "react";
+import { cloneElement, useState } from "react";
 
 export default function Drawer({
-  buttonText,
+  button,
   children,
   footer,
   title,
@@ -13,9 +13,7 @@ export default function Drawer({
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   return (
     <>
-      <Button type="primary" size="large" onClick={() => setIsDrawerOpen(true)}>
-        {buttonText}
-      </Button>
+      {cloneElement(button, { onClick: () => setIsDrawerOpen(true) })}
       <AntdDrawer
         closeIcon={null}
         open={isDrawerOpen}

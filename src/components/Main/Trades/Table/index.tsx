@@ -1,7 +1,9 @@
 import { TableProps } from "antd";
 import ScrollableTable from "../../Table/ScrollableTable";
 
-export default function Trade({ columns }: Pick<TableProps<any>, "columns">) {
+export default function TradeTable({
+  columns,
+}: Pick<TableProps<any>, "columns">) {
   return (
     <ScrollableTable
       columns={columns}

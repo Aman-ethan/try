@@ -1,5 +1,5 @@
 import { TableColumnsType } from "antd";
-import Trade from "./Trade";
+import Trade from ".";
 
 const Columns: TableColumnsType = [
   {

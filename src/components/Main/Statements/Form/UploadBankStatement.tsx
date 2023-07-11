@@ -70,7 +70,7 @@ export default function UploadBankStatement() {
       revalidate("/statement/bank/");
     },
   });
-  const formId = useForm({ isMutating });
+  const { formId } = useForm({ isMutating });
 
   const onFileChange = ({ file }: UploadChangeParam<UploadFile>) => {
     switch (file.status) {

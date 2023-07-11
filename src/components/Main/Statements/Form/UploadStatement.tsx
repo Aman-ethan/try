@@ -1,10 +1,10 @@
-import { useTransactionServerFormMutation } from "@/hooks/useMutation";
 import useForm from "@/hooks/useForm";
+import { useTransactionServerFormMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
 import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
 import { Button, Form, FormRule, Radio, Row, message } from "antd";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { lazy, useState } from "react";
+import { lazy } from "react";
 import SelectClient from "../../Input/SelectClient";
 import Upload from "../../Input/Upload";
 
@@ -23,8 +23,6 @@ interface IUploadStatementForm {
   custodian: string;
   file: File;
 }
-
-type TUpload = "bulk" | "manual";
 
 const FormRules: Partial<Record<keyof IUploadStatementForm, FormRule[]>> = {
   client: [{ required: true, message: "Please select a client" }],
@@ -55,7 +53,7 @@ function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
     },
   });
 
-  const formId = useForm({ isMutating });
+  const { formId } = useForm({ isMutating });
   return (
     <>
       <div className="space-y-2">
@@ -109,8 +107,7 @@ function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
 }
 
 export default function UploadStatement(props: IUploadStatementFormProps) {
-  const [uploadType, setUploadType] = useState<TUpload>("bulk");
-
+  const { uploadType, setUploadType } = useForm();
   return (
     <div className="space-y-8">
       <Radio.Group
