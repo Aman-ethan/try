@@ -5,7 +5,6 @@ import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { ILoginResponse, IUserArgs } from "@/interfaces/Auth";
-// import PhoneInput from "../../Input/PhoneInput";
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
@@ -13,7 +12,7 @@ export default function ForgotPasswordForm() {
   const { trigger, isMutating } = useAuthServerMutation<
     IUserArgs,
     ILoginResponse
-  >("/api/forgot-password", {
+  >("/forgot-password/", {
     onSuccess(data) {
       if (data.user_id) {
         router.push(

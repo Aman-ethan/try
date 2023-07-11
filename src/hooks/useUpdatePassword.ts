@@ -47,7 +47,7 @@ export default function useUpdatePassword({
   const { trigger, isMutating } = useAuthServerMutation<
     IUpdatePasswordArgs,
     IUpdatePasswordResponse
-  >("/api/reset-password", {
+  >("/reset-password", {
     onSuccess,
     onError() {
       message.error("Password reset failed. Please try again.");
