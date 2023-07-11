@@ -41,6 +41,16 @@ const REFERRAL_SOURCE = [
   "Other",
 ];
 
+const timezoneOptions = Timezones.map(({ text }) => ({
+  label: text,
+  value: text,
+}));
+
+const referralOptions = REFERRAL_SOURCE.map((source) => ({
+  label: source,
+  value: source,
+}));
+
 export default function SignupForm() {
   const router = useRouter();
   const [form] = Form.useForm<ISignupForm>();
@@ -134,13 +144,7 @@ export default function SignupForm() {
             />
           </Form.Item>
           <Form.Item label="&nbsp;" name="timezone" className="w-1/2">
-            <Select
-              placeholder="Select timezone"
-              options={Timezones.map(({ text }) => ({
-                label: text,
-                value: text,
-              }))}
-            />
+            <Select placeholder="Select timezone" options={timezoneOptions} />
           </Form.Item>
         </Row>
         <Form.Item
@@ -148,14 +152,7 @@ export default function SignupForm() {
           htmlFor="media"
           name="media"
         >
-          <Select
-            id="media"
-            placeholder="Google"
-            options={REFERRAL_SOURCE.map((source) => ({
-              label: source,
-              value: source,
-            }))}
-          />
+          <Select id="media" placeholder="Google" options={referralOptions} />
         </Form.Item>
         {media === "Other" && (
           <Form.Item noStyle label="State Here" name="source">
