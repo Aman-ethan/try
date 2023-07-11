@@ -1,10 +1,12 @@
 "use client";
 
+import { cookieOptions } from "@/constants/cookie";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import { ILoginArgs, ILoginResponse } from "@/interfaces/Auth";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/navigation";
+import { Cookies } from "react-cookie";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -20,8 +22,12 @@ export default function LoginForm() {
             user_id: data.user_id.toString(),
             phone_number: data.phone_number,
             username: form.getFieldValue("username"),
-            password: btoa(form.getFieldValue("password")),
           })}`
+        );
+        new Cookies().set(
+          "password",
+          btoa(form.getFieldValue("password")),
+          cookieOptions
         );
       }
     },

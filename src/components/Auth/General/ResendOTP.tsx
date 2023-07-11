@@ -8,6 +8,7 @@ import {
   IUserArgs,
 } from "@/interfaces/Auth";
 import { useEffect, useState } from "react";
+import { Cookies } from "react-cookie";
 
 const OTP_WAIT_TIME = 60;
 
@@ -18,7 +19,7 @@ export default function ResendOTP({ forgotPassword }: IResendOTPProps) {
   const { trigger } = useAuthServerMutation<
     ILoginArgs | IUserArgs,
     ILoginResponse
-  >(forgotPassword ? "/api/forgot-password" : "/api/login");
+  >(forgotPassword ? "/forgot-password" : "/login");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -41,7 +42,7 @@ export default function ResendOTP({ forgotPassword }: IResendOTPProps) {
       });
       return;
     }
-    const password = searchParams.get("password");
+    const password = new Cookies().get("password");
     if (username && password) {
       trigger({
         username,

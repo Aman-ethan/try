@@ -69,6 +69,7 @@ export default function SignupForm() {
     ...rest
   }: ISignupForm) => {
     if (terms_and_conditions) {
+      router.prefetch("/signup-success");
       const offset = Timezones.find((t) => t.text === timezone)
         ?.offset as number;
       const contact_time = dayjs(time)
