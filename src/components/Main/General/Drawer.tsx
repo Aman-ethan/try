@@ -1,3 +1,4 @@
+import { IDrawerProps } from "@/interfaces/Main";
 import { CloseOutlined } from "@ant-design/icons";
 import { Drawer as AntdDrawer, Button, DrawerProps, Row } from "antd";
 import { useState } from "react";
@@ -8,9 +9,7 @@ export default function Drawer({
   footer,
   title,
   width,
-}: Pick<DrawerProps, "children" | "footer" | "title" | "width"> & {
-  buttonText: string;
-}) {
+}: IDrawerProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   return (
     <>

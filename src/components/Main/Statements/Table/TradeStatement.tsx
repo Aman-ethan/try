@@ -43,7 +43,7 @@ const Columns: TableColumnsType = [
   {
     title: "Security ID",
     key: "security-id",
-    dataIndex: "security_id",
+    dataIndex: "isin",
     width: 140,
   },
   {

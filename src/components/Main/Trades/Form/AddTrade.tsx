@@ -1,4 +1,4 @@
-import { Form, Input, InputNumber, Row } from "antd";
+import { Form, Input, InputNumber, Radio, Row } from "antd";
 import SelectClient from "../../Input/SelectClientWithParams";
 import { DatePicker } from "../../Input/DatePicker";
 import SelectCustodian from "../../Input/SelectCustodianWithParams";
@@ -6,18 +6,16 @@ import AddSecurity from "../General/AddSecurity";
 import Select from "../../Input/Select";
 import SelectAssetClass from "../../Input/SelectAssetClass";
 import SelectRelationshipNumber from "../../Statements/Input/SelectRelationshipNumber";
+import TradeAction from "../../Input/TradeAction";
+import useForm from "@/hooks/useForm";
 
 export default function AddTrade() {
+  const formId = useForm();
   return (
-    <Form layout="vertical" size="large" className="space-y-6 pb-20">
-      <Row className="gap-x-8">
-        <Form.Item label="Client" name="client" className="flex-1">
-          <SelectClient placeholder="Choose the client" />
-        </Form.Item>
-        <Form.Item label="Date" name="date" className="flex-1">
-          <DatePicker placeholder="Select date" />
-        </Form.Item>
-      </Row>
+    <Form id={formId} layout="vertical" size="large" className="space-y-6">
+      <Form.Item label="Client" name="client" className="w-1/2 pr-4">
+        <SelectClient placeholder="Choose the client" />
+      </Form.Item>
       <Row className="gap-x-8">
         <Form.Item label="Custodian" name="custodian" className="flex-1">
           <SelectCustodian placeholder="Choose the custodian" />
@@ -30,11 +28,11 @@ export default function AddTrade() {
           <SelectRelationshipNumber placeholder="Enter the relationship number" />
         </Form.Item>
       </Row>
-      <Row className="gap-x-4">
-        <Form.Item label="Security" name="security" className="flex-1">
+      <Row>
+        <Form.Item label="Security" name="security" className="w-1/2 pr-4">
           <Input placeholder="Enter the security" />
         </Form.Item>
-        <Form.Item label="&nbsp;">
+        <Form.Item label="&nbsp;" className="w-1/2">
           <AddSecurity />
         </Form.Item>
       </Row>
@@ -49,6 +47,9 @@ export default function AddTrade() {
           <SelectAssetClass placeholder="Asset Type" disabled />
         </Form.Item>
       </Row>
+      <Form.Item label="Trade Action" name="trade_action" className="w-1/2">
+        <TradeAction />
+      </Form.Item>
       <Row className="gap-x-8">
         <Form.Item label="Trade Date" name="trade_date" className="flex-1">
           <DatePicker placeholder="Select trade date" />
@@ -75,9 +76,14 @@ export default function AddTrade() {
           />
         </Form.Item>
       </Row>
-      <Form.Item label="Add Tag" name="tags" className="w-1/2 pr-4">
-        <Input placeholder="Add some tags" />
-      </Form.Item>
+      <Row className="gap-x-8">
+        <Form.Item label="Goal" name="goal" className="flex-1">
+          <Select placeholder="Enter the goal" />
+        </Form.Item>
+        <Form.Item label="Tags" name="tags" className="flex-1">
+          <Input placeholder="Enter the tags" />
+        </Form.Item>
+      </Row>
     </Form>
   );
 }

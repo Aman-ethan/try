@@ -9,22 +9,19 @@ interface ICurrency {
   numeric_code: string;
 }
 
-const CurrencyOptions = Object.entries(flags).map(([key, value]) => ({
-  label: (
-    <div className="space-x-2">
-      <Image className="w-4" src={value} />
-      <span className="uppercase">{key}</span>
-    </div>
-  ),
-  value: key,
-}));
+type TCurrency = keyof typeof flags;
 
 export default function SelectCurrency(props: SelectProps) {
   const { data, isLoading } = useTransactionServerQuery<ICurrency[]>(
     "/classification/currency/"
   );
   const options = data?.map(({ code, name }) => ({
-    label: name,
+    label: (
+      <div className="space-x-2">
+        <Image className="w-4" src={flags[code.toLowerCase() as TCurrency]} />
+        <span className="uppercase">{name}</span>
+      </div>
+    ),
     value: code,
   }));
   return <Select options={options} loading={isLoading} {...props} />;

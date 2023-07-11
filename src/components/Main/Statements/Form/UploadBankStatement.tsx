@@ -1,5 +1,5 @@
 import { Form, FormRule, Row, message } from "antd";
-import useStatementForm from "@/hooks/useStatementForm";
+import useForm from "@/hooks/useForm";
 import { DATE_PARAM_FORMAT } from "@/constants/format";
 import { useTransactionServerMutation } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
@@ -70,7 +70,7 @@ export default function UploadBankStatement() {
       revalidate("/statement/bank/");
     },
   });
-  const formId = useStatementForm({ isMutating });
+  const formId = useForm({ isMutating });
 
   const onFileChange = ({ file }: UploadChangeParam<UploadFile>) => {
     switch (file.status) {

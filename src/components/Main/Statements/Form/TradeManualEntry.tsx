@@ -1,18 +1,48 @@
-import useStatementForm from "@/hooks/useStatementForm";
-import { Form, Input, InputNumber, Radio, Row } from "antd";
+import useForm from "@/hooks/useForm";
+import { Form, Input, Radio, Row, message } from "antd";
 import SelectClient from "../../Input/SelectClient";
 import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
 import { DatePicker } from "../../Input/DatePicker";
 import SelectAssetClass from "../../Input/SelectAssetClass";
 import SelectCurrency from "../../Input/SelectCurrency";
+import InputPrice from "../../Input/InputPrice";
+import InputQuantity from "../../Input/InputQuantity";
+import SelectCustodian from "../../Input/SelectCustodian";
+import { useTransactionServerMutation } from "@/hooks/useMutation";
+import { DATE_PARAM_FORMAT } from "@/constants/format";
+import revalidate from "@/lib/revalidate";
+import TradeAction from "../../Input/TradeAction";
+
+const URLs = {
+  get: "/statement/trade/",
+  post: "/statement/trade/",
+};
 
 export default function TradeManualEntry() {
   const [form] = Form.useForm();
-  const formId = useStatementForm();
+
+  const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
+    onSuccess() {
+      message.success("Trade added successfully");
+      revalidate(URLs.get);
+    },
+    onError() {
+      message.error("Failed to add trade");
+    },
+  });
+  const formId = useForm({ isMutating });
   return (
     <Form
       id={formId}
       form={form}
+      onFinish={(values) => {
+        trigger({
+          ...values,
+          settlement_date: values.settlement_date.format(DATE_PARAM_FORMAT),
+          trade_date: values.trade_date.format(DATE_PARAM_FORMAT),
+          statement_date: values.statement_date.format(DATE_PARAM_FORMAT),
+        });
+      }}
       layout="vertical"
       className="space-y-6"
       requiredMark={false}
@@ -28,7 +58,7 @@ export default function TradeManualEntry() {
           />
         </Form.Item>
         <Form.Item label="Custodian" name="custodian" className="flex-1">
-          <SelectClient
+          <SelectCustodian
             reset={() => {
               form.resetFields(["custodian"]);
             }}
@@ -65,7 +95,7 @@ export default function TradeManualEntry() {
         >
           <Input placeholder="Enter reference number" />
         </Form.Item>
-        <Form.Item label="Security ID" name="security_id" className="flex-1">
+        <Form.Item label="Security ID" name="isin" className="flex-1">
           <Input placeholder="Enter security ID" />
         </Form.Item>
       </Row>
@@ -74,10 +104,7 @@ export default function TradeManualEntry() {
           <SelectAssetClass placeholder="Select asset class" />
         </Form.Item>
         <Form.Item label="Trade Action" name="trade_action" className="flex-1">
-          <Radio.Group className="pt-2">
-            <Radio value="buy">Buy</Radio>
-            <Radio value="sell">Sell</Radio>
-          </Radio.Group>
+          <TradeAction />
         </Form.Item>
       </Row>
       <Row className="gap-x-8">
@@ -90,18 +117,10 @@ export default function TradeManualEntry() {
       </Row>
       <Row className="gap-x-8">
         <Form.Item label="Cost Price" name="cost_price" className="flex-1">
-          <InputNumber
-            placeholder="Enter cost price"
-            className="w-full"
-            min={0}
-          />
+          <InputPrice placeholder="Enter cost price" />
         </Form.Item>
         <Form.Item label="Quantity" name="quantity" className="flex-1">
-          <InputNumber
-            placeholder="Enter the quantity"
-            className="w-full"
-            min={0}
-          />
+          <InputQuantity placeholder="Enter the quantity" />
         </Form.Item>
       </Row>
       <Row className="gap-x-8">

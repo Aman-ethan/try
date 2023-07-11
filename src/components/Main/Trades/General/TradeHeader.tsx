@@ -57,7 +57,7 @@ export default function TradeHeader() {
           placeholder="All Custodian"
           className="w-1/4"
         />
-        <Input className="w-1/5" placeholder="Enter Security ID" />
+        <Input size="large" className="w-1/5" placeholder="Enter Security ID" />
         <SelectAssetClass className="w-1/5" placeholder="All Asset" />
       </Row>
     </div>

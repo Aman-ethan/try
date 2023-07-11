@@ -54,7 +54,7 @@ export default function Statement<T>({
         const { field, order } = sorter as SorterResult<T>;
         updateSearchParams({
           page: String(pagination.current),
-          ordering: order === "ascend" ? field?.toString() : `-${field}`,
+          ordering: order === "descend" ? `-${field}` : field?.toString(),
         });
       }}
       pagination={{

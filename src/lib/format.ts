@@ -20,7 +20,7 @@ function formatNumber(
   value?: string | number,
   options?: Intl.NumberFormatOptions
 ) {
-  if (Number.isNaN(Number(value))) return null;
+  if (Number.isNaN(Number(value))) return "";
   return new Intl.NumberFormat("en-US", {
     ...numberFormatOptions[type],
     ...options,
@@ -33,7 +33,7 @@ export function formatPrice(price: number | string, currency: string) {
   });
 }
 
-export function formatQuantity(quantity: number) {
+export function formatQuantity(quantity: number | string) {
   return formatNumber("quantity", quantity);
 }
 
@@ -44,7 +44,7 @@ export function formatTableDate(date: Date) {
 const f = format("~s");
 
 export function formatCompactNumber(num: number | string) {
-  if (Number.isNaN(Number(num))) return null;
+  if (Number.isNaN(Number(num))) return "";
   return f(Number(num))
     .replace("k", " K")
     .replace("G", " B")

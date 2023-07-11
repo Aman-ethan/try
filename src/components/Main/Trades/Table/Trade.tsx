@@ -5,7 +5,8 @@ export default function Trade({ columns }: Pick<TableProps<any>, "columns">) {
   return (
     <ScrollableTable
       columns={columns}
-      scroll={{ y: "h-[calc(100vh-28rem)]" }}
+      className="h-[calc(100vh-22rem)]"
+      scroll={{ y: "calc(100vh - 25rem)" }}
     />
   );
 }

@@ -1,5 +1,5 @@
 import { useTransactionServerFormMutation } from "@/hooks/useMutation";
-import useStatementForm from "@/hooks/useStatementForm";
+import useForm from "@/hooks/useForm";
 import revalidate from "@/lib/revalidate";
 import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
 import { Button, Form, FormRule, Radio, Row, message } from "antd";
@@ -55,7 +55,7 @@ function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
     },
   });
 
-  const formId = useStatementForm({ isMutating });
+  const formId = useForm({ isMutating });
   return (
     <>
       <div className="space-y-2">
