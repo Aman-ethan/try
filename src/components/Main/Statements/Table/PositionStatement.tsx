@@ -21,6 +21,28 @@ interface IPositionStatement {
   cost_price: number;
 }
 
+const URLs = {
+  get: "/statement/position/",
+  delete: "/statement/position/{id}/",
+};
+
+function Action({ id }: { id: string }) {
+  return (
+    <MoreMenu
+      items={[
+        {
+          key: "edit",
+          label: <button>Edit</button>,
+        },
+        {
+          key: "delete",
+          label: <DeleteItem id={id} urls={URLs} />,
+        },
+      ]}
+    />
+  );
+}
+
 const Columns: TableColumnsType<IPositionStatement> = [
   {
     title: "Client",
@@ -119,27 +141,10 @@ const Columns: TableColumnsType<IPositionStatement> = [
     width: 55,
     dataIndex: "id",
     align: "center",
-    render: () => (
-      <MoreMenu
-        items={[
-          {
-            key: "edit",
-            label: <button>Edit</button>,
-          },
-          {
-            key: "delete",
-            label: <DeleteItem />,
-          },
-        ]}
-      />
-    ),
+    render: (id) => <Action id={id} />,
   },
 ];
 
-const URLs = {
-  get: "/statement/position/",
-};
-
 export default function PositionStatement() {
-  return <Statement urls={URLs} columns={Columns} />;
+  return <Statement urlKey={URLs.get} columns={Columns} />;
 }

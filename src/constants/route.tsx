@@ -61,15 +61,27 @@ const ROUTE = [
     children: [
       {
         key: "/statements/bank",
-        label: <Link href="/statements/bank">Bank Statement</Link>,
+        label: (
+          <Link href="/statements/bank?ordering=-statement_date">
+            Bank Statement
+          </Link>
+        ),
       },
       {
         key: "/statements/trade",
-        label: <Link href="/statements/trade">Trade Statement</Link>,
+        label: (
+          <Link href="/statements/trade?ordering=-statement_date">
+            Trade Statement
+          </Link>
+        ),
       },
       {
         key: "/statements/position",
-        label: <Link href="/statements/position">Position Statement</Link>,
+        label: (
+          <Link href="/statements/position?ordering=-statement_date">
+            Position Statement
+          </Link>
+        ),
       },
     ],
   },

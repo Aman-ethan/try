@@ -34,14 +34,6 @@ const URLs = {
 };
 
 function Action({ id, downloadUrl }: IActionProps) {
-  const { trigger, isMutating } = useTransactionServerDeleteMutation(
-    URLs.delete.replace("{id}", id),
-    {
-      onSuccess: () => {
-        revalidate(URLs.get);
-      },
-    }
-  );
   return (
     <MoreMenu
       items={[
@@ -51,7 +43,7 @@ function Action({ id, downloadUrl }: IActionProps) {
         },
         {
           key: "delete",
-          label: <DeleteItem disabled={isMutating} onClick={trigger} />,
+          label: <DeleteItem id={id} urls={URLs} />,
         },
       ]}
     />
@@ -125,5 +117,5 @@ const Columns: TableColumnsType<IBankStatement> = [
 ];
 
 export default function BankStatement() {
-  return <Statement urls={URLs} columns={Columns} />;
+  return <Statement urlKey={URLs.get} columns={Columns} />;
 }

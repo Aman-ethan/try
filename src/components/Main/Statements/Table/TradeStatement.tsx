@@ -6,6 +6,32 @@ import Statement from "./Statement";
 import { ThunderboltOutlined } from "@ant-design/icons";
 import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
 
+interface IActionProps {
+  id: string;
+}
+
+const URLs = {
+  get: "/statement/trade/",
+  delete: "/statement/trade/{id}/",
+};
+
+function Action({ id }: IActionProps) {
+  return (
+    <MoreMenu
+      items={[
+        {
+          key: "edit",
+          label: <button>Edit</button>,
+        },
+        {
+          key: "delete",
+          label: <DeleteItem urls={URLs} id={id} />,
+        },
+      ]}
+    />
+  );
+}
+
 const Columns: TableColumnsType = [
   {
     title: "Client",
@@ -59,27 +85,10 @@ const Columns: TableColumnsType = [
     width: 55,
     dataIndex: "id",
     align: "center",
-    render: () => (
-      <MoreMenu
-        items={[
-          {
-            key: "edit",
-            label: <button>Edit</button>,
-          },
-          {
-            key: "delete",
-            label: <DeleteItem />,
-          },
-        ]}
-      />
-    ),
+    render: (id) => <Action id={id} />,
   },
 ];
 
-const URLs = {
-  get: "/statement/trade/",
-};
-
 export default function TradeStatement() {
-  return <Statement urls={URLs} columns={Columns} />;
+  return <Statement urlKey={URLs.get} columns={Columns} />;
 }

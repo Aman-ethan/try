@@ -12,26 +12,21 @@ interface IStatementResponse<T> {
   results: T[];
 }
 
-interface IURLs {
-  get: string;
-  delete?: string;
-}
-
 export default function Statement<T>({
-  urls,
+  urlKey,
   columns,
-}: Pick<TableProps<T>, "columns"> & { urls: IURLs }) {
+}: Pick<TableProps<T>, "columns"> & { urlKey: string }) {
   const { updateSearchParams, get: getSearchParams } = useSearchParams();
 
   const page = getSearchParams("page");
   const client = getSearchParams("client");
   const custodian = getSearchParams("custodian");
-  const ordering = getSearchParams("ordering") || "-statement_date";
+  const ordering = getSearchParams("ordering");
   const statementDateGTE = getSearchParams("statement_date__gte");
   const statementDateLTE = getSearchParams("statement_date__lte");
 
   const { data, isLoading } = useTransactionServerQuery<IStatementResponse<T>>(
-    urls.get +
+    urlKey +
       buildURLSearchParams({
         client,
         custodian,
