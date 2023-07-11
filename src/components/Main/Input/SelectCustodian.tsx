@@ -2,7 +2,7 @@ import useSelectCustodian from "@/hooks/useSelectCustodian";
 import { SelectProps } from "antd";
 import { TSelectCustodianParams } from "@/interfaces/Main";
 import useDependentSelect from "@/hooks/useDependentSelect";
-import Select from "./Select";
+import Select from "../../Input/Select";
 
 export default function SelectCustodian({
   params,

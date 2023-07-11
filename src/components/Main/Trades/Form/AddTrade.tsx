@@ -4,7 +4,7 @@ import SelectClient from "../../Input/SelectClientWithParams";
 import { DatePicker } from "../../Input/DatePicker";
 import SelectCustodian from "../../Input/SelectCustodianWithParams";
 import AddSecurity from "../General/AddSecurity";
-import Select from "../../Input/Select";
+import Select from "../../../Input/Select";
 import SelectAssetClass from "../../Input/SelectAssetClass";
 import SelectRelationshipNumber from "../../Statements/Input/SelectRelationshipNumber";
 import TradeAction from "../../Input/TradeAction";

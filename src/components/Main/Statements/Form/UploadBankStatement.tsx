@@ -190,7 +190,11 @@ export default function UploadBankStatement() {
           <SelectStatementType placeholder="Select statement type" />
         </Form.Item>
       </Row>
-      <Form.Item name="s3_url" rules={FormRules.s3_url}>
+      <Form.Item
+        name="s3_url"
+        valuePropName="fileList"
+        rules={FormRules.s3_url}
+      >
         <Upload
           action={data?.url}
           disabled={isLoading || isMutating}

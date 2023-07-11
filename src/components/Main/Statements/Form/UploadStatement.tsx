@@ -91,7 +91,7 @@ function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
             placeholder="Select the client"
           />
         </Form.Item>
-        <Form.Item name="file" rules={FormRules.file}>
+        <Form.Item name="file" valuePropName="fileList" rules={FormRules.file}>
           <Upload
             beforeUpload={() => {
               return false;

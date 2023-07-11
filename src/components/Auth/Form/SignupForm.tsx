@@ -1,19 +1,16 @@
 "use client";
 
-import {
-  Button,
-  Checkbox,
-  Form,
-  Input,
-  Row,
-  Select,
-  TimePicker,
-  message,
-} from "antd";
+import { Button, Checkbox, Form, Input, Row, TimePicker, message } from "antd";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import Timezones from "@/constants/timezones";
 import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import Select from "@/components/Input/Select";
+import { TIME_FORMAT } from "@/constants/format";
 import PhoneInput from "../../Input/PhoneInput";
+
+dayjs.extend(utc);
 
 interface ISignupResponse {
   id: string;
@@ -27,7 +24,12 @@ interface ISignupArgs {
   media: string;
   company_name: string;
   designation: string;
+  contact_time: string;
+}
+
+interface ISignupForm extends ISignupArgs {
   time: Date;
+  timezone: string;
   source: string;
   terms_and_conditions: boolean;
 }
@@ -41,17 +43,16 @@ const REFERRAL_SOURCE = [
 
 export default function SignupForm() {
   const router = useRouter();
-  const [form] = Form.useForm<ISignupArgs>();
+  const [form] = Form.useForm<ISignupForm>();
   const media = Form.useWatch("media", form);
 
   const { trigger, isMutating } = useAuthServerMutation<
     ISignupArgs,
     ISignupResponse
-  >("/api/contacts/", {
+  >("/contacts/", {
     onSuccess(data) {
       if (data.id) {
         form.resetFields();
-        message.success("Thank you! Your data is recorded.");
         router.replace("/signup-success");
       }
     },
@@ -60,12 +61,27 @@ export default function SignupForm() {
     },
   });
 
-  const handleSignup = (data: ISignupArgs) => {
-    const { source, terms_and_conditions } = data;
-    if (!terms_and_conditions) {
-      message.error("Please accept the terms and conditions.");
+  const handleSignup = ({
+    source,
+    terms_and_conditions,
+    time,
+    timezone,
+    ...rest
+  }: ISignupForm) => {
+    if (terms_and_conditions) {
+      const offset = Timezones.find((t) => t.text === timezone)
+        ?.offset as number;
+      const contact_time = dayjs(time)
+        .utcOffset(offset, true)
+        .utc()
+        .format(TIME_FORMAT);
+      trigger({
+        ...rest,
+        contact_time,
+        media: media === "Other" ? source : media,
+      });
     } else {
-      trigger({ ...data, media: media === "Other" ? source : media });
+      message.error("Please accept the terms and conditions.");
     }
   };
 
@@ -81,7 +97,7 @@ export default function SignupForm() {
     >
       <div className="space-y-6">
         <Row justify="space-between" className="gap-x-4">
-          <Form.Item label="Username" name="username" className="flex-1">
+          <Form.Item label="Username" name="name" className="flex-1">
             <Input type="text" placeholder="john doe" autoFocus />
           </Form.Item>
           <Form.Item label="Email" name="email" className="flex-1">
@@ -116,14 +132,14 @@ export default function SignupForm() {
               className="w-full"
             />
           </Form.Item>
-          <Form.Item label="&nbsp;" name="timezone" className="flex-1">
-            <Select placeholder="Select timezone">
-              {Timezones.map(({ text }) => (
-                <Select.Option key={text} value={text}>
-                  {text}
-                </Select.Option>
-              ))}
-            </Select>
+          <Form.Item label="&nbsp;" name="timezone" className="w-1/2">
+            <Select
+              placeholder="Select timezone"
+              options={Timezones.map(({ text }) => ({
+                label: text,
+                value: text,
+              }))}
+            />
           </Form.Item>
         </Row>
         <Form.Item
@@ -131,20 +147,21 @@ export default function SignupForm() {
           htmlFor="media"
           name="media"
         >
-          <Select id="media" placeholder="Google">
-            {REFERRAL_SOURCE.map((source) => (
-              <Select.Option key={source} value={source}>
-                {source}
-              </Select.Option>
-            ))}
-          </Select>
+          <Select
+            id="media"
+            placeholder="Google"
+            options={REFERRAL_SOURCE.map((source) => ({
+              label: source,
+              value: source,
+            }))}
+          />
         </Form.Item>
         {media === "Other" && (
           <Form.Item noStyle label="State Here" name="source">
             <Input type="text" placeholder="State Here" />
           </Form.Item>
         )}
-        <Form.Item name="terms_and_conditions">
+        <Form.Item name="terms_and_conditions" valuePropName="checked">
           <Checkbox>
             <span className="text-neutral-13/80">
               I agree to the{" "}
@@ -160,13 +177,7 @@ export default function SignupForm() {
           </Checkbox>
         </Form.Item>
       </div>
-      <Button
-        disabled
-        htmlType="submit"
-        type="primary"
-        block
-        loading={isMutating}
-      >
+      <Button htmlType="submit" type="primary" block loading={isMutating}>
         Create Account
       </Button>
     </Form>

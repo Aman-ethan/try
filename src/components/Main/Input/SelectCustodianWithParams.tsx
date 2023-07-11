@@ -1,6 +1,6 @@
 import useSelectCustodianWithParams from "@/hooks/useSelectCustodianWithParams";
 import { SelectProps } from "antd";
-import Select from "./Select";
+import Select from "../../Input/Select";
 
 export default function SelectCustodianWithParams(props: SelectProps) {
   const { isLoading, options, onChange, custodianId } =

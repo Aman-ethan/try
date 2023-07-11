@@ -30,7 +30,8 @@
     "react": "18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "18.2.0",
-    "swr": "^2.2.0"
+    "swr": "^2.2.0",
+    "utc": "link:dayjs/plugin/utc"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.0.1",

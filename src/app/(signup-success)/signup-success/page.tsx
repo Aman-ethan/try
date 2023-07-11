@@ -1,9 +1,14 @@
 "use client";
 
 import { LikeTwoTone } from "@ant-design/icons";
-import { Result } from "antd";
+import { Result, message } from "antd";
+import { useEffect } from "react";
 
 export default function SignupSuccessPage() {
+  useEffect(() => {
+    message.success("Thank you! Your data is recorded.");
+  }, []);
+
   return (
     <Result
       status="success"

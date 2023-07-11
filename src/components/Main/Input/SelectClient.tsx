@@ -2,7 +2,7 @@ import useSelectClient from "@/hooks/useSelectClient";
 import { SelectProps } from "antd";
 import { TSelectClientParams } from "@/interfaces/Main";
 import useDependentSelect from "@/hooks/useDependentSelect";
-import Select from "./Select";
+import Select from "../../Input/Select";
 
 export default function SelectClient({
   params,

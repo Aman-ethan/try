@@ -1,6 +1,6 @@
 import { SelectProps } from "antd";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import Select from "./Select";
+import Select from "../../Input/Select";
 
 interface ISubAsset {
   sub_asset_class: string;

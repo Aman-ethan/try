@@ -1,5 +1,5 @@
 import { SelectProps } from "antd";
-import Select from "../../Input/Select";
+import Select from "../../../Input/Select";
 
 const StatementOptions = [
   {
