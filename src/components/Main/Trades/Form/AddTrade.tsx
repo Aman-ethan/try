@@ -10,7 +10,7 @@ import SelectRelationshipNumber from "../../Statements/Input/SelectRelationshipN
 import TradeAction from "../../Input/TradeAction";
 
 export default function AddTrade() {
-  const formId = useForm();
+  const { formId } = useForm();
   return (
     <Form id={formId} layout="vertical" size="large" className="space-y-6">
       <Form.Item label="Client" name="client" className="w-1/2 pr-4">
