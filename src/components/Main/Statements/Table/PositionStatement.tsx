@@ -2,8 +2,8 @@
 
 import { TableColumnsType } from "antd";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
-import Statement from "./Statement";
 import { ThunderboltOutlined } from "@ant-design/icons";
+import Statement from "./Statement";
 import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
 import CurrencyTag from "../../General/CurrencyTag";
 
@@ -32,7 +32,7 @@ function Action({ id }: { id: string }) {
       items={[
         {
           key: "edit",
-          label: <button>Edit</button>,
+          label: <button type="button">Edit</button>,
         },
         {
           key: "delete",

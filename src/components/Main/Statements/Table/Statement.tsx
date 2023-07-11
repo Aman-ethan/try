@@ -47,13 +47,13 @@ export default function Statement<T>({
       rowKey="id"
       onChange={(pagination, _, sorter) => {
         const { field, order } = sorter as SorterResult<T>;
+        let _ordering;
+        if (order) {
+          _ordering = order === "descend" ? `-${field}` : field?.toString();
+        }
         updateSearchParams({
           page: String(pagination.current),
-          ordering: order
-            ? order === "descend"
-              ? `-${field}`
-              : field?.toString()
-            : undefined,
+          ordering: _ordering,
         });
       }}
       pagination={{

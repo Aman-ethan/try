@@ -22,11 +22,11 @@ import {
 } from "antd";
 import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 import CurrencyTag from "../General/CurrencyTag";
 import Logout from "../General/Logout";
 import ChangePassword from "../General/ChangePassword";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
 
 interface ILayoutProps {
   children: ReactNode;

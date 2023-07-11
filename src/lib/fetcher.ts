@@ -16,8 +16,8 @@ async function fetcher({ url, init, error }: IFetcherParams) {
     const res = await fetch(url, {
       ...init,
       headers: {
-        // Authorization: accessToken ? `Bearer ${accessToken}` : "",
-        Authorization: "Token 5df62ba1cb1e86fd3d12886c4ae5d1e3c67fb2df",
+        Authorization: accessToken ? `Bearer ${accessToken}` : "",
+        // Authorization: "Token 5df62ba1cb1e86fd3d12886c4ae5d1e3c67fb2df",
         ...init.headers,
       },
     });

@@ -1,7 +1,7 @@
 import { flags } from "@/constants/symbols";
-import Select from "./Select";
 import { SelectProps, Image } from "antd";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
+import Select from "./Select";
 
 interface ICurrency {
   code: string;

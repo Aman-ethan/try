@@ -9,7 +9,7 @@ const DraggerStyle: CSSProperties = {
 
 export default function Upload({
   method = "PUT",
-  value,
+  value: _value,
   ...props
 }: UploadProps & Partial<{ value: Record<string, File | FileList> }>) {
   return (

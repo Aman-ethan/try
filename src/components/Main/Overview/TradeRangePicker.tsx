@@ -3,7 +3,7 @@ import useSearchParams from "@/hooks/useSearchParams";
 import { RangePicker } from "../Input/DatePicker";
 
 export default function TradeRangePicker() {
-  const { updateSearchParams, get: getSearchParams } = useSearchParams();
+  const { updateSearchParams } = useSearchParams();
 
   const onChange = (values: Dayjs[] | any) => {
     if (values) {

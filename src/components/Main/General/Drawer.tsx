@@ -1,6 +1,6 @@
 import { IDrawerProps } from "@/interfaces/Main";
 import { CloseOutlined } from "@ant-design/icons";
-import { Drawer as AntdDrawer, Button, DrawerProps, Row } from "antd";
+import { Drawer as AntdDrawer, Button, Row } from "antd";
 import { useState } from "react";
 
 export default function Drawer({
