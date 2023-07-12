@@ -7,7 +7,7 @@ export default function formatInitialValues(
   return Object.entries(initialValues).reduce((acc, [key, value]) => {
     return {
       ...acc,
-      [key]: dayjs(value) || value,
+      [key]: key.includes("date") ? dayjs(value) : value,
     };
   }, {});
 }
