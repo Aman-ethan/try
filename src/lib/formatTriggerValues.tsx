@@ -1,5 +1,5 @@
 import { DATE_PARAM_FORMAT } from "@/constants/format";
-import { Dayjs } from "dayjs";
+import { Dayjs, isDayjs } from "dayjs";
 
 export default function formatTriggerValues(
   values: Record<string, string | number | Dayjs>
@@ -7,7 +7,7 @@ export default function formatTriggerValues(
   return Object.entries(values).reduce((acc, [key, value]) => {
     return {
       ...acc,
-      [key]: value instanceof Dayjs ? value.format(DATE_PARAM_FORMAT) : value,
+      [key]: isDayjs(value) ? value.format(DATE_PARAM_FORMAT) : value,
     };
   }, {});
 }
