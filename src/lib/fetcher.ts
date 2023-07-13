@@ -48,7 +48,7 @@ async function fetcher({ url, init, error }: IFetcherParams) {
 }
 
 export function postJsonFetcher(baseURL: string) {
-  return <ExtraArgs>(key: string, options: Readonly<{ arg: ExtraArgs }>) =>
+  return <ExtraArgs>(key: string, options?: Readonly<{ arg: ExtraArgs }>) =>
     fetcher({
       url: baseURL + key,
       init: {
@@ -56,7 +56,7 @@ export function postJsonFetcher(baseURL: string) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(options.arg),
+        body: options ? JSON.stringify(options.arg) : undefined,
       },
       error: "An error occurred while posting the data.",
     });
@@ -72,9 +72,9 @@ export function deleteFetcher(baseURL: string) {
 }
 
 export function postFormFetcher(baseURL: string) {
-  return <ExtraArgs>(key: string, options: Readonly<{ arg: ExtraArgs }>) => {
+  return <ExtraArgs>(key: string, options?: Readonly<{ arg: ExtraArgs }>) => {
     const formData = new FormData();
-    Object.entries(options.arg as Record<string, string | File>).forEach(
+    Object.entries(options?.arg as Record<string, string | File>).forEach(
       ([_key, value]) => {
         formData.append(_key, value);
       }
@@ -105,7 +105,7 @@ export function getFetcher(baseURL: string) {
 }
 
 export function putFetcher(baseURL: string) {
-  return <ExtraArgs>(key: string, options: Readonly<{ arg: ExtraArgs }>) =>
+  return <ExtraArgs>(key: string, options?: Readonly<{ arg: ExtraArgs }>) =>
     fetcher({
       url: baseURL + key,
       init: {
@@ -113,14 +113,14 @@ export function putFetcher(baseURL: string) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(options.arg),
+        body: options ? JSON.stringify(options.arg) : undefined,
       },
       error: "An error occurred while replacing the data.",
     });
 }
 
 export function patchFetcher(baseURL: string) {
-  return <ExtraArgs>(key: string, options: Readonly<{ arg: ExtraArgs }>) =>
+  return <ExtraArgs>(key: string, options?: Readonly<{ arg: ExtraArgs }>) =>
     fetcher({
       url: baseURL + key,
       init: {
@@ -128,7 +128,7 @@ export function patchFetcher(baseURL: string) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(options.arg),
+        body: options ? JSON.stringify(options.arg) : undefined,
       },
       error: "An error occurred while modifying the data.",
     });

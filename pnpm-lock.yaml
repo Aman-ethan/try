@@ -41,6 +41,9 @@ dependencies:
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
+  color-hash:
+    specifier: ^2.0.2
+    version: 2.0.2
   d3:
     specifier: ^7.8.5
     version: 7.8.5
@@ -56,6 +59,9 @@ dependencies:
   quarterOfYear:
     specifier: link:dayjs/plugin/quarterOfYear
     version: link:dayjs/plugin/quarterOfYear
+  rc-select:
+    specifier: ^14.5.2
+    version: 14.5.2(react-dom@18.2.0)(react@18.2.0)
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -76,6 +82,9 @@ devDependencies:
   '@svgr/webpack':
     specifier: ^8.0.1
     version: 8.0.1
+  '@types/color-hash':
+    specifier: ^1.0.2
+    version: 1.0.2
   '@types/d3':
     specifier: ^7.4.0
     version: 7.4.0
@@ -3281,6 +3290,10 @@ packages:
     resolution: {integrity: sha512-UUyq7nDIPbp2DGcbaShROu8oB9lksiNc2FqxrC6+bKLJOlo03lTtQnoeQFxhhfcBNAYfUPAblRt3LCQFesbyEw==}
     dev: false
 
+  /@types/color-hash@1.0.2:
+    resolution: {integrity: sha512-QJCVXSVRse+mMvzWQ8vH6AcKxtqCgHPHf5abAdGn86DEeQdUpSJnKAeCa1+hZuohaUF3l4RhigC9akRx82Bwig==}
+    dev: true
+
   /@types/cookie@0.3.3:
     resolution: {integrity: sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==}
     dev: false
@@ -4193,6 +4206,10 @@ packages:
     dependencies:
       color-name: 1.1.4
     dev: true
+
+  /color-hash@2.0.2:
+    resolution: {integrity: sha512-6exeENAqBTuIR1wIo36mR8xVVBv6l1hSLd7Qmvf6158Ld1L15/dbahR9VUOiX7GmGJBCnQyS0EY+I8x+wa7egg==}
+    dev: false
 
   /color-name@1.1.3:
     resolution: {integrity: sha512-72fSenhMw2HZMTVHeCA9KCmpEIbzWiQsjN+BHcBbS9vr1mtt+vJjPdksIBNUmKAW8TFUDPJK5SUU3QhE9NEXDw==}

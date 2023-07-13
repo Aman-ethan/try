@@ -6,13 +6,12 @@ import getFileValueFromEvent from "@/lib/getFileValueFromEvent";
 import revalidate from "@/lib/revalidate";
 import { Form, FormRule, Input, Row, message } from "antd";
 import { UploadChangeParam, UploadFile } from "antd/es/upload";
-import { Dayjs } from "dayjs";
 import { DatePicker } from "../../Input/DatePicker";
-import SelectClient from "../../Input/SelectClient";
-import SelectCustodian from "../../Input/SelectCustodian";
 import Upload from "../../Input/Upload";
+import SelectCustodian from "../../Input/SelectCustodian";
+import SelectClient from "../../Input/SelectClient";
+import SelectRelationshipNumber from "../../Input/SelectRelationshipNumber";
 import SelectPortfolioNumber from "../Input/SelectPortfolioNumber";
-import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
 import SelectStatementType from "../Input/SelectStatementType";
 
 interface IUploadBankStatementResponse {

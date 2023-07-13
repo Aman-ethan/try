@@ -1,7 +1,6 @@
 "use client";
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import useSearchParams from "@/hooks/useSearchParams";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { Row, Segmented } from "antd";
 import dayjs, { ManipulateType, QUnitType } from "dayjs";
@@ -40,13 +39,15 @@ const DURATION: IDuration[] = [
 const DURATION_AMOUNT = 1;
 
 function useAssetNetWorth() {
-  const { updateSearchParams, get: getSearchParams } = useSearchParams();
   const {
     clientId,
     isLoading: isClientLoading,
     options: clientOptions,
     onChange: onClientChange,
+    getSearchParams,
+    updateSearchParams,
   } = useSelectClientWithParams();
+
   const assetDuration = getSearchParams("asset_duration") as ManipulateType;
 
   const { data, isLoading } = useTransactionServerQuery<IAssetNetWorthResponse>(
@@ -59,7 +60,8 @@ function useAssetNetWorth() {
   );
 
   const selectedClient =
-    clientOptions.find(({ value }) => value === clientId) || clientOptions[0];
+    clientOptions?.find(({ value }) => value === clientId) ||
+    clientOptions?.[0];
 
   function onDurationChange(value: SegmentedValue) {
     updateSearchParams({

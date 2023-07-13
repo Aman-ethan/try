@@ -7,20 +7,20 @@ import DetailsSummary from "./DetailsSummary";
 import PositionListItems from "./PositionListItems";
 import SelectClient from "../Input/SelectClientWithParams";
 import SelectCustodian from "../Input/SelectCustodianWithParams";
+import SelectAsset from "../Input/SelectAsset";
 import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
-import SelectAssetClass from "../Input/SelectAssetClass";
+
+const containerClasses =
+  "flex flex-col tab:flex-row tab:items-center tab:space-x-4";
+const outerContainerClasses =
+  "flex flex-1 flex-col space-y-4 lap:flex-row lap:items-center lap:space-x-4 lap:space-y-0";
+const innerContainerClasses =
+  "flex flex-1 flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0";
+const filterButtonClasses =
+  "order-first mb-4 tab:order-last tab:mb-0 tab:self-start lap:hidden";
 
 export default function PositionList() {
   const [collapse, setCollapse] = useState(false);
-
-  const containerClasses =
-    "flex flex-col tab:flex-row tab:items-center tab:space-x-4";
-  const outerContainerClasses =
-    "flex flex-1 flex-col space-y-4 lap:flex-row lap:items-center lap:space-x-4 lap:space-y-0";
-  const innerContainerClasses =
-    "flex flex-1 flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0";
-  const filterButtonClasses =
-    "order-first mb-4 tab:order-last tab:mb-0 tab:self-start lap:hidden";
 
   const primarySelectClasses = clsx(
     collapse ? "block" : "hidden",
@@ -52,7 +52,7 @@ export default function PositionList() {
               placeholder="Relationship Number"
               className={secondarySelectClasses}
             />
-            <SelectAssetClass
+            <SelectAsset
               placeholder="Asset Class"
               className={secondarySelectClasses}
             />

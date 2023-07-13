@@ -3,6 +3,7 @@
 import { TableColumnsType } from "antd";
 import { formatTableDate } from "@/lib/format";
 import { ThunderboltOutlined } from "@ant-design/icons";
+import { capitalize } from "lodash";
 import Statement from ".";
 import StatusTag from "../../General/StatusTag";
 import CurrencyTag from "../../General/CurrencyTag";
@@ -101,6 +102,13 @@ const Columns: TableColumnsType<IBankStatement> = [
     title: "Portfoilio Number",
     key: "portfolio-number",
     dataIndex: "portfolio_number",
+    width: 170,
+  },
+  {
+    title: "Type of Statement",
+    key: "type-of-statement",
+    dataIndex: "statement_type",
+    render: capitalize,
     width: 170,
   },
   {

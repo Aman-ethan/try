@@ -42,5 +42,7 @@ export default function useSelectClientWithParams(
     options,
     onChange,
     clientId,
+    getSearchParams,
+    updateSearchParams,
   };
 }

@@ -47,6 +47,38 @@ export interface IStatementForm {
   trigger: (_values: Record<string, string>) => void;
 }
 
+export interface ISecurity {
+  name: string;
+  symbol: string;
+  isin: string;
+  exchange: string;
+  sub_asset_class: string;
+  country_name: string;
+  currency_code: string;
+  market_close: string;
+}
+
+export interface ISecuritySearchProps {
+  name: string;
+  code: string;
+  exchange: string;
+  type: string;
+  country: string;
+  currency: string;
+  isin: string;
+  previous_close: string;
+}
+export interface IPaginatedResponse<T> {
+  count: number;
+  next: string;
+  previous: string;
+  results: T[];
+}
+
+export interface ITradeFormProps extends IStatementForm {}
+
+export type TCurrency = keyof typeof flags;
+
 export type TUpload = "bulk" | "single";
 
 export interface ISelectRelationshipNumberProps {
@@ -71,3 +103,4 @@ export type TBankAccountParams = Record<
   "clientId" | "custodianId",
   string | undefined
 >;
+export type TSelectAssetParams = Record<"assetClass", string | undefined>;

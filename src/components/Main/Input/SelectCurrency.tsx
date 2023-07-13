@@ -20,7 +20,7 @@ export default function SelectCurrency(props: SelectProps) {
       label: (
         <div className="space-x-2">
           <Image className="w-4" src={flag} />
-          <span className="uppercase">{name}</span>
+          <span className="capitalize">{name}</span>
         </div>
       ),
       value: code,

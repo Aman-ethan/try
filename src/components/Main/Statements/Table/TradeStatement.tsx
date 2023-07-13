@@ -1,14 +1,36 @@
 "use client";
 
-import { TableColumnsType } from "antd";
-import { formatTableDate } from "@/lib/format";
+import { TCurrency } from "@/interfaces/Main";
+import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
 import { ThunderboltOutlined } from "@ant-design/icons";
+import { TableColumnsType } from "antd";
+import { capitalize } from "lodash";
 import Statement from ".";
+import CurrencyTag from "../../General/CurrencyTag";
 import MoreMenu, { DeleteItem, EditItem } from "../../General/MoreMenu";
 import TradeStatementForm from "../Form/TradeStatementForm";
 
 interface IActionProps {
   id: string;
+}
+
+interface ITradeStatement {
+  id: string;
+  client_name: string;
+  custodian_name: string;
+  statement_date: string;
+  reference_number: string;
+  relationship_number: string;
+  portfolio_number: string;
+  isin: string;
+  asset_class: string;
+  trade_action: string;
+  description: string;
+  quantity: number;
+  cost_price: number;
+  currency: TCurrency;
+  trade_date: string;
+  settlement_date: string;
 }
 
 const URLs = {
@@ -41,7 +63,7 @@ function Action({ id }: IActionProps) {
   );
 }
 
-const Columns: TableColumnsType = [
+const Columns: TableColumnsType<ITradeStatement> = [
   {
     title: "Client",
     key: "client",
@@ -51,9 +73,8 @@ const Columns: TableColumnsType = [
   {
     title: "Custodian",
     key: "custodian",
-    dataIndex: "custodian",
+    dataIndex: "custodian_name",
     width: 165,
-    filtered: true,
   },
   {
     title: "Relationship Number",
@@ -86,6 +107,58 @@ const Columns: TableColumnsType = [
     key: "asset-class",
     dataIndex: "asset_class",
     width: 130,
+  },
+  {
+    title: "Trade Action",
+    key: "trade-action",
+    dataIndex: "trade_action",
+    render: capitalize,
+    width: 130,
+  },
+  {
+    title: "Description",
+    key: "description",
+    dataIndex: "description",
+    width: 220,
+  },
+  {
+    title: "Currency",
+    key: "currency",
+    dataIndex: "currency",
+    render: (currency) => <CurrencyTag currency={currency} />,
+    width: 130,
+  },
+  {
+    title: "Cost Price",
+    key: "cost-price",
+    dataIndex: "cost_price",
+    render: (price, record) => formatPrice(price, record.currency),
+    sorter: true,
+    width: 135,
+  },
+  {
+    title: "Quantity",
+    key: "quantity",
+    dataIndex: "quantity",
+    render: formatQuantity,
+    sorter: true,
+    width: 125,
+  },
+  {
+    title: "Trade Date",
+    key: "trade-date",
+    dataIndex: "trade_date",
+    render: formatTableDate,
+    sorter: true,
+    width: 125,
+  },
+  {
+    title: "Settlement Date",
+    key: "settlement-date",
+    dataIndex: "settlement_date",
+    render: formatTableDate,
+    sorter: true,
+    width: 150,
   },
   {
     fixed: "right",

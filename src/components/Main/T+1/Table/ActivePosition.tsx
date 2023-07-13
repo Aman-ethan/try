@@ -1,5 +1,13 @@
+"use client";
+
 import { TableColumnsType } from "antd";
-import Trade from ".";
+import TradeTable from ".";
+
+const URLs = {
+  get: "/position/active/",
+  put: "/position/active/{id}/",
+  delete: "/position/active/{id}/",
+};
 
 const Columns: TableColumnsType = [
   {
@@ -49,6 +57,6 @@ const Columns: TableColumnsType = [
   },
 ];
 
-export default function ActivePosition() {
-  return <Trade columns={Columns} />;
+export default function ActivePositionTable() {
+  return <TradeTable urlKey={URLs.get} columns={Columns} />;
 }

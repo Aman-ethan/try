@@ -10,25 +10,25 @@ import {
 } from "@/lib/fetcher";
 import useSWRMutation, { SWRMutationConfiguration } from "swr/mutation";
 
-function useMutation<ExtraArgs, Data>(
+export default function useMutation<ExtraArgs, Data>(
   key: string,
-  fetcher: (_key: string, _options: { arg: ExtraArgs }) => Promise<Data>,
-  options?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
+  fetcher: (_key: string, _options?: { arg: ExtraArgs }) => Promise<Data>,
+  config?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
 ) {
   return useSWRMutation<Data, Error, string, ExtraArgs>(key, fetcher, {
-    ...options,
+    ...config,
     throwOnError: false,
   });
 }
 
 export function useAuthServerMutation<ExtraArgs, Data>(
   key: string,
-  options?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
+  config?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
 ) {
   return useMutation<ExtraArgs, Data>(
     key,
     postJsonFetcher(process.env.NEXT_PUBLIC_AUTH_SERVER_URL!),
-    options
+    config
   );
 }
 
@@ -45,34 +45,34 @@ export function useAuthServerPutMutation<ExtraArgs, Data>(
 
 export function useTransactionServerFormMutation<ExtraArgs, Data>(
   key: string,
-  options?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
+  config?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
 ) {
   return useMutation<ExtraArgs, Data>(
     key,
     postFormFetcher(TRANSACTION_SERVER_URL),
-    options
+    config
   );
 }
 
 export function useTransactionServerMutation<ExtraArgs, Data>(
   key: string,
-  options?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
+  config?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
 ) {
   return useMutation<ExtraArgs, Data>(
     key,
     postJsonFetcher(TRANSACTION_SERVER_URL),
-    options
+    config
   );
 }
 
 export function useTransactionServerDeleteMutation<Data>(
   key: string,
-  options?: SWRMutationConfiguration<Data, Error, string>
+  config?: SWRMutationConfiguration<Data, Error, string>
 ) {
   return useMutation<unknown, Data>(
     key,
     deleteFetcher(TRANSACTION_SERVER_URL),
-    options
+    config
   );
 }
 

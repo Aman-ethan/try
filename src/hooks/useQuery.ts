@@ -3,6 +3,8 @@
 import { getFetcher } from "@/lib/fetcher";
 import useSWR, { SWRConfiguration } from "swr";
 import { TRANSACTION_SERVER_URL } from "@/constants/strings";
+import { SWRMutationConfiguration } from "swr/mutation";
+import useMutation from "./useMutation";
 
 function useQuery<Data>(
   key: string | null,
@@ -19,4 +21,13 @@ export function useTransactionServerQuery<Data>(
   return useQuery<Data>(key, TRANSACTION_SERVER_URL, config);
 }
 
-export function useAnalyticsServerQuery() {}
+export function useTransactionServerLazyQuery<Data>(
+  key: string,
+  config?: SWRMutationConfiguration<Data, Error, string, unknown>
+) {
+  return useMutation<unknown, Data>(
+    key,
+    getFetcher(TRANSACTION_SERVER_URL),
+    config
+  );
+}

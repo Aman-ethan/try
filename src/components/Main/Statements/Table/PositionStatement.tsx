@@ -71,8 +71,6 @@ const Columns: TableColumnsType<IPositionStatement> = [
     title: "Asset Class",
     key: "asset-class",
     dataIndex: "asset_class",
-    filters: [],
-    filterSearch: true,
     width: 125,
   },
   {
@@ -85,8 +83,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     title: "Custodian Name",
     key: "custodian-name",
     dataIndex: "custodian_name",
-    filters: [],
-    filterSearch: true,
+    sorter: true,
     width: 225,
   },
   {
@@ -113,6 +110,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     key: "quantity",
     dataIndex: "quantity",
     render: formatQuantity,
+    sorter: true,
     width: 125,
   },
   {
@@ -120,6 +118,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     key: "cost-price",
     dataIndex: "cost_price",
     render: (value, record) => formatPrice(value, record.currency),
+    sorter: true,
     width: 115,
   },
   {
@@ -127,6 +126,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     key: "mtm-price",
     dataIndex: "mtm_price",
     render: (value, record) => formatPrice(value, record.currency),
+    sorter: true,
     width: 135,
   },
   {

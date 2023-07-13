@@ -1,16 +1,18 @@
+"use client";
+
 import { formatPrice } from "@/lib/format";
 import { InputNumberProps } from "antd";
 import InputNumber from "./InputNumber";
 
 export default function InputPrice({
-  currency,
+  currency = "USD",
   ...props
-}: InputNumberProps & Partial<{ currency: string }>) {
+}: InputNumberProps & { currency: string }) {
   return (
     <InputNumber
-      formatter={(value) =>
-        value ? formatPrice(value, currency || "USD") : ""
-      }
+      key={currency}
+      formatter={(value) => (value ? formatPrice(value, currency) : "")}
+      parser={(value) => value!.replace(/([A-Z]|[a-z])*\$\s?|(,*)/g, "")}
       {...props}
     />
   );

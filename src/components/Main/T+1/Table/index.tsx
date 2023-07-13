@@ -5,45 +5,40 @@ import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { TableProps } from "antd";
 import ScrollableTable from "../../Table/ScrollableTable";
 
-export default function Statement<T>({
-  urlKey,
+export default function TradeTable<T>({
   columns,
+  urlKey,
 }: Pick<TableProps<T>, "columns"> & { urlKey: string }) {
   const {
-    getSearchParams,
-    onChange,
-    pagination,
-    page,
-    ordering,
     client,
     custodian,
+    onChange,
+    ordering,
+    page,
+    pagination,
+    getSearchParams,
   } = useTable();
-
-  const statementDateGTE = getSearchParams("statement_date__gte");
-  const statementDateLTE = getSearchParams("statement_date__lte");
-
+  const asset_class = getSearchParams("asset_class");
+  const security = getSearchParams("security");
   const { data, isLoading } = useTransactionServerQuery<IPaginatedResponse<T>>(
     urlKey +
       buildURLSearchParams({
         client,
         custodian,
-        page,
         ordering,
-        statement_date__gte: statementDateGTE,
-        statement_date__lte: statementDateLTE,
+        page,
+        asset_class,
+        security,
       })
   );
-
   return (
     <ScrollableTable
+      rowKey="id"
+      columns={columns}
+      className="h-[calc(100vh-22rem)]"
       scroll={{ y: "calc(100vh - 25rem)" }}
-      style={{
-        height: "calc(100vh-25rem)",
-      }}
       dataSource={data?.results}
       loading={isLoading}
-      columns={columns}
-      rowKey="id"
       onChange={onChange}
       pagination={{ ...pagination, total: data?.count }}
     />

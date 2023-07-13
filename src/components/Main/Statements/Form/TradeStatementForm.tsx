@@ -6,12 +6,12 @@ import { Form, Input, Row } from "antd";
 import { DatePicker } from "../../Input/DatePicker";
 import InputPrice from "../../Input/InputPrice";
 import InputQuantity from "../../Input/InputQuantity";
-import SelectAssetClass from "../../Input/SelectAssetClass";
+import SelectAssetClass from "../../Input/SelectAsset";
 import SelectClient from "../../Input/SelectClient";
 import SelectCurrency from "../../Input/SelectCurrency";
 import SelectCustodian from "../../Input/SelectCustodian";
 import TradeAction from "../../Input/TradeAction";
-import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
+import SelectRelationshipNumber from "../../Input/SelectRelationshipNumber";
 
 export default function TradeStatementForm({
   form,
@@ -20,6 +20,7 @@ export default function TradeStatementForm({
   isMutating,
 }: IStatementForm) {
   const { formId } = useForm({ isMutating });
+  const currency = Form.useWatch("currency", form);
   return (
     <Form
       id={formId}
@@ -96,13 +97,13 @@ export default function TradeStatementForm({
         <Form.Item label="Description" name="description" className="flex-1">
           <Input placeholder="Enter description" />
         </Form.Item>
-        <Form.Item label="Currency" name="currency" className="flex-1">
+        <Form.Item label="Currency" name="currency" className="w-1/2 pl-4">
           <SelectCurrency placeholder="Select currency" />
         </Form.Item>
       </Row>
       <Row className="gap-x-8">
         <Form.Item label="Cost Price" name="cost_price" className="flex-1">
-          <InputPrice placeholder="Enter cost price" />
+          <InputPrice currency={currency} placeholder="Enter cost price" />
         </Form.Item>
         <Form.Item label="Quantity" name="quantity" className="flex-1">
           <InputQuantity placeholder="Enter the quantity" />

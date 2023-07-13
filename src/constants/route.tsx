@@ -45,12 +45,12 @@ const ROUTE = [
     icon: <LineChartOutlined />,
     children: [
       {
-        key: "/trades/blotter-trades",
-        label: <Link href="/trades/blotter-trades">Transaction</Link>,
+        key: "/t+1/transaction",
+        label: <Link href="/t+1/transaction">Transaction</Link>,
       },
       {
-        key: "/trades/active-positions",
-        label: <Link href="/trades/active-positions">Active Positions</Link>,
+        key: "/t+1/active-positions",
+        label: <Link href="/t+1/active-positions">Active Positions</Link>,
       },
     ],
   },

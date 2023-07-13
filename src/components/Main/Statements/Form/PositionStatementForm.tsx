@@ -1,16 +1,16 @@
-import { DATE_PARAM_FORMAT } from "@/constants/format";
 import useForm from "@/hooks/useForm";
 import { IStatementForm } from "@/interfaces/Main";
 import formatInitialValues from "@/lib/formatInitialValues";
+import formatTriggerValues from "@/lib/formatTriggerValues";
 import { Form, Input, Row } from "antd";
 import { DatePicker } from "../../Input/DatePicker";
 import InputPrice from "../../Input/InputPrice";
 import InputQuantity from "../../Input/InputQuantity";
-import SelectAssetClass from "../../Input/SelectAssetClass";
+import SelectAsset from "../../Input/SelectAsset";
 import SelectClient from "../../Input/SelectClient";
 import SelectCurrency from "../../Input/SelectCurrency";
 import SelectCustodian from "../../Input/SelectCustodian";
-import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
+import SelectRelationshipNumber from "../../Input/SelectRelationshipNumber";
 
 export default function PositionStatementForm({
   form,
@@ -24,12 +24,7 @@ export default function PositionStatementForm({
     <Form
       id={formId}
       form={form}
-      onFinish={(values) =>
-        trigger({
-          ...values,
-          statement_date: values.statement_date.format(DATE_PARAM_FORMAT),
-        })
-      }
+      onFinish={(values) => trigger(formatTriggerValues(values))}
       initialValues={formatInitialValues(initialValues)}
       layout="vertical"
       size="large"
@@ -49,7 +44,7 @@ export default function PositionStatementForm({
       </Row>
       <Row className="gap-x-8">
         <Form.Item label="Asset Class" name="asset_class" className="flex-1">
-          <SelectAssetClass placeholder="Select asset class" />
+          <SelectAsset placeholder="Select asset class" />
         </Form.Item>
         <Form.Item label="ISIN" name="isin" className="flex-1">
           <Input placeholder="Enter ISIN" />
