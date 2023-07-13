@@ -68,7 +68,7 @@ function User() {
   return (
     <>
       <Avatar />
-      <span className="text-sm font-medium text-neutral-13 capitalize">
+      <span className="text-sm font-medium capitalize text-neutral-13">
         {name || username}
       </span>
     </>

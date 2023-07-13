@@ -33,7 +33,7 @@ export default function Drawer({
         <div className="pb-20">{children}</div>
         <div
           style={{ width }}
-          className="fixed bottom-0 right-0 bg-neutral-1 py-6 px-6 flex justify-end"
+          className="fixed bottom-0 right-0 flex justify-end bg-neutral-1 px-6 py-6"
         >
           {footer}
         </div>

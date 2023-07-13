@@ -15,7 +15,8 @@ const data = [
   },
 ];
 
-const tableClassName = "text-left text-lg font-light text-neutral-9";
+const tableClassName =
+  "text-left text-sm tab:text-md lap:text-lg font-light text-neutral-9";
 
 const columns = [
   {

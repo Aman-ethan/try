@@ -68,7 +68,7 @@ function Table({
   ));
   return (
     <div className="-space-y-6 bg-white">
-      <table className="w-full relative ">
+      <table className="relative w-full">
         <thead className="text-neutral-10">
           <tr className="h-14">{TableHeaders}</tr>
         </thead>

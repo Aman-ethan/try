@@ -48,7 +48,7 @@ export default function TradeHeader() {
         </Dropdown> */}
         <AddTradeDrawer />
       </Row>
-      <Row className="gap-x-6 justify-between">
+      <Row className="justify-between gap-x-6">
         <SelectClientWithParams
           placeholder="Select a Client"
           className="w-1/4"

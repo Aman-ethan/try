@@ -21,6 +21,14 @@ export interface IStatementForm {
 
 export type TUpload = "bulk" | "single";
 
+export interface ISelectRelationshipNumberProps {
+  placeholder?: string;
+  className?: string;
+}
+
+export interface IStatementFormProps {
+  id: string;
+}
 export interface IDrawerProps
   extends Pick<DrawerProps, "children" | "footer" | "title" | "width"> {
   button: ReactElement;

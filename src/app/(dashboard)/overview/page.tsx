@@ -6,21 +6,21 @@ import Title from "@/components/Typography/Title";
 
 export default function Home() {
   return (
-    <div className="px-12 py-6 space-y-8">
+    <div className="space-y-8 px-12 py-6">
       <Title>Overview</Title>
       <div className="flex gap-x-8">
-        <div className="w-2/5 py-6 px-8 bg-white rounded-lg space-y-4">
-          <div className="flex justify-between items-center">
+        <div className="w-2/5 space-y-4 rounded-lg bg-white px-8 py-6">
+          <div className="flex items-center justify-between">
             <Title level={4}>Net Worth</Title>
             <CurrencyTag currency="sgd" />
           </div>
           <ClientNetWorth />
         </div>
-        <div className="flex-1 bg-white rounded-lg p-6">
+        <div className="flex-1 rounded-lg bg-white p-6">
           <AssetNetWorth />
         </div>
       </div>
-      <div className="bg-white p-6 space-y-6 rounded-lg">
+      <div className="space-y-6 rounded-lg bg-white p-6">
         <div className="space-y-4">
           <div className="flex justify-between">
             <Title level={4}>Gainer/Loser</Title>

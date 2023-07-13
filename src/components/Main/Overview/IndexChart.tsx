@@ -152,7 +152,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
   }, [normalizeIndex, filledData, groupedData]);
   if (loading)
     return (
-      <div className="h-full flex items-center justify-center">
+      <div className="flex h-full items-center justify-center">
         <Spin />
       </div>
     );

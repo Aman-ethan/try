@@ -61,7 +61,7 @@ export default function Table({
             style={{
               height: props.scroll?.y,
             }}
-            className="flex justify-center items-center"
+            className="flex items-center justify-center"
           >
             {props.loading ? null : <Empty />}
           </div>
