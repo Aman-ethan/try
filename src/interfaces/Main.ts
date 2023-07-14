@@ -1,6 +1,33 @@
 import { DrawerProps, FormInstance } from "antd";
 import { ReactElement } from "react";
 
+type AuthSearchParams =
+  | "username"
+  | "password"
+  | "phone_number"
+  | "user_id"
+  | "next_path";
+
+type StatementSearchParams =
+  | "page"
+  | "statement_date__gte"
+  | "statement_date__lte"
+  | "ordering";
+
+export type SearchParams =
+  | AuthSearchParams
+  | StatementSearchParams
+  | "selected_date"
+  | "selected_duration"
+  | "goal_id"
+  | "estate_id"
+  | "bank_account_id"
+  | "client"
+  | "client_id"
+  | "custodian"
+  | "asset_duration"
+  | "gain_loss_duration";
+
 export interface ICustodian {
   id: string;
   name: string;

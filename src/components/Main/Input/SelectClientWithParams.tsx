@@ -1,10 +1,15 @@
 import useSelectClientWithParams from "@/hooks/useSelectClientWithParams";
+import { SearchParams } from "@/interfaces/Main";
 import { SelectProps } from "antd";
 import Select from "../../Input/Select";
 
-export default function SelectClientWithParams(props: SelectProps) {
-  const { isLoading, options, onChange, clientId } =
-    useSelectClientWithParams();
+export default function SelectClientWithParams({
+  searchParamKey,
+  ...props
+}: SelectProps & { searchParamKey?: SearchParams }) {
+  const { isLoading, options, onChange, clientId } = useSelectClientWithParams({
+    searchParamKey,
+  });
   return (
     <Select
       loading={isLoading}

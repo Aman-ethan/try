@@ -1,29 +1,9 @@
+import { SearchParams } from "@/interfaces/Main";
 import {
   usePathname,
   useSearchParams as useNextSearchParams,
   useRouter,
 } from "next/navigation";
-
-type AuthSearchParams =
-  | "username"
-  | "password"
-  | "phone_number"
-  | "user_id"
-  | "next_path";
-
-type StatementSearchParams =
-  | "page"
-  | "statement_date__gte"
-  | "statement_date__lte"
-  | "ordering";
-
-export type SearchParams =
-  | AuthSearchParams
-  | StatementSearchParams
-  | "client"
-  | "custodian"
-  | "asset_duration"
-  | "gain_loss_duration";
 
 export type IUpdateSearchParams = Partial<
   Record<SearchParams, string | number | null>

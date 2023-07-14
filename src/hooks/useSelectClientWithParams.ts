@@ -1,10 +1,18 @@
+import { SearchParams } from "@/interfaces/Main";
 import useDependentSelect from "./useDependentSelect";
 import useSearchParams from "./useSearchParams";
 import useSelectClient from "./useSelectClient";
 
-export default function useSelectClientWithParams() {
+interface IUseSelectClientWithParams {
+  searchParamKey?: SearchParams;
+}
+
+export default function useSelectClientWithParams(
+  params?: IUseSelectClientWithParams
+) {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
-  const clientId = getSearchParams("client");
+  const searchParamKey = params?.searchParamKey || "client";
+  const clientId = getSearchParams(searchParamKey);
   const custodianId = getSearchParams("custodian");
 
   const { isLoading, options } = useSelectClient({ custodianId });
@@ -25,7 +33,7 @@ export default function useSelectClientWithParams() {
 
   function onChange(value: string) {
     updateSearchParams({
-      client: value,
+      [searchParamKey]: value,
     });
   }
 

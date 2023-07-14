@@ -7,7 +7,7 @@ import BankAccounts from "./BankAccounts";
 import Estates from "./Estates";
 import Goals from "./Goals";
 
-type TabType = "goals" | "estates" | "bank accounts";
+type TabType = "goals" | "estates" | "bank_accounts";
 
 function View({ type }: { type: TabType }) {
   switch (type) {
@@ -15,7 +15,7 @@ function View({ type }: { type: TabType }) {
       return <Goals />;
     case "estates":
       return <Estates />;
-    case "bank accounts":
+    case "bank_accounts":
       return <BankAccounts />;
     default:
       return null;
@@ -33,7 +33,7 @@ export default function ClientDetailsView() {
         <Radio.Group size="large" value={type} onChange={handleTypeChange}>
           <Radio.Button value="goals">Goals</Radio.Button>
           <Radio.Button value="estates">Estates</Radio.Button>
-          <Radio.Button value="bank accounts">Bank Accounts</Radio.Button>
+          <Radio.Button value="bank_accounts">Bank Accounts</Radio.Button>
         </Radio.Group>
         <ClientDetailsDrawer type={type} />
       </div>

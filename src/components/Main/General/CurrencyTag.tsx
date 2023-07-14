@@ -4,7 +4,7 @@ import { flags } from "@/constants/symbols";
 import { Tag } from "antd";
 import Image from "next/image";
 
-type Currency = keyof typeof flags;
+export type Currency = keyof typeof flags;
 
 interface ICurrencyTagProps {
   currency: Currency;

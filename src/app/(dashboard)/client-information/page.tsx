@@ -1,12 +1,16 @@
 "use client";
 
-import SelectClient from "@/components/Main/ClientInformation/SelectClient";
 import ClientInfoCard from "@/components/Main/ClientInformation/ClientInfoCard";
 import Title from "@/components/Typography/Title";
 import { Col, Row, Space } from "@/lib/antd";
 import AddClient from "@/components/Main/ClientInformation/AddClient";
+import useSearchParams from "@/hooks/useSearchParams";
+import SelectClientWithParams from "@/components/Main/Input/SelectClientWithParams";
 
 export default function ClientInformationPage() {
+  const { get: getSearchParams } = useSearchParams();
+  const isClientSelected = !!getSearchParams("client_id");
+
   return (
     <Space
       direction="vertical"
@@ -23,12 +27,10 @@ export default function ClientInformationPage() {
       </Row>
       <Row>
         <Col span={8}>
-          <SelectClient />
+          <SelectClientWithParams searchParamKey="client_id" />
         </Col>
       </Row>
-      <Row>
-        <ClientInfoCard />
-      </Row>
+      <Row>{isClientSelected && <ClientInfoCard />}</Row>
     </Space>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { ACCESS_TOKEN_KEY } from "@/constants/strings";
 import { Cookies } from "react-cookie";
+import { ACCESS_TOKEN_KEY } from "@/constants/strings";
 
 interface IFetcherParams {
   url: string;
@@ -17,7 +17,6 @@ async function fetcher({ url, init, error }: IFetcherParams) {
       ...init,
       headers: {
         Authorization: accessToken ? `Bearer ${accessToken}` : "",
-        // Authorization: "Token 5df62ba1cb1e86fd3d12886c4ae5d1e3c67fb2df",
         ...init.headers,
       },
     });
