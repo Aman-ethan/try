@@ -62,7 +62,6 @@ export default function AddTradeForm({
         form.setFieldsValue({
           currency: security.currency_code,
           asset_class: security.sub_asset_class,
-          security_id: security.symbol,
         });
       },
     },
@@ -141,7 +140,7 @@ export default function AddTradeForm({
         </Form.Item>
       </Row>
       <Row className="gap-x-8">
-        <Form.Item label="Security ID" name="security_id" className="flex-1">
+        <Form.Item label="Security ID" name="security" className="flex-1">
           <Input placeholder="Security ID" disabled />
         </Form.Item>
         <Form.Item label="Currency" name="currency" className="w-1/3">
