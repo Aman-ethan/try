@@ -1,13 +1,13 @@
 "use client";
 
-import { TableColumnsType } from "antd";
+import { ActionColumn } from "@/constants/table";
 import { formatTableDate } from "@/lib/format";
-import { ThunderboltOutlined } from "@ant-design/icons";
+import { TableColumnsType } from "antd";
 import { capitalize } from "lodash";
 import Statement from ".";
-import StatusTag from "../../General/StatusTag";
 import CurrencyTag from "../../General/CurrencyTag";
 import MoreMenu, { DeleteItem, DownloadItem } from "../../General/MoreMenu";
+import StatusTag from "../../General/StatusTag";
 
 interface IBankStatement {
   id: string;
@@ -112,12 +112,7 @@ const Columns: TableColumnsType<IBankStatement> = [
     width: 170,
   },
   {
-    fixed: "right",
-    title: <ThunderboltOutlined />,
-    key: "actions",
-    width: 55,
-    dataIndex: "id",
-    align: "center",
+    ...ActionColumn,
     render: (id, { s3_url }) => <Action id={id} downloadUrl={s3_url} />,
   },
 ];

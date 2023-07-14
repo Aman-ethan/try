@@ -9,7 +9,7 @@ import { useState } from "react";
 import SecurityDetails from "./SecurityDetails";
 
 interface IAddSecurityProps {
-  onSecurityAdded: (_security: string) => void;
+  onSecurityAdded: (_security: ISecuritySearchProps) => void;
 }
 
 const FormRules: Partial<Record<"isin_ticker", FormRule[]>> = {
@@ -32,7 +32,6 @@ export default function AddSecurity({ onSecurityAdded }: IAddSecurityProps) {
     {
       onSuccess() {
         message.success("Security found");
-        revalidate("/security/");
       },
       onError() {
         message.error("Security not found");
@@ -43,10 +42,11 @@ export default function AddSecurity({ onSecurityAdded }: IAddSecurityProps) {
     ISecurity,
     unknown
   >("/security/add-ticker/", {
-    onSuccess() {
+    async onSuccess() {
       if (!security) return;
+      await revalidate("/security/");
       message.success("Security added");
-      onSecurityAdded(security.code);
+      onSecurityAdded(security);
       setIsModalOpen(false);
     },
     onError() {

@@ -36,7 +36,7 @@ export default function TradeTable<T>({
       rowKey="id"
       columns={columns}
       className="h-[calc(100vh-22rem)]"
-      scroll={{ y: "calc(100vh - 25rem)" }}
+      scroll={{ y: "calc(100vh - 27rem)" }}
       dataSource={data?.results}
       loading={isLoading}
       onChange={onChange}

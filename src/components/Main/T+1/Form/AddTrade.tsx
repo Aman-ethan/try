@@ -1,6 +1,7 @@
 import useForm from "@/hooks/useForm";
 import useSecurity from "@/hooks/useSecurity";
 import { ITradeFormProps } from "@/interfaces/Main";
+import formatInitialValues from "@/lib/formatInitialValues";
 import formatTriggerValues from "@/lib/formatTriggerValues";
 import { Form, FormRule, Input, Row } from "antd";
 import { DatePicker } from "../../Input/DatePicker";
@@ -74,7 +75,7 @@ export default function AddTradeForm({
       layout="vertical"
       size="large"
       className="space-y-6"
-      initialValues={initialValues}
+      initialValues={formatInitialValues(initialValues)}
       requiredMark={false}
       onFinish={({ trade_action, quantity, ...rest }: ITradeForm) => {
         trigger(
@@ -130,9 +131,10 @@ export default function AddTradeForm({
         </Form.Item>
         <Form.Item label="&nbsp;">
           <AddSecurity
-            onSecurityAdded={(ticker) => {
+            onSecurityAdded={({ code, exchange }) => {
+              const _symbol = code.includes(".") ? code : `${code}.${exchange}`;
               form.setFieldsValue({
-                security: ticker,
+                security: _symbol,
               });
             }}
           />

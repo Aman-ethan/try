@@ -34,7 +34,7 @@ export function formatPrice(price: number | string, currency: string) {
 }
 
 export function formatQuantity(quantity: number | string) {
-  return formatNumber("quantity", Math.abs(Number(quantity)));
+  return formatNumber("quantity", quantity);
 }
 
 export function formatTableDate(date: Date) {

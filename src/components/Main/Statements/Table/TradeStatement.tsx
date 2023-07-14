@@ -1,8 +1,8 @@
 "use client";
 
+import { ActionColumn } from "@/constants/table";
 import { TCurrency } from "@/interfaces/Main";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
-import { ThunderboltOutlined } from "@ant-design/icons";
 import { TableColumnsType } from "antd";
 import { capitalize } from "lodash";
 import Statement from ".";
@@ -161,12 +161,7 @@ const Columns: TableColumnsType<ITradeStatement> = [
     width: 150,
   },
   {
-    fixed: "right",
-    title: <ThunderboltOutlined />,
-    key: "actions",
-    width: 55,
-    dataIndex: "id",
-    align: "center",
+    ...ActionColumn,
     render: (id) => <Action id={id} />,
   },
 ];

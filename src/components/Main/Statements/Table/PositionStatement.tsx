@@ -1,11 +1,11 @@
 "use client";
 
+import { ActionColumn } from "@/constants/table";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
-import { ThunderboltOutlined } from "@ant-design/icons";
 import { TableColumnsType } from "antd";
+import Statement from ".";
 import CurrencyTag from "../../General/CurrencyTag";
 import MoreMenu, { DeleteItem, EditItem } from "../../General/MoreMenu";
-import Statement from ".";
 import PositionStatementForm from "../Form/PositionStatementForm";
 
 interface IPositionStatement {
@@ -144,12 +144,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     width: 135,
   },
   {
-    fixed: "right",
-    title: <ThunderboltOutlined />,
-    key: "actions",
-    width: 55,
-    dataIndex: "id",
-    align: "center",
+    ...ActionColumn,
     render: (id) => <Action id={id} />,
   },
 ];
