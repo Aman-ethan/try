@@ -1,8 +1,8 @@
 import { DATE_PARAM_FORMAT } from "@/constants/format";
 import useForm from "@/hooks/useForm";
 import { IStatementForm } from "@/interfaces/Main";
+import formatInitialValues from "@/lib/formatInitialValues";
 import { Form, Input, Row } from "antd";
-import dayjs from "dayjs";
 import { DatePicker } from "../../Input/DatePicker";
 import InputPrice from "../../Input/InputPrice";
 import InputQuantity from "../../Input/InputQuantity";
@@ -30,10 +30,7 @@ export default function PositionStatementForm({
           statement_date: values.statement_date.format(DATE_PARAM_FORMAT),
         })
       }
-      initialValues={{
-        ...initialValues,
-        statement_date: dayjs(initialValues?.statement_date),
-      }}
+      initialValues={formatInitialValues(initialValues)}
       layout="vertical"
       size="large"
       className="space-y-6"

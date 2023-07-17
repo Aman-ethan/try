@@ -1,8 +1,8 @@
-import { DATE_PARAM_FORMAT } from "@/constants/format";
 import useForm from "@/hooks/useForm";
 import { IStatementForm } from "@/interfaces/Main";
+import formatInitialValues from "@/lib/formatInitialValues";
+import formatTriggerValues from "@/lib/formatTriggerValues";
 import { Form, Input, Row } from "antd";
-import dayjs from "dayjs";
 import { DatePicker } from "../../Input/DatePicker";
 import InputPrice from "../../Input/InputPrice";
 import InputQuantity from "../../Input/InputQuantity";
@@ -25,19 +25,9 @@ export default function TradeStatementForm({
       id={formId}
       form={form}
       onFinish={(values) => {
-        trigger({
-          ...values,
-          settlement_date: values.settlement_date.format(DATE_PARAM_FORMAT),
-          trade_date: values.trade_date.format(DATE_PARAM_FORMAT),
-          statement_date: values.statement_date.format(DATE_PARAM_FORMAT),
-        });
+        trigger(formatTriggerValues(values));
       }}
-      initialValues={{
-        ...initialValues,
-        settlement_date: dayjs(initialValues?.settlement_date),
-        trade_date: dayjs(initialValues?.trade_date),
-        statement_date: dayjs(initialValues?.statement_date),
-      }}
+      initialValues={formatInitialValues(initialValues)}
       layout="vertical"
       className="space-y-6"
       requiredMark={false}
