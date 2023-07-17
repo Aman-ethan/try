@@ -3,7 +3,7 @@ import { useTransactionServerMutation } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import formatTriggerValues from "@/lib/formatTriggerValues";
 import revalidate from "@/lib/revalidate";
-import { Form, FormRule, Row, message } from "antd";
+import { Form, FormRule, Input, Row, message } from "antd";
 import { UploadChangeParam, UploadFile } from "antd/es/upload";
 import { Dayjs } from "dayjs";
 import { DatePicker } from "../../Input/DatePicker";
@@ -189,13 +189,21 @@ export default function UploadBankStatement() {
           <SelectStatementType placeholder="Select statement type" />
         </Form.Item>
       </Row>
-      <Form.Item name="file" valuePropName="fileList">
-        <Upload
-          action={data?.url}
-          disabled={isLoading || isMutating}
-          onChange={onFileChange}
-        />
-        <Form.Item name="s3_url" rules={FormRules.s3_url} />
+      <Form.Item>
+        <Form.Item
+          name="file"
+          valuePropName="fileList"
+          getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+        >
+          <Upload
+            action={data?.url}
+            disabled={isLoading || isMutating}
+            onChange={onFileChange}
+          />
+        </Form.Item>
+        <Form.Item name="s3_url" rules={FormRules.s3_url} noStyle>
+          <Input hidden />
+        </Form.Item>
       </Form.Item>
     </Form>
   );
