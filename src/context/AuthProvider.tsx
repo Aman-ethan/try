@@ -36,7 +36,7 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
   const { trigger } = useAuthServerMutation<
     ITokenRefreshArgs,
     ITokenRefreshResponse
-  >("/api/token/refresh/", {
+  >("/token/refresh/", {
     onSuccess(data) {
       if (data.access) {
         setCookie(ACCESS_TOKEN_KEY, data.access, {
