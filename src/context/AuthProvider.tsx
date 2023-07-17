@@ -2,13 +2,7 @@ import { cookieOptions } from "@/constants/cookie";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/strings";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import { message } from "antd";
-import {
-  ReactNode,
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-} from "react";
+import { ReactNode, createContext, useEffect, useMemo } from "react";
 import { useCookies } from "react-cookie";
 
 interface ITokenRefreshArgs {
@@ -25,13 +19,13 @@ interface IAuthProviderProps {
 
 export const AuthContext = createContext({
   isLoggedIn: false,
-  logout: () => {},
 });
 
 export default function AuthProvider({ children }: IAuthProviderProps) {
-  const [{ access_token, refresh_token }, setCookie, removeCookie] = useCookies(
-    [ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY]
-  );
+  const [{ access_token, refresh_token }, setCookie] = useCookies([
+    ACCESS_TOKEN_KEY,
+    REFRESH_TOKEN_KEY,
+  ]);
 
   const { trigger } = useAuthServerMutation<
     ITokenRefreshArgs,
@@ -58,17 +52,11 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
 
   const isLoggedIn = Boolean(refresh_token);
 
-  const logout = useCallback(() => {
-    removeCookie(ACCESS_TOKEN_KEY, cookieOptions);
-    removeCookie(REFRESH_TOKEN_KEY, cookieOptions);
-  }, [removeCookie]);
-
   const value = useMemo(
     () => ({
       isLoggedIn,
-      logout,
     }),
-    [isLoggedIn, logout]
+    [isLoggedIn]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

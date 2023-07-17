@@ -2,6 +2,8 @@
 
 import Logo from "@/components/Icon/Logo";
 import ROUTE from "@/constants/route";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
+import logout from "@/lib/logout";
 import {
   CaretDownFilled,
   LogoutOutlined,
@@ -20,13 +22,11 @@ import {
   MenuProps,
   Row,
 } from "antd";
-import { usePathname } from "next/navigation";
-import { ReactNode, useState } from "react";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
 import Link from "next/link";
-import CollapsedLogo from "../Icon/CollapsedLogo";
+import { usePathname, useSelectedLayoutSegments } from "next/navigation";
+import { ReactNode, useState } from "react";
 import CurrencyTag from "../General/CurrencyTag";
-import Logout from "../General/Logout";
+import CollapsedLogo from "../Icon/CollapsedLogo";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -56,7 +56,11 @@ const ProfileItems: MenuProps["items"] = [
     icon: <SyncOutlined className={iconClassName} />,
   },
   {
-    label: <Logout />,
+    label: (
+      <Link onClick={logout} href="/login">
+        Logout
+      </Link>
+    ),
     key: "logout",
     icon: <LogoutOutlined className={iconClassName} />,
   },
@@ -88,8 +92,11 @@ function UserProfile() {
 
 export default function DashboardLayout({ children }: ILayoutProps) {
   const pathname = usePathname();
+  const layoutSegments = useSelectedLayoutSegments();
   const [collapsed, setCollapsed] = useState(false);
 
+  const openKey = layoutSegments.length > 1 ? [layoutSegments[0]] : undefined;
+  const selectedKeys = pathname ? [pathname] : undefined;
   return (
     <Layout hasSider className="h-full">
       <Layout.Sider
@@ -104,8 +111,8 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           {collapsed ? <CollapsedLogo /> : <Logo />}
         </div>
         <Menu
-          selectedKeys={[pathname]}
-          openKeys={[pathname.split("/")[1]]}
+          selectedKeys={selectedKeys}
+          defaultOpenKeys={openKey}
           items={ROUTE}
           mode="inline"
         />
