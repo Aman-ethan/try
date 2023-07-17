@@ -6,7 +6,7 @@ const CHARTS = ["Asset Class", "Industry", "Region"];
 
 export default function GrossAllocations() {
   return (
-    <div className="flex items-center justify-center rounded-lg bg-neutral-1 p-6">
+    <div className="flex flex-col rounded-lg bg-neutral-1 p-6 lap:flex-row lap:items-center lap:justify-center">
       {CHARTS.map((chart: string) => (
         <Allocation key={chart} title={chart} />
       ))}

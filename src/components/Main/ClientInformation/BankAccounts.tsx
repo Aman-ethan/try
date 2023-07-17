@@ -42,7 +42,7 @@ export default function BankAccounts() {
   const { data } = useBankAccount();
 
   return (
-    <div className="mt-4 h-96 overflow-y-scroll w-5/6">
+    <div className="mt-4 h-96 w-5/6 overflow-y-scroll">
       {data?.map((item) => (
         <ProCard
           key={item?.relationship_number}

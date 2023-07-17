@@ -1,6 +1,5 @@
 "use client";
 
-import Title from "@/components/Typography/Title";
 import { ProList } from "@ant-design/pro-components";
 
 interface IAllocationProps {
@@ -26,20 +25,23 @@ const dataSource = [
 export default function Allocation({ title }: IAllocationProps) {
   return (
     <div className="flex-1 space-y-4 text-center">
-      <Title>{title}</Title>
-      {/* Pie chart comes here */}
-      <ProList
-        // data source will be replaced with dynamic data from pie chart
-        dataSource={dataSource}
-        metas={{
-          title: {
-            dataIndex: "title",
-          },
-          extra: {
-            render: () => [<p>50%</p>],
-          },
-        }}
-      />
+      <h2 className="text-xl font-medium tab:text-2xl">{title}</h2>
+      <div className="tab:flex tab:items-center lap:flex-col">
+        <h1 className="tab:flex-1 lap:w-full">Pie chart</h1>
+        <ProList
+          // data source will be replaced with dynamic data from pie chart
+          dataSource={dataSource}
+          metas={{
+            title: {
+              dataIndex: "title",
+            },
+            extra: {
+              render: () => [<p>50%</p>],
+            },
+          }}
+          className="tab:flex-1 lap:w-full"
+        />
+      </div>
     </div>
   );
 }

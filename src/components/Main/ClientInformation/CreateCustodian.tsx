@@ -70,7 +70,7 @@ export default function CreateCustodian({
           </Button>
           <div className="mt-2">
             {showFormActions && (
-              <div className="p-1 flex justify-center gap-2">
+              <div className="flex justify-center gap-2 p-1">
                 <Button
                   size="middle"
                   onClick={() => setShowFormActions(false)}

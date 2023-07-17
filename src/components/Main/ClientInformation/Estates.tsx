@@ -52,7 +52,7 @@ export default function Estates() {
   const { data } = useEstates();
 
   return (
-    <div className="mt-4 h-96 overflow-y-scroll w-5/6">
+    <div className="mt-4 h-96 w-5/6 overflow-y-scroll">
       {data?.map((item: TEstate) => (
         <ProCard
           key={item?.id}

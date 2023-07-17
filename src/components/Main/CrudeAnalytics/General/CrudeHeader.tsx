@@ -3,8 +3,9 @@
 import { Breadcrumb, Button, Dropdown, MenuProps, Row } from "antd";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
-import { CaretDownFilled } from "@ant-design/icons";
+import { CaretDownFilled, FilterOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import clsx from "clsx";
 import Title from "@/components/Typography/Title";
 import SelectClient from "../../Input/SelectClientWithParams";
 import SelectCustodian from "../../Input/SelectCustodianWithParams";
@@ -33,6 +34,7 @@ const options = [
 ];
 
 export default function CrudeHeader() {
+  const [showFilter, setShowFilter] = useState(false);
   const selectedLayoutSegment = useSelectedLayoutSegments();
   const title = selectedLayoutSegment[selectedLayoutSegment.length - 1]
     ?.split("-")
@@ -53,6 +55,8 @@ export default function CrudeHeader() {
       title: segment,
     });
   });
+
+  const selectClassName = clsx(showFilter ? "block" : "hidden", "tab:flex");
 
   return (
     <div className="space-y-6">
@@ -92,8 +96,8 @@ export default function CrudeHeader() {
           </Row>
         )}
       </Row>
-      <Row className="max-w-xl gap-x-6">
-        {isPositions ? (
+      {isPositions ? (
+        <Row className="max-w-xl gap-x-6">
           <Row className="flex-1 content-center items-center">
             <h2 className="text-xl">Asset Class</h2>
             <Select
@@ -102,13 +106,27 @@ export default function CrudeHeader() {
               options={options}
             />
           </Row>
-        ) : (
-          <>
-            <SelectClient placeholder="Select a Client" className="flex-1" />
-            <SelectCustodian placeholder="All Custodian" className="flex-1" />
-          </>
-        )}
-      </Row>
+        </Row>
+      ) : (
+        <div className="flex max-w-xl flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0">
+          <SelectClient
+            placeholder="Select a Client"
+            className={selectClassName}
+          />
+          <SelectCustodian
+            placeholder="All Custodian"
+            className={selectClassName}
+          />
+          <Button
+            size="large"
+            icon={<FilterOutlined />}
+            className="order-first mb-4 block tab:hidden"
+            onClick={() => setShowFilter(!showFilter)}
+          >
+            Filters
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

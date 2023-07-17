@@ -157,7 +157,7 @@ export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
           >
             {currencyOptions.map((item) => (
               <Option value={item.value} label={item.label}>
-                <div className="flex items-center mt-2">
+                <div className="mt-2 flex items-center">
                   <CurrencyTag currency={item.value} />
                 </div>
               </Option>

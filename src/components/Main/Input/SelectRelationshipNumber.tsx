@@ -1,5 +1,5 @@
 import { ISelectRelationshipNumberProps } from "@/interfaces/Main";
-import { Select } from "antd";
+import Select from "../../Input/Select";
 
 export default function SelectRelationshipNumber({
   placeholder,

@@ -15,6 +15,8 @@ export default function PositionList() {
 
   const containerClasses =
     "flex flex-col tab:flex-row tab:items-center tab:space-x-4";
+  const outerContainerClasses =
+    "flex flex-1 flex-col space-y-4 lap:flex-row lap:items-center lap:space-x-4 lap:space-y-0";
   const innerContainerClasses =
     "flex flex-1 flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0";
   const filterButtonClasses =
@@ -34,7 +36,7 @@ export default function PositionList() {
     <>
       <Title className="text-2xl tab:text-3xl">Position List</Title>
       <div className={containerClasses}>
-        <div className={innerContainerClasses}>
+        <div className={outerContainerClasses}>
           <div className={innerContainerClasses}>
             <SelectClient
               placeholder="All Client"

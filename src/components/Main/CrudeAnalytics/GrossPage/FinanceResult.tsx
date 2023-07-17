@@ -21,14 +21,14 @@ const DURATION: IDuration[] = [
 export default function FinanceResult() {
   return (
     <div className="flex flex-col space-y-4 rounded-lg bg-neutral-1 p-6">
-      <div className="space-x-4 self-end">
+      <div className="space-x-2 self-end">
         {DURATION.map(({ label, value }) => (
-          <Button size="large" key={value}>
+          <Button size="middle" key={value}>
             {label}
           </Button>
         ))}
       </div>
-      <div className="flex">
+      <div className="flex flex-col lap:flex-row">
         {GRAPHS.map((graph: string) => (
           <FinanceChart key={graph} title={graph} />
         ))}
