@@ -10,10 +10,6 @@ import Upload from "../../Input/Upload";
 
 const ManualEntry = lazy(() => import("./ManualEntry"));
 
-interface IUploadStatementFormProps {
-  sampleLink?: string;
-}
-
 interface IUploadStatementResponse {
   message: string;
 }
@@ -35,9 +31,16 @@ const UploadTypeOptions = [
   { label: "Manual Entry", value: "manual" },
 ];
 
-function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
+const SampleLinksMap = {
+  position:
+    "https://ethan-static.s3.ap-southeast-1.amazonaws.com/samples/Position+statement+-+Client_Name.xlsx",
+  trade: "",
+};
+
+function BulkUpload() {
   const [form] = Form.useForm();
-  const layoutSegment = useSelectedLayoutSegment();
+  const layoutSegment =
+    useSelectedLayoutSegment() as keyof typeof SampleLinksMap;
   const urlKey = `/statement/${layoutSegment}/`;
   const { isMutating, trigger } = useTransactionServerFormMutation<
     IUploadStatementForm,
@@ -54,6 +57,7 @@ function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
   });
 
   const { formId } = useForm({ isMutating });
+  const sampleLink = SampleLinksMap[layoutSegment];
   return (
     <>
       <div className="space-y-2">
@@ -106,7 +110,7 @@ function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
   );
 }
 
-export default function UploadStatement(props: IUploadStatementFormProps) {
+export default function UploadStatement() {
   const { uploadType, setUploadType } = useForm();
   return (
     <div className="space-y-8">
@@ -121,7 +125,7 @@ export default function UploadStatement(props: IUploadStatementFormProps) {
         size="large"
       />
       <div className="space-y-6">
-        {uploadType === "bulk" ? <BulkUpload {...props} /> : <ManualEntry />}
+        {uploadType === "bulk" ? <BulkUpload /> : <ManualEntry />}
       </div>
     </div>
   );
