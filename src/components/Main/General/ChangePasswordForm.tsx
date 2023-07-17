@@ -43,9 +43,6 @@ export default function ChangePasswordForm() {
     },
   });
 
-  const getStatus = (fieldName: keyof IChangePasswordForm) =>
-    form.getFieldError(fieldName).length > 0 ? "warning" : undefined;
-
   return (
     <Form
       form={form}
@@ -61,7 +58,7 @@ export default function ChangePasswordForm() {
         name="old_password"
         rules={FormRules.old_password}
       >
-        <Input.Password status={getStatus("old_password")} />
+        <Input.Password />
       </Form.Item>
 
       <Form.Item
@@ -79,7 +76,7 @@ export default function ChangePasswordForm() {
         hasFeedback
         rules={FormRules.confirm_password}
       >
-        <Input.Password status={getStatus("confirm_password")} />
+        <Input.Password />
       </Form.Item>
 
       <Row className="gap-x-4">
