@@ -104,8 +104,8 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           {collapsed ? <CollapsedLogo /> : <Logo />}
         </div>
         <Menu
-          defaultSelectedKeys={[pathname]}
-          defaultOpenKeys={[pathname.split("/")[1]]}
+          selectedKeys={[pathname]}
+          openKeys={[pathname.split("/")[1]]}
           items={ROUTE}
           mode="inline"
         />
