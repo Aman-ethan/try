@@ -1,4 +1,4 @@
-import { clientUploadSample } from "@/constants/samples";
+import { ClientUploadSample } from "@/constants/samples";
 import useForm from "@/hooks/useForm";
 import { useTransactionServerFormMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
@@ -109,7 +109,7 @@ export default function UploadStatement(props: IUploadStatementFormProps) {
       />
       <div className="space-y-6">
         {uploadType === "bulk" ? (
-          <BulkUpload sampleLink={clientUploadSample} {...props} />
+          <BulkUpload sampleLink={ClientUploadSample} {...props} />
         ) : (
           <ManualEntry />
         )}

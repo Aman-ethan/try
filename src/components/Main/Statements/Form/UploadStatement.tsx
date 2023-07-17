@@ -1,5 +1,7 @@
+import { StatementUploadSamples } from "@/constants/samples";
 import useForm from "@/hooks/useForm";
 import { useTransactionServerFormMutation } from "@/hooks/useMutation";
+import { TUploadStatement } from "@/interfaces/Main";
 import revalidate from "@/lib/revalidate";
 import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
 import { Button, Form, FormRule, Radio, Row, message } from "antd";
@@ -31,16 +33,9 @@ const UploadTypeOptions = [
   { label: "Manual Entry", value: "manual" },
 ];
 
-const SampleLinksMap = {
-  position:
-    "https://ethan-static.s3.ap-southeast-1.amazonaws.com/samples/Position+statement+-+Client_Name.xlsx",
-  trade: "",
-};
-
 function BulkUpload() {
   const [form] = Form.useForm();
-  const layoutSegment =
-    useSelectedLayoutSegment() as keyof typeof SampleLinksMap;
+  const layoutSegment = useSelectedLayoutSegment() as TUploadStatement;
   const urlKey = `/statement/${layoutSegment}/`;
   const { isMutating, trigger } = useTransactionServerFormMutation<
     IUploadStatementForm,
@@ -57,7 +52,7 @@ function BulkUpload() {
   });
 
   const { formId } = useForm({ isMutating });
-  const sampleLink = SampleLinksMap[layoutSegment];
+  const sampleLink = StatementUploadSamples[layoutSegment];
   return (
     <>
       <div className="space-y-2">
@@ -80,7 +75,9 @@ function BulkUpload() {
       <Form
         id={formId}
         form={form}
-        onFinish={trigger}
+        onFinish={(values) => {
+          trigger({ ...values, file: values.file[0] });
+        }}
         layout="vertical"
         className="space-y-6"
         disabled={isMutating}
@@ -101,7 +98,7 @@ function BulkUpload() {
               return false;
             }}
             onChange={(info) => {
-              form.setFieldValue("file", info.file);
+              form.setFieldValue("file", [info.file]);
             }}
           />
         </Form.Item>

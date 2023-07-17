@@ -61,6 +61,8 @@ export interface IDrawerProps
   button: ReactElement;
 }
 
+export type TUploadStatement = "position" | "trade";
+
 export type TSelectClientParams = Record<"custodianId", string | undefined>;
 export type TSelectCustodianParams = Record<"clientId", string | undefined>;
 export type TBankAccountParams = Record<

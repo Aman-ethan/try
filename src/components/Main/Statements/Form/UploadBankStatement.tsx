@@ -1,17 +1,17 @@
-import { Form, FormRule, Row, message } from "antd";
 import useForm from "@/hooks/useForm";
-import { DATE_PARAM_FORMAT } from "@/constants/format";
 import { useTransactionServerMutation } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import { Dayjs } from "dayjs";
+import formatTriggerValues from "@/lib/formatTriggerValues";
 import revalidate from "@/lib/revalidate";
+import { Form, FormRule, Row, message } from "antd";
 import { UploadChangeParam, UploadFile } from "antd/es/upload";
+import { Dayjs } from "dayjs";
 import { DatePicker } from "../../Input/DatePicker";
-import Upload from "../../Input/Upload";
-import SelectCustodian from "../../Input/SelectCustodian";
 import SelectClient from "../../Input/SelectClient";
-import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
+import SelectCustodian from "../../Input/SelectCustodian";
+import Upload from "../../Input/Upload";
 import SelectPortfolioNumber from "../Input/SelectPortfolioNumber";
+import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
 import SelectStatementType from "../Input/SelectStatementType";
 
 interface IUploadBankStatementResponse {
@@ -23,7 +23,7 @@ interface IUploadBankStatementForm {
   custodian: string;
   relationship_number: string;
   portfolio_number: string;
-  statement_date: unknown;
+  statement_date: Dayjs;
   s3_url: string;
   statement_type: string;
 }
@@ -51,23 +51,28 @@ interface IUploadUrlResponse {
   s3_url: string;
 }
 
+const URLs = {
+  get: "/statement/bank/",
+};
+
 export default function UploadBankStatement() {
   const [form] = Form.useForm();
   const custodianId = Form.useWatch("custodian", form);
   const clientId = Form.useWatch("client", form);
 
   const { data, isLoading, mutate } =
-    useTransactionServerQuery<IUploadUrlResponse>(
-      "/statement/bank/upload_url/"
-    );
+    useTransactionServerQuery<IUploadUrlResponse>(`${URLs.get}upload_url/`, {
+      refreshInterval: 3600 * 1000,
+    });
+
   const { trigger, isMutating } = useTransactionServerMutation<
     IUploadBankStatementForm,
     IUploadBankStatementResponse
-  >("/statement/bank/", {
+  >(URLs.get, {
     onSuccess: () => {
       message.success("Bank statement uploaded successfully");
       form.resetFields();
-      revalidate("/statement/bank/");
+      revalidate(URLs.get);
     },
   });
   const { formId } = useForm({ isMutating });
@@ -76,20 +81,12 @@ export default function UploadBankStatement() {
     switch (file.status) {
       case "done":
         form.setFieldValue("s3_url", data?.s3_url);
+        form.validateFields(["s3_url"]);
         mutate();
         break;
       default:
         form.setFieldValue("s3_url", undefined);
     }
-  };
-
-  const onFinish = (values: IUploadBankStatementForm) => {
-    trigger({
-      ...values,
-      statement_date: (values.statement_date as Dayjs).format(
-        DATE_PARAM_FORMAT
-      ),
-    });
   };
 
   return (
@@ -100,7 +97,9 @@ export default function UploadBankStatement() {
       size="large"
       className="space-y-6"
       disabled={isMutating}
-      onFinish={onFinish}
+      onFinish={({ file: _, ...values }) =>
+        trigger(formatTriggerValues(values) as IUploadBankStatementForm)
+      }
       requiredMark={false}
     >
       <Row className="gap-x-8">
@@ -190,16 +189,13 @@ export default function UploadBankStatement() {
           <SelectStatementType placeholder="Select statement type" />
         </Form.Item>
       </Row>
-      <Form.Item
-        name="s3_url"
-        valuePropName="fileList"
-        rules={FormRules.s3_url}
-      >
+      <Form.Item name="file" valuePropName="fileList">
         <Upload
           action={data?.url}
           disabled={isLoading || isMutating}
           onChange={onFileChange}
         />
+        <Form.Item name="s3_url" rules={FormRules.s3_url} />
       </Form.Item>
     </Form>
   );
