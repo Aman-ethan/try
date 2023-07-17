@@ -8,7 +8,7 @@ import {
 } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
-import { flags } from "@/constants/symbols";
+import { flags } from "@/constants/flags";
 import revalidate from "@/lib/revalidate";
 import FormActions from "../Common/FormAction";
 import CreateCustodian from "../CreateCustodian";

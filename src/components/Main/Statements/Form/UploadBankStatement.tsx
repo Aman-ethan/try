@@ -2,6 +2,7 @@ import useForm from "@/hooks/useForm";
 import { useTransactionServerMutation } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import formatTriggerValues from "@/lib/formatTriggerValues";
+import getFileValueFromEvent from "@/lib/getFileValueFromEvent";
 import revalidate from "@/lib/revalidate";
 import { Form, FormRule, Input, Row, message } from "antd";
 import { UploadChangeParam, UploadFile } from "antd/es/upload";
@@ -193,7 +194,7 @@ export default function UploadBankStatement() {
         <Form.Item
           name="file"
           valuePropName="fileList"
-          getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+          getValueFromEvent={getFileValueFromEvent}
         >
           <Upload
             action={data?.url}

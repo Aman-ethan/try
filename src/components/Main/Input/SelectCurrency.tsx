@@ -1,6 +1,7 @@
-import { flags } from "@/constants/symbols";
-import { SelectProps, Image } from "antd";
+import { flags } from "@/constants/flags";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
+import { TCurrency } from "@/interfaces/Main";
+import { Image, SelectProps } from "antd";
 import Select from "../../Input/Select";
 
 interface ICurrency {
@@ -9,20 +10,21 @@ interface ICurrency {
   numeric_code: string;
 }
 
-type TCurrency = keyof typeof flags;
-
 export default function SelectCurrency(props: SelectProps) {
   const { data, isLoading } = useTransactionServerQuery<ICurrency[]>(
     "/classification/currency/"
   );
-  const options = data?.map(({ code, name }) => ({
-    label: (
-      <div className="space-x-2">
-        <Image className="w-4" src={flags[code.toLowerCase() as TCurrency]} />
-        <span className="uppercase">{name}</span>
-      </div>
-    ),
-    value: code,
-  }));
+  const options = data?.map(({ code, name }) => {
+    const flag = flags[code.toLowerCase() as TCurrency] || flags.all;
+    return {
+      label: (
+        <div className="space-x-2">
+          <Image className="w-4" src={flag} />
+          <span className="uppercase">{name}</span>
+        </div>
+      ),
+      value: code,
+    };
+  });
   return <Select options={options} loading={isLoading} {...props} />;
 }

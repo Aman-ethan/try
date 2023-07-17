@@ -1,3 +1,4 @@
+import { flags } from "@/constants/flags";
 import { DrawerProps, FormInstance } from "antd";
 import { ReactElement } from "react";
 
@@ -62,6 +63,7 @@ export interface IDrawerProps
 }
 
 export type TUploadStatement = "position" | "trade";
+export type TCurrency = keyof typeof flags;
 
 export type TSelectClientParams = Record<"custodianId", string | undefined>;
 export type TSelectCustodianParams = Record<"clientId", string | undefined>;
