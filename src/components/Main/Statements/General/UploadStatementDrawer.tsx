@@ -24,7 +24,7 @@ function StatementForm() {
 export default function UploadStatementDrawer() {
   const layoutSegment = useSelectedLayoutSegment() as string;
 
-  const title = `Upload ${capitalize(layoutSegment)} Statement`;
+  const title = `Add ${capitalize(layoutSegment)} Statement`;
 
   return (
     <FormDrawer buttonText="Add a Statement" title={title}>
