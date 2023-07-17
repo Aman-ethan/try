@@ -1,11 +1,12 @@
 "use client";
 
-import { ProCard } from "@ant-design/pro-components";
-import { Col, Row, Typography } from "antd";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
+import { TCurrency } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import CurrencyTag, { Currency } from "../General/CurrencyTag";
+import { ProCard } from "@ant-design/pro-components";
+import { Col, Row, Typography } from "antd";
+import CurrencyTag from "../General/CurrencyTag";
 import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import DeleteModal from "./Common/DeleteModal";
 
@@ -13,7 +14,7 @@ type TBankAccount = {
   account_number: string;
   account_type: string;
   relationship_number: number;
-  currency: Currency;
+  currency: TCurrency;
   custodian: string;
   custodian_name: string;
 };

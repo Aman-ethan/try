@@ -1,18 +1,19 @@
 "use client";
 
-import { Button, Form, Input, message, Row, Select } from "antd";
-import { useEffect, useState } from "react";
+import { flags } from "@/constants/flags";
 import {
   useTransactionServerMutation,
   useTransactionServerPutMutation,
 } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
-import { flags } from "@/constants/flags";
+import { TCurrency } from "@/interfaces/Main";
 import revalidate from "@/lib/revalidate";
+import { Button, Form, Input, message, Row, Select } from "antd";
+import { useEffect, useState } from "react";
+import CurrencyTag from "../../General/CurrencyTag";
 import FormActions from "../Common/FormAction";
 import CreateCustodian from "../CreateCustodian";
-import CurrencyTag, { Currency } from "../../General/CurrencyTag";
 
 interface IBankAccountFormsProps {
   onClose: () => void;
@@ -56,7 +57,7 @@ function useBankAccount() {
 
 const currencyOptions = Object.keys(flags).map((key) => ({
   label: key,
-  value: key as Currency,
+  value: key as TCurrency,
 }));
 
 export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
