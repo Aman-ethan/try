@@ -32,6 +32,17 @@ export function useAuthServerMutation<ExtraArgs, Data>(
   );
 }
 
+export function useAuthServerPutMutation<ExtraArgs, Data>(
+  key: string,
+  options?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
+) {
+  return useMutation<ExtraArgs, Data>(
+    key,
+    putFetcher(process.env.NEXT_PUBLIC_AUTH_SERVER_URL!),
+    options
+  );
+}
+
 export function useTransactionServerFormMutation<ExtraArgs, Data>(
   key: string,
   options?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>

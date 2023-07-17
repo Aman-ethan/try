@@ -23,10 +23,10 @@ import {
 import { usePathname } from "next/navigation";
 import { ReactNode, useState } from "react";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
+import Link from "next/link";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 import CurrencyTag from "../General/CurrencyTag";
 import Logout from "../General/Logout";
-import ChangePassword from "../General/ChangePassword";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -51,7 +51,7 @@ const currentDate = new Date();
 
 const ProfileItems: MenuProps["items"] = [
   {
-    label: <ChangePassword />,
+    label: <Link href="/change-password">Change Password</Link>,
     key: "change-password",
     icon: <SyncOutlined className={iconClassName} />,
   },

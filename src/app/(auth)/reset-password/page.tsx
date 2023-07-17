@@ -6,8 +6,8 @@ export default function ResetPasswordPage() {
   return (
     <div className="space-y-12">
       <div className="space-y-4">
-        <Title>Reset Password</Title>
-        <Paragraph>Enter a new password for your account</Paragraph>
+        <Title>Password Reset</Title>
+        <Paragraph>Enter the new password for your account</Paragraph>
       </div>
       <ResetPasswordForm />
     </div>
