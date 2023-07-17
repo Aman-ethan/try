@@ -13,7 +13,7 @@ function StatementForm() {
   switch (layoutSegment) {
     case "position":
     case "trade":
-      return <UploadStatement />;
+      return <UploadStatement key={layoutSegment} />;
     case "bank":
       return <UploadBankStatement />;
     default:
