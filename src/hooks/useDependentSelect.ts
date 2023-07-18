@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 
 interface IUsePreviousParams<T> {
   dependsOn: T;
@@ -18,7 +18,7 @@ export default function useDependentSelect<T>({
 
   const { value, options, reset, isLoading } = dependentProps;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isLoading || previousValue.current === dependsOn) return;
     previousValue.current = dependsOn;
     if (options?.find((option) => option.value === value)) return;

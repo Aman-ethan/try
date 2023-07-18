@@ -1,4 +1,4 @@
-import useForm from "@/hooks/useForm";
+import useFormState from "@/hooks/useForm";
 import { useTransactionServerMutation } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import formatTriggerValues from "@/lib/formatTriggerValues";
@@ -6,6 +6,7 @@ import getFileValueFromEvent from "@/lib/getFileValueFromEvent";
 import revalidate from "@/lib/revalidate";
 import { Form, FormRule, Input, Row, message } from "antd";
 import { UploadChangeParam, UploadFile } from "antd/es/upload";
+import type { Dayjs } from "dayjs";
 import { DatePicker } from "../../Input/DatePicker";
 import Upload from "../../Input/Upload";
 import SelectCustodian from "../../Input/SelectCustodian";
@@ -75,7 +76,7 @@ export default function UploadBankStatement() {
       revalidate(URLs.get);
     },
   });
-  const { formId } = useForm({ isMutating });
+  const { formId } = useFormState({ isMutating });
 
   const onFileChange = ({ file }: UploadChangeParam<UploadFile>) => {
     switch (file.status) {

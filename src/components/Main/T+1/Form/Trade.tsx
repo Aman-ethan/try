@@ -1,6 +1,6 @@
 import useForm from "@/hooks/useForm";
-import useSecurity from "@/hooks/useSecurity";
-import { ITradeFormProps } from "@/interfaces/Main";
+import useSecurities from "@/hooks/useSecurities";
+import { IFormProps } from "@/interfaces/Main";
 import formatInitialValues from "@/lib/formatInitialValues";
 import formatTriggerValues from "@/lib/formatTriggerValues";
 import { Form, FormRule, Input, Row } from "antd";
@@ -8,15 +8,15 @@ import { DatePicker } from "../../Input/DatePicker";
 import InputPrice from "../../Input/InputPrice";
 import InputQuantity from "../../Input/InputQuantity";
 import SelectAsset from "../../Input/SelectAsset";
-import SelectClient from "../../Input/SelectClientWithParams";
 import SelectCurrency from "../../Input/SelectCurrency";
-import SelectCustodian from "../../Input/SelectCustodianWithParams";
 import SelectRelationshipNumber from "../../Input/SelectRelationshipNumber";
 import TradeAction from "../../Input/TradeAction";
-import AddSecurity from "../General/AddSecurity";
+import SearchSecurity from "../General/SearchSecurity";
 import SelectSecurity from "../General/SelectSecurity";
 import SelectGoal from "../Input/SelectGoal";
 import SelectTag from "../Input/SelectTag";
+import SelectClient from "../../Input/SelectClient";
+import SelectCustodian from "../../Input/SelectCustodian";
 
 interface ITradeForm {
   client: string;
@@ -42,22 +42,26 @@ const FormRules: Partial<Record<keyof ITradeForm, FormRule[]>> = {
   security: [
     { required: true, message: "Please select the security or add one" },
   ],
+  trade_date: [{ required: true, message: "Please select the trade date" }],
 };
 
-export default function AddTradeForm({
+export default function TradeForm({
   form,
   isMutating,
   initialValues,
   trigger,
-}: ITradeFormProps) {
+}: IFormProps) {
   const { formId } = useForm({ isMutating });
   const symbol = Form.useWatch("security", form);
   const currency = Form.useWatch("currency", form);
+  const clientId = Form.useWatch("client", form);
+  const custodianId = Form.useWatch("custodian", form);
 
-  useSecurity({
+  useSecurities({
     queryParams: { symbol },
     config: {
       onSuccess(data) {
+        if (data.length < 1) return;
         const security = data?.[0];
         form.setFieldsValue({
           currency: security.currency_code,
@@ -79,9 +83,9 @@ export default function AddTradeForm({
       onFinish={({ trade_action, quantity, ...rest }: ITradeForm) => {
         trigger(
           formatTriggerValues({
-            ...rest,
             quantity: trade_action === "sell" ? -quantity : quantity,
             trade_action,
+            ...rest,
           })
         );
       }}
@@ -93,7 +97,16 @@ export default function AddTradeForm({
         rules={FormRules.client}
         className="w-1/2 pr-4"
       >
-        <SelectClient disabled={isMutating} placeholder="Select the client" />
+        <SelectClient
+          params={{
+            custodianId,
+          }}
+          reset={() => {
+            form.setFieldValue("client", undefined);
+          }}
+          disabled={isMutating}
+          placeholder="Select the client"
+        />
       </Form.Item>
       <Row className="gap-x-8">
         <Form.Item
@@ -103,6 +116,10 @@ export default function AddTradeForm({
           className="flex-1"
         >
           <SelectCustodian
+            params={{ clientId }}
+            reset={() => {
+              form.setFieldValue("custodian", undefined);
+            }}
             disabled={isMutating}
             placeholder="Select the custodian"
           />
@@ -114,6 +131,10 @@ export default function AddTradeForm({
           className="flex-1"
         >
           <SelectRelationshipNumber
+            params={{ clientId, custodianId }}
+            reset={() => {
+              form.setFieldValue("relationship_number", undefined);
+            }}
             disabled={isMutating}
             placeholder="Enter the relationship number"
           />
@@ -129,11 +150,18 @@ export default function AddTradeForm({
           <SelectSecurity placeholder="Enter the security" />
         </Form.Item>
         <Form.Item label="&nbsp;">
-          <AddSecurity
-            onSecurityAdded={({ code, exchange }) => {
+          <SearchSecurity
+            onSecurityAdded={({
+              code,
+              exchange,
+              currency: _currency,
+              type,
+            }) => {
               const _symbol = code.includes(".") ? code : `${code}.${exchange}`;
               form.setFieldsValue({
                 security: _symbol,
+                currency: _currency,
+                asset_class: type,
               });
             }}
           />
@@ -154,7 +182,12 @@ export default function AddTradeForm({
         <TradeAction />
       </Form.Item>
       <Row className="gap-x-8">
-        <Form.Item label="Trade Date" name="trade_date" className="flex-1">
+        <Form.Item
+          label="Trade Date"
+          name="trade_date"
+          rules={FormRules.trade_date}
+          className="flex-1"
+        >
           <DatePicker placeholder="Select trade date" />
         </Form.Item>
         <Form.Item

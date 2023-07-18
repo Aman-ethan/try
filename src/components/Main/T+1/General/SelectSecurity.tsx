@@ -1,8 +1,8 @@
 import Select from "@/components/Input/Select";
-import useSecurity from "@/hooks/useSecurity";
+import useSecurities from "@/hooks/useSecurities";
 import { SelectProps } from "antd";
 
 export default function SelectSecurity(props: SelectProps) {
-  const { options, isLoading } = useSecurity();
+  const { options, isLoading } = useSecurities();
   return <Select options={options} loading={isLoading} {...props} />;
 }

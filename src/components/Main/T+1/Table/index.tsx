@@ -1,14 +1,21 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import useTable from "@/hooks/useTable";
+import useTable, { useSelectRow } from "@/hooks/useTable";
 import { IPaginatedResponse } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { TableProps } from "antd";
+import { Button, TableColumnsType } from "antd";
+import ViewDrawer from "../../General/ViewDrawer";
 import ScrollableTable from "../../Table/ScrollableTable";
+import EditTradeDrawer from "../General/EditTradeDrawer";
+
+interface ITradeTableProps<T> {
+  columns: TableColumnsType<T>;
+  urlKey: string;
+}
 
 export default function TradeTable<T>({
   columns,
   urlKey,
-}: Pick<TableProps<T>, "columns"> & { urlKey: string }) {
+}: ITradeTableProps<T>) {
   const {
     client,
     custodian,
@@ -31,16 +38,42 @@ export default function TradeTable<T>({
         security,
       })
   );
+  const { onRow, rowSelection, selectedRowKey, setSelectedRowKey } =
+    useSelectRow<T>({
+      key: "id" as keyof T,
+    });
+
   return (
-    <ScrollableTable
-      rowKey="id"
-      columns={columns}
-      className="h-[calc(100vh-22rem)]"
-      scroll={{ y: "calc(100vh - 27rem)" }}
-      dataSource={data?.results}
-      loading={isLoading}
-      onChange={onChange}
-      pagination={{ ...pagination, total: data?.count }}
-    />
+    <>
+      <ViewDrawer<T>
+        open={!!selectedRowKey}
+        onClose={() => setSelectedRowKey(undefined)}
+        title="Trade View"
+        columns={columns}
+        urlKey={`${urlKey + selectedRowKey}/`}
+        footer={
+          <EditTradeDrawer
+            id={selectedRowKey}
+            button={
+              <Button type="primary" size="large" className="px-7">
+                Edit Trade
+              </Button>
+            }
+          />
+        }
+      />
+      <ScrollableTable
+        rowKey="id"
+        columns={columns}
+        className="h-[calc(100vh-22rem)]"
+        scroll={{ y: "calc(100vh - 27rem)" }}
+        rowSelection={rowSelection}
+        onRow={onRow}
+        dataSource={data?.results}
+        loading={isLoading}
+        onChange={onChange}
+        pagination={{ ...pagination, total: data?.count }}
+      />
+    </>
   );
 }

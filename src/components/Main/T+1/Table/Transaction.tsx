@@ -1,31 +1,14 @@
 "use client";
 
 import { ActionColumn } from "@/constants/table";
+import { IBlotterTransactionStatement } from "@/interfaces/Main";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
 import { TableColumnsType } from "antd";
 import { capitalize } from "lodash";
 import TradeTable from ".";
 import HashTag from "../../General/HashTag";
-import MoreMenu, { DeleteItem, EditItem } from "../../General/MoreMenu";
-import AddTradeForm from "../Form/AddTrade";
-
-interface ITransactionStatement {
-  id: string;
-  trade_action: string;
-  security: string;
-  asset_class: string;
-  custodian_name: string;
-  relationship_number: string;
-  trade_date: string;
-  settlement_date: string;
-  quantity: number;
-  cost_price: number;
-  mtm_price: number;
-  realised_pl: number;
-  currency: string;
-  goal: string;
-  meta: { tags: string[] };
-}
+import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
+import EditTradeDrawer from "../General/EditTradeDrawer";
 
 interface IActionProps {
   id: string;
@@ -44,11 +27,9 @@ function Action({ id }: IActionProps) {
         {
           key: "edit",
           label: (
-            <EditItem
-              drawerTitle="Edit Trade"
-              form={AddTradeForm}
+            <EditTradeDrawer
               id={id}
-              urls={URLs}
+              button={<button type="button">Edit</button>}
             />
           ),
         },
@@ -61,16 +42,16 @@ function Action({ id }: IActionProps) {
   );
 }
 
-const Columns: TableColumnsType<ITransactionStatement> = [
+const Columns: TableColumnsType<IBlotterTransactionStatement> = [
   {
     title: "Client",
-    key: "client",
+    key: "client_name",
     dataIndex: "client_name",
     width: 115,
   },
   {
     title: "Trade Action",
-    key: "trade-action",
+    key: "trade_action",
     dataIndex: "trade_action",
     render: capitalize,
     width: 130,
@@ -83,26 +64,26 @@ const Columns: TableColumnsType<ITransactionStatement> = [
   },
   {
     title: "Asset Class",
-    key: "asset-class",
+    key: "asset_class",
     dataIndex: "asset_class",
     width: 105,
   },
   {
     title: "Custodian Name",
-    key: "custodian-name",
+    key: "custodian_name",
     dataIndex: "custodian_name",
     width: 140,
   },
   {
     title: "Relationship Number",
-    key: "relationship-number",
+    key: "relationship_number",
     dataIndex: "relationship_number",
     sorter: true,
     width: 175,
   },
   {
     title: "Trade Date",
-    key: "trade-date",
+    key: "trade_date",
     dataIndex: "trade_date",
     render: formatTableDate,
     sorter: true,
@@ -110,7 +91,7 @@ const Columns: TableColumnsType<ITransactionStatement> = [
   },
   {
     title: "Settlement Date",
-    key: "settlement-date",
+    key: "settlement_date",
     dataIndex: "settlement_date",
     render: formatTableDate,
     sorter: true,
@@ -125,28 +106,28 @@ const Columns: TableColumnsType<ITransactionStatement> = [
   },
   {
     title: "Cost Price",
-    key: "cost-price",
+    key: "cost_price",
     dataIndex: "cost_price",
     render: (price, record) => formatPrice(price, record.currency),
     width: 135,
   },
   {
     title: "MTM Price",
-    key: "mtm-price",
+    key: "mtm_price",
     dataIndex: "mtm_price",
     render: (price, record) => formatPrice(price, record.currency),
     width: 135,
   },
   {
     title: "Realized P/L",
-    key: "realized-pl",
+    key: "realized_pl",
     dataIndex: "realised_pl",
     render: (pl, record) => formatPrice(pl, record.currency),
     width: 135,
   },
   {
     title: "Tags",
-    key: "tags",
+    key: "meta.tags",
     dataIndex: ["meta", "tags"],
     render: (tags: string[]) => <HashTag tags={tags} />,
     width: 335,

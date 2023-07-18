@@ -1,5 +1,5 @@
 import { StatementUploadSamples } from "@/constants/samples";
-import useForm from "@/hooks/useForm";
+import useFormState, { useFormType } from "@/hooks/useForm";
 import { useTransactionServerFormMutation } from "@/hooks/useMutation";
 import { TUploadStatement } from "@/interfaces/Main";
 import revalidate from "@/lib/revalidate";
@@ -51,7 +51,7 @@ function BulkUpload() {
     },
   });
 
-  const { formId } = useForm({ isMutating });
+  const { formId } = useFormState({ isMutating });
   const sampleLink = StatementUploadSamples[layoutSegment];
   return (
     <>
@@ -108,7 +108,7 @@ function BulkUpload() {
 }
 
 export default function UploadStatement() {
-  const { uploadType, setUploadType } = useForm();
+  const { uploadType, setUploadType } = useFormType();
   return (
     <div className="space-y-8">
       <Radio.Group

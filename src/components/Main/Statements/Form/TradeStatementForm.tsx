@@ -1,5 +1,5 @@
-import useForm from "@/hooks/useForm";
-import { IStatementForm } from "@/interfaces/Main";
+import useFormState from "@/hooks/useForm";
+import { IFormProps } from "@/interfaces/Main";
 import formatInitialValues from "@/lib/formatInitialValues";
 import formatTriggerValues from "@/lib/formatTriggerValues";
 import { Form, Input, Row } from "antd";
@@ -18,9 +18,12 @@ export default function TradeStatementForm({
   initialValues,
   trigger,
   isMutating,
-}: IStatementForm) {
-  const { formId } = useForm({ isMutating });
+}: IFormProps) {
+  const { formId } = useFormState({ isMutating });
   const currency = Form.useWatch("currency", form);
+  const clientId = Form.useWatch("client", form);
+  const custodianId = Form.useWatch("custodian", form);
+
   return (
     <Form
       id={formId}
@@ -37,6 +40,7 @@ export default function TradeStatementForm({
       <Row className="gap-x-8">
         <Form.Item label="Client" name="client" className="flex-1">
           <SelectClient
+            params={{ custodianId }}
             reset={() => {
               form.resetFields(["client"]);
             }}
@@ -45,6 +49,7 @@ export default function TradeStatementForm({
         </Form.Item>
         <Form.Item label="Custodian" name="custodian" className="flex-1">
           <SelectCustodian
+            params={{ clientId }}
             reset={() => {
               form.resetFields(["custodian"]);
             }}
@@ -59,6 +64,7 @@ export default function TradeStatementForm({
           className="flex-1"
         >
           <SelectRelationshipNumber
+            params={{ clientId, custodianId }}
             reset={() => {
               form.resetFields(["relationship_number"]);
             }}

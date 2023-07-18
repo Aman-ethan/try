@@ -5,8 +5,8 @@ import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
 import { TableColumnsType } from "antd";
 import Statement from ".";
 import CurrencyTag from "../../General/CurrencyTag";
-import MoreMenu, { DeleteItem, EditItem } from "../../General/MoreMenu";
-import PositionStatementForm from "../Form/PositionStatementForm";
+import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
+import EditStatementDrawer from "../General/EditStatementDrawer";
 
 interface IPositionStatement {
   id: string;
@@ -24,7 +24,6 @@ interface IPositionStatement {
 
 const URLs = {
   get: "/statement/position/",
-  put: "/statement/position/{id}/",
   delete: "/statement/position/{id}/",
 };
 
@@ -34,14 +33,7 @@ function Action({ id }: { id: string }) {
       items={[
         {
           key: "edit",
-          label: (
-            <EditItem
-              id={id}
-              form={PositionStatementForm}
-              drawerTitle="Edit Position Statement"
-              urls={URLs}
-            />
-          ),
+          label: <EditStatementDrawer id={id} />,
         },
         {
           key: "delete",

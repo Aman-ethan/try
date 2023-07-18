@@ -1,38 +1,15 @@
 "use client";
 
-import { useTransactionServerQuery } from "@/hooks/useQuery";
+import useBankAccounts from "@/hooks/useBankAccounts";
 import useSearchParams from "@/hooks/useSearchParams";
-import { TCurrency } from "@/interfaces/Main";
-import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { IBankAccount } from "@/interfaces/Main";
 import { ProCard } from "@ant-design/pro-components";
 import { Col, Row, Typography } from "antd";
 import CurrencyTag from "../General/CurrencyTag";
 import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import DeleteModal from "./Common/DeleteModal";
 
-type TBankAccount = {
-  account_number: string;
-  account_type: string;
-  relationship_number: number;
-  currency: TCurrency;
-  custodian: string;
-  custodian_name: string;
-};
-
-function useBankAccount() {
-  const { get: getSearchParams } = useSearchParams();
-  const client_id = getSearchParams("client_id");
-  const { data, isLoading } = useTransactionServerQuery<TBankAccount[]>(
-    `/bank_account/${buildURLSearchParams({ client_id })}`
-  );
-
-  return {
-    data,
-    isLoading,
-  };
-}
-
-const BankAccountItemsMap: Record<string, keyof TBankAccount> = {
+const BankAccountItemsMap: Record<string, keyof IBankAccount> = {
   "Account Number": "account_number",
   "Account Type": "account_type",
   "Relationship Number": "relationship_number",
@@ -40,7 +17,11 @@ const BankAccountItemsMap: Record<string, keyof TBankAccount> = {
 };
 
 export default function BankAccounts() {
-  const { data } = useBankAccount();
+  const { get: getSearchParams } = useSearchParams();
+  const { data } = useBankAccounts({
+    clientId: getSearchParams("client_id"),
+    custodianId: getSearchParams("custodian_id"),
+  });
 
   return (
     <div className="mt-4 h-96 w-5/6 overflow-y-scroll">

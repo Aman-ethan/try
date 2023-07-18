@@ -1,6 +1,6 @@
 import { SelectProps } from "antd";
 import useDependentSelect from "@/hooks/useDependentSelect";
-import useBankAccount from "@/hooks/useBankAccount";
+import useBankAccounts from "@/hooks/useBankAccounts";
 import { TBankAccountParams } from "@/interfaces/Main";
 import Select from "../../Input/Select";
 
@@ -13,7 +13,7 @@ export default function SelectRelationshipNumber({
     params: TBankAccountParams;
     reset: () => void;
   }>) {
-  const { relationshipNumberOptions, isLoading } = useBankAccount(params);
+  const { relationshipNumberOptions, isLoading } = useBankAccounts(params);
   const dependentProps = {
     isLoading,
     relationshipNumberOptions,

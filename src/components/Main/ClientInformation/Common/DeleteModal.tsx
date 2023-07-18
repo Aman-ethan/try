@@ -13,17 +13,12 @@ const DeleteHeader = {
 };
 
 type TDeleteType = keyof typeof DeleteHeader;
-interface IDeleteModal {
-  id: number;
+interface IDeleteModalProps {
+  id: string;
   type: TDeleteType;
 }
 
-interface IDeleteClient {
-  id: number;
-  type: TDeleteType;
-}
-
-function useDeleteClient({ type, id }: IDeleteClient) {
+function useDeleteClient({ type, id }: IDeleteModalProps) {
   const { trigger } = useTransactionServerDeleteMutation(`/${type}/${id}/`, {
     onSuccess: () => {
       message.success(` ${DeleteHeader[type]} deleted successfully`);
@@ -38,7 +33,7 @@ function useDeleteClient({ type, id }: IDeleteClient) {
   };
 }
 
-export default function DeleteModal({ id, type }: IDeleteModal) {
+export default function DeleteModal({ id, type }: IDeleteModalProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { trigger } = useDeleteClient({ id, type });
 

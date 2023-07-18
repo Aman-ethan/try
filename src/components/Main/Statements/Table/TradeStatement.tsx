@@ -7,8 +7,8 @@ import { TableColumnsType } from "antd";
 import { capitalize } from "lodash";
 import Statement from ".";
 import CurrencyTag from "../../General/CurrencyTag";
-import MoreMenu, { DeleteItem, EditItem } from "../../General/MoreMenu";
-import TradeStatementForm from "../Form/TradeStatementForm";
+import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
+import EditStatementDrawer from "../General/EditStatementDrawer";
 
 interface IActionProps {
   id: string;
@@ -45,14 +45,7 @@ function Action({ id }: IActionProps) {
       items={[
         {
           key: "edit",
-          label: (
-            <EditItem
-              id={id}
-              urls={URLs}
-              form={TradeStatementForm}
-              drawerTitle="Edit Trade Statement"
-            />
-          ),
+          label: <EditStatementDrawer id={id} />,
         },
         {
           key: "delete",

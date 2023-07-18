@@ -1,7 +1,7 @@
 import { useTransactionServerMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
 import { Form, Input, message, Row } from "antd";
-import useForm from "@/hooks/useForm";
+import useFormState from "@/hooks/useForm";
 
 const URLs = {
   get: "/client/",
@@ -20,7 +20,7 @@ export default function ClientManualEntry() {
       message.error("Failed to add client");
     },
   });
-  const { formId } = useForm({ isMutating });
+  const { formId } = useFormState({ isMutating });
 
   return (
     <Form

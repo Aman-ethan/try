@@ -1,12 +1,22 @@
 "use client";
 
-import FormDrawer from "../General/FormDrawer";
-import NewClientUpload from "./Forms/NewClientUpload";
+import { Button } from "antd";
+import Drawer from "../General/Drawer";
+import ClientUpload from "./Forms/ClientUpload";
+import DrawerFormFooter from "../General/DrawerFormFooter";
 
 export default function AddClient() {
   return (
-    <FormDrawer buttonText="Add Clients" title="Add New Client">
-      <NewClientUpload />
-    </FormDrawer>
+    <Drawer
+      button={
+        <Button type="primary" size="large">
+          Add Clients
+        </Button>
+      }
+      title="Add New Client"
+      footer={<DrawerFormFooter />}
+    >
+      <ClientUpload />
+    </Drawer>
   );
 }

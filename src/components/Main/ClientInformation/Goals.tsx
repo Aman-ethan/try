@@ -22,7 +22,7 @@ const ReturnExpectationsMap = {
 };
 
 type TGoalsType = {
-  id: number;
+  id: string;
   name: string;
   asset_class_preference: keyof typeof AssetClassMap;
   holding_period: string;

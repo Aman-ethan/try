@@ -1,9 +1,11 @@
 "use client";
 
+import { Button } from "antd";
 import { capitalize } from "lodash";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { lazy } from "react";
-import FormDrawer from "../../General/FormDrawer";
+import Drawer from "../../General/Drawer";
+import DrawerFormFooter from "../../General/DrawerFormFooter";
 
 const UploadStatement = lazy(() => import("../Form/UploadStatement"));
 const UploadBankStatement = lazy(() => import("../Form/UploadBankStatement"));
@@ -23,12 +25,19 @@ function StatementForm() {
 
 export default function UploadStatementDrawer() {
   const layoutSegment = useSelectedLayoutSegment() as string;
-
   const title = `Add ${capitalize(layoutSegment)} Statement`;
 
   return (
-    <FormDrawer buttonText="Add a Statement" title={title}>
+    <Drawer
+      button={
+        <Button type="primary" size="large">
+          Add a statement
+        </Button>
+      }
+      title={title}
+      footer={<DrawerFormFooter />}
+    >
       <StatementForm />
-    </FormDrawer>
+    </Drawer>
   );
 }

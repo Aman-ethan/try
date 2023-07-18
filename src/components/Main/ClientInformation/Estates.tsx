@@ -17,7 +17,7 @@ const BenificiaryMap = {
 type TBeneficaryType = keyof typeof BenificiaryMap;
 
 type TEstate = {
-  id: number;
+  id: string;
   type: TBeneficaryType;
   name: string;
   email: string;

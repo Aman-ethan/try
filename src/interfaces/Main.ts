@@ -1,33 +1,8 @@
 import { flags } from "@/constants/flags";
 import { DrawerProps, FormInstance } from "antd";
-import { ReactElement } from "react";
+import { ReactElement, ReactNode } from "react";
 
-type AuthSearchParams =
-  | "username"
-  | "password"
-  | "phone_number"
-  | "user_id"
-  | "next_path";
-
-type StatementSearchParams =
-  | "page"
-  | "statement_date__gte"
-  | "statement_date__lte"
-  | "ordering";
-
-export type SearchParams =
-  | AuthSearchParams
-  | StatementSearchParams
-  | "selected_date"
-  | "selected_duration"
-  | "goal_id"
-  | "estate_id"
-  | "bank_account_id"
-  | "client"
-  | "client_id"
-  | "custodian"
-  | "asset_duration"
-  | "gain_loss_duration";
+export type TCurrency = keyof typeof flags;
 
 export interface ICustodian {
   id: string;
@@ -40,7 +15,17 @@ export interface IClientResponse {
   custodians: ICustodian[];
 }
 
-export interface IStatementForm {
+export interface IBankAccount {
+  relationship_number: string;
+  portfolio_number: string;
+  account_number: string;
+  account_type: string;
+  currency: TCurrency;
+  custodian: string;
+  custodian_name: string;
+}
+
+export interface IFormProps {
   form: FormInstance;
   isMutating: boolean;
   initialValues?: Record<string, string>;
@@ -75,12 +60,6 @@ export interface IPaginatedResponse<T> {
   results: T[];
 }
 
-export interface ITradeFormProps extends IStatementForm {}
-
-export type TCurrency = keyof typeof flags;
-
-export type TUpload = "bulk" | "single";
-
 export interface ISelectRelationshipNumberProps {
   placeholder?: string;
   className?: string;
@@ -90,13 +69,74 @@ export interface IStatementFormProps {
   id: string;
 }
 export interface IDrawerProps
-  extends Pick<DrawerProps, "children" | "footer" | "title" | "width"> {
-  button: ReactElement;
+  extends Pick<
+    DrawerProps,
+    "children" | "footer" | "title" | "width" | "open" | "onClose"
+  > {
+  button?: ReactElement;
+  closeButton?: string;
 }
 
-export type TUploadStatement = "position" | "trade";
-export type TCurrency = keyof typeof flags;
+export interface IBlotterTransactionStatement {
+  id: string;
+  trade_action: string;
+  security: string;
+  asset_class: string;
+  custodian_name: string;
+  relationship_number: string;
+  trade_date: string;
+  settlement_date: string;
+  quantity: number;
+  cost_price: number;
+  mtm_price: number;
+  realised_pl: number;
+  currency: string;
+  goal: string;
+  meta: { tags: string[] };
+}
 
+export interface IFormDrawerProps {
+  id?: string;
+  message?: {
+    success: string;
+    error: string;
+  };
+  formComponent: (_props: IFormProps) => ReactNode;
+  drawerProps: IDrawerProps;
+}
+
+type TAuthSearchParams =
+  | "username"
+  | "password"
+  | "phone_number"
+  | "user_id"
+  | "next_path";
+
+type TStatementSearchParams = "statement_date__gte" | "statement_date__lte";
+type TTradeSearchParams = "asset_class" | "security";
+
+export type SearchParams =
+  | TAuthSearchParams
+  | TStatementSearchParams
+  | TTradeSearchParams
+  | "page"
+  | "ordering"
+  | "selected_date"
+  | "selected_duration"
+  | "goal_id"
+  | "estate_id"
+  | "bank_account_id"
+  | "client"
+  | "client_id"
+  | "custodian"
+  | "custodian_id"
+  | "asset_duration"
+  | "gain_loss_duration";
+export type TUpload = "bulk" | "single";
+export type TUploadStatement = "position" | "trade";
+
+export type TSearchParams<T> = Record<"searchParamKeys", T>;
+export type TClientParams = TSearchParams<Record<"client", SearchParams>>;
 export type TSelectClientParams = Record<"custodianId", string | undefined>;
 export type TSelectCustodianParams = Record<"clientId", string | undefined>;
 export type TBankAccountParams = Record<

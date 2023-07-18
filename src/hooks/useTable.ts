@@ -1,9 +1,17 @@
 import {
   FilterValue,
+  RowSelectionType,
   SorterResult,
   TablePaginationConfig,
 } from "antd/es/table/interface";
+import { useLayoutEffect, useState } from "react";
 import useSearchParams from "./useSearchParams";
+
+interface ISelectRow<T> {
+  key: keyof T;
+  defaultValue?: string;
+  onRowClick?: (_record: T) => void;
+}
 
 export default function useTable() {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
@@ -40,5 +48,42 @@ export default function useTable() {
     getSearchParams,
     page,
     ordering,
+  };
+}
+
+export function useSelectRow<T>({
+  key,
+  defaultValue,
+  onRowClick,
+}: ISelectRow<T>) {
+  const [selectedRowKey, setSelectedRowKey] = useState<string | undefined>(
+    undefined
+  );
+
+  useLayoutEffect(() => {
+    if (defaultValue) setSelectedRowKey(defaultValue);
+  }, [defaultValue]);
+
+  const rowSelection = {
+    renderCell: () => null,
+    selectedRowKeys: selectedRowKey ? [selectedRowKey] : undefined,
+    type: "radio" as RowSelectionType,
+    columnWidth: 0,
+  };
+
+  function onRow(record: T) {
+    return {
+      onClick() {
+        setSelectedRowKey(record[key] as string);
+        onRowClick?.(record);
+      },
+    };
+  }
+
+  return {
+    rowSelection,
+    onRow,
+    selectedRowKey,
+    setSelectedRowKey,
   };
 }

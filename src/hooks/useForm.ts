@@ -1,18 +1,20 @@
-import FormContext from "@/context/FormContext";
+import { FormStateContext, FormTypeContext } from "@/context/FormProvider";
 import { useContext, useEffect } from "react";
 
 interface IFormParams {
   isMutating: boolean;
 }
 
-export default function useForm(params?: IFormParams) {
-  const { setIsMutating, formId, uploadType, setUploadType } =
-    useContext(FormContext);
-  const isMutating = params?.isMutating;
+export default function useFormState(params?: IFormParams) {
+  const { setIsMutating, isMutating, formId } = useContext(FormStateContext);
 
   useEffect(() => {
-    setIsMutating(!!isMutating);
-  }, [isMutating, setIsMutating]);
+    setIsMutating(!!params?.isMutating);
+  }, [params?.isMutating, setIsMutating]);
 
-  return { formId, uploadType, setUploadType };
+  return { formId, isMutating };
+}
+
+export function useFormType() {
+  return useContext(FormTypeContext);
 }

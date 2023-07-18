@@ -1,5 +1,5 @@
 import { ClientUploadSample } from "@/constants/samples";
-import useForm from "@/hooks/useForm";
+import useFormState, { useFormType } from "@/hooks/useForm";
 import { useTransactionServerFormMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
 import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
@@ -9,21 +9,19 @@ import Upload from "../../Input/Upload";
 
 const ManualEntry = lazy(() => import("./ClientManualEntry"));
 
-interface IUploadStatementFormProps {
+interface IUploadClientProps {
   sampleLink?: string;
 }
 
-interface IUploadStatementResponse {
+interface IUploadClientResponse {
   message: string;
 }
 
-interface IUploadStatementForm {
-  client: string;
+interface IUploadClientForm {
   file: File;
 }
 
-const FormRules: Partial<Record<keyof IUploadStatementForm, FormRule[]>> = {
-  client: [{ required: true, message: "Please select a client" }],
+const FormRules: Partial<Record<keyof IUploadClientForm, FormRule[]>> = {
   file: [{ required: true, message: "Please upload a file" }],
 };
 
@@ -32,12 +30,12 @@ const UploadTypeOptions = [
   { label: "Manual Entry", value: "manual" },
 ];
 
-function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
+function BulkUpload({ sampleLink }: IUploadClientProps) {
   const [form] = Form.useForm();
   const urlKey = `/client/`;
   const { isMutating, trigger } = useTransactionServerFormMutation<
-    IUploadStatementForm,
-    IUploadStatementResponse
+    IUploadClientForm,
+    IUploadClientResponse
   >(`${urlKey}upload/`, {
     onSuccess(data) {
       message.success(data.message);
@@ -49,7 +47,7 @@ function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
     },
   });
 
-  const { formId } = useForm({ isMutating });
+  const { formId } = useFormState({ isMutating });
   return (
     <>
       <div className="space-y-2">
@@ -72,19 +70,19 @@ function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
       <Form
         id={formId}
         form={form}
-        onFinish={trigger}
+        onFinish={(values) => trigger({ file: values.file[0] })}
         layout="vertical"
         className="space-y-6"
         disabled={isMutating}
         requiredMark={false}
       >
-        <Form.Item name="file" rules={FormRules.file}>
+        <Form.Item valuePropName="fileList" name="file" rules={FormRules.file}>
           <Upload
             beforeUpload={() => {
               return false;
             }}
             onChange={(info) => {
-              form.setFieldValue("file", info.file);
+              form.setFieldValue("file", [info.file]);
             }}
           />
         </Form.Item>
@@ -93,8 +91,8 @@ function BulkUpload({ sampleLink }: IUploadStatementFormProps) {
   );
 }
 
-export default function UploadStatement(props: IUploadStatementFormProps) {
-  const { uploadType, setUploadType } = useForm();
+export default function ClientUpload(props: IUploadClientProps) {
+  const { uploadType, setUploadType } = useFormType();
   return (
     <div className="space-y-8">
       <Radio.Group

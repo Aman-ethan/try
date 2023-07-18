@@ -8,7 +8,7 @@ import useSearchParams from "@/hooks/useSearchParams";
 interface IClientDetailsDrawerProps {
   type: string;
   edit?: boolean;
-  id?: number;
+  id?: string;
 }
 
 interface IDetailsFormProps {

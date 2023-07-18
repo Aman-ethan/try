@@ -1,43 +1,71 @@
+import FormProvider from "@/context/FormProvider";
 import { IDrawerProps } from "@/interfaces/Main";
 import { CloseOutlined } from "@ant-design/icons";
 import { Drawer as AntdDrawer, Button, Row } from "antd";
-import { cloneElement, useState } from "react";
+import {
+  KeyboardEvent,
+  MouseEvent,
+  cloneElement,
+  useLayoutEffect,
+  useState,
+} from "react";
 
 export default function Drawer({
   button,
   children,
   footer,
   title,
-  width,
+  width = 720,
+  open,
+  closeButton,
+  onClose,
 }: IDrawerProps) {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(open);
+
+  useLayoutEffect(() => {
+    setIsDrawerOpen(open);
+  }, [open]);
+
+  const handleClose = (e: MouseEvent | KeyboardEvent) => {
+    onClose?.(e);
+    setIsDrawerOpen(false);
+  };
+
   return (
-    <>
-      {cloneElement(button, { onClick: () => setIsDrawerOpen(true) })}
+    <FormProvider>
+      {button
+        ? cloneElement(button, {
+            onClick: () => setIsDrawerOpen(true),
+          })
+        : null}
       <AntdDrawer
         closeIcon={null}
         open={isDrawerOpen}
         width={width}
-        onClose={() => setIsDrawerOpen(false)}
+        onClose={handleClose}
         title={
           <Row justify="space-between" className="-ml-2">
             <h4 className="text-xl font-medium">{title}</h4>
             <Button
-              onClick={() => setIsDrawerOpen(false)}
+              onClick={handleClose}
               type="text"
               icon={<CloseOutlined className="text-xl" />}
             />
           </Row>
         }
+        footer={
+          <div className="space-x-4 flex justify-end">
+            {closeButton ? (
+              <Button size="large" className="px-7" onClick={handleClose}>
+                {closeButton}
+              </Button>
+            ) : null}
+            {footer}
+          </div>
+        }
       >
-        <div className="pb-20">{children}</div>
-        <div
-          style={{ width }}
-          className="fixed bottom-0 right-0 flex justify-end bg-neutral-1 px-6 py-6"
-        >
-          {footer}
-        </div>
+        {children}
       </AntdDrawer>
-    </>
+    </FormProvider>
   );
 }

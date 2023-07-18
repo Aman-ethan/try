@@ -1,8 +1,8 @@
 import useSearchParams from "./useSearchParams";
-import useSecurity from "./useSecurity";
+import useSecurities from "./useSecurities";
 
 export default function useSecurityWithParams() {
-  const { options, isLoading } = useSecurity();
+  const { options, isLoading } = useSecurities();
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
 
   const security = getSearchParams("security");

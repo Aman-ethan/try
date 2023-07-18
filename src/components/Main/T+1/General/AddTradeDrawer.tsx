@@ -1,26 +1,41 @@
-import { useTransactionServerMutation } from "@/hooks/useMutation";
-import { Form, message } from "antd";
-import revalidate from "@/lib/revalidate";
-import FormDrawer from "../../General/FormDrawer";
-import AddTradeForm from "../Form/AddTrade";
+import { IDrawerProps } from "@/interfaces/Main";
+import { Button } from "antd";
+import AddFormDrawer from "../../General/AddFormDrawer";
+import { ResetButton, SubmitButton } from "../../General/DrawerFormButton";
+import TradeForm from "../Form/Trade";
 
-const urlKey = "/blotter-trade/";
+const drawerProps: IDrawerProps = {
+  button: (
+    <Button type="primary" size="large">
+      Add Trade
+    </Button>
+  ),
+  title: "Add a Trade",
+  footer: (
+    <>
+      <ResetButton>Clear All</ResetButton>
+      <SubmitButton>Save Trade</SubmitButton>
+    </>
+  ),
+};
+
+const message = {
+  success: "Trade added successfully",
+  error: "Error adding trade",
+};
+
+const URLs = {
+  get: "/blotter-trade/",
+  post: "/blotter-trade/",
+};
 
 export default function AddTradeDrawer() {
-  const [form] = Form.useForm();
-  const { trigger, isMutating } = useTransactionServerMutation(urlKey, {
-    onSuccess() {
-      message.success("Trade added successfully");
-      form.resetFields();
-      revalidate(urlKey);
-    },
-    onError() {
-      message.error("Failed to add trade");
-    },
-  });
   return (
-    <FormDrawer buttonText="Add Trade" title="Add a Trade">
-      <AddTradeForm form={form} isMutating={isMutating} trigger={trigger} />
-    </FormDrawer>
+    <AddFormDrawer
+      urls={URLs}
+      drawerProps={drawerProps}
+      formComponent={TradeForm}
+      message={message}
+    />
   );
 }

@@ -1,17 +1,15 @@
 "use client";
 
-import { flags } from "@/constants/flags";
 import {
   useTransactionServerMutation,
   useTransactionServerPutMutation,
 } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
-import { TCurrency } from "@/interfaces/Main";
 import revalidate from "@/lib/revalidate";
-import { Button, Form, Input, message, Row, Select } from "antd";
+import { Button, Form, Input, Row, message } from "antd";
 import { useEffect, useState } from "react";
-import CurrencyTag from "../../General/CurrencyTag";
+import SelectCurrency from "../../Input/SelectCurrency";
 import FormActions from "../Common/FormAction";
 import CreateCustodian from "../CreateCustodian";
 
@@ -54,11 +52,6 @@ function useBankAccount() {
   );
   return { bankAccountId, data, getSearchParams };
 }
-
-const currencyOptions = Object.keys(flags).map((key) => ({
-  label: key,
-  value: key as TCurrency,
-}));
 
 export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
   const [form] = Form.useForm();
@@ -121,8 +114,6 @@ export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
     form.resetFields();
   };
 
-  const { Option } = Select;
-
   return (
     <Form
       form={form}
@@ -150,20 +141,7 @@ export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
           <Input placeholder="Enter account type" />
         </Form.Item>
         <Form.Item label="Currency" name="currency" className="flex-1">
-          <Select
-            maxLength={1}
-            placeholder="Select currency"
-            showSearch
-            allowClear
-          >
-            {currencyOptions.map((item) => (
-              <Option value={item.value} label={item.label}>
-                <div className="mt-2 flex items-center">
-                  <CurrencyTag currency={item.value} />
-                </div>
-              </Option>
-            ))}
-          </Select>
+          <SelectCurrency placeholder="Select Currency" />
         </Form.Item>
       </Row>
       <Row className="gap-x-8">
