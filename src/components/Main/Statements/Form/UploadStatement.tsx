@@ -2,7 +2,6 @@ import { StatementUploadSamples } from "@/constants/samples";
 import useForm from "@/hooks/useForm";
 import { useTransactionServerFormMutation } from "@/hooks/useMutation";
 import { TUploadStatement } from "@/interfaces/Main";
-import getFileValueFromEvent from "@/lib/getFileValueFromEvent";
 import revalidate from "@/lib/revalidate";
 import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
 import { Button, Form, FormRule, Radio, Row, message } from "antd";
@@ -93,15 +92,13 @@ function BulkUpload() {
             placeholder="Select the client"
           />
         </Form.Item>
-        <Form.Item
-          name="file"
-          valuePropName="fileList"
-          rules={FormRules.file}
-          getValueFromEvent={getFileValueFromEvent}
-        >
+        <Form.Item name="file" valuePropName="fileList" rules={FormRules.file}>
           <Upload
             beforeUpload={() => {
               return false;
+            }}
+            onChange={(info) => {
+              form.setFieldValue("file", [info.file]);
             }}
           />
         </Form.Item>
