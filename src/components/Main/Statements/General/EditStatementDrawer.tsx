@@ -1,5 +1,6 @@
+"use client"
+
 import { IDrawerProps } from "@/interfaces/Main";
-import { useSelectedLayoutSegment } from "next/navigation";
 import { SubmitButton } from "../../General/DrawerFormButton";
 import EditFormDrawer from "../../General/EditFormDrawer";
 import PositionStatementForm from "../Form/PositionStatementForm";
@@ -7,6 +8,7 @@ import TradeStatementForm from "../Form/TradeStatementForm";
 
 interface IEditStatementDrawerProps {
   id?: string;
+  layoutSegment: "trade" | "position"
 }
 
 const drawerProps: IDrawerProps = {
@@ -20,8 +22,7 @@ const FormComponentsMap = {
   trade: TradeStatementForm,
 };
 
-export default function EditStatementDrawer({ id }: IEditStatementDrawerProps) {
-  const layoutSegment = useSelectedLayoutSegment() as "position" | "trade";
+export default function EditStatementDrawer({ id , layoutSegment}: IEditStatementDrawerProps) {
   const urls = {
     get: `/statement/${layoutSegment}/`,
     put: `/statement/${layoutSegment}/{id}/`,

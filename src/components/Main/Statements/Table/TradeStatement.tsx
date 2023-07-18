@@ -45,7 +45,7 @@ function Action({ id }: IActionProps) {
       items={[
         {
           key: "edit",
-          label: <EditStatementDrawer id={id} />,
+          label: <EditStatementDrawer id={id} layoutSegment="trade" />,
         },
         {
           key: "delete",

@@ -33,7 +33,7 @@ function Action({ id }: { id: string }) {
       items={[
         {
           key: "edit",
-          label: <EditStatementDrawer id={id} />,
+          label: <EditStatementDrawer id={id} layoutSegment="position" />,
         },
         {
           key: "delete",
