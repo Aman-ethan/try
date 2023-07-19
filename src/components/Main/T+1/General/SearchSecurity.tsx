@@ -1,97 +1,250 @@
+import Title from "@/components/Typography/Title";
 import { useTransactionServerLazyQuery } from "@/hooks/useQuery";
 import { ISecuritySearchProps } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { PlusOutlined } from "@ant-design/icons";
-import { Button, Form, FormRule, Input, Modal, Row, message } from "antd";
-import { useState } from "react";
+import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Form, FormRule, Input, Radio, Row, message } from "antd";
+import SelectAsset from "../../Input/SelectAsset";
+import SelectCurrency from "../../Input/SelectCurrency";
 import SecurityDetails from "./SecurityDetails";
 
-interface IAddSecurityProps {
-  onSecurityAdded: (_security: ISecuritySearchProps) => void;
-}
+type TSecurity = "PUBLIC" | "PRIVATE";
 
-const FormRules: Partial<Record<"symbol", FormRule[]>> = {
+const PublicSecurityRules: Partial<Record<"symbol", FormRule[]>> = {
   symbol: [{ required: true, message: "Please enter a security ticker/ISIN" }],
 };
 
-export default function SearchSecurity({ onSecurityAdded }: IAddSecurityProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [form] = Form.useForm();
-  const symbol = Form.useWatch("symbol", form);
+const PrivateSecurityRules: Partial<
+  Record<"security" | "security_name" | "asset_class" | "currency", FormRule[]>
+> = {
+  security: [{ required: true, message: "Please enter a security" }],
+  security_name: [{ required: true, message: "Please enter a security name" }],
+  asset_class: [{ required: true, message: "Please select an asset class" }],
+  currency: [{ required: true, message: "Please select a currency" }],
+};
 
-  const { trigger, data, isMutating } =
-    useTransactionServerLazyQuery<ISecuritySearchProps>(
-      `/security/search/${buildURLSearchParams({ symbol })}`,
-      {
-        onSuccess() {
-          message.success("Security found");
-        },
-        onError() {
-          message.error("Security not found");
-        },
-      }
-    );
+const FieldPrefix = "new_security";
 
-  const confirmSecurity = () => {
-    if (!data) return;
-    onSecurityAdded(data);
-    setIsModalOpen(false);
+function PublicSecurityForm() {
+  const fieldName = [FieldPrefix, "symbol"];
+  const form = Form.useFormInstance();
+  const symbol = Form.useWatch(fieldName);
+
+  const {
+    trigger,
+    data: newSecurity,
+    isMutating,
+  } = useTransactionServerLazyQuery<ISecuritySearchProps>(
+    `/security/search/${buildURLSearchParams({ symbol })}`,
+    {
+      onSuccess() {
+        message.success("Security found");
+      },
+      onError() {
+        message.error("Security not found");
+      },
+    }
+  );
+
+  const handleSearch = async () => {
+    try {
+      await form.validateFields([fieldName]);
+      trigger();
+    } catch {
+      // Do nothing
+    }
+  };
+
+  const addSecurity = () => {
+    if (!newSecurity) return;
+    const { code, exchange, name, previous_close, ...rest } = newSecurity;
+    const _symbol = code.includes(".") ? code : `${code}.${exchange}`;
+    form.setFieldsValue({
+      security: _symbol,
+      security_name: name,
+      asset_class: "Cash",
+      exchange,
+      market_close: previous_close,
+      ...rest,
+    });
+    form.setFieldValue("search_security", false);
+    form.setFieldValue("extra_option", { label: name, value: _symbol });
+    form.resetFields([fieldName]);
   };
 
   return (
     <>
-      <Button
-        icon={<PlusOutlined />}
-        onClick={() => setIsModalOpen(true)}
-        className="text-neutral-13/80"
-      >
-        Add Security
-      </Button>
-      <Modal
-        centered
-        open={isModalOpen}
-        footer={null}
-        title="Search New Security"
-        onCancel={() => setIsModalOpen(false)}
-      >
-        <Form
-          form={form}
-          onFinish={trigger}
-          layout="vertical"
-          size="large"
-          className="space-y-6 pt-4"
-          disabled={isMutating}
-          requiredMark={false}
+      <Row className="gap-x-4">
+        <Form.Item
+          label="ISIN/Ticker"
+          name={fieldName}
+          className="flex-1"
+          rules={PublicSecurityRules.symbol}
         >
-          <Row className="gap-x-6">
-            <Form.Item
-              label="ISIN/Ticker"
-              name="symbol"
-              className="flex-1"
-              rules={FormRules.symbol}
-            >
-              <Input placeholder="Enter security ticker/ISIN" />
-            </Form.Item>
-            <Form.Item label="&nbsp;">
-              <Button htmlType="submit" className="px-8" loading={isMutating}>
-                Search
-              </Button>
-            </Form.Item>
-          </Row>
-          {data ? (
-            <>
-              <SecurityDetails {...data} />
-              <Button
-                onClick={confirmSecurity}
-                type="primary"
-                disabled={isMutating}
-              >
-                Confirm New Security
-              </Button>
-            </>
-          ) : null}
-        </Form>
-      </Modal>
+          <Input
+            type="search"
+            placeholder="Enter security ticker/ISIN"
+            onKeyDown={async (e) => {
+              if (e.code === "Enter") {
+                e.preventDefault();
+                handleSearch();
+              }
+            }}
+            disabled={isMutating}
+          />
+        </Form.Item>
+        <Form.Item label="&nbsp;">
+          <Button
+            type="primary"
+            onClick={handleSearch}
+            className="px-8"
+            loading={isMutating}
+            disabled={isMutating}
+          >
+            Search
+          </Button>
+        </Form.Item>
+      </Row>
+      {newSecurity ? (
+        <>
+          <SecurityDetails {...newSecurity} />
+          <Button
+            type="primary"
+            disabled={isMutating}
+            className="block ml-auto"
+            onClick={addSecurity}
+          >
+            Confirm New Security
+          </Button>
+        </>
+      ) : null}
     </>
+  );
+}
+
+function PrivateSecurityForm() {
+  const form = Form.useFormInstance();
+  const addSecurity = async () => {
+    try {
+      const fields = [
+        [FieldPrefix, "security"],
+        [FieldPrefix, "security_name"],
+        [FieldPrefix, "asset_class"],
+        [FieldPrefix, "currency"],
+      ];
+      await form.validateFields(fields);
+      const newSecurity = form.getFieldValue(FieldPrefix);
+      const { security_name, security } = newSecurity;
+      form.setFieldsValue(newSecurity);
+      form.setFieldValue("search_security", false);
+      form.setFieldValue("extra_option", {
+        label: security_name,
+        value: security,
+      });
+      form.resetFields(fields);
+    } catch {
+      // Do nothing
+    }
+  };
+  return (
+    <>
+      <Row className="gap-x-6">
+        <Form.Item
+          name={[FieldPrefix, "security_name"]}
+          label="Security Name"
+          rules={PrivateSecurityRules.security_name}
+          className="flex-1"
+        >
+          <Input placeholder="Enter security Name" />
+        </Form.Item>
+        <Form.Item
+          name={[FieldPrefix, "asset_class"]}
+          label="Asset Class"
+          rules={PrivateSecurityRules.asset_class}
+          className="flex-1"
+        >
+          <SelectAsset placeholder="Select asset class" />
+        </Form.Item>
+      </Row>
+      <Row className="gap-x-6">
+        <Form.Item
+          name={[FieldPrefix, "currency"]}
+          label="Currency"
+          rules={PrivateSecurityRules.currency}
+          className="flex-1"
+        >
+          <SelectCurrency placeholder="Find Currency" />
+        </Form.Item>
+        <Form.Item
+          name={[FieldPrefix, "security"]}
+          label="Security ID (Generate Random)"
+          rules={PrivateSecurityRules.security}
+          className="flex-1"
+        >
+          <Input placeholder="Enter an identifier for your security" />
+        </Form.Item>
+      </Row>
+      <Row align="middle" className="gap-x-4">
+        <Title level={6}>Additional Properties</Title>
+        <Button
+          shape="circle"
+          className="shadow"
+          icon={<PlusOutlined className="text-sm" />}
+        />
+      </Row>
+      <Button onClick={addSecurity} block type="primary" size="large">
+        Add New Security
+      </Button>
+    </>
+  );
+}
+
+function SecurityForm() {
+  const type = Form.useWatch("security_type") as TSecurity;
+  switch (type) {
+    case "PUBLIC":
+      return <PublicSecurityForm />;
+    case "PRIVATE":
+      return <PrivateSecurityForm />;
+    default:
+      return null;
+  }
+}
+
+export default function SearchSecurity() {
+  const form = Form.useFormInstance();
+  return (
+    <div className="p-4 space-y-6 w-full rounded-lg text-base shadow-lg">
+      <Row justify="space-between" align="middle">
+        <Title level={5}>Search New Security</Title>
+        <Button
+          onClick={() => {
+            form.setFieldValue("search_security", false);
+          }}
+          type="text"
+          icon={<CloseOutlined />}
+        />
+      </Row>
+      <Form.Item name="security_type" initialValue="PUBLIC">
+        <Radio.Group
+          className="flex"
+          optionType="button"
+          size="middle"
+          options={[
+            {
+              label: "Search New Ticker",
+              value: "PUBLIC",
+              style: { flex: 1 },
+            },
+            {
+              label: "Custom Security",
+              value: "PRIVATE",
+              style: { flex: 1 },
+            },
+          ]}
+        />
+      </Form.Item>
+      <SecurityForm />
+    </div>
   );
 }

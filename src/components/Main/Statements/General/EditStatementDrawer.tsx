@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { IDrawerProps } from "@/interfaces/Main";
 import { SubmitButton } from "../../General/DrawerFormButton";
@@ -8,7 +8,7 @@ import TradeStatementForm from "../Form/TradeStatementForm";
 
 interface IEditStatementDrawerProps {
   id?: string;
-  layoutSegment: "trade" | "position"
+  layoutSegment: "trade" | "position";
 }
 
 const drawerProps: IDrawerProps = {
@@ -22,7 +22,10 @@ const FormComponentsMap = {
   trade: TradeStatementForm,
 };
 
-export default function EditStatementDrawer({ id , layoutSegment}: IEditStatementDrawerProps) {
+export default function EditStatementDrawer({
+  id,
+  layoutSegment,
+}: IEditStatementDrawerProps) {
   const urls = {
     get: `/statement/${layoutSegment}/`,
     put: `/statement/${layoutSegment}/{id}/`,

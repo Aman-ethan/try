@@ -1,4 +1,5 @@
-import { TCurrency, ISecuritySearchProps } from "@/interfaces/Main";
+import Title from "@/components/Typography/Title";
+import { ISecuritySearchProps, TCurrency } from "@/interfaces/Main";
 import { formatPrice } from "@/lib/format";
 import { Divider } from "antd";
 import CurrencyTag from "../../General/CurrencyTag";
@@ -32,14 +33,14 @@ export default function SecurityDetails(props: ISecuritySearchProps) {
   return (
     <div className="space-y-4 rounded-md border border-neutral-3 bg-neutral-2 p-4 text-neutral-13/80">
       <div className="space-y-2">
-        <h5 className="text-base font-medium">Security Details</h5>
+        <Title level={5}>Security Details</Title>
         <Divider className="bg-neutral-4" />
       </div>
       <div className="flex gap-x-2">
         <div className="flex flex-col gap-y-2">
           {DescriptionItemsEntries.map(([label, key]) => (
-            <div className="flex items-center" key={key}>
-              <span className="font-medium w-32">{label}:</span>
+            <div className="flex items-center text-sm" key={key}>
+              <span className="font-medium w-52">{label}:</span>
               <span>{renderValue(key)}</span>
             </div>
           ))}

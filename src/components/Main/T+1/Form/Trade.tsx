@@ -3,20 +3,23 @@ import useSecurities from "@/hooks/useSecurities";
 import { IFormProps } from "@/interfaces/Main";
 import formatInitialValues from "@/lib/formatInitialValues";
 import formatTriggerValues from "@/lib/formatTriggerValues";
-import { Form, FormRule, Input, Row } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { Button, Form, FormRule, Input, Row } from "antd";
+import clsx from "clsx";
+import { Dayjs } from "dayjs";
 import { DatePicker } from "../../Input/DatePicker";
 import InputPrice from "../../Input/InputPrice";
 import InputQuantity from "../../Input/InputQuantity";
 import SelectAsset from "../../Input/SelectAsset";
+import SelectClient from "../../Input/SelectClient";
 import SelectCurrency from "../../Input/SelectCurrency";
+import SelectCustodian from "../../Input/SelectCustodian";
 import SelectRelationshipNumber from "../../Input/SelectRelationshipNumber";
 import TradeAction from "../../Input/TradeAction";
 import SearchSecurity from "../General/SearchSecurity";
 import SelectSecurity from "../General/SelectSecurity";
 import SelectGoal from "../Input/SelectGoal";
 import SelectTag from "../Input/SelectTag";
-import SelectClient from "../../Input/SelectClient";
-import SelectCustodian from "../../Input/SelectCustodian";
 
 interface ITradeForm {
   client: string;
@@ -31,6 +34,9 @@ interface ITradeForm {
   currency: string;
   goal: string;
   meta: { tags: string[] };
+  security_name: string;
+  exchange: string;
+  settlement_date: Dayjs;
 }
 
 const FormRules: Partial<Record<keyof ITradeForm, FormRule[]>> = {
@@ -43,7 +49,22 @@ const FormRules: Partial<Record<keyof ITradeForm, FormRule[]>> = {
     { required: true, message: "Please select the security or add one" },
   ],
   trade_date: [{ required: true, message: "Please select the trade date" }],
+  settlement_date: [
+    { required: true, message: "Please select the settlement date" },
+  ],
+  quantity: [{ required: true, message: "Please enter the quantity" }],
+  cost_price: [{ required: true, message: "Please enter the cost price" }],
+  trade_action: [{ required: true, message: "Please select the trade action" }],
 };
+
+const HiddenFields = [
+  "security_name",
+  "exchange",
+  "isin",
+  "country",
+  "market_close",
+  "extra_option",
+];
 
 export default function TradeForm({
   form,
@@ -56,12 +77,14 @@ export default function TradeForm({
   const currency = Form.useWatch("currency", form);
   const clientId = Form.useWatch("client", form);
   const custodianId = Form.useWatch("custodian", form);
+  const searchSecurity = Form.useWatch("search_security", form);
+  const extraOption = Form.useWatch("extra_option", form);
 
   useSecurities({
     queryParams: { symbol },
     config: {
       onSuccess(data) {
-        if (data.length < 1) return;
+        if (data.length < 1 || !symbol) return;
         const security = data?.[0];
         form.setFieldsValue({
           currency: security.currency_code,
@@ -70,6 +93,14 @@ export default function TradeForm({
       },
     },
   });
+
+  const onSecurityClear = () => {
+    form.resetFields(["asset_class", "currency", ...HiddenFields]);
+  };
+
+  const resetField = (name: string) => {
+    return () => form.resetFields([name]);
+  };
 
   return (
     <Form
@@ -101,9 +132,7 @@ export default function TradeForm({
           params={{
             custodianId,
           }}
-          reset={() => {
-            form.setFieldValue("client", undefined);
-          }}
+          reset={resetField("client")}
           disabled={isMutating}
           placeholder="Select the client"
         />
@@ -117,9 +146,7 @@ export default function TradeForm({
         >
           <SelectCustodian
             params={{ clientId }}
-            reset={() => {
-              form.setFieldValue("custodian", undefined);
-            }}
+            reset={resetField("custodian")}
             disabled={isMutating}
             placeholder="Select the custodian"
           />
@@ -132,41 +159,47 @@ export default function TradeForm({
         >
           <SelectRelationshipNumber
             params={{ clientId, custodianId }}
-            reset={() => {
-              form.setFieldValue("relationship_number", undefined);
-            }}
+            reset={resetField("relationship_number")}
             disabled={isMutating}
             placeholder="Enter the relationship number"
           />
         </Form.Item>
       </Row>
-      <Row className="gap-x-4">
+      <Row className="gap-x-4 gap-y-2">
         <Form.Item
           label="Security"
           name="security"
-          rules={FormRules.security}
           className="flex-1"
+          rules={FormRules.security}
         >
-          <SelectSecurity placeholder="Enter the security" />
-        </Form.Item>
-        <Form.Item label="&nbsp;">
-          <SearchSecurity
-            onSecurityAdded={({
-              code,
-              exchange,
-              currency: _currency,
-              type,
-            }) => {
-              const _symbol = code.includes(".") ? code : `${code}.${exchange}`;
-              form.setFieldsValue({
-                security: _symbol,
-                currency: _currency,
-                asset_class: type,
-              });
-            }}
+          <SelectSecurity
+            extraOptions={extraOption ? [extraOption] : undefined}
+            placeholder="Enter the security"
+            onClear={onSecurityClear}
           />
         </Form.Item>
+        <Form.Item label="&nbsp;" name="search_security">
+          <Button
+            onClick={() => {
+              form.setFieldValue("search_security", true);
+            }}
+            icon={<PlusOutlined />}
+            className={clsx(
+              searchSecurity
+                ? "text-primary border-primary"
+                : "text-neutral-13/80"
+            )}
+          >
+            Add Security
+          </Button>
+        </Form.Item>
+        {searchSecurity ? <SearchSecurity /> : null}
       </Row>
+      {HiddenFields.map((name) => (
+        <Form.Item key={name} noStyle name={name}>
+          <Input hidden />
+        </Form.Item>
+      ))}
       <Row className="gap-x-8">
         <Form.Item label="Security ID" name="security" className="flex-1">
           <Input placeholder="Security ID" disabled />
@@ -178,7 +211,12 @@ export default function TradeForm({
           <SelectAsset placeholder="Asset Type" disabled />
         </Form.Item>
       </Row>
-      <Form.Item label="Trade Action" name="trade_action" className="w-1/2">
+      <Form.Item
+        label="Trade Action"
+        name="trade_action"
+        rules={FormRules.trade_action}
+        className="w-1/2"
+      >
         <TradeAction />
       </Form.Item>
       <Row className="gap-x-8">
@@ -194,18 +232,29 @@ export default function TradeForm({
           label="Settlement Date"
           name="settlement_date"
           className="flex-1"
+          rules={FormRules.settlement_date}
         >
           <DatePicker placeholder="Select settlement date" />
         </Form.Item>
       </Row>
       <Row className="gap-x-8">
-        <Form.Item label="Quantity" name="quantity" className="flex-1">
+        <Form.Item
+          label="Quantity"
+          name="quantity"
+          rules={FormRules.quantity}
+          className="flex-1"
+        >
           <InputQuantity
             className="w-full"
             placeholder="Enter the quantity of asset"
           />
         </Form.Item>
-        <Form.Item label="Price" name="cost_price" className="flex-1">
+        <Form.Item
+          label="Price"
+          name="cost_price"
+          rules={FormRules.cost_price}
+          className="flex-1"
+        >
           <InputPrice
             currency={currency}
             className="w-full"
