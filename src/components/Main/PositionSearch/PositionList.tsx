@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Title from "@/components/Typography/Title";
 import { Button } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 import clsx from "clsx";
+import Title from "@/components/Typography/Title";
 import DetailsSummary from "./DetailsSummary";
 import PositionListItems from "./PositionListItems";
 import SelectClient from "../Input/SelectClientWithParams";

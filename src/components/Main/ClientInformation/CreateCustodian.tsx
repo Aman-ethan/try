@@ -9,6 +9,7 @@ import useDependentSelect from "@/hooks/useDependentSelect";
 import { useTransactionServerMutation } from "@/hooks/useMutation";
 import Select from "@/components/Input/Select";
 import revalidate from "@/lib/revalidate";
+import useSearchParams from "@/hooks/useSearchParams";
 
 export default function CreateCustodian({
   params,
@@ -20,6 +21,9 @@ export default function CreateCustodian({
   const [addCustodian, setAddCustodian] = useState(false);
   const [name, setName] = useState("");
   const [showFormActions, setShowFormActions] = useState(false);
+  const { get: getSearchParams } = useSearchParams();
+  const client_id = getSearchParams("client_id");
+
   useDependentSelect({
     dependsOn: params?.clientId,
     dependentProps: {
@@ -85,6 +89,7 @@ export default function CreateCustodian({
                   onClick={() =>
                     trigger({
                       name,
+                      client: [client_id],
                     })
                   }
                 >

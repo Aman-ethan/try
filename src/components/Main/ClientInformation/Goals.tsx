@@ -65,7 +65,7 @@ export default function Goals() {
   const { data, isLoading } = useGoal();
 
   return (
-    <div className="mt-4 h-96 w-5/6 overflow-y-scroll">
+    <div className="mt-4 h-96 overflow-y-scroll w-full tab:w-11/12">
       {data?.map((item) => (
         <ProCard
           key={item?.id}
@@ -73,17 +73,28 @@ export default function Goals() {
           headerBordered
           bordered
           extra={[
-            <ClientDetailsDrawer edit type="goals" id={item?.id} />,
-            <DeleteModal type="goals" id={item?.id} />,
+            <div className="flex">
+              <ClientDetailsDrawer edit type="goals" id={item?.id} />
+              <DeleteModal type="goals" id={item?.id} />
+            </div>,
           ]}
           style={{ marginBottom: "1em" }}
+          headStyle={{ gap: "0.5rem" }}
           loading={isLoading}
         >
-          <Row gutter={[8, 8]}>
+          <Row
+            gutter={{
+              sm: 16,
+              md: 24,
+              lg: 32,
+              xl: 48,
+            }}
+          >
             {Object.entries(GoalsItemsMap).map(([label, key]) => (
               <Col
-                span={key === "asset_class_preference" ? 24 : 12}
-                className="flex flex-col"
+                sm={24}
+                md={key === "asset_class_preference" ? 24 : 12}
+                className="flex flex-col "
               >
                 <Typography.Text type="secondary">{label}</Typography.Text>
                 <Typography.Text style={{ marginTop: "0.3em" }}>

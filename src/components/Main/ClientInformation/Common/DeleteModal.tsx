@@ -1,7 +1,7 @@
 "use client";
 
 import { DeleteOutlined, DeleteTwoTone } from "@ant-design/icons";
-import { Button, message, Popconfirm } from "antd";
+import { Button, Drawer, message, Popconfirm } from "antd";
 import { useState } from "react";
 import revalidate from "@/lib/revalidate";
 import { useTransactionServerDeleteMutation } from "@/hooks/useMutation";
@@ -49,19 +49,19 @@ export default function DeleteModal({ id, type }: IDeleteModalProps) {
     <>
       <Button
         className="ml-4"
-        size="large"
         type="default"
         onClick={showModal}
         icon={<DeleteOutlined />}
       />
       <Popconfirm
+        className="mob:hidden tab:block"
         title={
           <div className="flex justify-center">
             <DeleteTwoTone twoToneColor="#F5222D" className="mr-2" />
             Delete this {DeleteHeader[type]}?
           </div>
         }
-        description={`Are you sure you want to delete this ${DeleteHeader[type]} ?`}
+        description={`Deleting this ${DeleteHeader[type]} may impact related areas.`}
         trigger="click"
         open={isModalOpen}
         okText="Delete"
@@ -80,6 +80,34 @@ export default function DeleteModal({ id, type }: IDeleteModalProps) {
         icon={null}
         onOpenChange={setIsModalOpen}
       />
+
+      <Drawer
+        className="mob:block tab:hidden"
+        title={
+          <div className="flex justify-center">
+            <DeleteTwoTone twoToneColor="#F5222D" className="mr-2" />
+            Delete this {DeleteHeader[type]}?
+          </div>
+        }
+        placement="bottom"
+        closable={false}
+        onClose={handleCancel}
+        open={isModalOpen}
+        key="bottom"
+        height="auto"
+        footer={
+          <div className="flex flex-col gap-4">
+            <Button type="primary" danger onClick={trigger}>
+              Delete
+            </Button>
+            <Button onClick={handleCancel}>Cancel</Button>
+          </div>
+        }
+      >
+        <p className="text-center">
+          Deleting this {DeleteHeader[type]} may impact related areas.
+        </p>
+      </Drawer>
     </>
   );
 }

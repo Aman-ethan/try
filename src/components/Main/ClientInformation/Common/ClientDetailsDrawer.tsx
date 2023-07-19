@@ -4,6 +4,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { Button, Drawer } from "antd";
 import { lazy, useState } from "react";
 import useSearchParams from "@/hooks/useSearchParams";
+import useResize from "@/hooks/useResize";
 
 interface IClientDetailsDrawerProps {
   type: string;
@@ -40,6 +41,7 @@ export default function ClientDetailsDrawer({
 }: IClientDetailsDrawerProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { updateSearchParams } = useSearchParams();
+  const { placement } = useResize();
 
   const title = (
     <span className="text-xl font-medium capitalize">
@@ -50,12 +52,12 @@ export default function ClientDetailsDrawer({
     <>
       <Button
         type={edit ? "default" : "primary"}
-        size="large"
         className="capitalize"
         onClick={() => setIsDrawerOpen(true)}
         icon={
           edit ? (
             <EditOutlined
+              className="text-sm"
               onClick={() => {
                 switch (type) {
                   case "goals":
@@ -79,6 +81,8 @@ export default function ClientDetailsDrawer({
       </Button>
       <Drawer
         width={720}
+        height={600}
+        placement={placement}
         open={isDrawerOpen}
         onClose={() => {
           setIsDrawerOpen(false);

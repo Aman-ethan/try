@@ -24,26 +24,50 @@ export default function BankAccounts() {
   });
 
   return (
-    <div className="mt-4 h-96 w-5/6 overflow-y-scroll">
+    <div className="mt-4 h-96 overflow-y-scroll w-full tab:w-11/12">
       {data?.map((item) => (
         <ProCard
           key={item?.relationship_number}
-          title={item?.custodian_name || "No Custodian Name Found"}
+          title={
+            <Row
+              gutter={{
+                xs: 8,
+                sm: 16,
+                md: 24,
+                lg: 32,
+                xl: 48,
+              }}
+            >
+              <Col xs={24} sm={12} md={24}>
+                {item?.custodian_name || "No Custodian Name Found"}
+              </Col>
+            </Row>
+          }
           headerBordered
           bordered
           extra={[
-            <ClientDetailsDrawer
-              edit
-              type="bank_accounts"
-              id={item?.relationship_number}
-            />,
-            <DeleteModal type="bank_account" id={item?.relationship_number} />,
+            <div className="flex">
+              <ClientDetailsDrawer
+                edit
+                type="bank_accounts"
+                id={item?.relationship_number}
+              />
+              <DeleteModal type="bank_account" id={item?.relationship_number} />
+            </div>,
           ]}
           style={{ marginBottom: "1em" }}
         >
-          <Row gutter={[8, 8]}>
+          <Row
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+              xl: 48,
+            }}
+          >
             {Object.entries(BankAccountItemsMap).map(([label, key]) => (
-              <Col span={12} className="flex flex-col">
+              <Col xs={24} sm={8} md={12} className="flex flex-col">
                 <Typography.Text type="secondary">{label}</Typography.Text>
                 <Typography.Text className="mt-1">
                   {key === "currency" ? (

@@ -2,7 +2,7 @@
 
 import ClientInfoCard from "@/components/Main/ClientInformation/ClientInfoCard";
 import Title from "@/components/Typography/Title";
-import { Col, Row, Space } from "@/lib/antd";
+import { Col, Row, Space } from "antd";
 import AddClient from "@/components/Main/ClientInformation/AddClient";
 import useSearchParams from "@/hooks/useSearchParams";
 import SelectClientWithParams from "@/components/Main/Input/SelectClientWithParams";
@@ -15,19 +15,22 @@ export default function ClientInformationPage() {
     <Space
       direction="vertical"
       size="large"
-      className="h-screen w-full overflow-scroll p-10"
+      className="h-screen w-full overflow-scroll p-10 mob:flex-col"
     >
       <Row justify="space-between">
         <Col>
-          <Title>Customer Information</Title>
+          <Title>Investor Profile</Title>
         </Col>
-        <Col>
+        <Col className="mob:mt-3">
           <AddClient />
         </Col>
       </Row>
       <Row>
-        <Col span={8}>
-          <SelectClientWithParams searchParamKey="client_id" />
+        <Col className="w-full tab:w-1/2 lap:w-1/3">
+          <SelectClientWithParams
+            searchParamKey="client_id"
+            className="mob:w-full"
+          />
         </Col>
       </Row>
       <Row>{isClientSelected && <ClientInfoCard />}</Row>

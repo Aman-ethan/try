@@ -52,24 +52,50 @@ export default function Estates() {
   const { data } = useEstates();
 
   return (
-    <div className="mt-4 h-96 w-5/6 overflow-y-scroll">
+    <div className="mt-4 h-96 overflow-y-scroll w-full tab:w-11/12">
       {data?.map((item: TEstate) => (
         <ProCard
           key={item?.id}
-          title={BenificiaryMap[item?.type]}
+          title={
+            <Row
+              gutter={{
+                xs: 8,
+                sm: 16,
+                md: 24,
+                lg: 32,
+                xl: 48,
+              }}
+            >
+              <Col xs={24} sm={12} md={24}>
+                {BenificiaryMap[item?.type]}
+              </Col>
+            </Row>
+          }
           headerBordered
           bordered
           extra={[
-            <ClientDetailsDrawer edit type="estates" id={item?.id} />,
-            <DeleteModal type="estate" id={item?.id} />,
+            <div className="flex">
+              <ClientDetailsDrawer edit type="estates" id={item?.id} />
+              <DeleteModal type="estate" id={item?.id} />
+            </div>,
           ]}
+          headStyle={{ gap: "0.5rem" }}
           className="mb-4"
         >
-          <Row gutter={[8, 8]} className="mt-4">
+          <Row
+            gutter={{
+              xs: 8,
+              sm: 16,
+              md: 24,
+              lg: 32,
+              xl: 48,
+            }}
+            className="mt-4"
+          >
             {Object.entries(EstateItemsMap).map(([label, key]) => (
-              <Col span={12} className="flex flex-col">
+              <Col xs={24} sm={8} md={12} className="flex flex-col">
                 <Typography.Text type="secondary">{label}</Typography.Text>
-                <Typography.Text className="mt-1">{item[key]}</Typography.Text>
+                <Typography.Text className="my-1">{item[key]}</Typography.Text>
               </Col>
             ))}
           </Row>

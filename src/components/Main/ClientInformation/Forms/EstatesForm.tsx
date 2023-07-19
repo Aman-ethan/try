@@ -1,8 +1,12 @@
 "use client";
 
-import { Form, Input, message, Row } from "antd";
+import { Form, message, Row } from "antd";
 import { useEffect } from "react";
-import Select from "@/components/Input/Select";
+import {
+  ProFormDatePicker,
+  ProFormSelect,
+  ProFormText,
+} from "@ant-design/pro-components";
 import {
   useTransactionServerMutation,
   useTransactionServerPutMutation,
@@ -12,7 +16,6 @@ import useSearchParams from "@/hooks/useSearchParams";
 import revalidate from "@/lib/revalidate";
 import formatTriggerValues from "@/lib/formatTriggerValues";
 import FormActions from "../Common/FormAction";
-import { DatePicker } from "../../Input/DatePicker";
 
 interface IEstatesForm {
   onClose: () => void;
@@ -37,7 +40,7 @@ const Relationship = [
 const URLs = {
   get: "/estate/",
   post: "/estate/",
-  put: "/estate/{id}/}",
+  put: "/estate/{id}/",
 };
 
 function useEstate() {
@@ -47,6 +50,52 @@ function useEstate() {
     `${URLs.get}${estateId ? `${estateId}/` : ""}`
   );
   return { data, getSearchParams, estateId };
+}
+
+const EstateFormMap: Record<keyof TEstate, string> = {
+  type: "Type",
+  name: "Name",
+  email: "Email",
+  phone: "Phone",
+  date_of_birth: "Date of Birth",
+  relationship: "Relationship",
+  percent_share: "Percent Share",
+};
+type TEstateKey = keyof TEstate;
+interface IEstateFormInputsProps {
+  type: TEstateKey;
+}
+
+function EstateFormInputs({ type }: IEstateFormInputsProps) {
+  switch (type) {
+    case "date_of_birth":
+      return (
+        /* Not able to use General Date picker , getting error in Date picker */
+        <ProFormDatePicker
+          name="date_of_birth"
+          className="flex-1"
+          fieldProps={{
+            style: { width: "100%" },
+          }}
+          placeholder="Select Date of Birth"
+        />
+      );
+    case "type":
+      return (
+        <ProFormSelect
+          name="type"
+          options={Relationship}
+          placeholder="Select a Type"
+        />
+      );
+    default:
+      return (
+        <ProFormText
+          name={type}
+          placeholder={`Enter the ${EstateFormMap[type]}`}
+        />
+      );
+  }
 }
 
 export default function EstatesForm({ onClose }: IEstatesForm) {
@@ -111,43 +160,12 @@ export default function EstatesForm({ onClose }: IEstatesForm) {
       form={form}
       initialValues={data}
     >
-      <Row className="gap-x-8">
-        <Form.Item label="Type" name="type" className="flex-1">
-          <Select placeholder="Select type" options={Relationship} />
-        </Form.Item>
-        <Form.Item label="Name" name="name" className="flex-1">
-          <Input placeholder="Enter name" />
-        </Form.Item>
-      </Row>
-      <Row className="gap-x-8">
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[{ type: "email" }]}
-          className="flex-1"
-        >
-          <Input placeholder="Enter email" />
-        </Form.Item>
-        <Form.Item label="Phone Number" name="phone" className="flex-1">
-          <Input placeholder="Enter phone number" />
-        </Form.Item>
-      </Row>
-      <Row className="gap-x-8">
-        <Form.Item
-          label="Date of Birth"
-          name="date_of_birth"
-          className="flex-1"
-        >
-          <DatePicker className="flex-1" placeholder="Select Date of Birth" />
-        </Form.Item>
-        <Form.Item label="Relationship" name="relationship" className="flex-1">
-          <Input placeholder="Enter Relationship" />
-        </Form.Item>
-      </Row>
-      <Row>
-        <Form.Item label="% Share" name="percent_share">
-          <Input placeholder="Enter the share" />
-        </Form.Item>
+      <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
+        {Object.entries(EstateFormMap).map(([key, value]) => (
+          <Form.Item label={value} name={key} key={key} className="flex-1">
+            <EstateFormInputs type={key as TEstateKey} />
+          </Form.Item>
+        ))}
       </Row>
       <FormActions onClick={onReset} />
     </Form>

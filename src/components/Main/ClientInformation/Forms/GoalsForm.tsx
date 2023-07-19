@@ -1,14 +1,14 @@
 "use client";
 
-import { Form, Input, message, Row } from "antd";
+import { Form, message, Row } from "antd";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { ProFormSelect, ProFormText } from "@ant-design/pro-components";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import {
   useTransactionServerMutation,
   useTransactionServerPutMutation,
 } from "@/hooks/useMutation";
-import Select from "@/components/Input/Select";
 import revalidate from "@/lib/revalidate";
 import FormActions from "../Common/FormAction";
 
@@ -30,11 +30,10 @@ interface GoalsFormProps {
 }
 
 type TGoal = {
+  name: string;
   asset_class_preference: string;
   investment_horizon: string;
-  liquidity_needs: string;
   return_expectations: string;
-  holding_period: string;
 };
 
 const URLs = {
@@ -55,6 +54,9 @@ function useGoal() {
       message.success("Goal Added successfully");
       revalidate(`/goals/`);
     },
+    onError: () => {
+      message.error("Something went wrong");
+    },
   });
   const { trigger: update } = useTransactionServerPutMutation(
     URLs.put.replace("{id}", goalId!),
@@ -63,9 +65,50 @@ function useGoal() {
         message.success("Goal Updated successfully");
         revalidate(`/goals/`);
       },
+      onError: () => {
+        message.error("Something went wrong");
+      },
     }
   );
   return { data, goalId, getSearchParams, trigger, update };
+}
+
+type TGoalFormKeys = keyof TGoal;
+
+interface IGoalFormInputsProps {
+  type: TGoalFormKeys;
+}
+
+function GoalFormInputs({ type }: IGoalFormInputsProps) {
+  switch (type) {
+    case "name":
+      return <ProFormText placeholder="Enter goal name" name="name" />;
+    case "asset_class_preference":
+      return (
+        <ProFormSelect
+          options={AssetClassPreference}
+          placeholder="Select asset class preference"
+          name="asset_class_preference"
+        />
+      );
+    case "investment_horizon":
+      return (
+        <ProFormText
+          placeholder="Enter investment horizon"
+          name="investment_horizon"
+        />
+      );
+    case "return_expectations":
+      return (
+        <ProFormSelect
+          options={ReturnExpectations}
+          placeholder="Select return expectations"
+          name="return_expectations"
+        />
+      );
+    default:
+      return null;
+  }
 }
 
 export default function GoalsForm({ onClose }: GoalsFormProps) {
@@ -94,6 +137,13 @@ export default function GoalsForm({ onClose }: GoalsFormProps) {
     onReset();
   };
 
+  const GoalFormMap: Record<keyof TGoal, string> = {
+    name: "Goal Name",
+    asset_class_preference: "Asset Class Preference",
+    investment_horizon: "Investment Horizon",
+    return_expectations: "Return Expectations",
+  };
+
   return (
     <Form
       layout="vertical"
@@ -103,40 +153,12 @@ export default function GoalsForm({ onClose }: GoalsFormProps) {
       form={form}
       initialValues={data}
     >
-      <Row className="gap-x-8">
-        <Form.Item label="Goal Name" name="name" className="flex-1">
-          <Input placeholder="Enter goal name" />
-        </Form.Item>
-        <Form.Item
-          label="Asset Class Preference"
-          name="asset_class_preference"
-          className="flex-1"
-        >
-          <Select
-            placeholder="Select asset class preference"
-            options={AssetClassPreference}
-          />
-        </Form.Item>
-      </Row>
-
-      <Row className="gap-x-8">
-        <Form.Item
-          label="Investment Horizon"
-          name="investment_horizon"
-          className="flex-1"
-        >
-          <Input placeholder="Enter investment horizon" />
-        </Form.Item>
-        <Form.Item
-          label="Return Expectations"
-          name="return_expectations"
-          className="flex-1"
-        >
-          <Select
-            placeholder="Select return expectations"
-            options={ReturnExpectations}
-          />
-        </Form.Item>
+      <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
+        {Object.entries(GoalFormMap).map(([key, label]) => (
+          <Form.Item key={key} label={label} name={key} className="flex-1">
+            <GoalFormInputs type={key as TGoalFormKeys} />
+          </Form.Item>
+        ))}
       </Row>
       <FormActions onClick={onReset} />
     </Form>

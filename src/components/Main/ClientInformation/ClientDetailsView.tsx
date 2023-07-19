@@ -29,13 +29,15 @@ export default function ClientDetailsView() {
   };
   return (
     <div className="space-y-8 py-5">
-      <div className="flex justify-between">
-        <Radio.Group size="large" value={type} onChange={handleTypeChange}>
+      <div className="flex flex-col tab:flex-row tab:justify-between">
+        <Radio.Group value={type} onChange={handleTypeChange}>
           <Radio.Button value="goals">Goals</Radio.Button>
           <Radio.Button value="estates">Estates</Radio.Button>
           <Radio.Button value="bank_accounts">Bank Accounts</Radio.Button>
         </Radio.Group>
-        <ClientDetailsDrawer type={type} />
+        <div className="mt-4 tab:mt-0">
+          <ClientDetailsDrawer type={type} />
+        </div>
       </div>
       <div>
         <View type={type} />
