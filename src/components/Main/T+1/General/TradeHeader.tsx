@@ -1,8 +1,11 @@
 "use client";
 
 import Title from "@/components/Typography/Title";
-import { Breadcrumb, Row } from "antd";
+import { Breadcrumb, Button, Row } from "antd";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { useState } from "react";
+import clsx from "clsx";
+import { FilterOutlined } from "@ant-design/icons";
 import SelectAssetWithParams from "../../Input/SelectAssetWithParams";
 import SelectClientWithParams from "../../Input/SelectClientWithParams";
 import SelectCustodianWithParams from "../../Input/SelectCustodianWithParams";
@@ -18,6 +21,26 @@ const BreadcrumbItems = [
 export default function TradeHeader() {
   const selectedLayoutSegment = useSelectedLayoutSegment();
   const title = selectedLayoutSegment?.split("-").join(" ") || "";
+  const [showFilter, setShowFilter] = useState(false);
+
+  const containerClasses =
+    "w-full flex flex-col tab:flex-row tab:items-center tab:space-x-4";
+  const outerContainerClasses =
+    "flex flex-1 flex-col space-y-4 lap:flex-row lap:items-center lap:space-x-4 lap:space-y-0";
+  const innerContainerClasses =
+    "flex flex-1 flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0";
+  const filterButtonClasses =
+    "flex-1 order-first mb-4 tab:order-last tab:mb-0 tab:self-start lap:hidden";
+
+  const primarySelectClasses = clsx(
+    showFilter ? "block" : "hidden",
+    "flex-1 tab:flex"
+  );
+
+  const secondarySelectClasses = clsx(
+    showFilter ? "block" : "hidden",
+    "flex-1 lap:flex"
+  );
   return (
     <div className="space-y-6">
       <Breadcrumb
@@ -30,23 +53,49 @@ export default function TradeHeader() {
       />
       <Row justify="space-between" align="middle">
         <Title className="capitalize">{title}</Title>
-        <AddTradeDrawer />
+        <div className="hidden tab:block">
+          <AddTradeDrawer />
+        </div>
       </Row>
-      <Row className="gap-x-6 justify-between">
-        <SelectClientWithParams
-          placeholder="Select a Client"
-          className="w-1/4"
-        />
-        <SelectCustodianWithParams
-          placeholder="All Custodian"
-          className="w-1/4"
-        />
-        <SelectSecurityWithParams
-          size="large"
-          className="w-1/5"
-          placeholder="Select a Security"
-        />
-        <SelectAssetWithParams className="w-1/5" placeholder="All Asset" />
+      <Row>
+        <div className={containerClasses}>
+          <div className={outerContainerClasses}>
+            <div className={innerContainerClasses}>
+              <SelectClientWithParams
+                placeholder="Select a Client"
+                className={primarySelectClasses}
+              />
+              <SelectCustodianWithParams
+                placeholder="All Custodian"
+                className={primarySelectClasses}
+              />
+            </div>
+            <div className={innerContainerClasses}>
+              <SelectSecurityWithParams
+                size="large"
+                className={secondarySelectClasses}
+                placeholder="Select a Security"
+              />
+              <SelectAssetWithParams
+                className={secondarySelectClasses}
+                placeholder="All Asset"
+              />
+            </div>
+          </div>
+          <div className="order-first flex w-full space-x-2 tab:order-last tab:w-auto tab:self-start">
+            <div className="order-first block flex-1 tab:hidden">
+              <AddTradeDrawer />
+            </div>
+            <Button
+              size="large"
+              icon={<FilterOutlined />}
+              className={filterButtonClasses}
+              onClick={() => setShowFilter(!showFilter)}
+            >
+              Filters
+            </Button>
+          </div>
+        </div>
       </Row>
     </div>
   );

@@ -111,7 +111,7 @@ function PublicSecurityForm() {
           <Button
             type="primary"
             disabled={isMutating}
-            className="block ml-auto"
+            className="ml-auto block"
             onClick={addSecurity}
           >
             Confirm New Security
@@ -214,7 +214,7 @@ function SecurityForm() {
 export default function SearchSecurity() {
   const form = Form.useFormInstance();
   return (
-    <div className="p-4 space-y-6 w-full rounded-lg text-base shadow-lg">
+    <div className="w-full space-y-6 rounded-lg p-4 text-base shadow-lg">
       <Row justify="space-between" align="middle">
         <Title level={5}>Search New Security</Title>
         <Button

@@ -2,7 +2,6 @@
 
 import Logo from "@/components/Icon/Logo";
 import ROUTE from "@/constants/route";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
 import logout from "@/lib/logout";
 import {
   CaretDownFilled,
@@ -22,9 +21,11 @@ import {
   MenuProps,
   Row,
 } from "antd";
+import { ReactNode, useLayoutEffect, useState } from "react";
+import { useMediaQuery } from "@mantine/hooks";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
 import Link from "next/link";
 import { usePathname, useSelectedLayoutSegments } from "next/navigation";
-import { ReactNode, useState } from "react";
 import CurrencyTag from "../General/CurrencyTag";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 
@@ -93,7 +94,16 @@ function UserProfile() {
 export default function DashboardLayout({ children }: ILayoutProps) {
   const pathname = usePathname();
   const layoutSegments = useSelectedLayoutSegments();
+  const SIDEBAR_BREAK_POINT = useMediaQuery("(max-width: 992px)");
   const [collapsed, setCollapsed] = useState(false);
+
+  useLayoutEffect(() => {
+    if (SIDEBAR_BREAK_POINT) {
+      setCollapsed(true);
+    } else {
+      setCollapsed(false);
+    }
+  }, [SIDEBAR_BREAK_POINT]);
 
   const openKey = layoutSegments.length > 1 ? [layoutSegments[0]] : undefined;
   const selectedKeys = pathname ? [pathname] : undefined;

@@ -1,5 +1,6 @@
 import FormProvider from "@/context/FormProvider";
 import { IDrawerProps } from "@/interfaces/Main";
+import { useMediaQuery } from "@mantine/hooks";
 import { CloseOutlined } from "@ant-design/icons";
 import { Drawer as AntdDrawer, Button, Row } from "antd";
 import {
@@ -21,6 +22,7 @@ export default function Drawer({
   onClose,
 }: IDrawerProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(open);
+  const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 768px)");
 
   useLayoutEffect(() => {
     setIsDrawerOpen(open);
@@ -42,6 +44,8 @@ export default function Drawer({
         closeIcon={null}
         open={isDrawerOpen}
         width={width}
+        height="100vh"
+        placement={MOBILE_BREAK_POINT ? "bottom" : "right"} // Use bottom placement for mobile screens, right for others
         onClose={handleClose}
         title={
           <Row justify="space-between" className="-ml-2">
@@ -54,7 +58,7 @@ export default function Drawer({
           </Row>
         }
         footer={
-          <div className="space-x-4 flex justify-end">
+          <div className="flex justify-end space-x-4">
             {closeButton ? (
               <Button size="large" className="px-7" onClick={handleClose}>
                 {closeButton}

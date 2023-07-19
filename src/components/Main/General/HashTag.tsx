@@ -20,7 +20,7 @@ export default function HashTag({ tags }: IHashTagProps) {
         borderColor: `rgba(${color}, 0.6)`,
         backgroundColor: `rgba(${color}, 0.075)`,
       }}
-      className="py-1 px-3 text-sm"
+      className="px-3 py-1 text-sm"
     >
       {tagString}
     </Tag>

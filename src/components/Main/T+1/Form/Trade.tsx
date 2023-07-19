@@ -137,7 +137,7 @@ export default function TradeForm({
           placeholder="Select the client"
         />
       </Form.Item>
-      <Row className="gap-x-8">
+      <Row className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-8 tab:gap-y-0">
         <Form.Item
           label="Custodian"
           name="custodian"
@@ -186,7 +186,7 @@ export default function TradeForm({
             icon={<PlusOutlined />}
             className={clsx(
               searchSecurity
-                ? "text-primary border-primary"
+                ? "border-primary text-primary"
                 : "text-neutral-13/80"
             )}
           >
@@ -200,7 +200,7 @@ export default function TradeForm({
           <Input hidden />
         </Form.Item>
       ))}
-      <Row className="gap-x-8">
+      <Row className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-8 tab:gap-y-0">
         <Form.Item label="Security ID" name="security" className="flex-1">
           <Input placeholder="Security ID" disabled />
         </Form.Item>
@@ -219,7 +219,7 @@ export default function TradeForm({
       >
         <TradeAction />
       </Form.Item>
-      <Row className="gap-x-8">
+      <Row className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-8 tab:gap-y-0">
         <Form.Item
           label="Trade Date"
           name="trade_date"
@@ -237,7 +237,7 @@ export default function TradeForm({
           <DatePicker placeholder="Select settlement date" />
         </Form.Item>
       </Row>
-      <Row className="gap-x-8">
+      <Row className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-8 tab:gap-y-0">
         <Form.Item
           label="Quantity"
           name="quantity"
@@ -262,7 +262,7 @@ export default function TradeForm({
           />
         </Form.Item>
       </Row>
-      <Row className="gap-x-8">
+      <Row className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-8 tab:gap-y-0">
         <Form.Item label="Goal" name="goal" className="flex-1">
           <SelectGoal disabled={isMutating} placeholder="Select the goal" />
         </Form.Item>

@@ -5,7 +5,7 @@ import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 function Tag({ label }: CustomTagProps) {
   return (
     <AntdTag
-      className="bg-primary-1 border-primary-3 text-sm text-primary py-1 px-3.5 rounded-md"
+      className="rounded-md border-primary-3 bg-primary-1 px-3.5 py-1 text-sm text-primary"
       closable={false}
     >
       {label}

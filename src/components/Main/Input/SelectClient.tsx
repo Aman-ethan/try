@@ -7,7 +7,7 @@ import Select from "../../Input/Select";
 
 function NotFoundContent() {
   return (
-    <button type="button" className="px-4 py-2 flex items-center text-sm">
+    <button type="button" className="flex items-center px-4 py-2 text-sm">
       <PlusOutlined />
     </button>
   );

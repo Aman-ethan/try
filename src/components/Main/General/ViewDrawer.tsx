@@ -35,7 +35,7 @@ export default function ViewDrawer<T>({
             const value = data[key as keyof typeof data];
             return key !== "actions" ? (
               <Row key={key} className="gap-x-2">
-                <span className="font-medium w-44">{label as ReactNode}:</span>
+                <span className="w-44 font-medium">{label as ReactNode}:</span>
                 {render ? (render(value, data, index) as ReactNode) : value}
                 <Divider className="my-3" />
               </Row>

@@ -40,7 +40,7 @@ export default function SecurityDetails(props: ISecuritySearchProps) {
         <div className="flex flex-col gap-y-2">
           {DescriptionItemsEntries.map(([label, key]) => (
             <div className="flex items-center text-sm" key={key}>
-              <span className="font-medium w-52">{label}:</span>
+              <span className="w-52 font-medium">{label}:</span>
               <span>{renderValue(key)}</span>
             </div>
           ))}
