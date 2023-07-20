@@ -2,6 +2,14 @@ import { flags } from "@/constants/flags";
 import { DrawerProps, FormInstance } from "antd";
 import { ReactElement, ReactNode } from "react";
 
+export interface ILayoutProps {
+  children: ReactNode;
+}
+
+export interface ITemplateProps {
+  children: ReactNode;
+}
+
 export type TCurrency = keyof typeof flags;
 
 export interface ICustodian {

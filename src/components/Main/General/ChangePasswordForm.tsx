@@ -2,6 +2,7 @@
 
 import useChangePassword from "@/hooks/useChangePassword";
 import { Button, Form, FormRule, Input, Row, message } from "antd";
+import { useRouter } from "next/navigation";
 
 interface IChangePasswordForm {
   old_password: string;
@@ -43,6 +44,8 @@ export default function ChangePasswordForm() {
     },
   });
 
+  const router = useRouter();
+
   return (
     <Form
       form={form}
@@ -51,7 +54,7 @@ export default function ChangePasswordForm() {
       disabled={isMutating}
       size="large"
       layout="vertical"
-      className="mt-4 space-y-8"
+      className="space-y-8"
     >
       <Form.Item
         label="Old Password"
@@ -78,8 +81,10 @@ export default function ChangePasswordForm() {
       >
         <Input.Password />
       </Form.Item>
-
-      <Row className="gap-x-4">
+      <Row className="gap-x-4" justify="end">
+        <Button onClick={router.back} disabled={isMutating} className="px-7">
+          Cancel
+        </Button>
         <Button
           type="primary"
           htmlType="submit"
@@ -87,9 +92,6 @@ export default function ChangePasswordForm() {
           className="px-7"
         >
           Submit
-        </Button>
-        <Button htmlType="reset" disabled={isMutating} className="px-7">
-          Cancel
         </Button>
       </Row>
     </Form>
