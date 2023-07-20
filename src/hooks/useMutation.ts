@@ -1,6 +1,6 @@
 "use client";
 
-import { TRANSACTION_SERVER_URL } from "@/constants/strings";
+import { AuthServerUrl, TransactionServerUrl } from "@/constants/strings";
 import {
   deleteFetcher,
   patchFetcher,
@@ -31,7 +31,7 @@ export function useAuthServerMutation<ExtraArgs, Data>(
 ) {
   return useMutation<ExtraArgs, Data>(
     key,
-    postJsonFetcher(process.env.NEXT_PUBLIC_AUTH_SERVER_URL!),
+    postJsonFetcher(AuthServerUrl),
     config
   );
 }
@@ -40,11 +40,7 @@ export function useAuthServerPutMutation<ExtraArgs, Data>(
   key: string,
   config?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
 ) {
-  return useMutation<ExtraArgs, Data>(
-    key,
-    putFetcher(process.env.NEXT_PUBLIC_AUTH_SERVER_URL!),
-    config
-  );
+  return useMutation<ExtraArgs, Data>(key, putFetcher(AuthServerUrl), config);
 }
 
 export function useTransactionServerFormMutation<ExtraArgs, Data>(
@@ -53,7 +49,7 @@ export function useTransactionServerFormMutation<ExtraArgs, Data>(
 ) {
   return useMutation<ExtraArgs, Data>(
     key,
-    postFormFetcher(TRANSACTION_SERVER_URL),
+    postFormFetcher(TransactionServerUrl),
     config
   );
 }
@@ -64,7 +60,7 @@ export function useTransactionServerMutation<ExtraArgs, Data>(
 ) {
   return useMutation<ExtraArgs, Data>(
     key,
-    postJsonFetcher(TRANSACTION_SERVER_URL),
+    postJsonFetcher(TransactionServerUrl),
     config
   );
 }
@@ -75,7 +71,7 @@ export function useTransactionServerDeleteMutation<Data>(
 ) {
   return useMutation<unknown, Data>(
     key,
-    deleteFetcher(TRANSACTION_SERVER_URL),
+    deleteFetcher(TransactionServerUrl),
     config
   );
 }
@@ -86,7 +82,7 @@ export function useTransactionServerPutMutation<Data>(
 ) {
   return useMutation<unknown, Data>(
     key,
-    putFetcher(TRANSACTION_SERVER_URL),
+    putFetcher(TransactionServerUrl),
     config
   );
 }
@@ -97,7 +93,7 @@ export function useTransactionServerPatchMutation<Data>(
 ) {
   return useMutation<unknown, Data>(
     key,
-    patchFetcher(TRANSACTION_SERVER_URL),
+    patchFetcher(TransactionServerUrl),
     config
   );
 }

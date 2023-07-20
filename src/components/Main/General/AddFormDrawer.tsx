@@ -21,6 +21,7 @@ export default function AddFormDrawer({
   const { trigger, isMutating } = useTransactionServerMutation(urls.post, {
     onSuccess() {
       message.success(response?.success);
+      form.resetFields();
       revalidate(urls.get);
     },
   });

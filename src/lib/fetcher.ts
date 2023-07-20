@@ -1,7 +1,7 @@
 "use client";
 
 import { Cookies } from "react-cookie";
-import { ACCESS_TOKEN_KEY } from "@/constants/strings";
+import { AccessTokenKey } from "@/constants/strings";
 
 interface IFetcherParams {
   url: string;
@@ -12,7 +12,7 @@ interface IFetcherParams {
 
 async function fetcher({ url, init, error }: IFetcherParams) {
   try {
-    const accessToken = new Cookies().get(ACCESS_TOKEN_KEY);
+    const accessToken = new Cookies().get(AccessTokenKey);
     const res = await fetch(url, {
       ...init,
       headers: {
@@ -21,23 +21,16 @@ async function fetcher({ url, init, error }: IFetcherParams) {
       },
     });
 
-    if (!res.ok) {
-      throw new Error(error);
-    }
-
     let json;
-
     try {
       json = await res.json();
-    } catch (e) {
-      return {};
+    } catch {
+      json = {};
     }
 
-    if (json.error) {
-      throw new Error(json.error);
-    }
+    if (res.ok) return json;
 
-    return json;
+    throw new Error(json.error);
   } catch (e) {
     if (e instanceof Error) {
       throw e;

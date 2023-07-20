@@ -1,7 +1,7 @@
 "use client";
 
 import { cookieOptions } from "@/constants/cookie";
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/strings";
+import { AccessTokenKey, RefreshTokenKey } from "@/constants/strings";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import useSearchParams from "@/hooks/useSearchParams";
 import { Button, Form, Input, InputRef, Row, message } from "antd";
@@ -44,17 +44,17 @@ export default function VerifyOTPForm() {
         switch (nextPath) {
           case "/reset-password": {
             // setting a session cookie
-            setCookie(ACCESS_TOKEN_KEY, data.access_token, cookieOptions);
+            setCookie(AccessTokenKey, data.access_token, cookieOptions);
             replace(nextPath);
             break;
           }
           default: {
             const currentDate = Date.now();
-            setCookie(ACCESS_TOKEN_KEY, data.access_token, {
+            setCookie(AccessTokenKey, data.access_token, {
               ...cookieOptions,
               expires: new Date(currentDate + 1000 * 60 * 60),
             });
-            setCookie(REFRESH_TOKEN_KEY, data.refresh_token, {
+            setCookie(RefreshTokenKey, data.refresh_token, {
               ...cookieOptions,
               expires: new Date(currentDate + 1000 * 60 * 60 * 2),
             });

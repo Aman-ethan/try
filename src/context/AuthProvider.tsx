@@ -1,5 +1,5 @@
 import { cookieOptions } from "@/constants/cookie";
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/strings";
+import { AccessTokenKey, RefreshTokenKey } from "@/constants/strings";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import { message } from "antd";
 import {
@@ -30,8 +30,8 @@ export const AuthContext = createContext({
 
 export default function AuthProvider({ children }: IAuthProviderProps) {
   const [{ access_token, refresh_token }, setCookie] = useCookies([
-    ACCESS_TOKEN_KEY,
-    REFRESH_TOKEN_KEY,
+    AccessTokenKey,
+    RefreshTokenKey,
   ]);
 
   const { trigger } = useAuthServerMutation<
@@ -40,7 +40,7 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
   >("/token/refresh/", {
     onSuccess(data) {
       if (data.access) {
-        setCookie(ACCESS_TOKEN_KEY, data.access, {
+        setCookie(AccessTokenKey, data.access, {
           ...cookieOptions,
           expires: new Date(Date.now() + 1000 * 60 * 60),
         });

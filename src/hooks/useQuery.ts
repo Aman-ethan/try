@@ -2,7 +2,7 @@
 
 import { getFetcher } from "@/lib/fetcher";
 import useSWR, { SWRConfiguration } from "swr";
-import { TRANSACTION_SERVER_URL } from "@/constants/strings";
+import { TransactionServerUrl } from "@/constants/strings";
 import { SWRMutationConfiguration } from "swr/mutation";
 import useMutation from "./useMutation";
 
@@ -18,7 +18,7 @@ export function useTransactionServerQuery<Data>(
   key: string | null,
   config?: SWRConfiguration<Data, Error>
 ) {
-  return useQuery<Data>(key, TRANSACTION_SERVER_URL, config);
+  return useQuery<Data>(key, TransactionServerUrl, config);
 }
 
 export function useTransactionServerLazyQuery<Data>(
@@ -27,7 +27,7 @@ export function useTransactionServerLazyQuery<Data>(
 ) {
   return useMutation<unknown, Data>(
     key,
-    getFetcher(TRANSACTION_SERVER_URL),
+    getFetcher(TransactionServerUrl),
     config
   );
 }

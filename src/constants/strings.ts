@@ -1,4 +1,7 @@
-export const TRANSACTION_SERVER_URL =
+export const TransactionServerUrl =
   process.env.NEXT_PUBLIC_TRANSACTION_SERVER_URL!;
-export const ACCESS_TOKEN_KEY = "access_token";
-export const REFRESH_TOKEN_KEY = "refresh_token";
+export const AuthServerUrl = process.env.NEXT_PUBLIC_AUTH_SERVER_URL!;
+export const AccessTokenKey = "access_token";
+export const RefreshTokenKey = "refresh_token";
+export const MenuItemClassName =
+  "after:absolute after:content-[''] after:inset-0";

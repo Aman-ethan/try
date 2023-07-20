@@ -2,6 +2,8 @@ import { MoreOutlined } from "@ant-design/icons";
 import { Button, Dropdown, MenuProps, message } from "antd";
 import { useTransactionServerDeleteMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
+import clsx from "clsx";
+import { MenuItemClassName } from "@/constants/strings";
 
 interface IMoreMenuProps {
   items: MenuProps["items"];
@@ -60,7 +62,7 @@ export function DeleteItem({ id, urls }: IDeleteItemProps) {
       disabled={isMutating}
       onClick={trigger}
       type="button"
-      className="text-red-500"
+      className={clsx("text-red-500", MenuItemClassName)}
     >
       Delete
     </button>
