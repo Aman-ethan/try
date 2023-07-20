@@ -1,10 +1,10 @@
 "use client";
 
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import { Button, Form, FormRule, Input, message } from "antd";
-import { useRouter } from "next/navigation";
-import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { ILoginResponse, IUserArgs } from "@/interfaces/Auth";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { Button, Form, FormRule, Input } from "antd";
+import { useRouter } from "next/navigation";
 
 const FormRules: Record<keyof IUserArgs, FormRule[]> = {
   username: [{ required: true, message: "Please enter your username" }],
@@ -28,9 +28,6 @@ export default function ForgotPasswordForm() {
           })}`
         );
       }
-    },
-    onError(error) {
-      message.error(error.message);
     },
   });
 

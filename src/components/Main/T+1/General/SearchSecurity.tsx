@@ -40,9 +40,6 @@ function PublicSecurityForm() {
       onSuccess() {
         message.success("Security found");
       },
-      onError() {
-        message.error("Security not found");
-      },
     }
   );
 

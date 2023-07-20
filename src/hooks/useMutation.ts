@@ -8,6 +8,7 @@ import {
   putFetcher,
   patchFetcher,
 } from "@/lib/fetcher";
+import { message } from "antd";
 import useSWRMutation, { SWRMutationConfiguration } from "swr/mutation";
 
 export default function useMutation<ExtraArgs, Data>(
@@ -28,7 +29,12 @@ export function useAuthServerMutation<ExtraArgs, Data>(
   return useMutation<ExtraArgs, Data>(
     key,
     postJsonFetcher(process.env.NEXT_PUBLIC_AUTH_SERVER_URL!),
-    config
+    {
+      onError(error) {
+        message.error(error.message);
+      },
+      ...config,
+    }
   );
 }
 

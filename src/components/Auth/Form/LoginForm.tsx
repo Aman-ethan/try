@@ -4,7 +4,7 @@ import { cookieOptions } from "@/constants/cookie";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import { ILoginArgs, ILoginResponse } from "@/interfaces/Auth";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { Button, Form, FormRule, Input, message } from "antd";
+import { Button, Form, FormRule, Input } from "antd";
 import { useRouter } from "next/navigation";
 import { Cookies } from "react-cookie";
 
@@ -35,9 +35,6 @@ export default function LoginForm() {
           cookieOptions
         );
       }
-    },
-    onError(error) {
-      message.error(error.message);
     },
   });
 

@@ -16,9 +16,6 @@ export default function TradeManualEntry() {
       form.resetFields();
       revalidate(URLs.get);
     },
-    onError() {
-      message.error("Failed to add trade");
-    },
   });
 
   return <TradeForm form={form} trigger={trigger} isMutating={isMutating} />;

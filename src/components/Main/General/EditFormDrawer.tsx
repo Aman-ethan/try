@@ -30,9 +30,6 @@ export default function EditFormDrawer({
         message.success(response?.success);
         revalidate(urls.get);
       },
-      onError() {
-        message.error(response?.error);
-      },
     }
   );
   return (

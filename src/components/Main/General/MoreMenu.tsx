@@ -40,9 +40,6 @@ export function DeleteItem({ id, urls }: IDeleteItemProps) {
         message.success("Statement deleted successfully");
         revalidate(urls.get);
       },
-      onError() {
-        message.error("Something went wrong");
-      },
     }
   );
   return (

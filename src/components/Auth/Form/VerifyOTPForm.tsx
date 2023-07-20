@@ -1,13 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { Button, Form, Input, InputRef, Row, message } from "antd";
-import { ChangeEvent, KeyboardEvent, useEffect, useRef } from "react";
-import { useCookies } from "react-cookie";
+import { cookieOptions } from "@/constants/cookie";
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/strings";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import useSearchParams from "@/hooks/useSearchParams";
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/constants/strings";
-import { cookieOptions } from "@/constants/cookie";
+import { Button, Form, Input, InputRef, Row, message } from "antd";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, KeyboardEvent, useEffect, useRef } from "react";
+import { useCookies } from "react-cookie";
 import Paragraph from "../../Typography/Paragraph";
 import ResendOTP from "../General/ResendOTP";
 
@@ -61,10 +61,6 @@ export default function VerifyOTPForm() {
           }
         }
       }
-    },
-    onError(error) {
-      otpRef.current[OPT_LENGTH - 1]?.focus();
-      message.error(error.message);
     },
   });
 

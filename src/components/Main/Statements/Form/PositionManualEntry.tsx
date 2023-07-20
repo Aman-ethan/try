@@ -17,9 +17,6 @@ export default function PositionManualEntry() {
       form.resetFields();
       revalidate(URLs.get);
     },
-    onError() {
-      message.error("Error adding position");
-    },
   });
   return <PositionForm form={form} trigger={trigger} isMutating={isMutating} />;
 }

@@ -1,22 +1,13 @@
 "use client";
 
-import {
-  Button,
-  Checkbox,
-  Form,
-  FormRule,
-  Input,
-  Row,
-  TimePicker,
-  message,
-} from "antd";
-import { useAuthServerMutation } from "@/hooks/useMutation";
-import Timezones from "@/constants/timezones";
-import { useRouter } from "next/navigation";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import Select from "@/components/Input/Select";
 import { TIME_FORMAT } from "@/constants/format";
+import Timezones from "@/constants/timezones";
+import { useAuthServerMutation } from "@/hooks/useMutation";
+import { Button, Checkbox, Form, FormRule, Input, Row, TimePicker } from "antd";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { useRouter } from "next/navigation";
 import PhoneInput from "../../Input/PhoneInput";
 
 dayjs.extend(utc);
@@ -82,9 +73,6 @@ export default function SignupForm() {
         form.resetFields();
         router.replace("/signup-success");
       }
-    },
-    onError(error) {
-      message.error(error.message);
     },
   });
 
