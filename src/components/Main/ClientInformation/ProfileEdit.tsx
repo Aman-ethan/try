@@ -151,7 +151,7 @@ export default function ProfileEdit() {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="flex items-center justify-between w-11/12 mb-4">
+      <div className="mb-4 flex w-11/12 items-center justify-between">
         <Title className="text-base">Edit Profile</Title>
         <div className="text-base">
           <Button
@@ -201,7 +201,7 @@ export default function ProfileEdit() {
             </Form.Item>
           ))}
         </Row>
-        <Row className=" float-right flex align-middle gap-4 mt-4">
+        <Row className=" float-right mt-4 flex gap-4 align-middle">
           <Button type="primary" htmlType="submit">
             Submit
           </Button>

@@ -16,7 +16,7 @@ export default function ClientInfoCard() {
   return (
     <Card className="h-full w-full rounded-lg" loading={isLoading}>
       <div className="mb-5 space-y-6 border-b-2 py-6">
-        <div className="flex items-center space-x-4 justify-between tab:justify-start">
+        <div className="flex items-center justify-between space-x-4 tab:justify-start">
           <Title className="text-xl tab:text-3xl">{clientData?.name}</Title>
           <Button
             className="flex items-center justify-center "

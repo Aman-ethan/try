@@ -6,6 +6,7 @@ import {
   DATE_PARAM_FORMAT,
   STATEMENT_DATE_FILTER_FORMAT,
 } from "@/constants/format";
+import { DatePickerProps } from "antd";
 import { DatePicker } from "../../Input/DatePicker";
 
 function useStatementDatePicker() {
@@ -33,7 +34,7 @@ function useStatementDatePicker() {
   };
 }
 
-export default function StatementDatePicker() {
+export default function StatementDatePicker(props: DatePickerProps) {
   const { onChange, value } = useStatementDatePicker();
 
   return (
@@ -43,6 +44,7 @@ export default function StatementDatePicker() {
       format={STATEMENT_DATE_FILTER_FORMAT}
       placeholder="Report Month"
       picker="month"
+      {...props}
     />
   );
 }
