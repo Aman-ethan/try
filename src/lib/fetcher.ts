@@ -40,7 +40,7 @@ async function fetcher({ url, init, error }: IFetcherParams) {
     return json;
   } catch (e) {
     if (e instanceof Error) {
-      throw new Error(e.message);
+      throw e;
     } else {
       throw new Error(error);
     }

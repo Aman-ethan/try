@@ -49,8 +49,8 @@ export default function useUpdatePassword({
     IUpdatePasswordResponse
   >("/reset-password", {
     onSuccess,
-    onError() {
-      message.error("Password reset failed. Please try again.");
+    onError(error) {
+      message.error(error.message);
     },
   });
 

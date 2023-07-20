@@ -66,8 +66,8 @@ export default function SignupForm() {
         router.replace("/signup-success");
       }
     },
-    onError() {
-      message.error("Something went wrong. Please try again.");
+    onError(error) {
+      message.error(error.message);
     },
   });
 

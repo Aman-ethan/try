@@ -31,8 +31,8 @@ export default function LoginForm() {
         );
       }
     },
-    onError() {
-      message.error("Login credentials are incorrect. Please try again.");
+    onError(error) {
+      message.error(error.message);
     },
   });
 

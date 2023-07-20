@@ -31,7 +31,9 @@ export default function VerifyOTPForm() {
 
   const searchParams = useSearchParams();
   const userId = searchParams.get("user_id");
-  const nextPath = searchParams.get("next_path");
+  const nextPath = searchParams.get("next_path") as
+    | "/reset-password"
+    | undefined;
 
   const { trigger, isMutating } = useAuthServerMutation<
     IVerifyOTPArgs,
@@ -60,9 +62,9 @@ export default function VerifyOTPForm() {
         }
       }
     },
-    onError() {
+    onError(error) {
       otpRef.current[OPT_LENGTH - 1]?.focus();
-      message.error("OTP is incorrect. Please try again.");
+      message.error(error.message);
     },
   });
 

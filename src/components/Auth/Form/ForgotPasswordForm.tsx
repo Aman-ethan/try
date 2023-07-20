@@ -25,8 +25,8 @@ export default function ForgotPasswordForm() {
         );
       }
     },
-    onError() {
-      message.error("Credentials are incorrect. Please try again.");
+    onError(error) {
+      message.error(error.message);
     },
   });
 
