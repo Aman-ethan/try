@@ -19,7 +19,11 @@ interface IDeleteItemProps {
 export default function MoreMenu({ items }: IMoreMenuProps) {
   return (
     <Dropdown menu={{ items }}>
-      <Button type="text" icon={<MoreOutlined />} />
+      <Button
+        onClick={(e) => e.stopPropagation()}
+        type="text"
+        icon={<MoreOutlined />}
+      />
     </Dropdown>
   );
 }

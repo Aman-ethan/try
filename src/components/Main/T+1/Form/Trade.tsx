@@ -1,6 +1,6 @@
 import useForm from "@/hooks/useForm";
 import useSecurities from "@/hooks/useSecurities";
-import { IFormProps } from "@/interfaces/Main";
+import { IFormProps, ISecurity } from "@/interfaces/Main";
 import formatInitialValues from "@/lib/formatInitialValues";
 import formatTriggerValues from "@/lib/formatTriggerValues";
 import { PlusOutlined } from "@ant-design/icons";
@@ -64,6 +64,7 @@ const HiddenFields = [
   "country",
   "market_close",
   "extra_option",
+  "private",
 ];
 
 export default function TradeForm({
@@ -83,12 +84,15 @@ export default function TradeForm({
   useSecurities({
     queryParams: { symbol },
     config: {
-      onSuccess(data) {
+      onSuccess(data: ISecurity[]) {
         if (data.length < 1 || !symbol) return;
         const security = data?.[0];
         form.setFieldsValue({
           currency: security.currency_code,
           asset_class: security.sub_asset_class,
+          security_name: security.name,
+          exchange: security.exchange,
+          private: !!security.meta?.private,
         });
       },
     },

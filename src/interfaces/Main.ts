@@ -49,6 +49,10 @@ export interface ISecurity {
   country_name: string;
   currency_code: string;
   market_close: string;
+  meta?: {
+    tags?: string[];
+    private: boolean;
+  };
 }
 
 export interface ISecuritySearchProps {

@@ -54,18 +54,19 @@ function PublicSecurityForm() {
 
   const addSecurity = () => {
     if (!newSecurity) return;
-    const { code, exchange, name, previous_close, ...rest } = newSecurity;
+    const { code, exchange, name, previous_close, type, ...rest } = newSecurity;
     const _symbol = code.includes(".") ? code : `${code}.${exchange}`;
     form.setFieldsValue({
       security: _symbol,
       security_name: name,
-      asset_class: "Cash",
+      asset_class: type,
       exchange,
       market_close: previous_close,
+      search_security: false,
+      private: false,
+      extra_option: { label: name, value: _symbol },
       ...rest,
     });
-    form.setFieldValue("search_security", false);
-    form.setFieldValue("extra_option", { label: name, value: _symbol });
     form.resetFields([fieldName]);
   };
 
@@ -132,11 +133,14 @@ function PrivateSecurityForm() {
       await form.validateFields(fields);
       const newSecurity = form.getFieldValue(FieldPrefix);
       const { security_name, security } = newSecurity;
-      form.setFieldsValue(newSecurity);
-      form.setFieldValue("search_security", false);
-      form.setFieldValue("extra_option", {
-        label: security_name,
-        value: security,
+      form.setFieldsValue({
+        search_security: false,
+        private: true,
+        extra_option: {
+          label: security_name,
+          value: security,
+        },
+        ...newSecurity,
       });
       form.resetFields(fields);
     } catch {
@@ -208,6 +212,19 @@ function SecurityForm() {
   }
 }
 
+const SecurityOptions = [
+  {
+    label: "Search New Ticker",
+    value: "PUBLIC",
+    style: { flex: 1 },
+  },
+  {
+    label: "Custom Security",
+    value: "PRIVATE",
+    style: { flex: 1 },
+  },
+];
+
 export default function SearchSecurity() {
   const form = Form.useFormInstance();
   return (
@@ -227,18 +244,7 @@ export default function SearchSecurity() {
           className="flex"
           optionType="button"
           size="middle"
-          options={[
-            {
-              label: "Search New Ticker",
-              value: "PUBLIC",
-              style: { flex: 1 },
-            },
-            {
-              label: "Custom Security",
-              value: "PRIVATE",
-              style: { flex: 1 },
-            },
-          ]}
+          options={SecurityOptions}
         />
       </Form.Item>
       <SecurityForm />

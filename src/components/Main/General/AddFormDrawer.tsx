@@ -23,9 +23,6 @@ export default function AddFormDrawer({
       message.success(response?.success);
       revalidate(urls.get);
     },
-    onError() {
-      message.error(response?.error);
-    },
   });
   return (
     <Drawer {...drawerProps}>
