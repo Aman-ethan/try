@@ -7,13 +7,18 @@ const DraggerStyle: CSSProperties = {
   borderColor: "#1890FF",
 };
 
-export default function Upload({ method = "PUT", ...props }: UploadProps) {
+export default function Upload({
+  method = "PUT",
+  accept,
+  ...props
+}: UploadProps) {
   return (
     <AntdUpload.Dragger
       maxCount={1}
       style={DraggerStyle}
       method={method}
       multiple={false}
+      accept={accept}
       {...props}
     >
       <Row align="middle" className="flex-col gap-y-4 py-7">
@@ -23,7 +28,7 @@ export default function Upload({ method = "PUT", ...props }: UploadProps) {
             Drag & drop files or <span className="text-primary-7">Browse</span>
           </p>
           <p className="text-xs text-neutral-13/60">
-            Supported Formats: pdf, xls, csv
+            Supported Formats: {accept?.replace(/\./g, "")}
           </p>
         </div>
       </Row>

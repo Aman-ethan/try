@@ -1,4 +1,5 @@
 import { ClientUploadSample } from "@/constants/samples";
+import useAuth from "@/hooks/useAuth";
 import useFormState, { useFormType } from "@/hooks/useForm";
 import { useTransactionServerFormMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
@@ -31,13 +32,15 @@ const UploadTypeOptions = [
 ];
 
 function BulkUpload({ sampleLink }: IUploadClientProps) {
+  const { refreshToken } = useAuth();
   const [form] = Form.useForm();
   const urlKey = `/client/`;
   const { isMutating, trigger } = useTransactionServerFormMutation<
     IUploadClientForm,
     IUploadClientResponse
   >(`${urlKey}upload/`, {
-    onSuccess(data) {
+    async onSuccess(data) {
+      await refreshToken();
       message.success(data.message);
       form.resetFields();
       revalidate(urlKey);
@@ -78,6 +81,7 @@ function BulkUpload({ sampleLink }: IUploadClientProps) {
       >
         <Form.Item valuePropName="fileList" name="file" rules={FormRules.file}>
           <Upload
+            accept=".csv"
             beforeUpload={() => {
               return false;
             }}

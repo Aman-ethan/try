@@ -94,6 +94,7 @@ function BulkUpload() {
         </Form.Item>
         <Form.Item name="file" valuePropName="fileList" rules={FormRules.file}>
           <Upload
+            accept=".csv"
             beforeUpload={() => {
               return false;
             }}

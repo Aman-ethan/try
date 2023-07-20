@@ -197,6 +197,7 @@ export default function UploadBankStatement() {
           getValueFromEvent={getFileValueFromEvent}
         >
           <Upload
+            accept=".pdf"
             action={data?.url}
             disabled={isLoading || isMutating}
             onChange={onFileChange}
