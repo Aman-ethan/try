@@ -98,7 +98,13 @@ export default function VerifyOTPForm() {
   return userId ? (
     <Form
       form={form}
-      onFinish={(data) => trigger({ otp: data.otp.join(""), user_id: userId })}
+      onFinish={(data) => {
+        if (data.otp.length !== OPT_LENGTH) {
+          message.error("Please enter a valid OTP");
+        } else {
+          trigger({ otp: data.otp.join(""), user_id: userId });
+        }
+      }}
       disabled={isMutating}
       size="large"
       className="space-y-10"

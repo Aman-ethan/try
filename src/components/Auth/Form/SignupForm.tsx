@@ -1,6 +1,15 @@
 "use client";
 
-import { Button, Checkbox, Form, Input, Row, TimePicker, message } from "antd";
+import {
+  Button,
+  Checkbox,
+  Form,
+  FormRule,
+  Input,
+  Row,
+  TimePicker,
+  message,
+} from "antd";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import Timezones from "@/constants/timezones";
 import { useRouter } from "next/navigation";
@@ -33,6 +42,14 @@ interface ISignupForm extends ISignupArgs {
   source: string;
   terms_and_conditions: boolean;
 }
+
+const FormRules: Partial<Record<keyof ISignupForm, FormRule[]>> = {
+  email: [{ required: true, message: "Please enter your email" }],
+  phone_number: [{ required: true, message: "Please enter your phone number" }],
+  terms_and_conditions: [
+    { required: true, message: "Please accept the terms and conditions" },
+  ],
+};
 
 const REFERRAL_SOURCE = [
   "Google Search Engine",
@@ -73,27 +90,22 @@ export default function SignupForm() {
 
   const handleSignup = ({
     source,
-    terms_and_conditions,
+    terms_and_conditions: _,
     time,
     timezone,
     ...rest
   }: ISignupForm) => {
-    if (terms_and_conditions) {
-      router.prefetch("/signup-success");
-      const offset = Timezones.find((t) => t.text === timezone)
-        ?.offset as number;
-      const contact_time = dayjs(time)
-        .utcOffset(offset, true)
-        .utc()
-        .format(TIME_FORMAT);
-      trigger({
-        ...rest,
-        contact_time,
-        media: media === "Other" ? source : media,
-      });
-    } else {
-      message.error("Please accept the terms and conditions.");
-    }
+    router.prefetch("/signup-success");
+    const offset = Timezones.find((t) => t.text === timezone)?.offset as number;
+    const contact_time = dayjs(time)
+      .utcOffset(offset, true)
+      .utc()
+      .format(TIME_FORMAT);
+    trigger({
+      ...rest,
+      contact_time,
+      media: media === "Other" ? source : media,
+    });
   };
 
   return (
@@ -111,11 +123,16 @@ export default function SignupForm() {
           <Form.Item label="Username" name="name" className="flex-1">
             <Input type="text" placeholder="john doe" autoFocus />
           </Form.Item>
-          <Form.Item label="Email" name="email" className="flex-1">
+          <Form.Item
+            label="Email"
+            name="email"
+            className="flex-1"
+            rules={FormRules.email}
+          >
             <Input type="email" placeholder="john.doe@acme.com" />
           </Form.Item>
         </Row>
-        <PhoneInput />
+        <PhoneInput rules={FormRules.phone_number} />
         <Row justify="space-between" className="gap-x-4">
           <Form.Item
             label="Company Name"
@@ -159,7 +176,11 @@ export default function SignupForm() {
             <Input type="text" placeholder="State Here" />
           </Form.Item>
         )}
-        <Form.Item name="terms_and_conditions" valuePropName="checked">
+        <Form.Item
+          name="terms_and_conditions"
+          valuePropName="checked"
+          rules={FormRules.terms_and_conditions}
+        >
           <Checkbox>
             <span className="text-neutral-13/80">
               I agree to the{" "}

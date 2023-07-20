@@ -1,8 +1,12 @@
 "use client";
 
 import useUpdatePassword from "@/hooks/useUpdatePassword";
-import { Button, Form, Input, Progress } from "antd";
+import { Button, Form, FormRule, Input, Progress } from "antd";
 import { useRouter } from "next/navigation";
+
+const FormRules: Record<"new_password", FormRule[]> = {
+  new_password: [{ required: true, message: "Please enter your new password" }],
+};
 
 export default function ResetPasswordForm() {
   const router = useRouter();
@@ -24,10 +28,14 @@ export default function ResetPasswordForm() {
       layout="vertical"
       labelCol={{ className: "font-medium" }}
     >
-      <Form.Item name="new_password" label="New Password" help={helpText}>
+      <Form.Item
+        name="new_password"
+        label="New Password"
+        help={helpText}
+        rules={FormRules.new_password}
+      >
         <Input.Password
           status={helpText ? "warning" : undefined}
-          required
           placeholder="••••••••"
           autoFocus
         />

@@ -1,14 +1,14 @@
 "use client";
 
 import CallingCodes from "@/constants/callingCodes";
-import { Form, Input, Select, Space } from "antd";
+import { Form, FormItemProps, Input, Select, Space } from "antd";
 
 const UniqueCallingCodes = [...new Set(Object.values(CallingCodes))]
   .sort()
   .map((code) => `+${code}`);
 const DEFAULT_COUNTRY_CODE = "+65";
 
-export default function PhoneInput() {
+export default function PhoneInput(props: FormItemProps) {
   return (
     <Space.Compact className="w-full">
       <Form.Item
@@ -25,7 +25,12 @@ export default function PhoneInput() {
           ))}
         </Select>
       </Form.Item>
-      <Form.Item label="&nbsp;" name="phone_number" className="flex-1">
+      <Form.Item
+        label="&nbsp;"
+        name="phone_number"
+        className="flex-1"
+        {...props}
+      >
         <Input type="tel" placeholder="1234-56789" />
       </Form.Item>
     </Space.Compact>

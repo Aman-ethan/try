@@ -1,10 +1,14 @@
 "use client";
 
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, FormRule, Input, message } from "antd";
 import { useRouter } from "next/navigation";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { ILoginResponse, IUserArgs } from "@/interfaces/Auth";
+
+const FormRules: Record<keyof IUserArgs, FormRule[]> = {
+  username: [{ required: true, message: "Please enter your username" }],
+};
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
@@ -32,6 +36,7 @@ export default function ForgotPasswordForm() {
 
   return (
     <Form
+      requiredMark={false}
       form={form}
       onFinish={trigger}
       size="large"
@@ -40,8 +45,8 @@ export default function ForgotPasswordForm() {
       className="space-y-10"
       labelCol={{ className: "font-medium" }}
     >
-      <Form.Item label="Username" name="username">
-        <Input placeholder="Enter your username" required />
+      <Form.Item label="Username" name="username" rules={FormRules.username}>
+        <Input placeholder="Enter your username" />
       </Form.Item>
       <Button
         htmlType="submit"
