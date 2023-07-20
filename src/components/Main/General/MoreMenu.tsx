@@ -18,9 +18,18 @@ interface IDeleteItemProps {
 
 export default function MoreMenu({ items }: IMoreMenuProps) {
   return (
-    <Dropdown menu={{ items }}>
+    <Dropdown
+      menu={{
+        items,
+        onClick(e) {
+          e.domEvent.stopPropagation();
+        },
+      }}
+    >
       <Button
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
         type="text"
         icon={<MoreOutlined />}
       />
