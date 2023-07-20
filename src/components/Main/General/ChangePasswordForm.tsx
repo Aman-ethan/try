@@ -39,6 +39,7 @@ export default function ChangePasswordForm() {
   const { form, helpText, isMutating, trigger } = useChangePassword({
     onSuccess(data) {
       if (data) {
+        form.resetFields();
         message.success("Password changed successfully");
       }
     },
