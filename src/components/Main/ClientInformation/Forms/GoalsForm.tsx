@@ -76,27 +76,40 @@ type TGoalFormKeys = keyof TGoal;
 
 interface IGoalFormInputsProps {
   type: TGoalFormKeys;
+  label: string;
 }
 
-function GoalFormInputs({ type }: IGoalFormInputsProps) {
+function GoalFormInputs({ type, label }: IGoalFormInputsProps) {
   switch (type) {
     case "name":
-      return <Input placeholder="Enter goal name" />;
+      return (
+        <Form.Item key={type} label={label} name={type} className="flex-1">
+          <Input placeholder="Enter goal name" />
+        </Form.Item>
+      );
     case "asset_class_preference":
       return (
-        <Select
-          options={AssetClassPreference}
-          placeholder="Select asset class preference"
-        />
+        <Form.Item key={type} label={label} name={type} className="flex-1">
+          <Select
+            options={AssetClassPreference}
+            placeholder="Select asset class preference"
+          />
+        </Form.Item>
       );
     case "investment_horizon":
-      return <Input placeholder="Enter investment horizon" />;
+      return (
+        <Form.Item key={type} label={label} name={type} className="flex-1">
+          <Input placeholder="Enter investment horizon" />
+        </Form.Item>
+      );
     case "return_expectations":
       return (
-        <Select
-          options={ReturnExpectations}
-          placeholder="Select return expectations"
-        />
+        <Form.Item key={type} label={label} name={type} className="flex-1">
+          <Select
+            options={ReturnExpectations}
+            placeholder="Select return expectations"
+          />
+        </Form.Item>
       );
     default:
       return null;
@@ -148,9 +161,7 @@ export default function GoalsForm({ onClose }: GoalsFormProps) {
     >
       <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
         {Object.entries(GoalFormMap).map(([key, label]) => (
-          <Form.Item key={key} label={label} name={key} className="flex-1">
-            <GoalFormInputs type={key as TGoalFormKeys} />
-          </Form.Item>
+          <GoalFormInputs label={label} type={key as TGoalFormKeys} />
         ))}
       </Row>
     </Form>

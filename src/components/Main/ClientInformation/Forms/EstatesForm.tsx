@@ -1,21 +1,19 @@
 "use client";
 
-import { Form, message, Row } from "antd";
-import { useEffect } from "react";
-import {
-  ProFormDatePicker,
-  ProFormSelect,
-  ProFormText,
-} from "@ant-design/pro-components";
+import Select from "@/components/Input/Select";
+import useFormState from "@/hooks/useForm";
 import {
   useTransactionServerMutation,
   useTransactionServerPutMutation,
 } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
-import revalidate from "@/lib/revalidate";
+import formatInitialValues from "@/lib/formatInitialValues";
 import formatTriggerValues from "@/lib/formatTriggerValues";
-import FormActions from "../Common/FormAction";
+import revalidate from "@/lib/revalidate";
+import { Form, FormRule, Input, Row, message } from "antd";
+import { useEffect } from "react";
+import { DatePicker } from "../../Input/DatePicker";
 
 interface IEstatesForm {
   onClose: () => void;
@@ -64,36 +62,37 @@ const EstateFormMap: Record<keyof TEstate, string> = {
 type TEstateKey = keyof TEstate;
 interface IEstateFormInputsProps {
   type: TEstateKey;
+  label: string;
 }
 
-function EstateFormInputs({ type }: IEstateFormInputsProps) {
+const FormRules: Partial<Record<keyof TEstate, FormRule[]>> = {
+  email: [{ type: "email", message: "Please enter a valid email" }],
+};
+
+function EstateFormInputs({ type, label }: IEstateFormInputsProps) {
   switch (type) {
     case "date_of_birth":
       return (
-        /* Not able to use General Date picker , getting error in Date picker */
-        <ProFormDatePicker
-          name="date_of_birth"
-          className="flex-1"
-          fieldProps={{
-            style: { width: "100%" },
-          }}
-          placeholder="Select Date of Birth"
-        />
+        <Form.Item label={label} name={type} className="flex-1">
+          <DatePicker className="flex-1" placeholder="Select Date of Birth" />
+        </Form.Item>
       );
     case "type":
       return (
-        <ProFormSelect
-          name="type"
-          options={Relationship}
-          placeholder="Select a Type"
-        />
+        <Form.Item label={label} name={type} className="flex-1">
+          <Select options={Relationship} placeholder="Select a Type" />
+        </Form.Item>
       );
     default:
       return (
-        <ProFormText
+        <Form.Item
+          label={label}
           name={type}
-          placeholder={`Enter the ${EstateFormMap[type]}`}
-        />
+          className="flex-1"
+          rules={type === "email" ? FormRules.email : undefined}
+        >
+          <Input placeholder={`Enter the ${label}`} />
+        </Form.Item>
       );
   }
 }
@@ -101,6 +100,7 @@ function EstateFormInputs({ type }: IEstateFormInputsProps) {
 export default function EstatesForm({ onClose }: IEstatesForm) {
   const [form] = Form.useForm();
   const { data, estateId, getSearchParams } = useEstate();
+  const client = getSearchParams("client_id");
 
   const onReset = () => {
     form.resetFields();
@@ -112,22 +112,22 @@ export default function EstatesForm({ onClose }: IEstatesForm) {
     onReset();
   };
 
-  const { trigger } = useTransactionServerMutation(URLs.post, {
+  const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
     onSuccess: () => {
       message.success("Estate Added successfully");
       handleMutationSuccess();
     },
   });
-  const { trigger: update } = useTransactionServerPutMutation(
-    URLs.put.replace("{id}", estateId || ""),
-    {
+  const { trigger: update, isMutating: isUpdating } =
+    useTransactionServerPutMutation(URLs.put.replace("{id}", estateId || ""), {
       onSuccess: () => {
         message.success("Estate Updated successfully");
         handleMutationSuccess();
       },
-    }
-  );
-  const client = getSearchParams("client_id");
+    });
+
+  const loading = isMutating || isUpdating;
+  const { formId } = useFormState({ isMutating: loading });
 
   useEffect(() => {
     if (data && estateId) {
@@ -135,39 +135,41 @@ export default function EstatesForm({ onClose }: IEstatesForm) {
     }
   }, [data, form, estateId]);
 
-  const handleSubmit = (values: TEstate) => {
+  const handleSubmit = async (values: TEstate) => {
     if (!client) {
       message.error("Client not found");
       return;
     }
     const payload = formatTriggerValues({ client, ...values });
-    if (estateId) {
-      update(payload);
-    } else {
-      trigger(payload);
+    try {
+      if (estateId) {
+        await update(payload);
+      } else {
+        await trigger(payload);
+      }
+      onClose();
+      onReset();
+    } catch (error) {
+      if (error instanceof Error) message.error(error.message);
     }
-    onClose();
-    onReset();
   };
 
   return (
     <Form
+      id={formId}
+      disabled={loading}
       onFinish={handleSubmit}
       layout="vertical"
       size="large"
       className="space-y-6 pb-20"
-      onReset={onReset}
       form={form}
-      initialValues={data}
+      initialValues={formatInitialValues(data)}
     >
       <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
-        {Object.entries(EstateFormMap).map(([key, value]) => (
-          <Form.Item label={value} name={key} key={key} className="flex-1">
-            <EstateFormInputs type={key as TEstateKey} />
-          </Form.Item>
+        {Object.entries(EstateFormMap).map(([key, label]) => (
+          <EstateFormInputs label={label} type={key as TEstateKey} />
         ))}
       </Row>
-      <FormActions onClick={onReset} />
     </Form>
   );
 }

@@ -1,8 +1,6 @@
 "use client";
 
-import { Button, Form, message, Row } from "antd";
-import { useEffect, useState, useCallback } from "react";
-import { ProFormText } from "@ant-design/pro-components";
+import useFormState from "@/hooks/useForm";
 import {
   useTransactionServerMutation,
   useTransactionServerPutMutation,
@@ -10,8 +8,9 @@ import {
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import revalidate from "@/lib/revalidate";
+import { Button, Form, Input, Row, message } from "antd";
+import { useCallback, useEffect, useState } from "react";
 import SelectCurrency from "../../Input/SelectCurrency";
-import FormActions from "../Common/FormAction";
 import CreateCustodian from "../CreateCustodian";
 
 interface IBankAccountFormsProps {
@@ -50,11 +49,11 @@ function useBankAccount() {
 }
 
 const BankAccountFormMap: Record<keyof TBankAccount, string> = {
+  custodian: "Custodian",
   account_number: "Account Number",
   account_type: "Account Type",
   currency: "Currency",
   relationship_number: "Relationship Number",
-  custodian: "Custodian",
   meta: "",
 };
 
@@ -70,19 +69,20 @@ const ManagerFormMap: Record<
 
 interface IBankAccountFormInputProps {
   type: keyof TBankAccount;
+  label: string;
 }
 
-function BankAccountFormInput({ type }: IBankAccountFormInputProps) {
+function BankAccountFormInput({ type, label }: IBankAccountFormInputProps) {
   switch (type) {
     case "custodian":
       return (
-        <Form.Item name="custodian" className="flex-1">
+        <Form.Item name="custodian" label="Custodian" className="flex-1">
           <CreateCustodian placeholder="Select Custodian" />
         </Form.Item>
       );
     case "currency":
       return (
-        <Form.Item name="currency">
+        <Form.Item name="currency" label="Currency">
           <SelectCurrency placeholder="Select Currency" />
         </Form.Item>
       );
@@ -90,10 +90,9 @@ function BankAccountFormInput({ type }: IBankAccountFormInputProps) {
       return null;
     default:
       return (
-        <ProFormText
-          name={type}
-          placeholder={`Enter ${BankAccountFormMap[type]}`}
-        />
+        <Form.Item label={label} name={type} className="flex-1">
+          <Input placeholder={`Enter the ${label}`} name={type} />
+        </Form.Item>
       );
   }
 }
@@ -113,7 +112,7 @@ export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
     revalidate(`/bank_account/`);
   };
 
-  const { trigger } = useTransactionServerMutation(URLs.post, {
+  const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
     onSuccess: () => {
       message.success("Bank Account Added successfully");
       handleMutationSuccess();
@@ -123,9 +122,8 @@ export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
     },
   });
 
-  const { trigger: update } = useTransactionServerPutMutation(
-    URLs.put.replace("{id}", bankAccountId!),
-    {
+  const { trigger: update, isMutating: isLoading } =
+    useTransactionServerPutMutation(URLs.put.replace("{id}", bankAccountId!), {
       onSuccess: () => {
         message.success("Bank Account Updated successfully");
         handleMutationSuccess();
@@ -133,8 +131,10 @@ export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
       onError: (error) => {
         message.error(error.message);
       },
-    }
-  );
+    });
+
+  const loading = isMutating || isLoading;
+  const { formId } = useFormState({ isMutating: loading });
 
   const handleSubmit = (values: TBankAccount) => {
     const payload = {
@@ -164,18 +164,18 @@ export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
 
   return (
     <Form
+      id={formId}
       form={form}
       initialValues={data}
       onFinish={handleSubmit}
       layout="vertical"
       size="large"
       className="space-y-6 pb-20"
+      disabled={loading}
     >
       <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
-        {Object.entries(BankAccountFormMap).map(([key, value]) => (
-          <Form.Item label={value} name={key} className="flex-1">
-            <BankAccountFormInput type={key as Tkey} />
-          </Form.Item>
+        {Object.entries(BankAccountFormMap).map(([key, label]) => (
+          <BankAccountFormInput label={label} type={key as Tkey} />
         ))}
       </Row>
       <Form
@@ -201,13 +201,12 @@ export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
           <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
             {Object.entries(ManagerFormMap).map(([key, label]) => (
               <Form.Item key={key} label={label} name={key} className="flex-1">
-                <ProFormText placeholder={`Enter the ${label}`} name={key} />
+                <Input placeholder={`Enter the ${label}`} name={key} />
               </Form.Item>
             ))}
           </Row>
         )}
       </Form>
-      <FormActions onClick={onReset} />
     </Form>
   );
 }

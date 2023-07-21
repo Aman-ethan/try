@@ -43,7 +43,7 @@ function BulkUpload({ sampleLink }: IUploadClientProps) {
       await refreshToken();
       message.success(data.success);
       form.resetFields();
-      revalidate(urlKey);
+      revalidate(urlKey, false);
     },
     onError(error) {
       message.error(error.message);

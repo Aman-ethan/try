@@ -51,6 +51,7 @@ export default function DeleteModal({ id, type }: IDeleteModalProps) {
         className="ml-4"
         type="default"
         onClick={showModal}
+        size="large"
         icon={<DeleteOutlined />}
       />
       <Popconfirm

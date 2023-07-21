@@ -14,7 +14,7 @@ export default function ClientManualEntry() {
     onSuccess() {
       message.success("Client added successfully");
       form.resetFields();
-      revalidate(URLs.get);
+      revalidate(URLs.get, false);
     },
     onError() {
       message.error("Failed to add client");
