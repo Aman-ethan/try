@@ -1,15 +1,9 @@
 import FormProvider from "@/context/FormProvider";
 import { IDrawerProps } from "@/interfaces/Main";
-import { useMediaQuery } from "@mantine/hooks";
 import { CloseOutlined } from "@ant-design/icons";
+import { useMediaQuery } from "@mantine/hooks";
 import { Drawer as AntdDrawer, Button, Row } from "antd";
-import {
-  KeyboardEvent,
-  MouseEvent,
-  cloneElement,
-  useLayoutEffect,
-  useState,
-} from "react";
+import { KeyboardEvent, MouseEvent, cloneElement, useState } from "react";
 
 export default function Drawer({
   button,
@@ -24,10 +18,6 @@ export default function Drawer({
   const [isDrawerOpen, setIsDrawerOpen] = useState(open);
   const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 768px)");
 
-  useLayoutEffect(() => {
-    setIsDrawerOpen(open);
-  }, [open]);
-
   const handleClose = (e: MouseEvent | KeyboardEvent) => {
     onClose?.(e);
     setIsDrawerOpen(false);
@@ -37,12 +27,15 @@ export default function Drawer({
     <FormProvider>
       {button
         ? cloneElement(button, {
-            onClick: () => setIsDrawerOpen(true),
+            onClick: () => {
+              button.props.onClick?.();
+              setIsDrawerOpen(true);
+            },
           })
         : null}
       <AntdDrawer
         closeIcon={null}
-        open={isDrawerOpen}
+        open={open !== undefined ? open : isDrawerOpen}
         width={width}
         height="100vh"
         placement={MOBILE_BREAK_POINT ? "bottom" : "right"} // Use bottom placement for mobile screens, right for others

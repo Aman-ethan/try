@@ -1,10 +1,12 @@
 "use client";
 
 import { EditOutlined } from "@ant-design/icons";
-import { Button, Drawer } from "antd";
+import { Button } from "antd";
 import { lazy, useState } from "react";
 import useSearchParams from "@/hooks/useSearchParams";
 import useResize from "@/hooks/useResize";
+import Drawer from "../../General/Drawer";
+import { ResetButton, SubmitButton } from "../../General/DrawerFormButton";
 
 interface IClientDetailsDrawerProps {
   type: string;
@@ -49,54 +51,61 @@ export default function ClientDetailsDrawer({
     </span>
   );
   return (
-    <>
-      <Button
-        type={edit ? "default" : "primary"}
-        className="capitalize"
-        onClick={() => setIsDrawerOpen(true)}
-        icon={
-          edit ? (
-            <EditOutlined
-              className="text-sm"
-              onClick={() => {
-                switch (type) {
-                  case "goals":
-                    updateSearchParams({ goal_id: id });
-                    break;
-                  case "estates":
-                    updateSearchParams({ estate_id: id });
-                    break;
-                  case "bank_accounts":
-                    updateSearchParams({ bank_account_id: id });
-                    break;
-                  default:
-                    break;
-                }
-              }}
-            />
-          ) : undefined
-        }
-      >
-        {edit ? "" : `Add ${type.replace("_", " ")}`}
-      </Button>
-      <Drawer
-        width={720}
-        height={600}
-        placement={placement}
-        open={isDrawerOpen}
-        onClose={() => {
-          setIsDrawerOpen(false);
-          updateSearchParams({
-            goal_id: null,
-            estate_id: null,
-            bank_account_id: null,
-            custodian: null,
-          });
-        }}
-        title={title}
-      >
-        <DetailsForm type={type} onClose={() => setIsDrawerOpen(false)} />
-      </Drawer>
-    </>
+    <Drawer
+      width={720}
+      height={600}
+      placement={placement}
+      open={isDrawerOpen}
+      onClose={() => {
+        setIsDrawerOpen(false);
+        updateSearchParams({
+          goal_id: null,
+          estate_id: null,
+          bank_account_id: null,
+          custodian: null,
+        });
+      }}
+      title={title}
+      button={
+        <Button
+          onClick={() => setIsDrawerOpen(true)}
+          type={edit ? "default" : "primary"}
+          className="capitalize"
+          size="large"
+          icon={
+            edit ? (
+              <EditOutlined
+                className="text-sm"
+                onClick={() => {
+                  switch (type) {
+                    case "goals":
+                      updateSearchParams({ goal_id: id });
+                      break;
+                    case "estates":
+                      updateSearchParams({ estate_id: id });
+                      break;
+                    case "bank_accounts":
+                      updateSearchParams({ bank_account_id: id });
+                      break;
+                    default:
+                      break;
+                  }
+                }}
+              />
+            ) : undefined
+          }
+        >
+          {edit ? "" : `Add ${type.replace("_", " ")}`}
+        </Button>
+      }
+      footer={
+        <>
+          <ResetButton>Clear All</ResetButton>
+          <SubmitButton>Submit</SubmitButton>
+        </>
+      }
+    >
+      <DetailsForm type={type} onClose={() => setIsDrawerOpen(false)} />
+    </Drawer>
   );
 }

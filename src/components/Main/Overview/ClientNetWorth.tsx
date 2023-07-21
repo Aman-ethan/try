@@ -104,7 +104,7 @@ function Table({
 }
 
 function useClientNetWorth() {
-  const { isLoading } = useTransactionServerQuery<IClient[]>(
+  const { data, isLoading } = useTransactionServerQuery<IClient[]>(
     `/position_history/summary/daily/${buildURLSearchParams({
       report_date: dayjs().format(DATE_PARAM_FORMAT),
     })}`
@@ -112,9 +112,7 @@ function useClientNetWorth() {
 
   return {
     isLoading,
-    data: [
-      { id: "1", client_name: "TT_SS", total_pl: 10000, net_worth: 10000 },
-    ],
+    data,
   };
 }
 

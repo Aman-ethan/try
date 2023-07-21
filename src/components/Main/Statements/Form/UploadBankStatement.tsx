@@ -39,7 +39,7 @@ const FormRules: Partial<Record<keyof IUploadBankStatementForm, FormRule[]>> = {
     { required: true, message: "Please select a relationship number" },
   ],
   portfolio_number: [
-    { required: true, message: "Please input a portfolio number" },
+    { required: false, message: "Please input a portfolio number" },
   ],
   s3_url: [{ required: true, message: "Please upload a file" }],
   statement_type: [

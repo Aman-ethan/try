@@ -15,7 +15,7 @@ interface IUploadClientProps {
 }
 
 interface IUploadClientResponse {
-  message: string;
+  success: string;
 }
 
 interface IUploadClientForm {
@@ -41,7 +41,7 @@ function BulkUpload({ sampleLink }: IUploadClientProps) {
   >(`${urlKey}upload/`, {
     async onSuccess(data) {
       await refreshToken();
-      message.success(data.message);
+      message.success(data.success);
       form.resetFields();
       revalidate(urlKey);
     },

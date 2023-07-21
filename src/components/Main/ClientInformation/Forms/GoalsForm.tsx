@@ -1,16 +1,15 @@
 "use client";
 
-import { Form, message, Row } from "antd";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-import { ProFormSelect, ProFormText } from "@ant-design/pro-components";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
+import useFormState from "@/hooks/useForm";
 import {
   useTransactionServerMutation,
   useTransactionServerPutMutation,
 } from "@/hooks/useMutation";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
 import revalidate from "@/lib/revalidate";
-import FormActions from "../Common/FormAction";
+import { Form, Input, Row, Select, message } from "antd";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 const AssetClassPreference = [
   { label: "Equity", value: "equity" },
@@ -49,7 +48,7 @@ function useGoal() {
     goalId ? URLs.get.replace("{id}", goalId) : null
   );
 
-  const { trigger } = useTransactionServerMutation(URLs.post, {
+  const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
     onSuccess: () => {
       message.success("Goal Added successfully");
       revalidate(`/goals/`);
@@ -58,9 +57,8 @@ function useGoal() {
       message.error("Something went wrong");
     },
   });
-  const { trigger: update } = useTransactionServerPutMutation(
-    URLs.put.replace("{id}", goalId!),
-    {
+  const { trigger: update, isMutating: isUpdating } =
+    useTransactionServerPutMutation(URLs.put.replace("{id}", goalId!), {
       onSuccess: () => {
         message.success("Goal Updated successfully");
         revalidate(`/goals/`);
@@ -68,9 +66,10 @@ function useGoal() {
       onError: () => {
         message.error("Something went wrong");
       },
-    }
-  );
-  return { data, goalId, getSearchParams, trigger, update };
+    });
+  const { formId } = useFormState({ isMutating: isMutating || isUpdating });
+
+  return { data, formId, goalId, getSearchParams, trigger, update };
 }
 
 type TGoalFormKeys = keyof TGoal;
@@ -82,28 +81,21 @@ interface IGoalFormInputsProps {
 function GoalFormInputs({ type }: IGoalFormInputsProps) {
   switch (type) {
     case "name":
-      return <ProFormText placeholder="Enter goal name" name="name" />;
+      return <Input placeholder="Enter goal name" />;
     case "asset_class_preference":
       return (
-        <ProFormSelect
+        <Select
           options={AssetClassPreference}
           placeholder="Select asset class preference"
-          name="asset_class_preference"
         />
       );
     case "investment_horizon":
-      return (
-        <ProFormText
-          placeholder="Enter investment horizon"
-          name="investment_horizon"
-        />
-      );
+      return <Input placeholder="Enter investment horizon" />;
     case "return_expectations":
       return (
-        <ProFormSelect
+        <Select
           options={ReturnExpectations}
           placeholder="Select return expectations"
-          name="return_expectations"
         />
       );
     default:
@@ -113,7 +105,7 @@ function GoalFormInputs({ type }: IGoalFormInputsProps) {
 
 export default function GoalsForm({ onClose }: GoalsFormProps) {
   const [form] = Form.useForm();
-  const { data, goalId, trigger, update, getSearchParams } = useGoal();
+  const { data, formId, goalId, trigger, update, getSearchParams } = useGoal();
 
   const client = getSearchParams("client_id");
 
@@ -127,11 +119,11 @@ export default function GoalsForm({ onClose }: GoalsFormProps) {
     form.resetFields();
   };
 
-  const handleSubmit = (values: TGoal) => {
+  const handleSubmit = async (values: TGoal) => {
     if (goalId) {
-      update({ client, ...values });
+      await update({ client, ...values });
     } else {
-      trigger({ client, ...values });
+      await trigger({ client, ...values });
     }
     onClose();
     onReset();
@@ -146,6 +138,7 @@ export default function GoalsForm({ onClose }: GoalsFormProps) {
 
   return (
     <Form
+      id={formId}
       layout="vertical"
       size="large"
       className="space-y-6 pb-20"
@@ -160,7 +153,6 @@ export default function GoalsForm({ onClose }: GoalsFormProps) {
           </Form.Item>
         ))}
       </Row>
-      <FormActions onClick={onReset} />
     </Form>
   );
 }

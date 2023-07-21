@@ -5,6 +5,7 @@ export default function formatInitialValues(
 ) {
   if (!initialValues) return {};
   return Object.entries(initialValues).reduce((acc, [key, value]) => {
+    if (!value) return acc;
     return {
       ...acc,
       [key]: key.includes("date") ? dayjs(value) : value,

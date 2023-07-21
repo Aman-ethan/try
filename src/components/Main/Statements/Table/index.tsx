@@ -36,7 +36,7 @@ export default function Statement<T>({
 
   return (
     <ScrollableTable
-      scroll={{ y: "calc(100vh - 25rem)" }}
+      scroll={{ y: "calc(100vh - 23rem)" }}
       style={{
         height: "calc(100vh - 20rem)",
       }}

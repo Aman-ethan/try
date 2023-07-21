@@ -1,9 +1,9 @@
 "use client";
 
-import { Radio, RadioChangeEvent } from "antd";
+import { CheckboxOptionType, Radio, RadioChangeEvent } from "antd";
 import { useState } from "react";
-import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import BankAccounts from "./BankAccounts";
+import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import Estates from "./Estates";
 import Goals from "./Goals";
 
@@ -22,6 +22,12 @@ function View({ type }: { type: TabType }) {
   }
 }
 
+const DetailOptions: CheckboxOptionType[] = [
+  { label: "Goals", value: "goals" },
+  { label: "Estates", value: "estates" },
+  { label: "Bank Accounts", value: "bank_accounts" },
+];
+
 export default function ClientDetailsView() {
   const [type, setType] = useState<TabType>("goals");
   const handleTypeChange = (e: RadioChangeEvent) => {
@@ -30,11 +36,14 @@ export default function ClientDetailsView() {
   return (
     <div className="space-y-8 py-5">
       <div className="flex flex-col tab:flex-row tab:justify-between">
-        <Radio.Group value={type} onChange={handleTypeChange}>
-          <Radio.Button value="goals">Goals</Radio.Button>
-          <Radio.Button value="estates">Estates</Radio.Button>
-          <Radio.Button value="bank_accounts">Bank Accounts</Radio.Button>
-        </Radio.Group>
+        <Radio.Group
+          options={DetailOptions}
+          value={type}
+          onChange={handleTypeChange}
+          optionType="button"
+          buttonStyle="outline"
+          size="large"
+        />
         <div className="mt-4 tab:mt-0">
           <ClientDetailsDrawer type={type} />
         </div>

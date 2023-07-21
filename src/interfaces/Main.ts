@@ -80,11 +80,7 @@ export interface ISelectRelationshipNumberProps {
 export interface IStatementFormProps {
   id: string;
 }
-export interface IDrawerProps
-  extends Pick<
-    DrawerProps,
-    "children" | "footer" | "title" | "width" | "open" | "onClose"
-  > {
+export interface IDrawerProps extends DrawerProps {
   button?: ReactElement;
   closeButton?: string;
 }

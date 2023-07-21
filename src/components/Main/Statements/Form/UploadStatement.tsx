@@ -4,9 +4,10 @@ import { useTransactionServerFormMutation } from "@/hooks/useMutation";
 import { TUploadStatement } from "@/interfaces/Main";
 import revalidate from "@/lib/revalidate";
 import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
-import { Button, Form, FormRule, Radio, Row, message } from "antd";
+import { Button, Form, FormRule, Row, message } from "antd";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { lazy } from "react";
+import FormType from "../../General/FormType";
 import SelectClient from "../../Input/SelectClient";
 import Upload from "../../Input/Upload";
 
@@ -27,11 +28,6 @@ const FormRules: Partial<Record<keyof IUploadStatementForm, FormRule[]>> = {
   custodian: [{ required: true, message: "Please select a custodian" }],
   file: [{ required: true, message: "Please upload a file" }],
 };
-
-const UploadTypeOptions = [
-  { label: "Bulk Upload", value: "bulk" },
-  { label: "Manual Entry", value: "manual" },
-];
 
 function BulkUpload() {
   const [form] = Form.useForm();
@@ -109,19 +105,10 @@ function BulkUpload() {
 }
 
 export default function UploadStatement() {
-  const { uploadType, setUploadType } = useFormType();
+  const { uploadType } = useFormType();
   return (
     <div className="space-y-8">
-      <Radio.Group
-        options={UploadTypeOptions}
-        optionType="button"
-        buttonStyle="solid"
-        value={uploadType}
-        onChange={(e) => {
-          setUploadType(e.target.value);
-        }}
-        size="large"
-      />
+      <FormType />
       <div className="space-y-6">
         {uploadType === "bulk" ? <BulkUpload /> : <ManualEntry />}
       </div>

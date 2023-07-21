@@ -1,5 +1,6 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { Divider, Row, TableColumnsType } from "antd";
+import { get } from "lodash";
 import { ReactNode } from "react";
 import Drawer from "./Drawer";
 
@@ -32,7 +33,7 @@ export default function ViewDrawer<T>({
     >
       {data
         ? columns.map(({ title: label, render, key }, index) => {
-            const value = data[key as keyof typeof data];
+            const value = get(data, key as string);
             return key !== "actions" ? (
               <Row key={key} className="gap-x-2">
                 <span className="w-44 font-medium">{label as ReactNode}:</span>

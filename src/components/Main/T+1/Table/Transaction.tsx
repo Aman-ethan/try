@@ -125,7 +125,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
   },
   {
     title: "Realized P/L",
-    key: "realized_pl",
+    key: "realised_pl",
     dataIndex: "realised_pl",
     render: (pl, record) => formatPrice(pl, record.currency),
     width: 135,

@@ -1,19 +1,16 @@
 "use client";
 
-import {
-  ProForm,
-  ProFormText,
-  ProFormDatePicker,
-  ProFormSelect,
-  ProFormTextArea,
-} from "@ant-design/pro-components";
-import { Button, Form, message, Row } from "antd";
-import { useEffect } from "react";
+import Select from "@/components/Input/Select";
 import Title from "@/components/Typography/Title";
 import { useTransactionServerPutMutation } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
+import formatInitialValues from "@/lib/formatInitialValues";
+import formatTriggerValues from "@/lib/formatTriggerValues";
 import revalidate from "@/lib/revalidate";
+import { Button, Form, Input, Row, message } from "antd";
+import { useEffect } from "react";
+import { DatePicker } from "../Input/DatePicker";
 
 type TClient = {
   first_name: string;
@@ -52,21 +49,22 @@ const RiskLevels = [
 function useClient() {
   const { get: getSearchParams } = useSearchParams();
   const client_id = getSearchParams("client_id");
-  const { data } = useTransactionServerQuery<TClient>(`/client/${client_id}/`);
+  const { data, isLoading } = useTransactionServerQuery<TClient>(
+    `/client/${client_id}/`
+  );
 
-  const { trigger: updateClient } = useTransactionServerPutMutation<TClient>(
-    `/client/${client_id}/`,
-    {
+  const { trigger: updateClient, isMutating } =
+    useTransactionServerPutMutation<TClient>(`/client/${client_id}/`, {
       onSuccess: () => {
         message.success("Client updated successfully");
         revalidate(`/client/`);
       },
-    }
-  );
+    });
 
   return {
     data,
     updateClient,
+    loading: isLoading || isMutating,
   };
 }
 
@@ -99,49 +97,36 @@ function DetailsForm({ type }: IClientDetailProps) {
   switch (type) {
     case "date_of_birth":
       return (
-        // Not able to use general Date Picker , when I get the date from the server the date picker is not able to parse it
-        <ProFormDatePicker
-          width="lg"
-          name="date_of_birth"
-          placeholder="Choose Date Of Birth"
-          fieldProps={{
-            style: {
-              width: "100%",
-            },
-          }}
-        />
+        <Form.Item key={type} label={ClientInformationMap[type]} name={type}>
+          <DatePicker placeholder="Choose Date Of Birth" />
+        </Form.Item>
       );
     case "risk_profile":
       return (
-        <ProFormSelect
-          width="lg"
-          name="risk_profile"
-          placeholder="Choose risk profile"
-          options={RiskLevels}
-        />
+        <Form.Item key={type} label={ClientInformationMap[type]} name={type}>
+          <Select placeholder="Choose risk profile" options={RiskLevels} />
+        </Form.Item>
       );
     case "street":
       return (
-        <ProFormTextArea
-          width="lg"
-          name="street"
-          placeholder={`Enter the ${ClientInformationMap[type]}`}
-        />
+        <Form.Item key={type} label={ClientInformationMap[type]} name={type}>
+          <Input.TextArea
+            placeholder={`Enter the ${ClientInformationMap[type]}`}
+          />
+        </Form.Item>
       );
     default:
       return (
-        <ProFormText
-          width="lg"
-          name={type}
-          placeholder={`Enter the ${ClientInformationMap[type]}`}
-        />
+        <Form.Item key={type} label={ClientInformationMap[type]} name={type}>
+          <Input placeholder={`Enter the ${ClientInformationMap[type]}`} />
+        </Form.Item>
       );
   }
 }
 
 export default function ProfileEdit() {
-  const [form] = ProForm.useForm();
-  const { data, updateClient } = useClient();
+  const [form] = Form.useForm();
+  const { data, loading, updateClient } = useClient();
 
   useEffect(() => {
     if (data) {
@@ -156,24 +141,12 @@ export default function ProfileEdit() {
         <div className="text-base">
           <Button
             onClick={() => {
-              form.setFieldsValue({
-                first_name: "",
-                last_name: "",
-                date_of_birth: new Date(),
-                nationality: "",
-                identification_number: "",
-                occupation: "",
-                reporting_currency: "",
-                tax_residency: "",
-                risk_profile: "",
-                email: "",
-                phone_number: "",
-                address: "",
-                city: "",
-                country: "",
-                postal_code: "",
-                state: "",
-              });
+              form.setFieldsValue(
+                Object.keys(ClientInformationMap).reduce(
+                  (acc, key) => ({ ...acc, [key]: "" }),
+                  {}
+                )
+              );
             }}
           >
             Clear All
@@ -182,32 +155,23 @@ export default function ProfileEdit() {
       </div>
       <Form
         form={form}
-        initialValues={data}
+        initialValues={formatInitialValues(data)}
         layout="vertical"
         className=" w-11/12"
-        onFinish={updateClient}
-        onReset={() => form.resetFields()}
+        onFinish={(values) => updateClient(formatTriggerValues(values))}
+        size="large"
+        disabled={loading}
       >
-        <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
+        <Row className="grid grid-cols-1 gap-y-6 gap-x-16 tab:grid-cols-2">
           {Object.keys(ClientInformationMap).map((key) => (
-            <Form.Item
-              key={key}
-              label={
-                ClientInformationMap[key as keyof typeof ClientInformationMap]
-              }
-              name={key}
-            >
-              <DetailsForm type={key as TFormType} />
-            </Form.Item>
+            <DetailsForm type={key as TFormType} />
           ))}
         </Row>
         <Row className=" float-right mt-4 flex gap-4 align-middle">
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={loading}>
             Submit
           </Button>
-          <Button htmlType="reset" onClick={() => form.resetFields()}>
-            Reset
-          </Button>
+          <Button htmlType="reset">Reset</Button>
         </Row>
       </Form>
     </div>
