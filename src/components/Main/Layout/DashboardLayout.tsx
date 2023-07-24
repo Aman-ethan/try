@@ -62,18 +62,14 @@ function User() {
   );
 }
 
-const ProfileItems = [
-  {
-    label: <Link href="/change-password">Change Password</Link>,
-    key: "change-password",
-    icon: <SyncOutlined className={iconClassName} />,
-  },
-];
-
 function UserProfile() {
   const { logout } = useAuth();
-  const items = [
-    ...ProfileItems,
+  const ProfileItems = [
+    {
+      label: <Link href="/change-password">Change Password</Link>,
+      key: "change-password",
+      icon: <SyncOutlined className={iconClassName} />,
+    },
     {
       label: (
         <Link onClick={() => logout()} href="/login">
@@ -85,7 +81,7 @@ function UserProfile() {
     },
   ];
   return (
-    <Dropdown menu={{ items }} trigger={["click"]}>
+    <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
       <div className="cursor-pointer space-x-2">
         <User />
         <CaretDownFilled />
@@ -156,7 +152,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           <Layout.Footer className="flex justify-center bg-neutral-3">
             ETHAN-AI &copy; ALL RIGHTS RESERVED {currentDate.getFullYear()}
             {". "}
-            Version: 1
+            Version: 1.2.0
           </Layout.Footer>
         </Layout.Content>
       </Layout>

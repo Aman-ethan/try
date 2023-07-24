@@ -74,24 +74,39 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
 
   useEffect(() => {
     if (access_token) {
-      const accessTimeout = setTimeout(
-        refresh,
-        Math.max(getTimeoutFromToken(access_token) - REFRESH_OFFSET, 0) // Offset might cause timeout to be negative
-      );
-      const refreshTimeout = setTimeout(
-        () => logout("Session expired. Please login again."),
-        getTimeoutFromToken(refresh_token)
-      );
-      return () => {
-        clearTimeout(accessTimeout);
-        clearTimeout(refreshTimeout);
-      };
-    }
-    if (refresh_token) {
-      refresh();
+      try {
+        const accessTimeout = setTimeout(
+          refresh,
+          Math.max(getTimeoutFromToken(access_token) - REFRESH_OFFSET, 0) // Offset might cause timeout to be negative
+        );
+        return () => {
+          clearTimeout(accessTimeout);
+        };
+      } catch {
+        if (refresh_token) {
+          refresh();
+        }
+      }
     }
     return () => undefined;
-  }, [refresh, logout, access_token, refresh_token]);
+  }, [refresh, access_token, refresh_token]);
+
+  useEffect(() => {
+    if (refresh_token) {
+      try {
+        const refreshTimeout = setTimeout(
+          () => logout("Session expired. Please login again."),
+          getTimeoutFromToken(refresh_token)
+        );
+        return () => {
+          clearTimeout(refreshTimeout);
+        };
+      } catch (error) {
+        logout();
+      }
+    }
+    return () => undefined;
+  }, [refresh_token, logout]);
 
   const value = useMemo(
     () => ({
