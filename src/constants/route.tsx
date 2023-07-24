@@ -1,8 +1,8 @@
 import {
+  ContainerOutlined,
   DotChartOutlined,
   FileSearchOutlined,
   LineChartOutlined,
-  NodeIndexOutlined,
   ProfileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -23,7 +23,7 @@ const ROUTE = [
         key: "/analytics/crude/gross-allocations",
         label: (
           <Link href="/analytics/crude/gross-allocations">
-            Present Analytics
+            Preset Analytics
           </Link>
         ),
       },
@@ -35,9 +35,30 @@ const ROUTE = [
     ],
   },
   {
-    key: "/position-search",
-    label: <Link href="/position-search">Balance Sheet</Link>,
-    icon: <NodeIndexOutlined />,
+    key: "consolidation",
+    label: "Consolidation",
+    icon: <ContainerOutlined />,
+    children: [
+      {
+        key: "/position-search",
+        label: <Link href="/position-search">Balance Sheet</Link>,
+      },
+      {
+        disabled: true,
+        key: "/balance-sheet",
+        label: "Transaction",
+      },
+      {
+        disabled: true,
+        key: "/profit-and-loss",
+        label: "Profit & Loss",
+      },
+      {
+        disabled: true,
+        key: "/cash-flow",
+        label: "Cash Flow",
+      },
+    ],
   },
   {
     key: "t+1",
