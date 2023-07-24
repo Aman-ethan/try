@@ -2,6 +2,7 @@ import { useTransactionServerMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
 import { Form, Input, message, Row } from "antd";
 import useFormState from "@/hooks/useForm";
+import useAuth from "@/hooks/useAuth";
 
 const URLs = {
   get: "/client/",
@@ -9,12 +10,14 @@ const URLs = {
 };
 
 export default function ClientManualEntry() {
+  const { refresh } = useAuth();
   const [form] = Form.useForm();
   const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
-    onSuccess() {
+    async onSuccess() {
+      refresh();
+      revalidate(URLs.get, false);
       message.success("Client added successfully");
       form.resetFields();
-      revalidate(URLs.get, false);
     },
     onError() {
       message.error("Failed to add client");
