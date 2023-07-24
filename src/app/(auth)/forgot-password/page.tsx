@@ -10,7 +10,7 @@ export default function ForgotPasswordPage() {
         <div className="space-y-4">
           <Title>Forgot your password?</Title>
           <Paragraph>
-            To reset your password, enter the username of your account
+            To reset your password, enter the phone number of your account
           </Paragraph>
         </div>
         <ForgotPasswordForm />
