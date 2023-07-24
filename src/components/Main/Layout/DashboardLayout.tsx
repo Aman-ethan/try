@@ -2,7 +2,6 @@
 
 import Logo from "@/components/Icon/Logo";
 import ROUTE from "@/constants/route";
-import { MenuItemClassName } from "@/constants/strings";
 import useAuth from "@/hooks/useAuth";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import {
@@ -24,12 +23,8 @@ import {
   Row,
 } from "antd";
 import Link from "next/link";
-import {
-  usePathname,
-  useRouter,
-  useSelectedLayoutSegments,
-} from "next/navigation";
-import { ReactNode, useEffect, useLayoutEffect, useState } from "react";
+import { usePathname, useSelectedLayoutSegments } from "next/navigation";
+import { ReactNode, useLayoutEffect, useState } from "react";
 import CurrencyTag from "../General/CurrencyTag";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 
@@ -42,14 +37,6 @@ interface IUser {
   username: string;
 }
 
-// const FooterLink = [
-//   { key: "faq", title: "FAQ", href: "https://www.ethan-ai.com/faq2" },
-//   {
-//     key: "privacy_policy",
-//     title: "Privacy Policy",
-//     href: "https://www.ethan-ai.com/privacy",
-//   },
-// ];
 const iconClassName = "text-neutral-11";
 
 const currentDate = new Date();
@@ -69,11 +56,6 @@ function User() {
 
 function UserProfile() {
   const { logout } = useAuth();
-  const { prefetch } = useRouter();
-
-  useEffect(() => {
-    prefetch("/login");
-  }, [prefetch]);
 
   const ProfileItems = [
     {
@@ -83,13 +65,15 @@ function UserProfile() {
     },
     {
       label: (
-        <button
-          type="button"
-          className={MenuItemClassName}
-          onClick={() => logout()}
+        <Link
+          href="/login"
+          onClick={() => {
+            document.body.classList.add("opacity-0");
+            logout();
+          }}
         >
           Logout
-        </button>
+        </Link>
       ),
       key: "logout",
       icon: <LogoutOutlined className={iconClassName} />,

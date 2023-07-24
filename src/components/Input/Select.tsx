@@ -1,6 +1,13 @@
 import { Select as AntdSelect, SelectProps } from "antd";
 import clsx from "clsx";
+import { DefaultOptionType } from "rc-select/lib/Select";
 import { useId } from "react";
+
+function filterOption(input: string, option?: DefaultOptionType) {
+  return ((option?.label ?? "") as string)
+    .toLowerCase()
+    .includes(input.toLowerCase());
+}
 
 export default function Select({
   loading,
@@ -16,6 +23,7 @@ export default function Select({
     <AntdSelect
       allowClear
       showSearch
+      filterOption={filterOption}
       key={loading ? selectId : undefined}
       defaultValue={loading ? undefined : defaultValue}
       value={loading ? undefined : value}
