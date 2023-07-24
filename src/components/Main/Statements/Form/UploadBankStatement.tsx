@@ -4,9 +4,10 @@ import { useTransactionServerQuery } from "@/hooks/useQuery";
 import formatTriggerValues from "@/lib/formatTriggerValues";
 import getFileValueFromEvent from "@/lib/getFileValueFromEvent";
 import revalidate from "@/lib/revalidate";
-import { Form, FormRule, Input, Row, message } from "antd";
+import { Form, FormRule, Input, message } from "antd";
 import { UploadChangeParam, UploadFile } from "antd/es/upload";
 import type { Dayjs } from "dayjs";
+import { formWrapper } from "@/constants/strings";
 import { DatePicker } from "../../Input/DatePicker";
 import Upload from "../../Input/Upload";
 import SelectCustodian from "../../Input/SelectCustodian";
@@ -103,7 +104,7 @@ export default function UploadBankStatement() {
       }
       requiredMark={false}
     >
-      <Row className="gap-x-8">
+      <div className={formWrapper}>
         <Form.Item
           label="Client"
           name="client"
@@ -127,8 +128,8 @@ export default function UploadBankStatement() {
         >
           <DatePicker placeholder="Select date" />
         </Form.Item>
-      </Row>
-      <Row className="gap-x-8">
+      </div>
+      <div className={formWrapper}>
         <Form.Item
           label="Custodian"
           name="custodian"
@@ -162,8 +163,8 @@ export default function UploadBankStatement() {
             placeholder="Enter the relationship number"
           />
         </Form.Item>
-      </Row>
-      <Row className="gap-x-8">
+      </div>
+      <div className={formWrapper}>
         <Form.Item
           label="Portfolio Number"
           name="portfolio_number"
@@ -189,7 +190,7 @@ export default function UploadBankStatement() {
         >
           <SelectStatementType placeholder="Select statement type" />
         </Form.Item>
-      </Row>
+      </div>
       <Form.Item>
         <Form.Item
           name="file"

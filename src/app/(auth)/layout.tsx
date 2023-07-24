@@ -16,7 +16,7 @@ export default function AuthRootLayout({ children }: { children: ReactNode }) {
           <Layout suppressHydrationWarning hasSider className="h-full">
             <Sider
               width="50%"
-              className="bg-primary-10 bg-[url(/AuthBackground.svg)] bg-cover"
+              className="hidden lap:block lap:bg-primary-10 lap:bg-[url(/AuthBackground.svg)] lap:bg-cover"
             >
               <div className="flex h-full items-center justify-center">
                 <AuthIllustration />

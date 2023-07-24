@@ -2,7 +2,8 @@ import useFormState from "@/hooks/useForm";
 import { IFormProps } from "@/interfaces/Main";
 import formatInitialValues from "@/lib/formatInitialValues";
 import formatTriggerValues from "@/lib/formatTriggerValues";
-import { Form, Input, Row } from "antd";
+import { Form, Input } from "antd";
+import { formWrapper } from "@/constants/strings";
 import { DatePicker } from "../../Input/DatePicker";
 import InputPrice from "../../Input/InputPrice";
 import InputQuantity from "../../Input/InputQuantity";
@@ -30,7 +31,7 @@ export default function PositionStatementForm({
       size="large"
       className="space-y-6"
     >
-      <Row className="gap-x-8">
+      <div className={formWrapper}>
         <Form.Item label="Client" name="client" className="flex-1">
           <SelectClient placeholder="Select client" />
         </Form.Item>
@@ -41,16 +42,16 @@ export default function PositionStatementForm({
         >
           <DatePicker />
         </Form.Item>
-      </Row>
-      <Row className="gap-x-8">
+      </div>
+      <div className={formWrapper}>
         <Form.Item label="Asset Class" name="asset_class" className="flex-1">
           <SelectAsset placeholder="Select asset class" />
         </Form.Item>
         <Form.Item label="ISIN" name="isin" className="flex-1">
           <Input placeholder="Enter ISIN" />
         </Form.Item>
-      </Row>
-      <Row className="gap-x-8">
+      </div>
+      <div className={formWrapper}>
         <Form.Item label="Custodian" name="custodian" className="flex-1">
           <SelectCustodian placeholder="Select custodian" />
         </Form.Item>
@@ -61,19 +62,19 @@ export default function PositionStatementForm({
         >
           <SelectRelationshipNumber placeholder="Select relationship number" />
         </Form.Item>
-      </Row>
+      </div>
       <Form.Item label="Description" name="description">
         <Input placeholder="Enter description" />
       </Form.Item>
-      <Row className="gap-x-8">
+      <div className={formWrapper}>
         <Form.Item label="Original Currency" name="currency" className="flex-1">
           <SelectCurrency placeholder="Select original currency" />
         </Form.Item>
         <Form.Item label="Quantity" name="quantity" className="flex-1">
           <InputQuantity className="w-full" placeholder="Enter the quantity" />
         </Form.Item>
-      </Row>
-      <Row className="gap-x-8">
+      </div>
+      <div className={formWrapper}>
         <Form.Item label="Cost Price" name="cost_price" className="flex-1">
           <InputPrice
             currency={currency}
@@ -88,11 +89,11 @@ export default function PositionStatementForm({
             placeholder="Enter MTM price"
           />
         </Form.Item>
-      </Row>
+      </div>
       <Form.Item
         label="Accrued Interest"
         name="accrued_interest"
-        className="w-1/2 pr-4"
+        className="w-auto pr-4 tab:w-1/2"
       >
         <InputPrice
           currency={currency}

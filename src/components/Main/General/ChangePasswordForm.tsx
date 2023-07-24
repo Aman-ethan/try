@@ -1,7 +1,7 @@
 "use client";
 
 import useChangePassword from "@/hooks/useChangePassword";
-import { Button, Form, FormRule, Input, Row, message } from "antd";
+import { Button, Form, FormRule, Input, message } from "antd";
 import { useRouter } from "next/navigation";
 
 interface IChangePasswordForm {
@@ -82,8 +82,12 @@ export default function ChangePasswordForm() {
       >
         <Input.Password />
       </Form.Item>
-      <Row className="gap-x-4" justify="end">
-        <Button onClick={router.back} disabled={isMutating} className="px-7">
+      <div className="flex gap-x-4 gap-y-4 mob:flex-col tab:flex-row lap:justify-end">
+        <Button
+          onClick={router.back}
+          disabled={isMutating}
+          className="px-7 mob:order-last tab:order-last lap:order-none"
+        >
           Cancel
         </Button>
         <Button
@@ -94,7 +98,7 @@ export default function ChangePasswordForm() {
         >
           Submit
         </Button>
-      </Row>
+      </div>
     </Form>
   );
 }

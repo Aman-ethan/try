@@ -27,7 +27,7 @@ export default function StatementFilter() {
           <Button
             size="large"
             icon={<FilterOutlined />}
-            className="w-1/2 tab:w-auto"
+            className="flex w-1/2 tab:hidden"
             onClick={() => setShowFilter(!showFilter)}
           >
             Filters
