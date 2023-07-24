@@ -69,8 +69,9 @@ export default function VerifyOTPForm() {
     if (userId) {
       prefetch("/overview");
       prefetch("/reset-password");
+    } else {
+      push("/login");
     }
-    push("/login");
   }, [userId, push, prefetch]);
 
   const getValueFromEvent = (e: ChangeEvent<HTMLInputElement>) => {

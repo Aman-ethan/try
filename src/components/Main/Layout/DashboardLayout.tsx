@@ -2,6 +2,7 @@
 
 import Logo from "@/components/Icon/Logo";
 import ROUTE from "@/constants/route";
+import { MenuItemClassName } from "@/constants/strings";
 import useAuth from "@/hooks/useAuth";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import {
@@ -82,9 +83,13 @@ function UserProfile() {
     },
     {
       label: (
-        <Link onClick={() => logout()} href="/login">
+        <button
+          type="button"
+          className={MenuItemClassName}
+          onClick={() => logout()}
+        >
           Logout
-        </Link>
+        </button>
       ),
       key: "logout",
       icon: <LogoutOutlined className={iconClassName} />,

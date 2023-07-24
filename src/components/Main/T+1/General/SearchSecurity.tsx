@@ -2,7 +2,11 @@ import Title from "@/components/Typography/Title";
 import { useTransactionServerLazyQuery } from "@/hooks/useQuery";
 import { ISecuritySearchProps } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { CloseOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  MinusCircleOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { Button, Form, FormRule, Input, Radio, Row, message } from "antd";
 import SelectAsset from "../../Input/SelectAsset";
 import SelectCurrency from "../../Input/SelectCurrency";
@@ -15,12 +19,17 @@ const PublicSecurityRules: Partial<Record<"symbol", FormRule[]>> = {
 };
 
 const PrivateSecurityRules: Partial<
-  Record<"security" | "security_name" | "asset_class" | "currency", FormRule[]>
+  Record<
+    "security" | "security_name" | "asset_class" | "currency" | "key" | "value",
+    FormRule[]
+  >
 > = {
   security: [{ required: true, message: "Please enter a security" }],
   security_name: [{ required: true, message: "Please enter a security name" }],
   asset_class: [{ required: true, message: "Please select an asset class" }],
   currency: [{ required: true, message: "Please select a currency" }],
+  key: [{ required: true, message: "Please enter a key" }],
+  value: [{ required: true, message: "Please enter a value" }],
 };
 
 const FieldPrefix = "new_security";
@@ -133,6 +142,7 @@ function PrivateSecurityForm() {
       await form.validateFields(fields);
       const newSecurity = form.getFieldValue(FieldPrefix);
       const { security_name, security } = newSecurity;
+
       form.setFieldsValue({
         search_security: false,
         private: true,
@@ -142,7 +152,6 @@ function PrivateSecurityForm() {
         },
         ...newSecurity,
       });
-      form.resetFields(fields);
     } catch {
       // Do nothing
     }
@@ -187,13 +196,55 @@ function PrivateSecurityForm() {
       </Row>
       <Row align="middle" className="gap-x-4">
         <Title level={6}>Additional Properties</Title>
-        <Button
-          shape="circle"
-          className="shadow"
-          icon={<PlusOutlined className="text-sm" />}
-        />
+        <Form.List name="extra">
+          {(fields, { add, remove }) => (
+            <>
+              <div>
+                <Button
+                  shape="circle"
+                  className="shadow"
+                  icon={<PlusOutlined className="text-sm" />}
+                  onClick={add}
+                />
+              </div>
+              <div className="w-full space-y-6">
+                {fields.map(({ key, name, ...restField }) => (
+                  <div key={key} className="flex gap-x-6">
+                    <Form.Item
+                      {...restField}
+                      name={[name, "key"]}
+                      label="Key"
+                      className="flex-1"
+                      rules={PrivateSecurityRules.key}
+                    >
+                      <Input placeholder="Enter Key" />
+                    </Form.Item>
+                    <Form.Item
+                      {...restField}
+                      name={[name, "value"]}
+                      label="Value"
+                      className="flex-1"
+                      rules={PrivateSecurityRules.value}
+                    >
+                      <Input placeholder="Enter Value" />
+                    </Form.Item>
+                    <MinusCircleOutlined
+                      className="text-2xl font-light text-red-500"
+                      onClick={() => remove(name)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </Form.List>
       </Row>
-      <Button onClick={addSecurity} block type="primary" size="large">
+      <Button
+        onClick={addSecurity}
+        type="primary"
+        size="large"
+        className="ml-auto block"
+      >
         Add New Security
       </Button>
     </>

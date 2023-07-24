@@ -72,7 +72,7 @@ const Columns: TableColumnsType<IActivePosition> = [
     dataIndex: "average_price",
     sorter: true,
     render: (price, record) => formatPrice(price, record.currency),
-    width: 135,
+    width: 140,
   },
   {
     title: "MTM Price",
@@ -80,7 +80,7 @@ const Columns: TableColumnsType<IActivePosition> = [
     dataIndex: "mtm_price",
     sorter: true,
     render: (price, record) => formatPrice(price, record.currency),
-    width: 130,
+    width: 115,
   },
   {
     title: "Unrealized P/L",
@@ -88,7 +88,7 @@ const Columns: TableColumnsType<IActivePosition> = [
     dataIndex: "unrealised_pl",
     sorter: true,
     render: (pl, record) => formatPrice(pl, record.currency),
-    width: 135,
+    width: 175,
   },
   {
     title: "Tags",
