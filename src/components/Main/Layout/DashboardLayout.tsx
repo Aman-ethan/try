@@ -23,8 +23,12 @@ import {
   Row,
 } from "antd";
 import Link from "next/link";
-import { usePathname, useSelectedLayoutSegments } from "next/navigation";
-import { ReactNode, useLayoutEffect, useState } from "react";
+import {
+  usePathname,
+  useRouter,
+  useSelectedLayoutSegments,
+} from "next/navigation";
+import { ReactNode, useEffect, useLayoutEffect, useState } from "react";
 import CurrencyTag from "../General/CurrencyTag";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 
@@ -64,6 +68,12 @@ function User() {
 
 function UserProfile() {
   const { logout } = useAuth();
+  const { prefetch } = useRouter();
+
+  useEffect(() => {
+    prefetch("/login");
+  }, [prefetch]);
+
   const ProfileItems = [
     {
       label: <Link href="/change-password">Change Password</Link>,

@@ -26,7 +26,7 @@ const OPT_LENGTH = 6;
 
 export default function VerifyOTPForm() {
   const [form] = Form.useForm();
-  const { push, replace } = useRouter();
+  const { push, replace, prefetch } = useRouter();
   const otpRef = useRef<Record<string, InputRef | null>>({});
   const setCookie = useCookies<string>([])[1];
 
@@ -66,9 +66,12 @@ export default function VerifyOTPForm() {
   });
 
   useEffect(() => {
-    if (userId) return;
+    if (userId) {
+      prefetch("/overview");
+      prefetch("/reset-password");
+    }
     push("/login");
-  }, [userId, push]);
+  }, [userId, push, prefetch]);
 
   const getValueFromEvent = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
