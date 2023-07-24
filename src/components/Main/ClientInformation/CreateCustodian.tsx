@@ -1,19 +1,17 @@
 "use client";
 
-import { message, SelectProps, Button } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
+import Select from "@/components/Input/Select";
+import { useTransactionServerMutation } from "@/hooks/useMutation";
+import useSearchParams from "@/hooks/useSearchParams";
 import useSelectCustodian from "@/hooks/useSelectCustodian";
 import { TSelectCustodianParams } from "@/interfaces/Main";
-import useDependentSelect from "@/hooks/useDependentSelect";
-import { useTransactionServerMutation } from "@/hooks/useMutation";
-import Select from "@/components/Input/Select";
 import revalidate from "@/lib/revalidate";
-import useSearchParams from "@/hooks/useSearchParams";
+import { PlusOutlined } from "@ant-design/icons";
+import { Button, SelectProps, message } from "antd";
+import React, { useState } from "react";
 
 export default function CreateCustodian({
   params,
-  reset,
   ...props
 }: SelectProps &
   Partial<{ params: TSelectCustodianParams; reset: () => void }>) {
@@ -24,21 +22,11 @@ export default function CreateCustodian({
   const { get: getSearchParams } = useSearchParams();
   const client_id = getSearchParams("client_id");
 
-  useDependentSelect({
-    dependsOn: params?.clientId,
-    dependentProps: {
-      isLoading,
-      options,
-      reset,
-      value: props.value,
-    },
-  });
-
   const { trigger } = useTransactionServerMutation("/custodian/", {
     onSuccess: () => {
+      revalidate("/custodian/", false);
       message.success("Custodian Added successfully");
       setAddCustodian(false);
-      revalidate("/custodian/");
     },
     onError: (error) => {
       message.error(error.message);
