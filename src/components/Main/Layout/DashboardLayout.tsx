@@ -63,7 +63,7 @@ function User() {
   );
 }
 
-const ProfileItems: MenuProps["items"] = [
+const ProfileItems = [
   {
     label: <Link href="/change-password">Change Password</Link>,
     key: "change-password",
@@ -73,17 +73,20 @@ const ProfileItems: MenuProps["items"] = [
 
 function UserProfile() {
   const { logout } = useAuth();
-  ProfileItems?.push({
-    label: (
-      <Link onClick={logout} href="/login">
-        Logout
-      </Link>
-    ),
-    key: "logout",
-    icon: <LogoutOutlined className={iconClassName} />,
-  });
+  const items = [
+    ...ProfileItems,
+    {
+      label: (
+        <Link onClick={logout} href="/login">
+          Logout
+        </Link>
+      ),
+      key: "logout",
+      icon: <LogoutOutlined className={iconClassName} />,
+    },
+  ];
   return (
-    <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
+    <Dropdown menu={{ items }} trigger={["click"]}>
       <div className="cursor-pointer space-x-2">
         <User />
         <CaretDownFilled />
