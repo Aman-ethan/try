@@ -5,7 +5,7 @@ import GainerLoser from "@/components/Main/Overview/GainerLoser";
 import Title from "@/components/Typography/Title";
 import Analytics from "@/components/Main/Overview/Analytics";
 import GainerLoserFilter from "@/components/Main/Overview/GainerLoserFilter";
-import { Radio } from "@/lib/antd";
+import { RadioButton, RadioGroup } from "@/lib/antd";
 
 export default function Home() {
   return (
@@ -28,24 +28,24 @@ export default function Home() {
         <div className="tab:item-center flex flex-col space-y-4 tab:flex-row tab:justify-between tab:space-y-0">
           <Title level={4}>Gainer/Loser</Title>
           <CurrencyTag currency="sgd" />
-          <Radio.Group
+          <RadioGroup
             defaultValue="table_view"
             buttonStyle="solid"
             className="w-full tab:w-auto"
           >
-            <Radio.Button
+            <RadioButton
               className="w-1/2 text-center tab:w-auto"
               value="table_view"
             >
               Table View
-            </Radio.Button>
-            <Radio.Button
+            </RadioButton>
+            <RadioButton
               className="w-1/2 text-center tab:w-auto"
               value="chart_view"
             >
               Chart View
-            </Radio.Button>
-          </Radio.Group>
+            </RadioButton>
+          </RadioGroup>
         </div>
         <GainerLoserFilter />
         <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-4">
