@@ -32,7 +32,7 @@ async function fetcher({ url, init, error }: IFetcherParams) {
 
     throw new Error(json.error);
   } catch (e) {
-    if (e instanceof Error) {
+    if (e instanceof Error && e.message) {
       throw e;
     } else {
       throw new Error(error);
@@ -86,7 +86,7 @@ export function postFormFetcher(baseURL: string) {
 export function getFetcher(baseURL: string) {
   return (key: string) =>
     fetcher({
-      url: baseURL + key,
+      url: baseURL + (Array.isArray(key) ? key[0] : key),
       init: {
         method: "GET",
         headers: {

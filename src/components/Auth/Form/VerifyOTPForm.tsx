@@ -4,6 +4,7 @@ import { cookieOptions } from "@/constants/cookie";
 import { AccessTokenKey, RefreshTokenKey } from "@/constants/strings";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import useSearchParams from "@/hooks/useSearchParams";
+import { getExpiryFromToken } from "@/lib/token";
 import { Button, Form, Input, InputRef, Row, message } from "antd";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, KeyboardEvent, useEffect, useRef } from "react";
@@ -40,23 +41,23 @@ export default function VerifyOTPForm() {
     IVerifyOTPResponse
   >("/verify-otp", {
     onSuccess(data) {
-      if (data.access_token && data.refresh_token) {
+      const { access_token, refresh_token } = data;
+      if (access_token && refresh_token) {
         switch (nextPath) {
           case "/reset-password": {
             // setting a session cookie
-            setCookie(AccessTokenKey, data.access_token, cookieOptions);
+            setCookie(AccessTokenKey, access_token, cookieOptions);
             replace(nextPath);
             break;
           }
           default: {
-            const currentDate = Date.now();
-            setCookie(AccessTokenKey, data.access_token, {
+            setCookie(AccessTokenKey, access_token, {
               ...cookieOptions,
-              expires: new Date(currentDate + 1000 * 60 * 60),
+              expires: getExpiryFromToken(access_token),
             });
-            setCookie(RefreshTokenKey, data.refresh_token, {
+            setCookie(RefreshTokenKey, refresh_token, {
               ...cookieOptions,
-              expires: new Date(currentDate + 1000 * 60 * 60 * 2),
+              expires: getExpiryFromToken(refresh_token),
             });
           }
         }

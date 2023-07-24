@@ -13,7 +13,7 @@ export default function AuthRootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body id="layout" className="opacity-0 transition-opacity">
         <AppProvider>
-          <Layout hasSider className="h-full">
+          <Layout suppressHydrationWarning hasSider className="h-full">
             <Sider
               width="50%"
               className="bg-primary-10 bg-[url(/AuthBackground.svg)] bg-cover"

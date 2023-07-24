@@ -1,6 +1,7 @@
 import { cookieOptions } from "@/constants/cookie";
 import { AccessTokenKey, RefreshTokenKey } from "@/constants/strings";
 import { useAuthServerMutation } from "@/hooks/useMutation";
+import { getExpiryFromToken, getTimeoutFromToken } from "@/lib/token";
 import { message } from "antd";
 import {
   ReactNode,
@@ -23,26 +24,29 @@ interface IAuthProviderProps {
   children: ReactNode;
 }
 
+const REFRESH_OFFSET = 5 * 60 * 1000;
+
 export const AuthContext = createContext({
   isLoggedIn: false,
-  refreshToken: async () => {},
+  refresh: async () => {},
+  logout: () => {},
 });
 
 export default function AuthProvider({ children }: IAuthProviderProps) {
-  const [{ access_token, refresh_token }, setCookie] = useCookies([
-    AccessTokenKey,
-    RefreshTokenKey,
-  ]);
+  const [{ access_token, refresh_token }, setCookie, removeCookie] = useCookies(
+    [AccessTokenKey, RefreshTokenKey]
+  );
 
   const { trigger } = useAuthServerMutation<
     ITokenRefreshArgs,
     ITokenRefreshResponse
   >("/token/refresh/", {
     onSuccess(data) {
-      if (data.access) {
-        setCookie(AccessTokenKey, data.access, {
+      const accessToken = data.access;
+      if (accessToken) {
+        setCookie(AccessTokenKey, accessToken, {
           ...cookieOptions,
-          expires: new Date(Date.now() + 1000 * 60 * 60),
+          expires: getExpiryFromToken(accessToken),
         });
       }
     },
@@ -51,24 +55,51 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
     },
   });
 
-  const refreshToken = useCallback(async () => {
-    if (!refresh_token) return;
+  const refresh = useCallback(async () => {
     await trigger({ refresh: refresh_token });
   }, [trigger, refresh_token]);
 
-  useEffect(() => {
-    if (access_token) return;
-    refreshToken();
-  }, [access_token, refreshToken]);
+  const logout = useCallback(
+    (msg?: string) => {
+      removeCookie(AccessTokenKey);
+      removeCookie(RefreshTokenKey);
+      if (msg) {
+        message.info(msg);
+      }
+    },
+    [removeCookie]
+  );
 
   const isLoggedIn = Boolean(refresh_token);
+
+  useEffect(() => {
+    if (access_token) {
+      const accessTimeout = setTimeout(
+        refresh,
+        Math.max(getTimeoutFromToken(access_token) - REFRESH_OFFSET, 0) // Offset might cause timeout to be negative
+      );
+      const refreshTimeout = setTimeout(
+        () => logout("Session expired. Please login again."),
+        getTimeoutFromToken(refresh_token)
+      );
+      return () => {
+        clearTimeout(accessTimeout);
+        clearTimeout(refreshTimeout);
+      };
+    }
+    if (refresh_token) {
+      refresh();
+    }
+    return () => undefined;
+  }, [refresh, logout, access_token, refresh_token]);
 
   const value = useMemo(
     () => ({
       isLoggedIn,
-      refreshToken,
+      refresh,
+      logout,
     }),
-    [isLoggedIn, refreshToken]
+    [isLoggedIn, refresh, logout]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

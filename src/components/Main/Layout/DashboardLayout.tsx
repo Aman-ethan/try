@@ -2,7 +2,8 @@
 
 import Logo from "@/components/Icon/Logo";
 import ROUTE from "@/constants/route";
-import logout from "@/lib/logout";
+import useAuth from "@/hooks/useAuth";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
 import {
   CaretDownFilled,
   LogoutOutlined,
@@ -10,6 +11,7 @@ import {
   MenuUnfoldOutlined,
   SyncOutlined,
 } from "@ant-design/icons";
+import { useMediaQuery } from "@mantine/hooks";
 import {
   Avatar,
   Button,
@@ -21,11 +23,9 @@ import {
   MenuProps,
   Row,
 } from "antd";
-import { ReactNode, useLayoutEffect, useState } from "react";
-import { useMediaQuery } from "@mantine/hooks";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
 import Link from "next/link";
 import { usePathname, useSelectedLayoutSegments } from "next/navigation";
+import { ReactNode, useLayoutEffect, useState } from "react";
 import CurrencyTag from "../General/CurrencyTag";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 
@@ -50,23 +50,6 @@ const iconClassName = "text-neutral-11";
 
 const currentDate = new Date();
 
-const ProfileItems: MenuProps["items"] = [
-  {
-    label: <Link href="/change-password">Change Password</Link>,
-    key: "change-password",
-    icon: <SyncOutlined className={iconClassName} />,
-  },
-  {
-    label: (
-      <Link onClick={logout} href="/login">
-        Logout
-      </Link>
-    ),
-    key: "logout",
-    icon: <LogoutOutlined className={iconClassName} />,
-  },
-];
-
 function User() {
   const { data } = useTransactionServerQuery<IUser>("/users/me/");
   const { name, username } = data || {};
@@ -80,7 +63,25 @@ function User() {
   );
 }
 
+const ProfileItems: MenuProps["items"] = [
+  {
+    label: <Link href="/change-password">Change Password</Link>,
+    key: "change-password",
+    icon: <SyncOutlined className={iconClassName} />,
+  },
+];
+
 function UserProfile() {
+  const { logout } = useAuth();
+  ProfileItems?.push({
+    label: (
+      <Link onClick={logout} href="/login">
+        Logout
+      </Link>
+    ),
+    key: "logout",
+    icon: <LogoutOutlined className={iconClassName} />,
+  });
   return (
     <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
       <div className="cursor-pointer space-x-2">
@@ -108,7 +109,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
   const openKey = layoutSegments.length > 1 ? [layoutSegments[0]] : undefined;
   const selectedKeys = pathname ? [pathname] : undefined;
   return (
-    <Layout hasSider className="h-full">
+    <Layout suppressHydrationWarning hasSider className="h-full">
       <Layout.Sider
         trigger={null}
         collapsed={collapsed}

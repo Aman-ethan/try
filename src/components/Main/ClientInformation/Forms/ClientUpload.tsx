@@ -32,7 +32,7 @@ const UploadTypeOptions = [
 ];
 
 function BulkUpload({ sampleLink }: IUploadClientProps) {
-  const { refreshToken } = useAuth();
+  const { refresh } = useAuth();
   const [form] = Form.useForm();
   const urlKey = `/client/`;
   const { isMutating, trigger } = useTransactionServerFormMutation<
@@ -40,7 +40,7 @@ function BulkUpload({ sampleLink }: IUploadClientProps) {
     IUploadClientResponse
   >(`${urlKey}upload/`, {
     async onSuccess(data) {
-      await refreshToken();
+      await refresh();
       message.success(data.success);
       form.resetFields();
       revalidate(urlKey, false);

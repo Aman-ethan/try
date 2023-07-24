@@ -1,8 +1,9 @@
 "use client";
 
+import { AccessTokenKey, TransactionServerUrl } from "@/constants/strings";
 import { getFetcher } from "@/lib/fetcher";
+import { useCookies } from "react-cookie";
 import useSWR, { SWRConfiguration } from "swr";
-import { TransactionServerUrl } from "@/constants/strings";
 import { SWRMutationConfiguration } from "swr/mutation";
 import useMutation from "./useMutation";
 
@@ -11,7 +12,8 @@ function useQuery<Data>(
   baseURL: string,
   config?: SWRConfiguration<Data, Error>
 ) {
-  return useSWR<Data, Error>(key, getFetcher(baseURL), config);
+  const { access_token } = useCookies([AccessTokenKey])[0];
+  return useSWR<Data, Error>([key, access_token], getFetcher(baseURL), config);
 }
 
 export function useTransactionServerQuery<Data>(

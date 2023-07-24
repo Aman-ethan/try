@@ -105,6 +105,7 @@ export default function SignupForm() {
       size="large"
       labelCol={{ className: "font-medium" }}
       className="space-y-10"
+      requiredMark={false}
     >
       <div className="space-y-6">
         <Row justify="space-between" className="gap-x-4">
