@@ -44,9 +44,8 @@ const ROUTE = [
         label: <Link href="/position-search">Balance Sheet</Link>,
       },
       {
-        disabled: true,
-        key: "/balance-sheet",
-        label: "Transaction",
+        key: "/transaction",
+        label: <Link href="/transaction">Transaction</Link>,
       },
       {
         disabled: true,
