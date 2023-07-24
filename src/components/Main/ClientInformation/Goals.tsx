@@ -1,7 +1,6 @@
 "use client";
 
-import { ProCard } from "@ant-design/pro-components";
-import { Col, Row, Typography } from "antd";
+import { Card, Col, Row, Skeleton, Typography } from "antd";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useSearchParams from "@/hooks/useSearchParams";
@@ -63,14 +62,13 @@ const renderGoalsType = (key: keyof TGoalsType, item: TGoalsType) => {
 
 export default function Goals() {
   const { data, isLoading } = useGoal();
-
+  if (isLoading) return <Skeleton />;
   return (
     <div className="mt-4 h-96 w-full overflow-y-scroll tab:w-11/12">
       {data?.map((item) => (
-        <ProCard
+        <Card
           key={item?.id}
           title={item?.name || "No Name"}
-          headerBordered
           bordered
           extra={[
             <div className="flex">
@@ -92,9 +90,10 @@ export default function Goals() {
           >
             {Object.entries(GoalsItemsMap).map(([label, key]) => (
               <Col
+                key={key}
                 sm={24}
                 md={key === "asset_class_preference" ? 24 : 12}
-                className="flex flex-col "
+                className="flex flex-col"
               >
                 <Typography.Text type="secondary">{label}</Typography.Text>
                 <Typography.Text style={{ marginTop: "0.3em" }}>
@@ -103,7 +102,7 @@ export default function Goals() {
               </Col>
             ))}
           </Row>
-        </ProCard>
+        </Card>
       ))}
     </div>
   );

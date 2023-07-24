@@ -8,13 +8,14 @@ import {
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import revalidate from "@/lib/revalidate";
-import { Button, Form, Input, Row, message } from "antd";
+import { Button, Form, Input, Row, Spin, message } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import SelectCurrency from "../../Input/SelectCurrency";
 import CreateCustodian from "../CreateCustodian";
 
 interface IBankAccountFormsProps {
   onClose: () => void;
+  id?: string;
 }
 
 type TBankAccount = {
@@ -39,13 +40,11 @@ const URLs = {
   put: "/bank_account/{id}/",
 };
 
-function useBankAccount() {
-  const { get: getSearchParams } = useSearchParams();
-  const bankAccountId = getSearchParams("bank_account_id");
-  const { data } = useTransactionServerQuery<TBankAccount>(
-    bankAccountId ? URLs.get.replace("{id}", bankAccountId) : null
+function useBankAccount(id?: string) {
+  const { data, isLoading } = useTransactionServerQuery<TBankAccount>(
+    id ? URLs.get.replace("{id}", id) : null
   );
-  return { bankAccountId, data, getSearchParams };
+  return { id, data, isLoading };
 }
 
 const BankAccountFormMap: Record<keyof TBankAccount, string> = {
@@ -99,11 +98,15 @@ function BankAccountFormInput({ type, label }: IBankAccountFormInputProps) {
 
 type Tkey = keyof TBankAccount;
 
-export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
+export default function BankAccountForms({
+  id,
+  onClose,
+}: IBankAccountFormsProps) {
   const [form] = Form.useForm();
   const [managerForm] = Form.useForm();
-  const { bankAccountId, data, getSearchParams } = useBankAccount();
+  const { data, isLoading } = useBankAccount(id);
   const [showRelationshipManager, setShowRelationshipManager] = useState(false);
+  const { get: getSearchParams } = useSearchParams();
   const clientId = getSearchParams("client_id");
 
   const handleMutationSuccess = () => {
@@ -122,8 +125,8 @@ export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
     },
   });
 
-  const { trigger: update, isMutating: isLoading } =
-    useTransactionServerPutMutation(URLs.put.replace("{id}", bankAccountId!), {
+  const { trigger: update, isMutating: isUpdating } =
+    useTransactionServerPutMutation(URLs.put.replace("{id}", id!), {
       onSuccess: () => {
         message.success("Bank Account Updated successfully");
         handleMutationSuccess();
@@ -133,23 +136,8 @@ export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
       },
     });
 
-  const loading = isMutating || isLoading;
+  const loading = isMutating || isUpdating;
   const { formId } = useFormState({ isMutating: loading });
-
-  const handleSubmit = (values: TBankAccount) => {
-    const payload = {
-      client: clientId,
-      ...values,
-      meta: {
-        relationship_manager_info: { ...managerForm.getFieldsValue() },
-      },
-    };
-    if (bankAccountId) {
-      update(payload);
-    } else {
-      trigger(payload);
-    }
-  };
 
   const onReset = useCallback(() => {
     form.resetFields();
@@ -161,6 +149,28 @@ export default function BankAccountForms({ onClose }: IBankAccountFormsProps) {
       onReset();
     }
   }, [data, onReset]);
+
+  if (isLoading)
+    return (
+      <div className="h-full flex justify-center items-center">
+        <Spin size="large" />
+      </div>
+    );
+
+  const handleSubmit = (values: TBankAccount) => {
+    const payload = {
+      client: clientId,
+      ...values,
+      meta: {
+        relationship_manager_info: { ...managerForm.getFieldsValue() },
+      },
+    };
+    if (id) {
+      update(payload);
+    } else {
+      trigger(payload);
+    }
+  };
 
   return (
     <Form

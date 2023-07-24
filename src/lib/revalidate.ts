@@ -1,11 +1,12 @@
+import { AccessTokenKey } from "@/constants/strings";
+import { Cookies } from "react-cookie";
 import { mutate } from "swr";
 import buildURLSearchParams from "./buildURLSearchParams";
 
 export default function revalidate(key: string, useURLSearchParams = true) {
-  return mutate(
+  return mutate([
     key +
-      buildURLSearchParams(
-        useURLSearchParams ? window.location.search : undefined
-      )
-  );
+      (useURLSearchParams ? buildURLSearchParams(window.location.search) : ""),
+    new Cookies().get(AccessTokenKey),
+  ]);
 }

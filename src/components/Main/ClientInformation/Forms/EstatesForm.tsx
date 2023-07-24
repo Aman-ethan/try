@@ -11,12 +11,13 @@ import useSearchParams from "@/hooks/useSearchParams";
 import formatInitialValues from "@/lib/formatInitialValues";
 import formatTriggerValues from "@/lib/formatTriggerValues";
 import revalidate from "@/lib/revalidate";
-import { Form, FormRule, Input, Row, message } from "antd";
+import { Form, FormRule, Input, Row, Spin, message } from "antd";
 import { useEffect } from "react";
 import { DatePicker } from "../../Input/DatePicker";
 
 interface IEstatesForm {
   onClose: () => void;
+  id?: string;
 }
 
 type TEstate = {
@@ -41,13 +42,11 @@ const URLs = {
   put: "/estate/{id}/",
 };
 
-function useEstate() {
-  const { get: getSearchParams } = useSearchParams();
-  const estateId = getSearchParams("estate_id");
-  const { data } = useTransactionServerQuery<TEstate>(
-    `${URLs.get}${estateId ? `${estateId}/` : ""}`
+function useEstate(id?: string) {
+  const { data, isLoading } = useTransactionServerQuery<TEstate>(
+    `${URLs.get}${id ? `${id}/` : ""}`
   );
-  return { data, getSearchParams, estateId };
+  return { data, isLoading };
 }
 
 const EstateFormMap: Record<keyof TEstate, string> = {
@@ -97,9 +96,10 @@ function EstateFormInputs({ type, label }: IEstateFormInputsProps) {
   }
 }
 
-export default function EstatesForm({ onClose }: IEstatesForm) {
+export default function EstatesForm({ onClose, id }: IEstatesForm) {
   const [form] = Form.useForm();
-  const { data, estateId, getSearchParams } = useEstate();
+  const { data, isLoading } = useEstate(id);
+  const { get: getSearchParams } = useSearchParams();
   const client = getSearchParams("client_id");
 
   const onReset = () => {
@@ -119,7 +119,7 @@ export default function EstatesForm({ onClose }: IEstatesForm) {
     },
   });
   const { trigger: update, isMutating: isUpdating } =
-    useTransactionServerPutMutation(URLs.put.replace("{id}", estateId || ""), {
+    useTransactionServerPutMutation(URLs.put.replace("{id}", id || ""), {
       onSuccess: () => {
         message.success("Estate Updated successfully");
         handleMutationSuccess();
@@ -130,10 +130,17 @@ export default function EstatesForm({ onClose }: IEstatesForm) {
   const { formId } = useFormState({ isMutating: loading });
 
   useEffect(() => {
-    if (data && estateId) {
+    if (data && id) {
       form.resetFields();
     }
-  }, [data, form, estateId]);
+  }, [data, form, id]);
+
+  if (isLoading)
+    return (
+      <div className="h-full flex justify-center items-center">
+        <Spin size="large" />
+      </div>
+    );
 
   const handleSubmit = async (values: TEstate) => {
     if (!client) {
@@ -142,7 +149,7 @@ export default function EstatesForm({ onClose }: IEstatesForm) {
     }
     const payload = formatTriggerValues({ client, ...values });
     try {
-      if (estateId) {
+      if (id) {
         await update(payload);
       } else {
         await trigger(payload);

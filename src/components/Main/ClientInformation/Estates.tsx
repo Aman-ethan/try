@@ -1,10 +1,9 @@
 "use client";
 
-import { ProCard } from "@ant-design/pro-components";
-import { Col, Row, Typography } from "antd";
-import { useSearchParams } from "next/navigation";
-import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { Card, Col, Row, Skeleton, Typography } from "antd";
+import { useSearchParams } from "next/navigation";
 import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import DeleteModal from "./Common/DeleteModal";
 
@@ -49,12 +48,14 @@ const EstateItemsMap: Record<string, keyof TEstate> = {
 };
 
 export default function Estates() {
-  const { data } = useEstates();
+  const { data, isLoading } = useEstates();
+
+  if (isLoading) return <Skeleton />;
 
   return (
     <div className="mt-4 h-96 w-full overflow-y-scroll tab:w-11/12">
       {data?.map((item: TEstate) => (
-        <ProCard
+        <Card
           key={item?.id}
           title={
             <Row
@@ -71,7 +72,6 @@ export default function Estates() {
               </Col>
             </Row>
           }
-          headerBordered
           bordered
           extra={[
             <div className="flex">
@@ -99,7 +99,7 @@ export default function Estates() {
               </Col>
             ))}
           </Row>
-        </ProCard>
+        </Card>
       ))}
     </div>
   );

@@ -49,15 +49,14 @@ const RiskLevels = [
 function useClient() {
   const { get: getSearchParams } = useSearchParams();
   const client_id = getSearchParams("client_id");
-  const { data, isLoading } = useTransactionServerQuery<TClient>(
-    `/client/${client_id}/`
-  );
+  const urlKey = `/client/${client_id}/`;
+  const { data, isLoading } = useTransactionServerQuery<TClient>(urlKey);
 
   const { trigger: updateClient, isMutating } =
-    useTransactionServerPutMutation<TClient>(`/client/${client_id}/`, {
+    useTransactionServerPutMutation<TClient>(urlKey, {
       onSuccess: () => {
         message.success("Client updated successfully");
-        revalidate(`/client/`);
+        revalidate(urlKey, false);
       },
     });
 
@@ -158,13 +157,15 @@ export default function ProfileEdit() {
         initialValues={formatInitialValues(data)}
         layout="vertical"
         className=" w-11/12"
-        onFinish={(values) => updateClient(formatTriggerValues(values))}
+        onFinish={(values) => {
+          updateClient(formatTriggerValues(values));
+        }}
         size="large"
         disabled={loading}
       >
         <Row className="grid grid-cols-1 gap-y-6 gap-x-16 tab:grid-cols-2">
           {Object.keys(ClientInformationMap).map((key) => (
-            <DetailsForm type={key as TFormType} />
+            <DetailsForm key={key} type={key as TFormType} />
           ))}
         </Row>
         <Row className=" float-right mt-4 flex gap-4 align-middle">

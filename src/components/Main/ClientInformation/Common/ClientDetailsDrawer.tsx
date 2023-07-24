@@ -3,7 +3,6 @@
 import { EditOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { lazy, useState } from "react";
-import useSearchParams from "@/hooks/useSearchParams";
 import useResize from "@/hooks/useResize";
 import Drawer from "../../General/Drawer";
 import { ResetButton, SubmitButton } from "../../General/DrawerFormButton";
@@ -16,6 +15,7 @@ interface IClientDetailsDrawerProps {
 
 interface IDetailsFormProps {
   type: string;
+  id?: string;
   onClose: () => void;
 }
 
@@ -23,14 +23,14 @@ const GoalsForm = lazy(() => import("../Forms/GoalsForm"));
 const EstatesForm = lazy(() => import("../Forms/EstatesForm"));
 const BankAccountsForm = lazy(() => import("../Forms/BankAccountsForm"));
 
-function DetailsForm({ type, onClose }: IDetailsFormProps) {
+function DetailsForm({ id, type, onClose }: IDetailsFormProps) {
   switch (type) {
     case "goals":
-      return <GoalsForm onClose={onClose} />;
+      return <GoalsForm id={id} onClose={onClose} />;
     case "estates":
-      return <EstatesForm onClose={onClose} />;
+      return <EstatesForm id={id} onClose={onClose} />;
     case "bank_accounts":
-      return <BankAccountsForm onClose={onClose} />;
+      return <BankAccountsForm id={id} onClose={onClose} />;
     default:
       return null;
   }
@@ -42,7 +42,6 @@ export default function ClientDetailsDrawer({
   id,
 }: IClientDetailsDrawerProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { updateSearchParams } = useSearchParams();
   const { placement } = useResize();
 
   const title = (
@@ -58,12 +57,6 @@ export default function ClientDetailsDrawer({
       open={isDrawerOpen}
       onClose={() => {
         setIsDrawerOpen(false);
-        updateSearchParams({
-          goal_id: null,
-          estate_id: null,
-          bank_account_id: null,
-          custodian: null,
-        });
       }}
       title={title}
       button={
@@ -72,28 +65,7 @@ export default function ClientDetailsDrawer({
           type={edit ? "default" : "primary"}
           className="capitalize"
           size="large"
-          icon={
-            edit ? (
-              <EditOutlined
-                className="text-sm"
-                onClick={() => {
-                  switch (type) {
-                    case "goals":
-                      updateSearchParams({ goal_id: id });
-                      break;
-                    case "estates":
-                      updateSearchParams({ estate_id: id });
-                      break;
-                    case "bank_accounts":
-                      updateSearchParams({ bank_account_id: id });
-                      break;
-                    default:
-                      break;
-                  }
-                }}
-              />
-            ) : undefined
-          }
+          icon={edit ? <EditOutlined className="text-sm" /> : undefined}
         >
           {edit ? "" : `Add ${type.replace("_", " ")}`}
         </Button>
@@ -105,7 +77,7 @@ export default function ClientDetailsDrawer({
         </>
       }
     >
-      <DetailsForm type={type} onClose={() => setIsDrawerOpen(false)} />
+      <DetailsForm id={id} type={type} onClose={() => setIsDrawerOpen(false)} />
     </Drawer>
   );
 }

@@ -7,5 +7,5 @@ export default function buildURLSearchParams(
     typeof params === "string" ? params : pickBy(params, isString)
   );
   urlSearchParams.sort();
-  return urlSearchParams ? `?${urlSearchParams}` : "";
+  return urlSearchParams.toString() ? `?${urlSearchParams}` : "";
 }

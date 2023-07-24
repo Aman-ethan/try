@@ -3,8 +3,7 @@
 import useBankAccounts from "@/hooks/useBankAccounts";
 import useSearchParams from "@/hooks/useSearchParams";
 import { IBankAccount } from "@/interfaces/Main";
-import { ProCard } from "@ant-design/pro-components";
-import { Col, Row, Typography } from "antd";
+import { Card, Col, Row, Skeleton, Typography } from "antd";
 import CurrencyTag from "../General/CurrencyTag";
 import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import DeleteModal from "./Common/DeleteModal";
@@ -18,15 +17,17 @@ const BankAccountItemsMap: Record<string, keyof IBankAccount> = {
 
 export default function BankAccounts() {
   const { get: getSearchParams } = useSearchParams();
-  const { data } = useBankAccounts({
+  const { data, isLoading } = useBankAccounts({
     clientId: getSearchParams("client_id"),
     custodianId: getSearchParams("custodian_id"),
   });
 
+  if (isLoading) return <Skeleton />;
+
   return (
     <div className="mt-4 h-96 w-full overflow-y-scroll tab:w-11/12">
       {data?.map((item) => (
-        <ProCard
+        <Card
           key={item?.relationship_number}
           title={
             <Row
@@ -43,7 +44,6 @@ export default function BankAccounts() {
               </Col>
             </Row>
           }
-          headerBordered
           bordered
           extra={[
             <div className="flex">
@@ -79,7 +79,7 @@ export default function BankAccounts() {
               </Col>
             ))}
           </Row>
-        </ProCard>
+        </Card>
       ))}
     </div>
   );

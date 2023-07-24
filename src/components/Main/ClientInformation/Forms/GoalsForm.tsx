@@ -7,7 +7,7 @@ import {
 } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import revalidate from "@/lib/revalidate";
-import { Form, Input, Row, Select, message } from "antd";
+import { Form, Input, Row, Select, Spin, message } from "antd";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
@@ -26,6 +26,7 @@ const ReturnExpectations = [
 
 interface GoalsFormProps {
   onClose: () => void;
+  id?: string;
 }
 
 type TGoal = {
@@ -41,27 +42,26 @@ const URLs = {
   put: "/goals/{id}/",
 };
 
-function useGoal() {
+function useGoal(id?: string) {
   const { get: getSearchParams } = useSearchParams();
-  const goalId = getSearchParams("goal_id");
-  const { data } = useTransactionServerQuery<TGoal>(
-    goalId ? URLs.get.replace("{id}", goalId) : null
+  const { data, isLoading } = useTransactionServerQuery<TGoal>(
+    id ? URLs.get.replace("{id}", id) : null
   );
 
   const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
     onSuccess: () => {
-      message.success("Goal Added successfully");
       revalidate(`/goals/`);
+      message.success("Goal Added successfully");
     },
     onError: () => {
       message.error("Something went wrong");
     },
   });
   const { trigger: update, isMutating: isUpdating } =
-    useTransactionServerPutMutation(URLs.put.replace("{id}", goalId!), {
+    useTransactionServerPutMutation(URLs.put.replace("{id}", id!), {
       onSuccess: () => {
-        message.success("Goal Updated successfully");
         revalidate(`/goals/`);
+        message.success("Goal Updated successfully");
       },
       onError: () => {
         message.error("Something went wrong");
@@ -69,7 +69,14 @@ function useGoal() {
     });
   const { formId } = useFormState({ isMutating: isMutating || isUpdating });
 
-  return { data, formId, goalId, getSearchParams, trigger, update };
+  return {
+    data,
+    formId,
+    getSearchParams,
+    trigger,
+    update,
+    isLoading,
+  };
 }
 
 type TGoalFormKeys = keyof TGoal;
@@ -116,12 +123,10 @@ function GoalFormInputs({ type, label }: IGoalFormInputsProps) {
   }
 }
 
-export default function GoalsForm({ onClose }: GoalsFormProps) {
+export default function GoalsForm({ id, onClose }: GoalsFormProps) {
   const [form] = Form.useForm();
-  const { data, formId, goalId, trigger, update, getSearchParams } = useGoal();
-
-  const client = getSearchParams("client_id");
-
+  const { data, formId, trigger, update, getSearchParams, isLoading } =
+    useGoal(id);
   useEffect(() => {
     if (data) {
       form.resetFields();
@@ -133,7 +138,8 @@ export default function GoalsForm({ onClose }: GoalsFormProps) {
   };
 
   const handleSubmit = async (values: TGoal) => {
-    if (goalId) {
+    const client = getSearchParams("client_id");
+    if (id) {
       await update({ client, ...values });
     } else {
       await trigger({ client, ...values });
@@ -149,6 +155,13 @@ export default function GoalsForm({ onClose }: GoalsFormProps) {
     return_expectations: "Return Expectations",
   };
 
+  if (isLoading)
+    return (
+      <div className="h-full flex justify-center items-center">
+        <Spin size="large" />
+      </div>
+    );
+
   return (
     <Form
       id={formId}
@@ -161,7 +174,7 @@ export default function GoalsForm({ onClose }: GoalsFormProps) {
     >
       <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
         {Object.entries(GoalFormMap).map(([key, label]) => (
-          <GoalFormInputs label={label} type={key as TGoalFormKeys} />
+          <GoalFormInputs key={key} label={label} type={key as TGoalFormKeys} />
         ))}
       </Row>
     </Form>
