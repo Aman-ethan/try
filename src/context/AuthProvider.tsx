@@ -61,8 +61,8 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
 
   const logout = useCallback(
     (msg?: string) => {
-      removeCookie(RefreshTokenKey);
-      removeCookie(AccessTokenKey);
+      removeCookie(RefreshTokenKey, cookieOptions);
+      removeCookie(AccessTokenKey, cookieOptions);
       if (msg) {
         message.info(msg);
       }
