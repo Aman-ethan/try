@@ -5,7 +5,7 @@ import GainerLoser from "@/components/Main/Overview/GainerLoser";
 import Title from "@/components/Typography/Title";
 import Analytics from "@/components/Main/Overview/Analytics";
 import GainerLoserFilter from "@/components/Main/Overview/GainerLoserFilter";
-import { Radio } from "antd";
+import { Radio } from "@/lib/antd";
 
 export default function Home() {
   return (

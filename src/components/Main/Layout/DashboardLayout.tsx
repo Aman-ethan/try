@@ -76,7 +76,7 @@ function UserProfile() {
     ...ProfileItems,
     {
       label: (
-        <Link onClick={logout} href="/login">
+        <Link onClick={() => logout()} href="/login">
           Logout
         </Link>
       ),
