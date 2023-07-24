@@ -1,10 +1,10 @@
 "use client";
 
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import { ILoginResponse, IUserArgs } from "@/interfaces/Auth";
-import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { Button, Form, FormRule, Input } from "antd";
 import { useRouter } from "next/navigation";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { ILoginResponse, IUserArgs } from "@/interfaces/Auth";
 
 const FormRules: Record<keyof IUserArgs, FormRule[]> = {
   username: [{ required: true, message: "Please enter your username" }],
@@ -43,8 +43,9 @@ export default function ForgotPasswordForm() {
       labelCol={{ className: "font-medium" }}
     >
       <Form.Item label="Username" name="username" rules={FormRules.username}>
-        <Input placeholder="Enter your username" />
+        <Input type="text" placeholder="Enter Username" autoFocus />
       </Form.Item>
+
       <Button
         htmlType="submit"
         type="primary"

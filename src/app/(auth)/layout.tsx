@@ -22,11 +22,11 @@ export default function AuthRootLayout({ children }: { children: ReactNode }) {
                 <AuthIllustration />
               </div>
             </Sider>
-            <Content className="max-h-screen space-y-12 overflow-y-scroll bg-neutral-1 px-24 pt-16">
+            <Content className="max-h-screen space-y-12 overflow-y-scroll bg-neutral-1 px-8 pt-16 tab:px-24">
               <Link href="/login">
                 <Logo />
               </Link>
-              <div className="max-w-[26.5rem]">{children}</div>
+              <div className="max-w-full lap:max-w-[26.5rem]">{children}</div>
             </Content>
           </Layout>
         </AppProvider>

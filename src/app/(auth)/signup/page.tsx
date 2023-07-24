@@ -5,18 +5,20 @@ import Link from "next/link";
 
 export default function SignupPage() {
   return (
-    <div className="space-y-8 pb-8">
+    <div className="flex h-screen flex-col space-y-8 pb-8">
       <Title>Create an account</Title>
       <SignupForm />
-      <Paragraph>
-        Already have an account?{" "}
-        <Link
-          href="/login"
-          className="font-medium hover:underline focus:underline"
-        >
-          Login
-        </Link>
-      </Paragraph>
+      <div className="flex flex-grow items-end justify-center pb-8 tab:items-start tab:justify-start tab:pb-0">
+        <Paragraph>
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="font-medium hover:underline focus:underline"
+          >
+            Login
+          </Link>
+        </Paragraph>
+      </div>
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function LoginPage() {
   return (
-    <div className="space-y-4">
+    <div className="flex h-screen flex-col space-y-4">
       <div className="space-y-12">
         <div className="space-y-4">
           <Title>Login</Title>
@@ -16,14 +16,14 @@ export default function LoginPage() {
         </div>
         <LoginForm />
       </div>
-      <div className="space-y-8">
+      <div className="flex flex-grow flex-col justify-between space-y-4 pb-8 tab:justify-start tab:pb-0">
         <Link
           href="/forgot-password"
           className="inline-block hover:underline focus:underline"
         >
           Forgot Password?
         </Link>
-        <Paragraph>
+        <Paragraph className="text-center tab:text-start">
           Not registered yet?&nbsp;
           <Link
             href="/signup"

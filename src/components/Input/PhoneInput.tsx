@@ -15,7 +15,7 @@ export default function PhoneInput(props: FormItemProps) {
         label="Phone Number"
         name="country_code"
         initialValue={DEFAULT_COUNTRY_CODE}
-        className="w-1/4"
+        className="w-auto tab:w-1/4"
       >
         <Select showSearch>
           {UniqueCallingCodes.map((code) => (

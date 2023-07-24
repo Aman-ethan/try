@@ -4,7 +4,7 @@ import Select from "@/components/Input/Select";
 import { TIME_FORMAT } from "@/constants/format";
 import Timezones from "@/constants/timezones";
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import { Button, Checkbox, Form, FormRule, Input, Row, TimePicker } from "antd";
+import { Button, Checkbox, Form, FormRule, Input, TimePicker } from "antd";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { useRouter } from "next/navigation";
@@ -108,7 +108,7 @@ export default function SignupForm() {
       requiredMark={false}
     >
       <div className="space-y-6">
-        <Row justify="space-between" className="gap-x-4">
+        <div className="space-y-6 tab:flex tab:flex-row tab:space-x-4 tab:space-y-0">
           <Form.Item label="Username" name="name" className="flex-1">
             <Input type="text" placeholder="john doe" autoFocus />
           </Form.Item>
@@ -120,9 +120,9 @@ export default function SignupForm() {
           >
             <Input type="email" placeholder="john.doe@acme.com" />
           </Form.Item>
-        </Row>
+        </div>
         <PhoneInput rules={FormRules.phone_number} />
-        <Row justify="space-between" className="gap-x-4">
+        <div className="space-y-6 tab:flex tab:flex-row tab:space-x-4 tab:space-y-0">
           <Form.Item
             label="Company Name"
             name="company_name"
@@ -133,8 +133,8 @@ export default function SignupForm() {
           <Form.Item label="Designation" name="designation" className="flex-1">
             <Input type="text" placeholder="Founder" />
           </Form.Item>
-        </Row>
-        <Row className="gap-x-2">
+        </div>
+        <div className="space-y-6 tab:flex tab:flex-row tab:space-x-4 tab:space-y-0">
           <Form.Item
             label="When can we contact you?"
             name="time"
@@ -149,10 +149,14 @@ export default function SignupForm() {
               className="w-full"
             />
           </Form.Item>
-          <Form.Item label="&nbsp;" name="timezone" className="w-1/2">
+          <Form.Item
+            label="&nbsp;"
+            name="timezone"
+            className="w-auto tab:w-1/2"
+          >
             <Select placeholder="Select timezone" options={timezoneOptions} />
           </Form.Item>
-        </Row>
+        </div>
         <Form.Item
           label="Where did you hear about us?"
           htmlFor="media"
