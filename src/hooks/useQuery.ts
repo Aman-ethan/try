@@ -16,7 +16,10 @@ function useQuery<Data>(
   return useSWR<Data, Error>(
     key ? [key, access_token] : null,
     getFetcher(baseURL),
-    config
+    {
+      keepPreviousData: true,
+      ...config,
+    }
   );
 }
 
