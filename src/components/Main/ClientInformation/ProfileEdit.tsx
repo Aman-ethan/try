@@ -163,7 +163,7 @@ export default function ProfileEdit() {
         size="large"
         disabled={loading}
       >
-        <Row className="grid grid-cols-1 gap-y-6 gap-x-16 tab:grid-cols-2">
+        <Row className="grid grid-cols-1 gap-x-16 gap-y-6 tab:grid-cols-2">
           {Object.keys(ClientInformationMap).map((key) => (
             <DetailsForm key={key} type={key as TFormType} />
           ))}

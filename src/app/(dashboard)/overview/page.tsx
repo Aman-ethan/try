@@ -3,13 +3,16 @@ import AssetNetWorth from "@/components/Main/Overview/AssetNetWorth";
 import ClientNetWorth from "@/components/Main/Overview/ClientNetWorth";
 import GainerLoser from "@/components/Main/Overview/GainerLoser";
 import Title from "@/components/Typography/Title";
+import Analytics from "@/components/Main/Overview/Analytics";
+import GainerLoserFilter from "@/components/Main/Overview/GainerLoserFilter";
+import { Radio } from "antd";
 
 export default function Home() {
   return (
     <div className="space-y-8 px-12 py-6">
-      <Title>Overview</Title>
-      <div className="flex gap-x-8">
-        <div className="w-2/5 space-y-4 rounded-lg bg-white px-8 py-6">
+      <Title level={2}>Overview</Title>
+      <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-4">
+        <div className="flex-1 space-y-4 rounded-lg bg-white px-8 py-6">
           <div className="flex items-center justify-between">
             <Title level={4}>Net Worth</Title>
             <CurrencyTag currency="sgd" />
@@ -20,15 +23,32 @@ export default function Home() {
           <AssetNetWorth />
         </div>
       </div>
+      <Analytics />
       <div className="space-y-6 rounded-lg bg-white p-6">
-        <div className="space-y-4">
-          <div className="flex justify-between">
-            <Title level={4}>Gainer/Loser</Title>
-            <CurrencyTag currency="sgd" />
-          </div>
-          <div className="h-1 border-b border-neutral-5" />
+        <div className="tab:item-center flex flex-col space-y-4 tab:flex-row tab:justify-between tab:space-y-0">
+          <Title level={4}>Gainer/Loser</Title>
+          <CurrencyTag currency="sgd" />
+          <Radio.Group
+            defaultValue="table_view"
+            buttonStyle="solid"
+            className="w-full tab:w-auto"
+          >
+            <Radio.Button
+              className="w-1/2 text-center tab:w-auto"
+              value="table_view"
+            >
+              Table View
+            </Radio.Button>
+            <Radio.Button
+              className="w-1/2 text-center tab:w-auto"
+              value="chart_view"
+            >
+              Chart View
+            </Radio.Button>
+          </Radio.Group>
         </div>
-        <div className="flex gap-x-10">
+        <GainerLoserFilter />
+        <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-4">
           <div className="flex-1 space-y-6">
             <Title level={5}>Gainer</Title>
             <GainerLoser urlKey="/positions/top_gainer/" />

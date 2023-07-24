@@ -20,7 +20,6 @@ import {
   Input,
   Layout,
   Menu,
-  MenuProps,
   Row,
 } from "antd";
 import Link from "next/link";

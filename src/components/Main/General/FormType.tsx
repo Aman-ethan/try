@@ -39,7 +39,7 @@ export default function FormType() {
         setUploadType(e.target.value);
       }}
       size="large"
-      className="space-x-6 divider-0"
+      className="divider-0 space-x-6"
     />
   );
 }

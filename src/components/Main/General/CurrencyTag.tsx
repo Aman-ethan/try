@@ -12,7 +12,7 @@ interface ICurrencyTagProps {
 export default function CurrencyTag({ currency }: ICurrencyTagProps) {
   if (!currency) return null;
   return (
-    <Tag className="-mr-0.5 flex w-max items-center space-x-2 bg-neutral-2 px-2 py-1">
+    <Tag className="-mr-0.5 hidden w-max items-center space-x-2 bg-neutral-2 px-2 py-1 tab:flex">
       <Image
         alt="flag"
         src={flags[currency.toLowerCase() as TCurrency] || flags.all}
