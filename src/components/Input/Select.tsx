@@ -1,12 +1,22 @@
 import { Select as AntdSelect, SelectProps } from "antd";
 import clsx from "clsx";
 import { DefaultOptionType } from "rc-select/lib/Select";
-import { useId } from "react";
+import { ReactElement, useId } from "react";
 
 function filterOption(input: string, option?: DefaultOptionType) {
-  return ((option?.label ?? "") as string)
-    .toLowerCase()
-    .includes(input.toLowerCase());
+  try {
+    const currentInput = input.toLowerCase();
+    const searchText =
+      typeof option?.label === "string"
+        ? option.label
+        : (option?.label as ReactElement)?.props?.children[1].props.children;
+    return (
+      searchText.toLowerCase().includes(currentInput) ||
+      option?.value?.toString().toLowerCase().includes(currentInput)
+    );
+  } catch (error) {
+    return false;
+  }
 }
 
 export default function Select({

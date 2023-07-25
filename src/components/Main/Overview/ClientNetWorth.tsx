@@ -6,8 +6,9 @@ import { useTransactionServerQuery } from "@/hooks/useQuery";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatCompactNumber } from "@/lib/format";
 import { SettingOutlined } from "@ant-design/icons";
-import { Button, TableColumnsType } from "antd";
+import { Button, Checkbox, Dropdown, MenuProps, TableColumnsType } from "antd";
 import dayjs from "dayjs";
+import { Dispatch, SetStateAction, useState } from "react";
 import Table from "../Table";
 
 interface IClient {
@@ -16,6 +17,11 @@ interface IClient {
   net_worth: number;
   total_pl: number;
   daily_pl: number;
+}
+
+interface ISettingProps {
+  selectedColumns: string[];
+  setSelectedColumns: Dispatch<SetStateAction<string[]>>;
 }
 
 function useClientNetWorth() {
@@ -46,7 +52,7 @@ function useClientNetWorth() {
   };
 }
 
-const columns: TableColumnsType = [
+const columns: TableColumnsType<IClient> = [
   {
     title: "Client Name",
     dataIndex: "client_name",
@@ -75,20 +81,97 @@ const columns: TableColumnsType = [
     render: formatCompactNumber,
   },
   {
-    title: (
-      <Button
-        icon={<SettingOutlined className="text-neutral-10" />}
-        type="text"
-      />
-    ),
-    key: "setting",
-    fixed: "right",
-    width: 40,
+    title: "MTD",
+    dataIndex: "mtd",
+    key: "mtd",
+    align: "right",
+    render: formatCompactNumber,
+  },
+  {
+    title: "QTD",
+    dataIndex: "qtd",
+    key: "qtd",
+    align: "right",
+    render: formatCompactNumber,
+  },
+  {
+    title: "YTD",
+    dataIndex: "ytd",
+    key: "ytd",
+    align: "right",
+    render: formatCompactNumber,
   },
 ];
 
+function Setting({ selectedColumns, setSelectedColumns }: ISettingProps) {
+  const items: MenuProps["items"] = columns.map((column) => {
+    const isChecked = selectedColumns.includes(column.key as string);
+    const onCheckboxClick = () => {
+      if (isChecked) {
+        setSelectedColumns(
+          selectedColumns.filter((key: string) => key !== column.key)
+        );
+      } else {
+        setSelectedColumns((prev) => [...prev, column.key as string]);
+      }
+    };
+    return {
+      label: (
+        <Checkbox checked={isChecked} onClick={onCheckboxClick}>
+          {column.title as string}
+        </Checkbox>
+      ),
+      key: column.key,
+      type: "group",
+    };
+  });
+  return (
+    <Dropdown
+      menu={{
+        items,
+      }}
+    >
+      <Button type="text" icon={<SettingOutlined />} />
+    </Dropdown>
+  );
+}
+
+const defaultSelectedColumns = [
+  "client-name",
+  "daily-pl",
+  "total-pl",
+  "net-worth",
+];
+
 export default function ClientNetWorth() {
+  const [selectedColumns, setSelectedColumns] = useState<string[]>(
+    defaultSelectedColumns
+  );
   const { isLoading, data } = useClientNetWorth();
+  const filteredColumns: TableColumnsType<IClient> = columns
+    .filter((column) => selectedColumns.includes(column.key as string))
+    .map((column, index) =>
+      index === 0
+        ? {
+            ...column,
+            align: "left",
+          }
+        : column
+    );
+  const Columns: TableColumnsType<IClient> = [
+    ...filteredColumns,
+    {
+      title: (
+        <Setting
+          selectedColumns={selectedColumns}
+          setSelectedColumns={setSelectedColumns}
+        />
+      ),
+      key: "setting",
+      fixed: "right",
+      width: 40,
+    },
+  ];
   return (
     <div className="flex-1 lap:w-2/5 space-y-6 rounded-lg bg-white p-6">
       <div className="flex items-center justify-between">
@@ -101,7 +184,7 @@ export default function ClientNetWorth() {
       </div>
       <Table
         loading={isLoading}
-        columns={columns}
+        columns={Columns}
         dataSource={data}
         rowKey="id"
         className="h-[24rem] table-reset"

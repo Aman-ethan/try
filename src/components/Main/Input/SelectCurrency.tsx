@@ -5,7 +5,7 @@ import { Image, SelectProps } from "antd";
 import Select from "../../Input/Select";
 
 interface ICurrency {
-  code: string;
+  code?: string;
   name: string;
   numeric_code: string;
 }
@@ -15,7 +15,7 @@ export default function SelectCurrency(props: SelectProps) {
     "/classification/currency/"
   );
   const options = data?.map(({ code, name }) => {
-    const flag = flags[code.toLowerCase() as TCurrency] || flags.all;
+    const flag = code ? flags[code.toLowerCase() as TCurrency] : flags.all;
     return {
       label: (
         <div className="space-x-2">

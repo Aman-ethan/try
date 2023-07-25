@@ -103,12 +103,6 @@ export default function CreateCustodian({
       options={options}
       {...props}
       onSearch={handleSearch}
-      filterOption={(input, option) =>
-        (option?.label ?? "")
-          .toLocaleString()
-          .toLowerCase()
-          .includes(input.toLocaleString().toLowerCase())
-      }
       dropdownRender={renderDropdown}
       onFocus={handleFocus}
     />
