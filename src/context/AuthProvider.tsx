@@ -83,10 +83,11 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
           clearTimeout(accessTimeout);
         };
       } catch {
-        if (refresh_token) {
-          refresh();
-        }
+        // Do nothing
       }
+    }
+    if (refresh_token) {
+      refresh();
     }
     return () => undefined;
   }, [refresh, access_token, refresh_token]);

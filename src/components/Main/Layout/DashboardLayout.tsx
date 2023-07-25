@@ -138,6 +138,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
               className="max-w-[22rem]"
               size="middle"
               placeholder="Search for Position, Market Data..."
+              disabled
             />
           </Row>
           <Row className="gap-x-6" align="middle">
@@ -151,7 +152,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           <Layout.Footer className="flex justify-center bg-neutral-3">
             ETHAN-AI &copy; ALL RIGHTS RESERVED {currentDate.getFullYear()}
             {". "}
-            Version: 1.6.0
+            Version: 1.7.0
           </Layout.Footer>
         </Layout.Content>
       </Layout>
