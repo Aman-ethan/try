@@ -14,11 +14,17 @@ import Select from "../../../Input/Select";
 const CrudeRoutes: MenuProps["items"] = [
   {
     key: "gross-allocations",
-    label: <Link href="/crude/gross-allocations">Gross Allocations</Link>,
+    label: (
+      <Link href="/analytics/crude/gross-allocations">Gross Allocations</Link>
+    ),
   },
   {
     key: "relative-performance",
-    label: <Link href="/crude/relative-performance">Relative Performance</Link>,
+    label: (
+      <Link href="/analytics/crude/relative-performance">
+        Relative Performance
+      </Link>
+    ),
   },
 ];
 
