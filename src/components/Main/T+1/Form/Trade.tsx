@@ -117,17 +117,9 @@ export default function TradeForm({
       className="space-y-6"
       initialValues={formatInitialValues(initialValues)}
       requiredMark={false}
-      onFinish={({
-        trade_action,
-        quantity,
-        meta,
-        extra,
-        ...rest
-      }: ITradeForm) => {
+      onFinish={({ meta, extra, ...rest }: ITradeForm) => {
         trigger(
           formatTriggerValues({
-            quantity: trade_action === "sell" ? -quantity : quantity,
-            trade_action,
             meta: {
               ...meta,
               ...extra?.reduce(
