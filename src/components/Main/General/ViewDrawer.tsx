@@ -22,7 +22,6 @@ export default function ViewDrawer<T>({
   title,
 }: IViewDrawerProps<T>) {
   const { data } = useTransactionServerQuery<T>(open ? urlKey : null);
-
   return (
     <Drawer
       open={open}

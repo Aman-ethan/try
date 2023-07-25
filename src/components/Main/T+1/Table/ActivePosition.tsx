@@ -29,31 +29,31 @@ const URLs = {
 const Columns: TableColumnsType<IActivePosition> = [
   {
     title: "Client Name",
-    key: "client-name",
+    key: "client_name",
     dataIndex: "client_name",
     width: 115,
   },
   {
     title: "Security ID",
-    key: "security-id",
+    key: "security",
     dataIndex: "security",
     width: 140,
   },
   {
     title: "Asset Class",
-    key: "asset-class",
+    key: "asset_class",
     dataIndex: "asset_class",
     width: 135,
   },
   {
     title: "Custodian Name",
-    key: "custodian-name",
+    key: "custodian_name",
     dataIndex: "custodian_name",
     width: 145,
   },
   {
     title: "Relationship Number",
-    key: "relationship-number",
+    key: "relationship_number",
     dataIndex: "relationship_number",
     sorter: true,
     width: 175,
@@ -68,7 +68,7 @@ const Columns: TableColumnsType<IActivePosition> = [
   },
   {
     title: "Average Price",
-    key: "average-price",
+    key: "average_price",
     dataIndex: "average_price",
     sorter: true,
     render: (price, record) => formatPrice(price, record.currency),
@@ -76,7 +76,7 @@ const Columns: TableColumnsType<IActivePosition> = [
   },
   {
     title: "MTM Price",
-    key: "mtm-price",
+    key: "mtm_price",
     dataIndex: "mtm_price",
     sorter: true,
     render: (price, record) => formatPrice(price, record.currency),
@@ -84,7 +84,7 @@ const Columns: TableColumnsType<IActivePosition> = [
   },
   {
     title: "Unrealized P/L",
-    key: "unrealized-pl",
+    key: "unrealised_pl",
     dataIndex: "unrealised_pl",
     sorter: true,
     render: (pl, record) => formatPrice(pl, record.currency),
@@ -100,5 +100,5 @@ const Columns: TableColumnsType<IActivePosition> = [
 ];
 
 export default function ActivePositionTable() {
-  return <TradeTable urlKey={URLs.get} columns={Columns} />;
+  return <TradeTable edit={false} urlKey={URLs.get} columns={Columns} />;
 }

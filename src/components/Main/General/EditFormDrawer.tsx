@@ -20,7 +20,7 @@ export default function EditFormDrawer({
   formComponent: Form,
 }: IEditFormDrawerProps) {
   const [form] = AntdForm.useForm();
-  const { data } = useTransactionServerQuery<Record<string, string>>(
+  const { data, mutate } = useTransactionServerQuery<Record<string, string>>(
     id ? urls.put.replace("{id}", id) : null
   );
   const { trigger, isMutating } = useTransactionServerPutMutation(
@@ -28,6 +28,7 @@ export default function EditFormDrawer({
     {
       onSuccess() {
         message.success(response?.success);
+        mutate();
         revalidate(urls.get);
       },
     }

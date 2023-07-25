@@ -10,11 +10,13 @@ import EditTradeDrawer from "../General/EditTradeDrawer";
 interface ITradeTableProps<T> {
   columns: TableColumnsType<T>;
   urlKey: string;
+  edit?: boolean;
 }
 
 export default function TradeTable<T>({
   columns,
   urlKey,
+  edit = true,
 }: ITradeTableProps<T>) {
   const {
     client,
@@ -52,14 +54,16 @@ export default function TradeTable<T>({
         columns={columns}
         urlKey={`${urlKey + selectedRowKey}/`}
         footer={
-          <EditTradeDrawer
-            id={selectedRowKey}
-            button={
-              <Button type="primary" size="large" className="px-7">
-                Edit Trade
-              </Button>
-            }
-          />
+          edit ? (
+            <EditTradeDrawer
+              id={selectedRowKey}
+              button={
+                <Button type="primary" size="large" className="px-7">
+                  Edit Trade
+                </Button>
+              }
+            />
+          ) : null
         }
       />
       <ScrollableTable
