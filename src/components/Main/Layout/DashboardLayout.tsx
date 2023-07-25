@@ -151,7 +151,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           <Layout.Footer className="flex justify-center bg-neutral-3">
             ETHAN-AI &copy; ALL RIGHTS RESERVED {currentDate.getFullYear()}
             {". "}
-            Version: 16.0
+            Version: 1.6.0
           </Layout.Footer>
         </Layout.Content>
       </Layout>
