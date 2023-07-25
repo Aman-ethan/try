@@ -43,7 +43,7 @@ export function formatTableDate(date: Date) {
 
 const f = format("~s");
 
-export function formatCompactNumber(num: number | string) {
+export function formatCompactNumber(num?: number | string) {
   if (Number.isNaN(Number(num))) return "";
   return f(Number(num))
     .replace("k", " K")

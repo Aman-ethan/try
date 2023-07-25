@@ -1,106 +1,21 @@
 "use client";
 
+import Title from "@/components/Typography/Title";
+import { DATE_PARAM_FORMAT } from "@/constants/format";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { TdHTMLAttributes } from "react";
-import clsx from "clsx";
-import dayjs from "dayjs";
-import { DATE_PARAM_FORMAT } from "@/constants/format";
-import { Empty, Spin } from "antd";
 import { formatCompactNumber } from "@/lib/format";
+import { SettingOutlined } from "@ant-design/icons";
+import { Button, TableColumnsType } from "antd";
+import dayjs from "dayjs";
+import Table from "../Table";
 
 interface IClient {
   client_id: number;
   client_name: string;
   net_worth: number;
   total_pl: number;
-}
-
-interface ITableColumn {
-  title: string;
-  dataIndex: string;
-  thClassName?: string;
-  tdClassName?: string;
-  key: string;
-  align?: TdHTMLAttributes<HTMLTableCellElement>["align"];
-  render?: (_value: string | number) => string | number;
-}
-
-type TDataSource = Record<string, string | number>[] | undefined;
-
-interface ITableProps {
-  columns: ITableColumn[];
-  dataSource: TDataSource;
-  rowKey: string;
-  className?: string;
-  loading?: boolean;
-}
-
-const containerClassName = "flex items-center justify-center";
-
-function Table({
-  columns,
-  className,
-  dataSource,
-  loading,
-  rowKey,
-}: ITableProps) {
-  if (loading) {
-    <div className={clsx(containerClassName, className)}>
-      <Spin />
-    </div>;
-  }
-  if (!dataSource?.length) {
-    return (
-      <div className={clsx(containerClassName, className)}>
-        <Empty />
-      </div>
-    );
-  }
-  const TableHeaders = columns.map(({ align, key, title, thClassName }) => (
-    <th
-      key={key}
-      align={align}
-      className={clsx("initial:font-normal", thClassName)}
-    >
-      {title}
-    </th>
-  ));
-  return (
-    <div className="-space-y-6 bg-white">
-      <table className="relative w-full">
-        <thead className="text-neutral-10">
-          <tr className="h-14">{TableHeaders}</tr>
-        </thead>
-      </table>
-      <div className={clsx("overflow-y-scroll", className)}>
-        <table className="w-full">
-          <thead className="invisible">
-            <tr>{TableHeaders}</tr>
-          </thead>
-          <tbody className="text-neutral-13/80">
-            {dataSource?.map((row) => (
-              <tr key={row[rowKey]} className="h-14 border-b">
-                {columns.map(
-                  ({
-                    dataIndex,
-                    align,
-                    key,
-                    render = (value) => value,
-                    tdClassName,
-                  }) => (
-                    <td key={key} align={align} className={tdClassName}>
-                      {render(row[dataIndex])}
-                    </td>
-                  )
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+  daily_pl: number;
 }
 
 function useClientNetWorth() {
@@ -112,23 +27,43 @@ function useClientNetWorth() {
 
   return {
     isLoading,
-    data,
+    data:
+      data ||
+      ([
+        {
+          client_name: "TT_SS",
+          daily_pl: 1000,
+          total_pl: 1000,
+          net_worth: 1000,
+        },
+        {
+          client_name: "AK_NK",
+          daily_pl: 10000,
+          total_pl: 10000,
+          net_worth: 10000,
+        },
+      ] as IClient[]),
   };
 }
 
-const columns: ITableColumn[] = [
+const columns: TableColumnsType = [
   {
     title: "Client Name",
     dataIndex: "client_name",
     key: "client-name",
-    thClassName: "w-1/4",
     align: "left",
   },
   {
-    title: "Total PL",
+    title: "Daily P/L",
+    dataIndex: "daily_pl",
+    key: "daily-pl",
+    align: "right",
+    render: formatCompactNumber,
+  },
+  {
+    title: "Total P/L",
     dataIndex: "total_pl",
     key: "total-pl",
-    thClassName: "w-1/3",
     align: "right",
     render: formatCompactNumber,
   },
@@ -139,17 +74,39 @@ const columns: ITableColumn[] = [
     align: "right",
     render: formatCompactNumber,
   },
+  {
+    title: (
+      <Button
+        icon={<SettingOutlined className="text-neutral-10" />}
+        type="text"
+      />
+    ),
+    key: "setting",
+    fixed: "right",
+    width: 40,
+  },
 ];
 
 export default function ClientNetWorth() {
   const { isLoading, data } = useClientNetWorth();
   return (
-    <Table
-      loading={isLoading}
-      columns={columns}
-      dataSource={data as TDataSource}
-      rowKey="id"
-      className="h-[24rem]"
-    />
+    <div className="flex-1 lap:w-2/5 space-y-6 rounded-lg bg-white p-6">
+      <div className="flex items-center justify-between">
+        <Title level={4}>Net Worth</Title>
+        <Title level={3}>
+          {formatCompactNumber(
+            data?.reduce((acc, cur) => acc + cur.net_worth, 0)
+          )}
+        </Title>
+      </div>
+      <Table
+        loading={isLoading}
+        columns={columns}
+        dataSource={data}
+        rowKey="id"
+        className="h-[24rem] table-reset"
+        scroll={{ y: "21rem" }}
+      />
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 import { ITypographyProps } from "@/interfaces/Typography";
 import clsx from "clsx";
 
-const titleClassName = "font-medium";
+const titleClassName = "font-medium text-neutral-13/80";
 
 export default function Title({
   children,
