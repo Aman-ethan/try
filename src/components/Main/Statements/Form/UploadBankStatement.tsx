@@ -1,3 +1,4 @@
+import { formWrapper } from "@/constants/strings";
 import useFormState from "@/hooks/useForm";
 import { useTransactionServerMutation } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
@@ -7,13 +8,11 @@ import revalidate from "@/lib/revalidate";
 import { Form, FormRule, Input, message } from "antd";
 import { UploadChangeParam, UploadFile } from "antd/es/upload";
 import type { Dayjs } from "dayjs";
-import { formWrapper } from "@/constants/strings";
 import { DatePicker } from "../../Input/DatePicker";
-import Upload from "../../Input/Upload";
-import SelectCustodian from "../../Input/SelectCustodian";
 import SelectClient from "../../Input/SelectClient";
+import SelectCustodian from "../../Input/SelectCustodian";
 import SelectRelationshipNumber from "../../Input/SelectRelationshipNumber";
-import SelectPortfolioNumber from "../Input/SelectPortfolioNumber";
+import Upload from "../../Input/Upload";
 import SelectStatementType from "../Input/SelectStatementType";
 
 interface IUploadBankStatementResponse {
@@ -108,7 +107,7 @@ export default function UploadBankStatement() {
         <Form.Item
           label="Client"
           name="client"
-          className="flex-1"
+          className="w-1/2 pr-4"
           rules={FormRules.client}
         >
           <SelectClient
@@ -119,6 +118,16 @@ export default function UploadBankStatement() {
               form.resetFields(["client"]);
             }}
           />
+        </Form.Item>
+      </div>
+      <div className={formWrapper}>
+        <Form.Item
+          label="Statement Type"
+          name="statement_type"
+          className="flex-1"
+          rules={FormRules.statement_type}
+        >
+          <SelectStatementType placeholder="Select statement type" />
         </Form.Item>
         <Form.Item
           label="Date"
@@ -162,33 +171,6 @@ export default function UploadBankStatement() {
             }}
             placeholder="Enter the relationship number"
           />
-        </Form.Item>
-      </div>
-      <div className={formWrapper}>
-        <Form.Item
-          label="Portfolio Number"
-          name="portfolio_number"
-          className="flex-1"
-          rules={FormRules.portfolio_number}
-        >
-          <SelectPortfolioNumber
-            placeholder="Select the portfolio number"
-            params={{
-              clientId,
-              custodianId,
-            }}
-            reset={() => {
-              form.resetFields(["portfolio_number"]);
-            }}
-          />
-        </Form.Item>
-        <Form.Item
-          label="Statement Type"
-          name="statement_type"
-          className="flex-1"
-          rules={FormRules.statement_type}
-        >
-          <SelectStatementType placeholder="Select statement type" />
         </Form.Item>
       </div>
       <Form.Item>

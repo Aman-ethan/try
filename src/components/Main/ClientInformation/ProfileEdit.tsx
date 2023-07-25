@@ -11,6 +11,7 @@ import revalidate from "@/lib/revalidate";
 import { Button, Form, Input, Row, message } from "antd";
 import { useEffect } from "react";
 import { DatePicker } from "../Input/DatePicker";
+import SelectCurrency from "../Input/SelectCurrency";
 
 type TClient = {
   first_name: string;
@@ -112,6 +113,12 @@ function DetailsForm({ type }: IClientDetailProps) {
           <Input.TextArea
             placeholder={`Enter the ${ClientInformationMap[type]}`}
           />
+        </Form.Item>
+      );
+    case "reporting_currency":
+      return (
+        <Form.Item key={type} label={ClientInformationMap[type]} name={type}>
+          <SelectCurrency placeholder="Enter the reporting currency" />
         </Form.Item>
       );
     default:
