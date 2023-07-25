@@ -199,9 +199,9 @@ export default function IndexChart() {
       </div>
     );
   return (
-    <div className="h-full flex flex-col">
+    <div className="flex h-full flex-col">
       <div ref={chartRef} />
-      <div className="w-full flex items-center py-6 max-w-lg overflow-x-auto">
+      <div className="flex w-full max-w-lg items-center overflow-x-auto py-6">
         <div className="flex gap-x-4">
           {(chartScaleRef.current?.domain as TScaleRecord)?.map(
             (domain, index) => {
@@ -211,7 +211,7 @@ export default function IndexChart() {
                   type="button"
                   key={domain}
                   className={clsx(
-                    "flex items-center px-2 py-0.5 border border-neutral-3 bg-neutral-2 rounded-md",
+                    "flex items-center rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5",
                     isExcluded ? "opacity-50" : ""
                   )}
                   onClick={() => {
@@ -225,7 +225,7 @@ export default function IndexChart() {
                   }}
                 >
                   <div
-                    className="w-4 h-4 mr-2"
+                    className="mr-2 h-4 w-4"
                     style={{
                       backgroundColor: (
                         chartScaleRef.current?.range as TScaleRecord

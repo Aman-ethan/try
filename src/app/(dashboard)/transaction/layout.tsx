@@ -1,5 +1,3 @@
-"use client";
-
 import { Breadcrumb } from "antd";
 import { ReactNode } from "react";
 

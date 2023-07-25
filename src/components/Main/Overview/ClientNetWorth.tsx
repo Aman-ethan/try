@@ -173,7 +173,7 @@ export default function ClientNetWorth() {
     },
   ];
   return (
-    <div className="flex-1 lap:w-2/5 space-y-6 rounded-lg bg-white p-6">
+    <div className="flex-1 space-y-6 rounded-lg bg-white p-6 lap:w-2/5">
       <div className="flex items-center justify-between">
         <Title level={4}>Net Worth</Title>
         <Title level={3}>
@@ -187,7 +187,7 @@ export default function ClientNetWorth() {
         columns={Columns}
         dataSource={data}
         rowKey="id"
-        className="h-[24rem] table-reset"
+        className="table-reset h-[24rem]"
         scroll={{ y: "21rem" }}
       />
     </div>
