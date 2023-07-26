@@ -1,6 +1,7 @@
 "use client";
 
 import { ActionColumn } from "@/constants/table";
+import { useTableFilter } from "@/hooks/useTable";
 import { formatTableDate } from "@/lib/format";
 import { TableColumnsType } from "antd";
 import { capitalize } from "lodash";
@@ -52,19 +53,19 @@ function Action({ id, downloadUrl }: IActionProps) {
 const Columns: TableColumnsType<IBankStatement> = [
   {
     title: "Client Name",
-    key: "client-name",
+    key: "client_name",
     width: 115,
     dataIndex: "client_name",
   },
   {
     title: "Custodian Name",
-    key: "custodian-name",
+    key: "custodian_name",
     width: 225,
     dataIndex: "custodian_name",
   },
   {
     title: "Statement Date",
-    key: "statement-date",
+    key: "statement_date",
     width: 145,
     dataIndex: "statement_date",
     render: formatTableDate,
@@ -72,7 +73,7 @@ const Columns: TableColumnsType<IBankStatement> = [
   },
   {
     title: "Upload Date",
-    key: "upload-date",
+    key: "upload_date",
     width: 145,
     dataIndex: "upload_date",
     render: formatTableDate,
@@ -87,26 +88,26 @@ const Columns: TableColumnsType<IBankStatement> = [
   },
   {
     title: "Reporting Currency",
-    key: "reporting-currency",
-    width: 160,
+    key: "reporting_currency",
+    width: 175,
     dataIndex: "reporting_currency",
     render: (currency) => <CurrencyTag currency={currency} />,
   },
   {
     title: "Relationship Number",
-    key: "relationship-number",
+    key: "relationship_number",
     dataIndex: "relationship_number",
     width: 170,
   },
   {
     title: "Portfoilio Number",
-    key: "portfolio-number",
+    key: "portfolio_number",
     dataIndex: "portfolio_number",
     width: 170,
   },
   {
     title: "Type of Statement",
-    key: "type-of-statement",
+    key: "statement_type",
     dataIndex: "statement_type",
     render: capitalize,
     width: 170,
@@ -118,5 +119,6 @@ const Columns: TableColumnsType<IBankStatement> = [
 ];
 
 export default function BankStatement() {
-  return <Statement urlKey={URLs.get} columns={Columns} />;
+  const { addFilters } = useTableFilter();
+  return <Statement urlKey={URLs.get} columns={Columns.map(addFilters)} />;
 }

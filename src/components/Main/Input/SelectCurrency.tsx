@@ -1,14 +1,8 @@
 import { flags } from "@/constants/flags";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import { TCurrency } from "@/interfaces/Main";
+import { ICurrency, TCurrency } from "@/interfaces/Main";
 import { Image, SelectProps } from "antd";
 import Select from "../../Input/Select";
-
-interface ICurrency {
-  code?: string;
-  name: string;
-  numeric_code: string;
-}
 
 export default function SelectCurrency(props: SelectProps) {
   const { data, isLoading } = useTransactionServerQuery<ICurrency[]>(

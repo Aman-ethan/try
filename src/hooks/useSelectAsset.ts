@@ -1,8 +1,5 @@
+import { IAssetClass } from "@/interfaces/Main";
 import { useTransactionServerQuery } from "./useQuery";
-
-interface IAssetClass {
-  sub_asset_class: string;
-}
 
 export default function useSelectAsset() {
   const { data, isLoading } = useTransactionServerQuery<IAssetClass[]>(

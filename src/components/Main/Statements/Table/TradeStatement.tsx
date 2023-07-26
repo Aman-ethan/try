@@ -1,6 +1,7 @@
 "use client";
 
 import { ActionColumn } from "@/constants/table";
+import { useTableFilter } from "@/hooks/useTable";
 import { TCurrency } from "@/interfaces/Main";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
 import { TableColumnsType } from "antd";
@@ -97,13 +98,13 @@ const Columns: TableColumnsType<ITradeStatement> = [
   },
   {
     title: "Asset Class",
-    key: "asset-class",
+    key: "asset_class",
     dataIndex: "asset_class",
     width: 130,
   },
   {
     title: "Trade Action",
-    key: "trade-action",
+    key: "trade_action",
     dataIndex: "trade_action",
     render: capitalize,
     width: 130,
@@ -160,5 +161,6 @@ const Columns: TableColumnsType<ITradeStatement> = [
 ];
 
 export default function TradeStatement() {
-  return <Statement urlKey={URLs.get} columns={Columns} />;
+  const { addFilters } = useTableFilter();
+  return <Statement urlKey={URLs.get} columns={Columns.map(addFilters)} />;
 }

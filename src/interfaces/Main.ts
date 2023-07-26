@@ -113,6 +113,16 @@ export interface IFormDrawerProps {
   drawerProps: IDrawerProps;
 }
 
+export interface ICurrency {
+  code?: string;
+  name: string;
+  numeric_code: string;
+}
+
+export interface IAssetClass {
+  sub_asset_class: string;
+}
+
 type TAuthSearchParams =
   | "username"
   | "password"

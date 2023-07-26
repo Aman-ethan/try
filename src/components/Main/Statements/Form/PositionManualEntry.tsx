@@ -4,8 +4,8 @@ import { Form, message } from "antd";
 import PositionForm from "./PositionStatementForm";
 
 const URLs = {
-  get: "/statement/trade/",
-  post: "/statement/trade/",
+  get: "/statement/position/",
+  post: "/statement/position/",
 };
 
 export default function PositionManualEntry() {
