@@ -33,7 +33,7 @@ export default function StatementFilter() {
           </Button>
         </div>
       </div>
-      <div className="flex max-w-3xl flex-col space-y-4 tab:flex-row tab:space-x-4 tab:space-y-0">
+      <div className="flex max-w-2xl flex-col space-y-4 tab:flex-row tab:space-x-4 tab:space-y-0">
         <SelectClient
           placeholder="All Client"
           className={primarySelectClasses}

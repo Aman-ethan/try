@@ -30,7 +30,7 @@ async function fetcher({ url, init, error }: IFetcherParams) {
 
     if (res.ok) return json;
 
-    throw new Error(json.error);
+    throw new Error(json.error || Object.values(json).join(", "));
   } catch (e) {
     if (e instanceof Error && e.message) {
       throw e;

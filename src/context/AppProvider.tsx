@@ -28,9 +28,7 @@ export default function AppProvider({ children }: IStyleRegistryProps) {
       <AuthProvider>
         <StyleProvider cache={cache}>
           <ConfigProvider locale={enUSIntl} theme={theme}>
-            <SWRConfig value={{ revalidateOnFocus: false }}>
-              {children}
-            </SWRConfig>
+            <SWRConfig>{children}</SWRConfig>
           </ConfigProvider>
         </StyleProvider>
       </AuthProvider>
