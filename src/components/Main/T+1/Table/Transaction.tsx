@@ -49,7 +49,7 @@ function Action({ id }: IActionProps) {
 
 const Columns: TableColumnsType<IBlotterTransactionStatement> = [
   {
-    title: "Client",
+    title: "Client Name",
     key: "client_name",
     dataIndex: "client_name",
     width: 115,
@@ -65,13 +65,13 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     title: "Security ID",
     key: "security",
     dataIndex: "security",
-    width: 125,
+    width: 140,
   },
   {
     title: "Asset Class",
     key: "asset_class",
     dataIndex: "asset_class",
-    width: 105,
+    width: 135,
   },
   {
     title: "Custodian Name",
@@ -107,6 +107,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     key: "quantity",
     dataIndex: "quantity",
     render: formatQuantity,
+    align: "right",
     width: 125,
   },
   {
@@ -114,6 +115,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     key: "cost_price",
     dataIndex: "cost_price",
     render: (price, record) => formatPrice(price, record.currency),
+    align: "right",
     width: 135,
   },
   {
@@ -122,6 +124,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     dataIndex: "mtm_price",
     render: (price, record) => formatPrice(price, record.currency),
     width: 135,
+    align: "right",
   },
   {
     title: "Realized P/L",
@@ -129,6 +132,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     dataIndex: "realised_pl",
     render: (pl, record) => formatPrice(pl, record.currency),
     width: 135,
+    align: "right",
   },
   {
     title: "Tags",

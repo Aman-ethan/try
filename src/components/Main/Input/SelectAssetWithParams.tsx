@@ -3,11 +3,10 @@ import useSelectAssetWithParams from "@/hooks/useSelectAssetWithParams";
 import { SelectProps } from "antd";
 
 export default function SelectAssetWithParams(props: SelectProps) {
-  const { defaultValue, isLoading, options, onChange } =
-    useSelectAssetWithParams();
+  const { value, isLoading, options, onChange } = useSelectAssetWithParams();
   return (
     <Select
-      defaultValue={defaultValue}
+      value={value}
       loading={isLoading}
       options={options}
       onChange={onChange}

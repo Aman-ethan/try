@@ -12,17 +12,16 @@ interface IUseSecurityParams {
 
 export default function useSecurities(params?: Partial<IUseSecurityParams>) {
   const { config, queryParams } = params || {};
-  const { data, isLoading } = useTransactionServerQuery<ISecurity[]>(
-    `/security/${buildURLSearchParams(queryParams)}`,
-    config
-  );
+  const { data, isLoading, isValidating } = useTransactionServerQuery<
+    ISecurity[]
+  >(`/security/${buildURLSearchParams(queryParams)}`, config);
   const options = data?.map(({ name, symbol }) => ({
     label: name,
     value: symbol,
   }));
   return {
     data,
-    isLoading,
+    isLoading: isLoading && !isValidating,
     options,
   };
 }

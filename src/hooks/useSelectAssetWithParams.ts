@@ -12,7 +12,7 @@ export default function useSelectAssetWithParams() {
   }
 
   return {
-    defaultValue: assetClass,
+    value: assetClass,
     isLoading,
     options,
     onChange,

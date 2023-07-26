@@ -29,13 +29,13 @@ type TEstate = {
 function useEstates() {
   const { get: getSearchParams } = useSearchParams();
   const client_id = getSearchParams("client_id");
-  const { data, isLoading } = useTransactionServerQuery<TEstate[]>(
-    `/estate/${buildURLSearchParams({ client_id })}`
-  );
+  const { data, isLoading, isValidating } = useTransactionServerQuery<
+    TEstate[]
+  >(`/estate/${buildURLSearchParams({ client_id })}`);
 
   return {
     data,
-    isLoading,
+    isLoading: isLoading && !isValidating,
   };
 }
 const EstateItemsMap: Record<string, keyof TEstate> = {

@@ -3,13 +3,8 @@ import useSecurityWithParams from "@/hooks/useSecurityWithParams";
 import { SelectProps } from "antd";
 
 export default function SelectSecurityWithParams(props: SelectProps) {
-  const { options, onChange, defaultValue } = useSecurityWithParams();
+  const { options, onChange, value } = useSecurityWithParams();
   return (
-    <Select
-      defaultValue={defaultValue}
-      options={options}
-      onChange={onChange}
-      {...props}
-    />
+    <Select value={value} options={options} onChange={onChange} {...props} />
   );
 }

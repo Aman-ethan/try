@@ -1,6 +1,6 @@
 import useSelectCustodian from "@/hooks/useSelectCustodian";
 import { SelectProps } from "antd";
-import { TSelectCustodianParams } from "@/interfaces/Main";
+import { TCustodianParams } from "@/interfaces/Main";
 import useDependentSelect from "@/hooks/useDependentSelect";
 import Select from "../../Input/Select";
 
@@ -8,8 +8,7 @@ export default function SelectCustodian({
   params,
   reset,
   ...props
-}: SelectProps &
-  Partial<{ params: TSelectCustodianParams; reset: () => void }>) {
+}: SelectProps & Partial<{ params: TCustodianParams; reset: () => void }>) {
   const { isLoading, options } = useSelectCustodian(params);
   useDependentSelect({
     dependsOn: params?.clientId,

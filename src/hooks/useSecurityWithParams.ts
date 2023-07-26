@@ -12,7 +12,7 @@ export default function useSecurityWithParams() {
   }
 
   return {
-    defaultValue: security,
+    value: security,
     options,
     isLoading,
     onChange,

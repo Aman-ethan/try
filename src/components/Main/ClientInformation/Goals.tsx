@@ -33,13 +33,13 @@ type TGoalsType = {
 function useGoal() {
   const { get: getSearchParams } = useSearchParams();
   const client_id = getSearchParams("client_id");
-  const { data, isLoading } = useTransactionServerQuery<TGoalsType[]>(
-    `/goals/${buildURLSearchParams({ client_id })}`
-  );
+  const { data, isLoading, isValidating } = useTransactionServerQuery<
+    TGoalsType[]
+  >(`/goals/${buildURLSearchParams({ client_id })}`);
 
   return {
     data,
-    isLoading,
+    isLoading: isLoading && !isValidating,
   };
 }
 

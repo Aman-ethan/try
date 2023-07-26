@@ -3,7 +3,9 @@ import { IBankAccount, TBankAccountParams } from "@/interfaces/Main";
 import { useTransactionServerQuery } from "./useQuery";
 
 export default function useBankAccounts(params?: TBankAccountParams) {
-  const { data, isLoading } = useTransactionServerQuery<IBankAccount[]>(
+  const { data, isLoading, isValidating } = useTransactionServerQuery<
+    IBankAccount[]
+  >(
     `/bank_account/${buildURLSearchParams({
       client_id: params?.clientId,
       custodian_id: params?.custodianId,
@@ -26,6 +28,6 @@ export default function useBankAccounts(params?: TBankAccountParams) {
     data,
     relationshipNumberOptions,
     portfolioNumberOptions,
-    isLoading,
+    isLoading: isLoading && !isValidating,
   };
 }

@@ -156,7 +156,7 @@ export type TUploadStatement = "position" | "trade";
 export type TSearchParams<T> = Record<"searchParamKeys", T>;
 export type TClientParams = TSearchParams<Record<"client", SearchParams>>;
 export type TSelectClientParams = Record<"custodianId", string | undefined>;
-export type TSelectCustodianParams = Record<"clientId", string | undefined>;
+export type TCustodianParams = Record<"clientId", string | undefined>;
 export type TBankAccountParams = Record<
   "clientId" | "custodianId",
   string | undefined

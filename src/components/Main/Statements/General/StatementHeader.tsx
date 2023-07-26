@@ -1,14 +1,13 @@
 "use client";
 
 import Title from "@/components/Typography/Title";
-import { Button } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+import clsx from "clsx";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useState } from "react";
-import clsx from "clsx";
-import StatementDatePicker from "../Input/StatementDatePicker";
-import SelectCustodian from "../../Input/SelectCustodianWithParams";
 import SelectClient from "../../Input/SelectClientWithParams";
+import SelectCustodian from "../../Input/SelectCustodianWithParams";
 import UploadStatementDrawer from "./UploadStatementDrawer";
 
 export default function StatementFilter() {
@@ -43,7 +42,7 @@ export default function StatementFilter() {
           placeholder="All Custodian"
           className={primarySelectClasses}
         />
-        <StatementDatePicker className={primarySelectClasses} />
+        {/* <StatementDatePicker className={primarySelectClasses} /> */}
       </div>
     </div>
   );

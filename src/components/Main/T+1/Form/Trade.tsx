@@ -212,13 +212,13 @@ export default function TradeForm({
         </Form.Item>
       ))}
       <Row className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-8 tab:gap-y-0">
-        <Form.Item label="Security ID" name="security" className="flex-1">
+        <Form.Item label="Security ID" name="security" className="w-[30%]">
           <Input placeholder="Security ID" disabled />
         </Form.Item>
-        <Form.Item label="Currency" name="currency" className="w-1/3">
+        <Form.Item label="Currency" name="currency" className="w-[30%]">
           <SelectCurrency placeholder="Currency" disabled />
         </Form.Item>
-        <Form.Item label="Asset Type" name="asset_class" className="flex-1">
+        <Form.Item label="Asset Type" name="asset_class" className="w-[30%]">
           <SelectAsset placeholder="Asset Type" disabled />
         </Form.Item>
       </Row>
@@ -274,10 +274,14 @@ export default function TradeForm({
         </Form.Item>
       </Row>
       <Row className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-8 tab:gap-y-0">
-        <Form.Item label="Goal" name="goal" className="flex-1">
+        <Form.Item label="Goal" name="goal" className="flex-1 flex-shrink-0">
           <SelectGoal disabled={isMutating} placeholder="Select the goal" />
         </Form.Item>
-        <Form.Item label="Tags" name={["meta", "tags"]} className="flex-1">
+        <Form.Item
+          label="Tags"
+          name={["meta", "tags"]}
+          className="flex-1 flex-shrink-0"
+        >
           <SelectTag disabled={isMutating} placeholder="Enter the tags" />
         </Form.Item>
       </Row>

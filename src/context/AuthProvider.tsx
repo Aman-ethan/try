@@ -70,6 +70,17 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
     [removeCookie]
   );
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!access_token) {
+        refresh();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [refresh, access_token]);
+
   const isLoggedIn = Boolean(refresh_token);
 
   useEffect(() => {

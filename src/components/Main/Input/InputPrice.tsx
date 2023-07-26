@@ -14,9 +14,7 @@ export default function InputPrice({
       formatter={(value) =>
         currency && value ? formatPrice(value, currency) : ""
       }
-      parser={(value) =>
-        value ? value.replace(/([A-Z]|[a-z])*\$\s?|(,*)/g, "") : ""
-      }
+      parser={(value) => (value ? value.replace(/[^0-9.]/g, "") : "")}
       {...props}
     />
   );

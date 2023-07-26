@@ -4,7 +4,7 @@ import Select from "@/components/Input/Select";
 import { useTransactionServerMutation } from "@/hooks/useMutation";
 import useSearchParams from "@/hooks/useSearchParams";
 import useSelectCustodian from "@/hooks/useSelectCustodian";
-import { TSelectCustodianParams } from "@/interfaces/Main";
+import { TCustodianParams } from "@/interfaces/Main";
 import revalidate from "@/lib/revalidate";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, SelectProps, message } from "antd";
@@ -13,8 +13,7 @@ import React, { useState } from "react";
 export default function CreateCustodian({
   params,
   ...props
-}: SelectProps &
-  Partial<{ params: TSelectCustodianParams; reset: () => void }>) {
+}: SelectProps & Partial<{ params: TCustodianParams; reset: () => void }>) {
   const { isLoading, options } = useSelectCustodian(params);
   const [addCustodian, setAddCustodian] = useState(false);
   const [name, setName] = useState("");

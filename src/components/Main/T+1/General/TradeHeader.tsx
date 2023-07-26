@@ -34,12 +34,12 @@ export default function TradeHeader() {
 
   const primarySelectClasses = clsx(
     showFilter ? "block" : "hidden",
-    "flex-1 tab:flex"
+    "w-1/2 tab:flex"
   );
 
   const secondarySelectClasses = clsx(
     showFilter ? "block" : "hidden",
-    "flex-1 lap:flex"
+    "w-1/2 lap:flex"
   );
   return (
     <div className="space-y-6">
