@@ -1,5 +1,5 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import useTable, { useSelectRow } from "@/hooks/useTable";
+import useTable, { useSelectRow, useTableFilter } from "@/hooks/useTable";
 import { IPaginatedResponse } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { Button, TableColumnsType } from "antd";
@@ -27,6 +27,7 @@ export default function TradeTable<T>({
     pagination,
     getSearchParams,
   } = useTable();
+  const { addFilters } = useTableFilter();
   const asset_class = getSearchParams("asset_class");
   const security = getSearchParams("security");
   const { data, isLoading } = useTransactionServerQuery<IPaginatedResponse<T>>(
@@ -68,7 +69,7 @@ export default function TradeTable<T>({
       />
       <ScrollableTable
         rowKey="id"
-        columns={columns}
+        columns={columns.map(addFilters)}
         className="h-[calc(100vh-22rem)]"
         scroll={{ y: "calc(100vh - 25rem)" }}
         rowSelection={rowSelection}

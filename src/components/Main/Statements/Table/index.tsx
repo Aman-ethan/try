@@ -1,5 +1,5 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import useTable from "@/hooks/useTable";
+import useTable, { useTableFilter } from "@/hooks/useTable";
 import { IPaginatedResponse } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { TableProps } from "antd";
@@ -18,6 +18,7 @@ export default function Statement<T>({
     client,
     custodian,
   } = useTable();
+  const { addFilters } = useTableFilter();
 
   const statementDateGTE = getSearchParams("statement_date__gte");
   const statementDateLTE = getSearchParams("statement_date__lte");
@@ -42,7 +43,7 @@ export default function Statement<T>({
       }}
       dataSource={data?.results}
       loading={isLoading}
-      columns={columns}
+      columns={columns?.map(addFilters)}
       rowKey="id"
       onChange={onChange}
       pagination={{ ...pagination, total: data?.count }}

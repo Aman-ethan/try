@@ -1,7 +1,6 @@
 "use client";
 
 import { ActionColumn } from "@/constants/table";
-import { useTableFilter } from "@/hooks/useTable";
 import { formatTableDate } from "@/lib/format";
 import { TableColumnsType } from "antd";
 import { capitalize } from "lodash";
@@ -119,6 +118,5 @@ const Columns: TableColumnsType<IBankStatement> = [
 ];
 
 export default function BankStatement() {
-  const { addFilters } = useTableFilter();
-  return <Statement urlKey={URLs.get} columns={Columns.map(addFilters)} />;
+  return <Statement urlKey={URLs.get} columns={Columns} />;
 }
