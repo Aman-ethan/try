@@ -113,6 +113,17 @@ export interface IFormDrawerProps {
   drawerProps: IDrawerProps;
 }
 
+// These fields will change according to data, for now the values and types are placeholders
+export interface IBalanceSheetChart {
+  key: string;
+  assetClass?: string;
+  liabilities?: string;
+  totalValue: string;
+  percentage: string;
+}
+
+export type TProgressType = "success" | "failure";
+
 export interface ICurrency {
   code?: string;
   name: string;

@@ -49,6 +49,10 @@ module.exports = {
           12: "#141414",
           13: "#000000",
         },
+        progress: {
+          success: "#D9F7BE",
+          failure: "#FFCCC7",
+        },
       },
       screens: {
         mob: "375px", // Mobile devices

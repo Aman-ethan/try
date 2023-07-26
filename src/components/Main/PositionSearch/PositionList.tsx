@@ -7,62 +7,40 @@ import DetailsSummary from "./DetailsSummary";
 import PositionListItems from "./PositionListItems";
 import SelectClient from "../Input/SelectClientWithParams";
 import SelectCustodian from "../Input/SelectCustodianWithParams";
-import SelectAsset from "../Input/SelectAsset";
-import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
 
 const containerClasses =
   "flex flex-col tab:flex-row tab:items-center tab:space-x-4";
-const outerContainerClasses =
-  "flex flex-1 flex-col space-y-4 lap:flex-row lap:items-center lap:space-x-4 lap:space-y-0";
 const innerContainerClasses =
   "flex flex-1 flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0";
-const filterButtonClasses =
-  "order-first mb-4 tab:order-last tab:mb-0 tab:self-start lap:hidden";
+const filterButtonClasses = "w-full order-first mb-4 self-start tab:hidden";
 
 export default function PositionList() {
-  const [collapse, setCollapse] = useState(false);
+  const [showFilter, setShowFilter] = useState(false);
 
   const primarySelectClasses = clsx(
-    collapse ? "block" : "hidden",
-    "flex-1 tab:flex"
-  );
-
-  const secondarySelectClasses = clsx(
-    collapse ? "block" : "hidden",
-    "flex-1 lap:flex"
+    showFilter ? "block" : "hidden",
+    "w-full tab:flex lap:w-1/3"
   );
 
   return (
     <>
-      <Title className="text-2xl tab:text-3xl">Position List</Title>
+      <Title className="text-2xl tab:text-3xl">Balance Sheet</Title>
       <div className={containerClasses}>
-        <div className={outerContainerClasses}>
-          <div className={innerContainerClasses}>
-            <SelectClient
-              placeholder="All Client"
-              className={primarySelectClasses}
-            />
-            <SelectCustodian
-              placeholder="All Custodian"
-              className={primarySelectClasses}
-            />
-          </div>
-          <div className={innerContainerClasses}>
-            <SelectRelationshipNumber
-              placeholder="Relationship Number"
-              className={secondarySelectClasses}
-            />
-            <SelectAsset
-              placeholder="Asset Class"
-              className={secondarySelectClasses}
-            />
-          </div>
+        <div className={innerContainerClasses}>
+          <SelectClient
+            placeholder="All Client"
+            className={primarySelectClasses}
+          />
+          <SelectCustodian
+            placeholder="All Custodian"
+            className={primarySelectClasses}
+          />
         </div>
         <Button
           size="large"
           icon={<FilterOutlined />}
           className={filterButtonClasses}
-          onClick={() => setCollapse(!collapse)}
+          onClick={() => setShowFilter(!showFilter)}
         >
           Filters
         </Button>

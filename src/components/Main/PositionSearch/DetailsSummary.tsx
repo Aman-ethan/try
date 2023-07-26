@@ -17,7 +17,7 @@ export default function DetailsSummary() {
         <Col className="flex-1">
           <AssetChart />
         </Col>
-        <Col className="flex-1 ">
+        <Col className="flex-1 space-y-8">
           <LiabilityChart />
           <div className="flex space-x-4">
             <SummaryCard type="Net Worth" value={36.6} />

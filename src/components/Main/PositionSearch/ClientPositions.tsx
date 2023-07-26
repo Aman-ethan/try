@@ -1,5 +1,5 @@
 import { ProList, ProCard } from "@ant-design/pro-components";
-import { DatePicker, Card, Row, Col } from "antd";
+import { DatePicker, Card, Row, Col, Empty } from "antd";
 import Title from "@/components/Typography/Title";
 import CurrencyTag from "../General/CurrencyTag";
 
@@ -15,6 +15,7 @@ export default function ClientPositions() {
   return (
     <ProList
       toolBarRender={() => [<DatePicker />]}
+      locale={{ emptyText: <Empty /> }}
       grid={{
         gutter: 16,
         column: 2,

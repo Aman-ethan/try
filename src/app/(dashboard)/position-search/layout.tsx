@@ -16,10 +16,10 @@ export default function PositionLayout({ children }: IPositionLayoutProps) {
       <Breadcrumb
         items={[
           {
-            title: <Link href="/position-search">Statement Positions</Link>,
+            title: <Link href="/position-search">Position Search</Link>,
           },
           {
-            title: <Link href="/position-search/TTSS">TTSS</Link>,
+            title: <Link href="/position-search/TTSS">Balance Sheet</Link>,
           },
         ]}
       />

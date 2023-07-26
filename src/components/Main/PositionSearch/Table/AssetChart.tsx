@@ -1,4 +1,6 @@
-import { Table } from "antd";
+import { IBalanceSheetChart } from "@/interfaces/Main";
+import { TableColumnsType } from "antd";
+import ChartTable from "./ChartTable";
 
 const data = [
   {
@@ -22,9 +24,9 @@ const data = [
 ];
 
 const tableClassName =
-  "text-left text-sm tab:text-md lap:text-lg font-light text-neutral-9";
+  "relative z-10 bg-transparent border-none text-left text-sm tab:text-md lap:text-lg font-light text-neutral-9";
 
-const columns = [
+const Columns: TableColumnsType<IBalanceSheetChart> = [
   {
     title: "Asset Class",
     dataIndex: "assetClass",
@@ -46,12 +48,5 @@ const columns = [
 ];
 
 export default function AssetChart() {
-  return (
-    <Table
-      dataSource={data}
-      columns={columns}
-      pagination={false}
-      className="mb-2"
-    />
-  );
+  return <ChartTable data={data} columns={Columns} progressType="success" />;
 }
