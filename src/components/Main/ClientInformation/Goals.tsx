@@ -56,7 +56,10 @@ const renderGoalsType = (key: keyof TGoalsType, item: TGoalsType) => {
   switch (key) {
     case "asset_class_preference":
       return item[key].map((asset_class: TAssetClassType) => (
-        <Tag color={AssetColorMap[asset_class]}>
+        <Tag
+          color={AssetColorMap[asset_class]}
+          className="my-2 font-medium text-sm px-2 py-1"
+        >
           {AssetClassMap[asset_class]}
         </Tag>
       ));
