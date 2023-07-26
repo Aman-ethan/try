@@ -1,11 +1,12 @@
 "use client";
 
-import { Card, Col, Row, Skeleton, Typography } from "antd";
+import { Card, Col, Row, Skeleton, Tag, Typography } from "antd";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useSearchParams from "@/hooks/useSearchParams";
 import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import DeleteModal from "./Common/DeleteModal";
+import { AssetColorMap } from "./Forms/GoalsForm";
 
 const AssetClassMap = {
   equity: "Equity",
@@ -20,10 +21,12 @@ const ReturnExpectationsMap = {
   low: "Low",
 };
 
+type TAssetClassType = keyof typeof AssetClassMap;
+
 type TGoalsType = {
   id: string;
   name: string;
-  asset_class_preference: keyof typeof AssetClassMap;
+  asset_class_preference: TAssetClassType[];
   holding_period: string;
   investment_horizon: string;
   liquidity_needs: string;
@@ -52,7 +55,11 @@ const GoalsItemsMap: Record<string, keyof TGoalsType> = {
 const renderGoalsType = (key: keyof TGoalsType, item: TGoalsType) => {
   switch (key) {
     case "asset_class_preference":
-      return AssetClassMap[item[key]];
+      return item[key].map((asset_class: TAssetClassType) => (
+        <Tag color={AssetColorMap[asset_class]}>
+          {AssetClassMap[asset_class]}
+        </Tag>
+      ));
     case "return_expectations":
       return ReturnExpectationsMap[item[key]];
     default:
