@@ -21,7 +21,7 @@ export default function CreateCustodian({
   const { get: getSearchParams } = useSearchParams();
   const client_id = getSearchParams("client_id");
 
-  const { trigger } = useTransactionServerMutation("/custodian/", {
+  const { trigger, isMutating } = useTransactionServerMutation("/custodian/", {
     onSuccess: () => {
       revalidate("/custodian/", false);
       message.success("Custodian Added successfully");
@@ -66,6 +66,7 @@ export default function CreateCustodian({
                   size="middle"
                   onClick={() => setShowFormActions(false)}
                   className="w-1/2"
+                  disabled={isMutating}
                 >
                   Cancel
                 </Button>
@@ -79,6 +80,7 @@ export default function CreateCustodian({
                       client: [client_id],
                     })
                   }
+                  loading={isMutating}
                 >
                   Confirm
                 </Button>

@@ -141,8 +141,19 @@ type TAuthSearchParams =
   | "user_id"
   | "next_path";
 
-type TStatementSearchParams = "statement_date__gte" | "statement_date__lte";
-type TTradeSearchParams = "asset_class" | "security";
+type TStatementSearchParams =
+  | "statement_date__gte"
+  | "statement_date__lte"
+  | "reporting_currency__in"
+  | "statement_type__in"
+  | "transaction_type__in"
+  | "custodian__in"
+  | "currency__in";
+
+type TTradeSearchParams =
+  | "asset_class__in"
+  | "security__in"
+  | "trade_action__in";
 
 export type SearchParams =
   | TAuthSearchParams
@@ -161,6 +172,7 @@ export type SearchParams =
   | "custodian_id"
   | "asset_duration"
   | "gain_loss_duration";
+
 export type TUpload = "bulk" | "single";
 export type TUploadStatement = "position" | "trade";
 

@@ -35,13 +35,13 @@ const Columns: TableColumnsType<IActivePosition> = [
   },
   {
     title: "Security ID",
-    key: "security",
+    key: "security__in",
     dataIndex: "security",
     width: 140,
   },
   {
     title: "Asset Class",
-    key: "asset_class",
+    key: "asset_class__in",
     dataIndex: "asset_class",
     width: 135,
   },

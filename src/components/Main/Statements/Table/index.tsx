@@ -1,9 +1,21 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useTable, { useTableFilter } from "@/hooks/useTable";
-import { IPaginatedResponse } from "@/interfaces/Main";
+import { IPaginatedResponse, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { TableProps } from "antd";
 import ScrollableTable from "../../Table/ScrollableTable";
+
+const searchParamsKey = [
+  "asset_class__in",
+  "currency__in",
+  "custodian__in",
+  "reporting_currency__in",
+  "statement_date__gte",
+  "statement_date__lte",
+  "statement_type__in",
+  "transaction_type__in",
+  "trade_action__in",
+];
 
 export default function Statement<T>({
   urlKey,
@@ -20,9 +32,6 @@ export default function Statement<T>({
   } = useTable();
   const { addFilters } = useTableFilter();
 
-  const statementDateGTE = getSearchParams("statement_date__gte");
-  const statementDateLTE = getSearchParams("statement_date__lte");
-
   const { data, isLoading } = useTransactionServerQuery<IPaginatedResponse<T>>(
     urlKey +
       buildURLSearchParams({
@@ -30,8 +39,13 @@ export default function Statement<T>({
         custodian,
         page,
         ordering,
-        statement_date__gte: statementDateGTE,
-        statement_date__lte: statementDateLTE,
+        ...searchParamsKey.reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: getSearchParams(key as SearchParams),
+          }),
+          {}
+        ),
       })
   );
 

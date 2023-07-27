@@ -31,9 +31,15 @@ export default function ViewDrawer<T>({
       closeButton="Close"
     >
       {data
-        ? columns.map(({ title: label, render, key }, index) => {
-            const value = get(data, key as string);
-            return key !== "actions" ? (
+        ? columns.map((column, index) => {
+            const {
+              title: label,
+              render,
+              key,
+              dataIndex,
+            } = { dataIndex: "", ...column };
+            const value = get(data, dataIndex as string);
+            return dataIndex !== "actions" ? (
               <Row key={key} className="gap-x-2">
                 <span className="w-44 font-medium">{label as ReactNode}:</span>
                 {render ? (render(value, data, index) as ReactNode) : value}

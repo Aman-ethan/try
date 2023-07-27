@@ -61,7 +61,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
   },
   {
     title: "Asset Class",
-    key: "asset_class",
+    key: "asset_class__in",
     dataIndex: "asset_class",
     width: 125,
   },
@@ -92,7 +92,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
   },
   {
     title: "Currency",
-    key: "currency",
+    key: "currency__in",
     dataIndex: "currency",
     render: (value) => <CurrencyTag currency={value} />,
     width: 115,

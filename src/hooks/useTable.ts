@@ -1,5 +1,5 @@
 import { StatementOptions, TradeActionOptions } from "@/constants/options";
-import { IAssetClass, ICurrency, ICustodian } from "@/interfaces/Main";
+import { ICurrency, SearchParams } from "@/interfaces/Main";
 import {
   FilterValue,
   RowSelectionType,
@@ -9,6 +9,9 @@ import {
 import { useLayoutEffect, useState } from "react";
 import { useTransactionServerQuery } from "./useQuery";
 import useSearchParams from "./useSearchParams";
+import useCustodian from "./useCustodian";
+import useAsset from "./useAsset";
+import useSecurities from "./useSecurities";
 
 interface ISelectRow<T> {
   key: keyof T;
@@ -26,12 +29,14 @@ export default function useTable() {
 
   function onChange<T>(
     pagination: TablePaginationConfig,
-    _filters: Record<string, FilterValue | null>,
+    filters: Record<string, FilterValue | null>,
     sorter: SorterResult<T> | SorterResult<T>[]
   ) {
     const { field, order } = sorter as SorterResult<T>;
     const _ordering = order === "descend" ? `-${field}` : field?.toString();
+
     updateSearchParams({
+      ...filters,
       page: String(pagination.current),
       ordering: order ? _ordering : undefined,
     });
@@ -91,42 +96,63 @@ export function useSelectRow<T>({
   };
 }
 
+const searchParamsKeys = [
+  "currency__in",
+  "reporting_currency__in",
+  "statement_type__in",
+  "asset_class__in",
+  "custodian__in",
+  "security__in",
+  "trade_action__in",
+];
+
 export function useTableFilter() {
+  const { get: getSearchParams } = useSearchParams();
   const { data: currency } = useTransactionServerQuery<ICurrency[]>(
     "/classification/currency/"
   );
-  const { data: asset } = useTransactionServerQuery<IAssetClass[]>(
-    "/classification/sub-asset/"
-  );
-  const { data: custodian } =
-    useTransactionServerQuery<ICustodian[]>("/custodian/");
+  const { data: asset } = useAsset();
+  const { data: custodian } = useCustodian();
+  const { data: security } = useSecurities();
+
+  const searchParams: Record<SearchParams, string | undefined> =
+    searchParamsKeys.reduce(
+      (acc, key) => ({ ...acc, [key]: getSearchParams(key as SearchParams) }),
+      {} as Record<SearchParams, string>
+    );
 
   function addFilters(columns: any) {
     switch (columns.key) {
-      case "currency":
-      case "reporting_currency":
+      case "currency__in":
+      case "reporting_currency__in":
         return {
           ...columns,
           filters: currency?.map(({ code }) => ({ text: code, value: code })),
           filterSearch: true,
+          filteredValue:
+            searchParams.currency__in?.split(",") ||
+            searchParams.reporting_currency__in?.split(","),
         };
-      case "statement_type":
+      case "statement_type__in":
         return {
           ...columns,
           filters: StatementOptions.map(({ value, label }) => ({
             text: label,
             value,
           })),
+          filteredValue: searchParams.statement_type__in?.split(","),
         };
-      case "asset_class":
+      case "asset_class__in":
         return {
           ...columns,
           filters: asset?.map(({ sub_asset_class }) => ({
             text: sub_asset_class,
             value: sub_asset_class,
           })),
+          filterSearch: true,
+          filteredValue: searchParams.asset_class__in?.split(","),
         };
-      case "custodian":
+      case "custodian__in":
         return {
           ...columns,
           filters: custodian?.map(({ name, id }) => ({
@@ -134,14 +160,26 @@ export function useTableFilter() {
             value: id,
           })),
           filterSearch: true,
+          filteredValue: searchParams.custodian__in?.split(","),
         };
-      case "trade_action":
+      case "security__in":
+        return {
+          ...columns,
+          filters: security?.map(({ symbol }) => ({
+            text: symbol,
+            value: symbol,
+          })),
+          filterSearch: true,
+          filteredValue: searchParams.security__in?.split(","),
+        };
+      case "trade_action__in":
         return {
           ...columns,
           filters: TradeActionOptions.map(({ value, label }) => ({
             text: label,
             value,
           })),
+          filteredValue: searchParams.trade_action__in?.split(","),
         };
       default:
         return columns;

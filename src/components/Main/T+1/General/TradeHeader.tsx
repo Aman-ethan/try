@@ -1,16 +1,14 @@
 "use client";
 
 import Title from "@/components/Typography/Title";
+import { FilterOutlined } from "@ant-design/icons";
 import { Breadcrumb, Button, Row } from "antd";
+import clsx from "clsx";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useState } from "react";
-import clsx from "clsx";
-import { FilterOutlined } from "@ant-design/icons";
-import SelectAssetWithParams from "../../Input/SelectAssetWithParams";
 import SelectClientWithParams from "../../Input/SelectClientWithParams";
 import SelectCustodianWithParams from "../../Input/SelectCustodianWithParams";
 import AddTradeDrawer from "./AddTradeDrawer";
-import SelectSecurityWithParams from "./SelectSecurityWithParams";
 
 const BreadcrumbItems = [
   {
@@ -37,10 +35,10 @@ export default function TradeHeader() {
     "w-1/2 tab:flex"
   );
 
-  const secondarySelectClasses = clsx(
-    showFilter ? "block" : "hidden",
-    "w-1/2 lap:flex"
-  );
+  // const secondarySelectClasses = clsx(
+  //   showFilter ? "block" : "hidden",
+  //   "w-1/2 lap:flex"
+  // );
   return (
     <div className="space-y-6">
       <Breadcrumb
@@ -71,7 +69,7 @@ export default function TradeHeader() {
               />
             </div>
             <div className={innerContainerClasses}>
-              <SelectSecurityWithParams
+              {/* <SelectSecurityWithParams
                 size="large"
                 className={secondarySelectClasses}
                 placeholder="Select a Security"
@@ -79,7 +77,7 @@ export default function TradeHeader() {
               <SelectAssetWithParams
                 className={secondarySelectClasses}
                 placeholder="All Asset"
-              />
+              /> */}
             </div>
           </div>
           <div className="order-first flex w-full space-x-2 tab:order-last tab:w-auto tab:self-start">

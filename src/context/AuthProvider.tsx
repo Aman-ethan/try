@@ -72,14 +72,14 @@ export default function AuthProvider({ children }: IAuthProviderProps) {
 
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (!access_token) {
+      if (!access_token && refresh_token) {
         refresh();
       }
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () =>
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, [refresh, access_token]);
+  }, [refresh, access_token, refresh_token]);
 
   const isLoggedIn = Boolean(refresh_token);
 

@@ -1,6 +1,6 @@
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useTable, { useSelectRow, useTableFilter } from "@/hooks/useTable";
-import { IPaginatedResponse } from "@/interfaces/Main";
+import { IPaginatedResponse, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { Button, TableColumnsType } from "antd";
 import ViewDrawer from "../../General/ViewDrawer";
@@ -12,6 +12,8 @@ interface ITradeTableProps<T> {
   urlKey: string;
   edit?: boolean;
 }
+
+const searchParamKeys = ["asset_class__in", "security__in", "trade_action__in"];
 
 export default function TradeTable<T>({
   columns,
@@ -28,8 +30,7 @@ export default function TradeTable<T>({
     getSearchParams,
   } = useTable();
   const { addFilters } = useTableFilter();
-  const asset_class = getSearchParams("asset_class");
-  const security = getSearchParams("security");
+
   const { data, isLoading } = useTransactionServerQuery<IPaginatedResponse<T>>(
     urlKey +
       buildURLSearchParams({
@@ -37,8 +38,13 @@ export default function TradeTable<T>({
         custodian,
         ordering,
         page,
-        asset_class,
-        security,
+        ...searchParamKeys.reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: getSearchParams(key as SearchParams),
+          }),
+          {}
+        ),
       })
   );
   const { onRow, rowSelection, selectedRowKey, setSelectedRowKey } =

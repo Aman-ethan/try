@@ -87,7 +87,7 @@ const Columns: TableColumnsType<IBankStatement> = [
   },
   {
     title: "Reporting Currency",
-    key: "reporting_currency",
+    key: "reporting_currency__in",
     width: 175,
     dataIndex: "reporting_currency",
     render: (currency) => <CurrencyTag currency={currency} />,
@@ -99,14 +99,8 @@ const Columns: TableColumnsType<IBankStatement> = [
     width: 170,
   },
   {
-    title: "Portfoilio Number",
-    key: "portfolio_number",
-    dataIndex: "portfolio_number",
-    width: 170,
-  },
-  {
     title: "Type of Statement",
-    key: "statement_type",
+    key: "statement_type__in",
     dataIndex: "statement_type",
     render: capitalize,
     width: 170,

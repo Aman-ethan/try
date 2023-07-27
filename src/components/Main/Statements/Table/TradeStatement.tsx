@@ -65,7 +65,7 @@ const Columns: TableColumnsType<ITradeStatement> = [
   },
   {
     title: "Custodian",
-    key: "custodian",
+    key: "custodian_name",
     dataIndex: "custodian_name",
     width: 165,
   },
@@ -97,13 +97,13 @@ const Columns: TableColumnsType<ITradeStatement> = [
   },
   {
     title: "Asset Class",
-    key: "asset_class",
+    key: "asset_class__in",
     dataIndex: "asset_class",
     width: 130,
   },
   {
     title: "Trade Action",
-    key: "trade_action",
+    key: "trade_action__in",
     dataIndex: "trade_action",
     render: capitalize,
     width: 130,
@@ -116,7 +116,7 @@ const Columns: TableColumnsType<ITradeStatement> = [
   },
   {
     title: "Currency",
-    key: "currency",
+    key: "currency__in",
     dataIndex: "currency",
     render: (currency) => <CurrencyTag currency={currency} />,
     width: 130,
