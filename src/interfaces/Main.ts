@@ -48,6 +48,19 @@ export interface IGrossAllocation {
   data: IPieData[];
 }
 
+export interface IBankStatement {
+  id: string;
+  client_name: string;
+  custodian_name: string;
+  statement_date: string;
+  upload_date: string;
+  status: string;
+  reporting_currency: string;
+  relationship_number: string;
+  portfolio_number: string;
+  s3_url: string;
+}
+
 export interface IBankAccount {
   relationship_number: string;
   portfolio_number: string;

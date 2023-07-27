@@ -1,6 +1,7 @@
 "use client";
 
 import { ActionColumn } from "@/constants/table";
+import { IBankStatement } from "@/interfaces/Main";
 import { formatTableDate } from "@/lib/format";
 import { TableColumnsType } from "antd";
 import { capitalize } from "lodash";
@@ -8,19 +9,6 @@ import Statement from ".";
 import CurrencyTag from "../../General/CurrencyTag";
 import MoreMenu, { DeleteItem, DownloadItem } from "../../General/MoreMenu";
 import StatusTag from "../../General/StatusTag";
-
-interface IBankStatement {
-  id: string;
-  client_name: string;
-  custodian_name: string;
-  statement_date: string;
-  upload_date: string;
-  status: string;
-  reporting_currency: string;
-  relationship_number: string;
-  portfolio_number: string;
-  s3_url: string;
-}
 
 interface IActionProps {
   id: string;

@@ -6,17 +6,17 @@ import { Button } from "antd";
 import clsx from "clsx";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useState } from "react";
-import { CSVLink } from "react-csv";
 import SelectClient from "../../Input/SelectClientWithParams";
 import SelectCustodian from "../../Input/SelectCustodianWithParams";
+import DownloadBankStatement from "./DownloadBankStatement";
 import UploadStatementDrawer from "./UploadStatementDrawer";
 
-const DownloadUrls = {
+const URLs = {
   trade: "",
 };
 
 export default function StatementFilter() {
-  const layoutSegment = useSelectedLayoutSegment() as keyof typeof DownloadUrls;
+  const layoutSegment = useSelectedLayoutSegment();
   const [showFilter, setShowFilter] = useState(false);
 
   const primarySelectClasses = clsx(
@@ -55,19 +55,11 @@ export default function StatementFilter() {
           <Button
             size="large"
             icon={<DownloadOutlined />}
-            href={DownloadUrls.trade}
+            href={URLs.trade}
             download
           />
         ) : (
-          <Button
-            size="large"
-            disabled={layoutSegment === "position"}
-            icon={<DownloadOutlined />}
-          >
-            <CSVLink data={[]} filename="bank_statement.csv">
-              Download as CSV
-            </CSVLink>
-          </Button>
+          <DownloadBankStatement />
         )}
       </div>
     </div>
