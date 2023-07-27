@@ -115,7 +115,7 @@ export default function VerifyOTPForm() {
           <Form.Item
             noStyle
             name={["otp", index]}
-            key={index.toString()}
+            key={`${index.toString()}`}
             rules={[{ max: 1 }]}
             getValueFromEvent={getValueFromEvent}
           >
