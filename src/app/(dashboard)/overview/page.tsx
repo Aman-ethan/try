@@ -1,10 +1,10 @@
+import Segmented from "@/components/Main/General/Segmented";
 import Analytics from "@/components/Main/Overview/Analytics";
 import AssetNetWorth from "@/components/Main/Overview/AssetNetWorth";
 import ClientNetWorth from "@/components/Main/Overview/ClientNetWorth";
 import GainerLoser from "@/components/Main/Overview/GainerLoser";
 import GainerLoserFilter from "@/components/Main/Overview/GainerLoserFilter";
 import Title from "@/components/Typography/Title";
-import { Segmented } from "@/lib/antd";
 
 const GainerLoserViewOptions = [
   { label: "Table View", value: "table_view" },
@@ -28,11 +28,8 @@ export default function Home() {
           <div className="w-[16.75rem]">
             <Segmented
               disabled
-              size="middle"
               defaultValue="table_view"
               options={GainerLoserViewOptions}
-              className="border border-neutral-4 bg-neutral-2 p-1"
-              block
             />
           </div>
         </div>
