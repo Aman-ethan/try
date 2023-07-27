@@ -28,7 +28,7 @@ export default function useSearchParams() {
     });
 
     urlSearchParams.sort();
-    router.push(`${pathname}?${urlSearchParams}`);
+    router.push(`${pathname}?${urlSearchParams}`, { scroll: false });
   }
 
   function get(name: SearchParams) {

@@ -4,6 +4,7 @@ import Logo from "@/components/Icon/Logo";
 import ROUTE from "@/constants/route";
 import useAuth from "@/hooks/useAuth";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
+import { TCurrency } from "@/interfaces/Main";
 import {
   CaretDownFilled,
   LogoutOutlined,
@@ -35,26 +36,17 @@ interface ILayoutProps {
 interface IUser {
   name: string;
   username: string;
+  reporting_currency: TCurrency | null;
 }
 
 const iconClassName = "text-neutral-11";
 
 const currentDate = new Date();
 
-function User() {
-  const { data } = useTransactionServerQuery<IUser>("/users/me/");
-  const { name, username } = data || {};
-  return (
-    <>
-      <Avatar />
-      <span className="text-sm font-medium capitalize text-neutral-13">
-        {name || username}
-      </span>
-    </>
-  );
-}
-
-function UserProfile() {
+function UserProfile({
+  name,
+  username,
+}: Omit<Partial<IUser>, "reporting_currency">) {
   const { logout } = useAuth();
 
   const ProfileItems = [
@@ -82,7 +74,10 @@ function UserProfile() {
   return (
     <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
       <div className="cursor-pointer space-x-2">
-        <User />
+        <Avatar />
+        <span className="text-sm font-medium capitalize text-neutral-13">
+          {name || username}
+        </span>
         <CaretDownFilled />
       </div>
     </Dropdown>
@@ -90,10 +85,13 @@ function UserProfile() {
 }
 
 export default function DashboardLayout({ children }: ILayoutProps) {
+  const [collapsed, setCollapsed] = useState(false);
+  const { data } = useTransactionServerQuery<IUser>("/users/me/");
   const pathname = usePathname();
   const layoutSegments = useSelectedLayoutSegments();
   const SIDEBAR_BREAK_POINT = useMediaQuery("(max-width: 992px)");
-  const [collapsed, setCollapsed] = useState(false);
+
+  const { name, username, reporting_currency } = data || {};
 
   useLayoutEffect(() => {
     if (SIDEBAR_BREAK_POINT) {
@@ -142,9 +140,9 @@ export default function DashboardLayout({ children }: ILayoutProps) {
             />
           </Row>
           <Row className="gap-x-6" align="middle">
-            <CurrencyTag currency="sgd" />
+            <CurrencyTag currency={reporting_currency || "usd"} />
             <Divider type="vertical" className="text-neutral-13/5" />
-            <UserProfile />
+            <UserProfile name={name} username={username} />
           </Row>
         </Layout.Header>
         <Layout.Content>
@@ -152,7 +150,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           <Layout.Footer className="flex justify-center bg-neutral-3">
             ETHAN-AI &copy; ALL RIGHTS RESERVED {currentDate.getFullYear()}
             {". "}
-            Version: 1.7.0
+            Version: 1.8.0
           </Layout.Footer>
         </Layout.Content>
       </Layout>
