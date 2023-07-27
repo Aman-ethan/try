@@ -7,7 +7,7 @@ export default function ListItem() {
       size="large"
       // pagination={{
       //   onChange: (page) => {
-      //     console.log(page);
+      //
       //   },
       //   pageSize: 3,
       // }}

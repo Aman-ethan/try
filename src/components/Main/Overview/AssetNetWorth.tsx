@@ -1,28 +1,34 @@
 "use client";
 
-import { useAnalyticsServerQuery } from "@/hooks/useQuery";
-import useSearchParams from "@/hooks/useSearchParams";
+import useClientDropdown from "@/hooks/useClientDropdown";
 import { IAssetNetWorth } from "@/interfaces/Main";
 import dayjs from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
-import ClientDropdwon from "../General/ClientDropdown";
+import Dropdown from "../General/Dropdown";
 import IndexChart from "./IndexChart";
 
 dayjs.extend(quarterOfYear);
 
+const urlKey = "/relative-performance/net-worth";
+const searchParamKey = "asset_client";
+
 export default function AssetNetWorth() {
-  const { get: getSearchParams } = useSearchParams();
-  const { data, isLoading } = useAnalyticsServerQuery<IAssetNetWorth>(
-    "/relative-performance/net-worth/",
-    {
-      client: getSearchParams("client"),
-    }
-  );
-  console.log(data);
+  const { loading, onChange, options, selectedClient, data } =
+    useClientDropdown<IAssetNetWorth>({ urlKey, searchParamKey });
+
   return (
-    <div className="space-y-3">
-      <ClientDropdwon />
-      <IndexChart data={data?.data} loading={isLoading} />
+    <div className="space-y-6 h-[25.5rem]">
+      <Dropdown
+        disabled={loading}
+        menu={{
+          onClick: ({ key }) => onChange(key),
+          items: options,
+          defaultSelectedKeys: [selectedClient?.key as string],
+        }}
+      >
+        {selectedClient?.label}
+      </Dropdown>
+      <IndexChart data={data?.data} loading={loading} />
     </div>
   );
 }

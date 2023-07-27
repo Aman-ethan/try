@@ -54,12 +54,12 @@ export function useTransactionServerLazyQuery<Data>(
 }
 
 export function useAnalyticsServerQuery<Data>(
-  key: string,
+  key: string | null,
   args: Partial<Record<SearchParams, string>>,
   config?: SWRConfiguration<Data, Error>
 ) {
   return useQuery<Data>(
-    [key, args],
+    key ? [key, args] : null,
     postJsonFetcher(AnalyticsServerUrl),
     config
   );

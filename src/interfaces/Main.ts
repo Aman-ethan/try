@@ -23,15 +23,29 @@ export interface IClientResponse {
   custodians: ICustodian[];
 }
 
+export interface IIndexData {
+  x: string;
+  y: number;
+  z: string;
+}
+
 export interface IAssetNetWorth {
   title: string;
   x_label: string;
   y_label: string;
-  data: {
-    x: string;
-    y: number;
-    z: string;
-  }[];
+  data: IIndexData[];
+}
+
+export interface IPieData {
+  type: string;
+  value: number;
+}
+
+export interface IGrossAllocation {
+  title: string;
+  x_label: string;
+  y_label: string;
+  data: IPieData[];
 }
 
 export interface IBankAccount {
@@ -176,7 +190,11 @@ type TTradeSearchParams =
   | "security__in"
   | "trade_action__in";
 
-type TOverviewSearchParams = "start_date" | "end_date";
+type TOverviewSearchParams =
+  | "start_date"
+  | "end_date"
+  | "asset_client"
+  | "gross_allocation_client";
 
 export type SearchParams =
   | TCommonSearchPrams

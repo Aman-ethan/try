@@ -11,3 +11,5 @@ export const MenuItemClassName =
 export const formWrapper =
   "flex flex-col gap-y-8 tab:flex-row tab:gap-y-0 tab:gap-x-8";
 export const PageCardClassName = "calc(100vh - 25rem)";
+
+export const TableScrollDifference = "5.375rem";

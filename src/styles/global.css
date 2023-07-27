@@ -17,6 +17,17 @@
   content: unset !important;
 }
 
+/* .ant-segmented-item {
+  transition: red 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+} */
+.ant-segmented-item-selected {
+  @apply !bg-primary-6 !text-white;
+}
+
+.ant-segmented-thumb {
+  @apply !bg-primary-6 !text-white;
+}
+
 /* Customize website's scrollbar like Mac OS*/
 .scrollbar {
   overflow: overlay;

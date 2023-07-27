@@ -1,13 +1,10 @@
-import { Pie, PieConfig } from "@ant-design/plots";
 import defaultPieChartConfig from "@/constants/pieChartConfig";
-
-interface PieData {
-  type: string;
-  value: number;
-}
+import { IPieData } from "@/interfaces/Main";
+import { formatCompactNumber } from "@/lib/format";
+import { Pie, PieConfig } from "@ant-design/plots";
 
 interface IPieProps {
-  data: PieData[];
+  data: IPieData[];
   totalValue: number;
   handleSegmentClick: () => void;
 }
@@ -24,7 +21,7 @@ export default function AnalyticsPieChart({
       ...defaultPieChartConfig.statistic,
       content: {
         ...defaultPieChartConfig.statistic?.content,
-        content: `${totalValue}M`,
+        content: formatCompactNumber(totalValue),
       },
     },
     onReady: (plot) => {
@@ -32,12 +29,13 @@ export default function AnalyticsPieChart({
         handleSegmentClick();
       });
     },
+    animation: false,
   };
 
   return (
     <Pie
-      {...pieChartConfig}
       style={{ maxWidth: "300px", maxHeight: "300px" }}
+      {...pieChartConfig}
     />
   );
 }
