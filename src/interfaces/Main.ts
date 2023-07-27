@@ -23,6 +23,17 @@ export interface IClientResponse {
   custodians: ICustodian[];
 }
 
+export interface IAssetNetWorth {
+  title: string;
+  x_label: string;
+  y_label: string;
+  data: {
+    x: string;
+    y: number;
+    z: string;
+  }[];
+}
+
 export interface IBankAccount {
   relationship_number: string;
   portfolio_number: string;
@@ -134,6 +145,16 @@ export interface IAssetClass {
   sub_asset_class: string;
 }
 
+export interface IClient {
+  client_id: number;
+  client_name: string;
+  net_worth: number;
+  total_pl: number;
+  daily_pl: number;
+}
+
+type TCommonSearchPrams = "page" | "ordering" | "client" | "client_id";
+
 type TAuthSearchParams =
   | "username"
   | "password"
@@ -155,12 +176,14 @@ type TTradeSearchParams =
   | "security__in"
   | "trade_action__in";
 
+type TOverviewSearchParams = "start_date" | "end_date";
+
 export type SearchParams =
+  | TCommonSearchPrams
   | TAuthSearchParams
   | TStatementSearchParams
   | TTradeSearchParams
-  | "page"
-  | "ordering"
+  | TOverviewSearchParams
   | "selected_date"
   | "selected_duration"
   | "goal_id"

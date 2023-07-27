@@ -1,42 +1,21 @@
+import Title from "@/components/Typography/Title";
 import { CaretDownFilled } from "@ant-design/icons";
-import { Dropdown as AntdDropdown, Button, DropdownProps, Row } from "antd";
-import { useState } from "react";
+import { Dropdown as AntdDropdown, Button, DropdownProps } from "antd";
 
-export default function Dropdown({
-  children,
-  menu,
-  placement = "bottomRight",
-  ...props
-}: DropdownProps) {
-  const [dropdownWidth, setDropdownWidth] = useState<undefined | number>();
+export default function Dropdown({ children, menu, ...props }: DropdownProps) {
   return (
-    <Row
-      ref={(el) => {
-        setDropdownWidth(el?.getBoundingClientRect().width);
+    <AntdDropdown
+      menu={{
+        selectable: true,
+        ...menu,
       }}
-      align="middle"
-      className="space-x-2"
+      trigger={["click"]}
+      {...props}
     >
-      {children}
-      <AntdDropdown
-        menu={{
-          selectable: true,
-          style: {
-            width: dropdownWidth,
-            ...menu?.style,
-          },
-          ...menu,
-        }}
-        trigger={["click"]}
-        placement={placement}
-        {...props}
-      >
-        <Button
-          type="text"
-          shape="circle"
-          icon={<CaretDownFilled className="mt-0.5 text-xl" />}
-        />
-      </AntdDropdown>
-    </Row>
+      <Button type="text" className="flex items-center space-x-2 pl-0 pr-1">
+        <Title level={5}>{children}</Title>
+        <CaretDownFilled className="text-sm" />
+      </Button>
+    </AntdDropdown>
   );
 }

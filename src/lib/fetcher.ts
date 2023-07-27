@@ -1,7 +1,7 @@
 "use client";
 
-import { Cookies } from "react-cookie";
 import { AccessTokenKey } from "@/constants/strings";
+import { Cookies } from "react-cookie";
 
 interface IFetcherParams {
   url: string;
@@ -41,18 +41,24 @@ async function fetcher({ url, init, error }: IFetcherParams) {
 }
 
 export function postJsonFetcher(baseURL: string) {
-  return <ExtraArgs>(key: string, options?: Readonly<{ arg: ExtraArgs }>) =>
-    fetcher({
-      url: baseURL + key,
+  return <ExtraArgs>(key: string, options?: Readonly<{ arg: ExtraArgs }>) => {
+    const isArray = Array.isArray(key);
+    return fetcher({
+      url: baseURL + (isArray ? key[0] : key),
       init: {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: options ? JSON.stringify(options.arg) : undefined,
+        body: options
+          ? JSON.stringify(options.arg)
+          : isArray
+          ? JSON.stringify(key[1])
+          : undefined,
       },
       error: "An error occurred while posting the data.",
     });
+  };
 }
 
 export function deleteFetcher(baseURL: string) {

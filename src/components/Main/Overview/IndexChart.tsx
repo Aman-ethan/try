@@ -1,6 +1,4 @@
-import aapl from "@/constants/data/aapl";
-import mcd from "@/constants/data/mcd";
-import msft from "@/constants/data/msft";
+import { IAssetNetWorth } from "@/interfaces/Main";
 import * as Plot from "@observablehq/plot";
 import { Spin } from "antd";
 import clsx from "clsx";
@@ -18,19 +16,15 @@ import {
 } from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-interface Data {
-  x: string;
-  y: number;
-  z: string;
+type TData = IAssetNetWorth["data"][0];
+
+interface IIndexChartProps {
+  data?: TData[];
+  loading?: boolean;
 }
 
-// interface IIndexChartProps {
-//   data: Data[];
-//   loading?: boolean;
-// }
-
 interface IFillMissingDataParams {
-  data: Record<string, Data[]>;
+  data: Record<string, TData[]>;
   xticks: string[];
 }
 
@@ -64,29 +58,29 @@ function fillMissingData({ data, xticks }: IFillMissingDataParams) {
 
 // const OFFSET = 1;
 
-const data = [
-  ...aapl.map((item) => ({ x: item.date, y: item.adjusted_close, z: "Cash" })),
-  ...mcd.map((item) => ({
-    x: item.date,
-    y: item.adjusted_close,
-    z: "Deposit",
-  })),
-  ...msft.map((item) => ({
-    x: item.date,
-    y: item.adjusted_close,
-    z: "Equity",
-  })),
-  ...aapl.map((item) => ({
-    x: item.date,
-    y: item.adjusted_close,
-    z: "Fixed Income",
-  })),
-  ...aapl.map((item) => ({ x: item.date, y: item.adjusted_close, z: "Funds" })),
-  ...aapl.map((item) => ({ x: item.date, y: item.adjusted_close, z: "Bonds" })),
-];
+// const data = [
+//   ...aapl.map((item) => ({ x: item.date, y: item.adjusted_close, z: "Cash" })),
+//   ...mcd.map((item) => ({
+//     x: item.date,
+//     y: item.adjusted_close,
+//     z: "Deposit",
+//   })),
+//   ...msft.map((item) => ({
+//     x: item.date,
+//     y: item.adjusted_close,
+//     z: "Equity",
+//   })),
+//   ...aapl.map((item) => ({
+//     x: item.date,
+//     y: item.adjusted_close,
+//     z: "Fixed Income",
+//   })),
+//   ...aapl.map((item) => ({ x: item.date, y: item.adjusted_close, z: "Funds" })),
+//   ...aapl.map((item) => ({ x: item.date, y: item.adjusted_close, z: "Bonds" })),
+// ];
 const loading = false;
 
-export default function IndexChart() {
+export default function IndexChart({ data, loading }: IIndexChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const [normalizeIndex, setNormalizeIndex] = useState(0);
   const [excludedDomain, setExcludedDomain] = useState<string[]>([]);
@@ -131,7 +125,7 @@ export default function IndexChart() {
     const maxDomain = max(
       map(
         groupedData,
-        (item) => (maxBy(item, "y") as Data).y / (minBy(item, "y") as Data).y
+        (item) => (maxBy(item, "y") as TData).y / (minBy(item, "y") as TData).y
       )
     ) as number;
 

@@ -8,10 +8,10 @@ interface IUseSelectClientWithParams {
 }
 
 export default function useSelectClientWithParams(
-  params?: IUseSelectClientWithParams
+  props?: IUseSelectClientWithParams
 ) {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
-  const searchParamKey = params?.searchParamKey || "client";
+  const searchParamKey = props?.searchParamKey || "client";
   const clientId = getSearchParams(searchParamKey);
   const custodianId = getSearchParams("custodian");
 

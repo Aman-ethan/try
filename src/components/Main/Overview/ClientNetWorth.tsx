@@ -1,23 +1,13 @@
 "use client";
 
 import Title from "@/components/Typography/Title";
-import { DATE_PARAM_FORMAT } from "@/constants/format";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { IClient } from "@/interfaces/Main";
 import { formatCompactNumber } from "@/lib/format";
 import { SettingOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Dropdown, MenuProps, TableColumnsType } from "antd";
-import dayjs from "dayjs";
 import { Dispatch, SetStateAction, useState } from "react";
-import Table from "../Table";
-
-interface IClient {
-  client_id: number;
-  client_name: string;
-  net_worth: number;
-  total_pl: number;
-  daily_pl: number;
-}
+import ScrollableTable from "../Table/ScrollableTable";
 
 interface ISettingProps {
   selectedColumns: string[];
@@ -25,30 +15,72 @@ interface ISettingProps {
 }
 
 function useClientNetWorth() {
-  const { data, isLoading } = useTransactionServerQuery<IClient[]>(
-    `/position_history/summary/daily/${buildURLSearchParams({
-      report_date: dayjs().format(DATE_PARAM_FORMAT),
-    })}`
-  );
+  const { isLoading } = useTransactionServerQuery<IClient[]>(`/client/`);
 
   return {
     isLoading,
-    data:
-      data ||
-      ([
-        {
-          client_name: "TT_SS",
-          daily_pl: 1000,
-          total_pl: 1000,
-          net_worth: 1000,
-        },
-        {
-          client_name: "AK_NK",
-          daily_pl: 10000,
-          total_pl: 10000,
-          net_worth: 10000,
-        },
-      ] as IClient[]),
+    data: [
+      {
+        client_name: "TT_SS",
+        daily_pl: 1000,
+        total_pl: 1000,
+        net_worth: 1000,
+      },
+      {
+        client_name: "AK_NK",
+        daily_pl: 10000,
+        total_pl: 10000,
+        net_worth: 10000,
+      },
+      {
+        client_name: "TT_SS",
+        daily_pl: 1000,
+        total_pl: 1000,
+        net_worth: 1000,
+      },
+      {
+        client_name: "AK_NK",
+        daily_pl: 10000,
+        total_pl: 10000,
+        net_worth: 10000,
+      },
+      {
+        client_name: "TT_SS",
+        daily_pl: 1000,
+        total_pl: 1000,
+        net_worth: 1000,
+      },
+      {
+        client_name: "AK_NK",
+        daily_pl: 10000,
+        total_pl: 10000,
+        net_worth: 10000,
+      },
+      {
+        client_name: "TT_SS",
+        daily_pl: 1000,
+        total_pl: 1000,
+        net_worth: 1000,
+      },
+      {
+        client_name: "AK_NK",
+        daily_pl: 10000,
+        total_pl: 10000,
+        net_worth: 10000,
+      },
+      {
+        client_name: "TT_SS",
+        daily_pl: 1000,
+        total_pl: 1000,
+        net_worth: 1000,
+      },
+      {
+        client_name: "AK_NK",
+        daily_pl: 10000,
+        total_pl: 10000,
+        net_worth: 10000,
+      },
+    ] as IClient[],
   };
 }
 
@@ -104,32 +136,31 @@ const columns: TableColumnsType<IClient> = [
 ];
 
 function Setting({ selectedColumns, setSelectedColumns }: ISettingProps) {
+  // @ts-expect-error
   const items: MenuProps["items"] = columns.map((column) => {
     const isChecked = selectedColumns.includes(column.key as string);
-    const onCheckboxClick = () => {
-      if (isChecked) {
-        setSelectedColumns(
-          selectedColumns.filter((key: string) => key !== column.key)
-        );
-      } else {
-        setSelectedColumns((prev) => [...prev, column.key as string]);
-      }
-    };
     return {
-      label: (
-        <Checkbox checked={isChecked} onClick={onCheckboxClick}>
-          {column.title as string}
-        </Checkbox>
-      ),
+      label: <Checkbox checked={isChecked}>{column.title as string}</Checkbox>,
       key: column.key,
-      type: "group",
     };
   });
   return (
     <Dropdown
+      disabled
+      trigger={["click"]}
       menu={{
         items,
+        onClick: ({ key }) => {
+          if (selectedColumns.includes(key)) {
+            setSelectedColumns((prevSelected) =>
+              prevSelected.filter((columnKey: string) => key !== columnKey)
+            );
+          } else {
+            setSelectedColumns((prevSelected) => [...prevSelected, key]);
+          }
+        },
       }}
+      placement="bottomRight"
     >
       <Button type="text" icon={<SettingOutlined />} />
     </Dropdown>
@@ -144,10 +175,11 @@ const defaultSelectedColumns = [
 ];
 
 export default function ClientNetWorth() {
+  const { isLoading, data } = useClientNetWorth();
   const [selectedColumns, setSelectedColumns] = useState<string[]>(
     defaultSelectedColumns
   );
-  const { isLoading, data } = useClientNetWorth();
+
   const filteredColumns: TableColumnsType<IClient> = columns
     .filter((column) => selectedColumns.includes(column.key as string))
     .map((column, index) =>
@@ -155,9 +187,11 @@ export default function ClientNetWorth() {
         ? {
             ...column,
             align: "left",
+            width: 100,
           }
-        : column
+        : { ...column, width: 97 }
     );
+
   const Columns: TableColumnsType<IClient> = [
     ...filteredColumns,
     {
@@ -167,13 +201,14 @@ export default function ClientNetWorth() {
           setSelectedColumns={setSelectedColumns}
         />
       ),
+      align: "right",
       key: "setting",
       fixed: "right",
       width: 40,
     },
   ];
   return (
-    <div className="flex-1 space-y-6 rounded-lg bg-white p-6 lap:w-2/5">
+    <div className="flex-1 max-w-[30rem] h-[28.5rem] space-y-6 rounded-lg bg-white p-6 lap:w-2/5">
       <div className="flex items-center justify-between">
         <Title level={4}>Net Worth</Title>
         <Title level={3}>
@@ -182,13 +217,14 @@ export default function ClientNetWorth() {
           )}
         </Title>
       </div>
-      <Table
+      <ScrollableTable
         loading={isLoading}
         columns={Columns}
         dataSource={data}
         rowKey="id"
-        className="table-reset h-[24rem]"
-        scroll={{ y: "21rem" }}
+        className="table-reset whitespace-nowrap"
+        rowClassName="h-12"
+        scroll={{ y: "18rem" }}
       />
     </div>
   );
