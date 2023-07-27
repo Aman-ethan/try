@@ -97,7 +97,6 @@ export default function Transaction() {
           className="h-[calc(100vh-18rem)]"
           scroll={{
             y: "calc(100vh - 20rem)",
-            x: "calc(100vw - 20rem)",
           }}
         />
       </div>

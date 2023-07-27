@@ -32,7 +32,7 @@ export default function ChartTable<T>({
         {children}
         <ProgressBar
           className={clsx(
-            "absolute w-[65%] top-1 left-0 right-0 bottom-1 z-0",
+            "absolute bottom-1 left-0 right-0 top-1 z-0 w-[65%]",
             progressType === "success"
               ? "bg-progress-success"
               : "bg-progress-failure"

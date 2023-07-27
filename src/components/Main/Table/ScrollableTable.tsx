@@ -7,5 +7,13 @@ export default function ScrollableTable<T>({
   scroll,
   ...props
 }: TableProps<T>) {
-  return <Table scroll={scroll} {...props} />;
+  return (
+    <Table
+      scroll={{
+        y: scroll?.y,
+        x: props.columns?.reduce((acc, { width }) => acc + Number(width), 0),
+      }}
+      {...props}
+    />
+  );
 }
