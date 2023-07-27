@@ -12,8 +12,20 @@ import useSWR, { SWRConfiguration } from "swr";
 import { SWRMutationConfiguration } from "swr/mutation";
 import useMutation from "./useMutation";
 
+type TKey = string | [string, Record<string, string>] | null;
+
+function formatKey(key: TKey, access_token: string) {
+  if (key) {
+    if (Array.isArray(key)) {
+      return [...key, access_token];
+    }
+    return [key, access_token];
+  }
+  return null;
+}
+
 function useQuery<Data>(
-  key: string | [string, Record<string, string>] | null,
+  key: TKey,
   fetcher: (
     _key: string,
     _options?: { arg: Record<string, string> }
@@ -21,18 +33,11 @@ function useQuery<Data>(
   config?: SWRConfiguration<Data, Error>
 ) {
   const { access_token } = useCookies([AccessTokenKey])[0];
-  return useSWR<Data, Error>(
-    key
-      ? Array.isArray(key)
-        ? [...key, access_token]
-        : [key, access_token]
-      : null,
-    fetcher,
-    {
-      keepPreviousData: true,
-      ...config,
-    }
-  );
+
+  return useSWR<Data, Error>(formatKey(key, access_token), fetcher, {
+    keepPreviousData: true,
+    ...config,
+  });
 }
 
 export function useTransactionServerQuery<Data>(

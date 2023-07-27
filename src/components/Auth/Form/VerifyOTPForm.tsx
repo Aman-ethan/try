@@ -115,7 +115,8 @@ export default function VerifyOTPForm() {
           <Form.Item
             noStyle
             name={["otp", index]}
-            key={`${index.toString()}`}
+            // eslint-disable-next-line react/no-array-index-key
+            key={index.toString()}
             rules={[{ max: 1 }]}
             getValueFromEvent={getValueFromEvent}
           >

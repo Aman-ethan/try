@@ -40,8 +40,24 @@ async function fetcher({ url, init, error }: IFetcherParams) {
   }
 }
 
+function formatBody<ExtraArgs>(
+  arg: ExtraArgs,
+  payload?: Record<string, string>
+) {
+  if (arg) {
+    return JSON.stringify(arg);
+  }
+  if (payload) {
+    return JSON.stringify(payload);
+  }
+  return undefined;
+}
+
 export function postJsonFetcher(baseURL: string) {
-  return <ExtraArgs>(key: string, options?: Readonly<{ arg: ExtraArgs }>) => {
+  return <ExtraArgs>(
+    key: string | [string, Record<string, string>],
+    options?: Readonly<{ arg: ExtraArgs }>
+  ) => {
     const isArray = Array.isArray(key);
     return fetcher({
       url: baseURL + (isArray ? key[0] : key),
@@ -50,11 +66,7 @@ export function postJsonFetcher(baseURL: string) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: options
-          ? JSON.stringify(options.arg)
-          : isArray
-          ? JSON.stringify(key[1])
-          : undefined,
+        body: formatBody(options?.arg, isArray ? key[1] : undefined),
       },
       error: "An error occurred while posting the data.",
     });
@@ -90,7 +102,7 @@ export function postFormFetcher(baseURL: string) {
 }
 
 export function getFetcher(baseURL: string) {
-  return (key: string) =>
+  return (key: string | [string, string]) =>
     fetcher({
       url: baseURL + (Array.isArray(key) ? key[0] : key),
       init: {

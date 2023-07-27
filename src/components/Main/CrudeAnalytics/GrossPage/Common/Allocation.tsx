@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { ProList } from "@ant-design/pro-components";
+import { IPieData } from "@/interfaces/Main";
 import AnalyticsPieChart from "../../Charts/AnalyticsPieChart";
 import AnalyticsModal from "./AnalyticsModal";
-import { IPieData } from "@/interfaces/Main";
 
 interface IAllocationProps {
   title: string;

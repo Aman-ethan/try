@@ -1,10 +1,9 @@
 "use client";
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import useSearchParams from "@/hooks/useSearchParams";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { TableColumnsType } from "antd";
 import { formatCompactNumber } from "@/lib/format";
+import { TableColumnsType } from "antd";
 import Table from "../Table";
 
 // interface IGainerResponse {
@@ -87,16 +86,15 @@ const Columns: TableColumnsType = [
 ];
 
 function useGainerLoser() {
-  const { get: getSearchParams } = useSearchParams();
-  const duration = getSearchParams("gain_loss_duration");
+  // const { get: getSearchParams } = useSearchParams();
+  // const duration = getSearchParams("gain_loss_duration");
   const { data, isLoading } = useTransactionServerQuery<ICombinedGainerLoser>(
-    "/position/history/top_gainer_loser" +
-      buildURLSearchParams({
-        start_date: undefined,
-        end_date: undefined,
-        client_id: undefined,
-        reporting_currency: undefined,
-      })
+    `/position/history/top_gainer_loser${buildURLSearchParams({
+      start_date: undefined,
+      end_date: undefined,
+      client_id: undefined,
+      reporting_currency: undefined,
+    })}`
   );
 
   return {

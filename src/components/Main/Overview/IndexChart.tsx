@@ -78,7 +78,6 @@ function fillMissingData({ data, xticks }: IFillMissingDataParams) {
 //   ...aapl.map((item) => ({ x: item.date, y: item.adjusted_close, z: "Funds" })),
 //   ...aapl.map((item) => ({ x: item.date, y: item.adjusted_close, z: "Bonds" })),
 // ];
-const loading = false;
 
 export default function IndexChart({ data, loading }: IIndexChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
@@ -118,7 +117,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
     const _filledData = Object.values(filledGroupedData).flat();
 
     return [_filledData, filledGroupedData];
-  }, [excludedDomain]);
+  }, [excludedDomain, data]);
 
   useEffect(() => {
     if (filledData.length === 0) return undefined;
