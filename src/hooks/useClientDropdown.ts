@@ -1,5 +1,4 @@
 import { SearchParams } from "@/interfaces/Main";
-import { useLayoutEffect } from "react";
 import { useAnalyticsServerQuery } from "./useQuery";
 import useSelectClientWithParams from "./useSelectClientWithParams";
 
@@ -32,12 +31,6 @@ export default function useClientDropdown<T>({
       end_date: getSearchParams("end_date"),
     }
   );
-
-  useLayoutEffect(() => {
-    if (!clientId && defaultOption?.value) {
-      onChange(defaultOption.value);
-    }
-  }, [clientId, onChange, defaultOption?.value]);
 
   const loading = isClientLoading || isLoading;
 

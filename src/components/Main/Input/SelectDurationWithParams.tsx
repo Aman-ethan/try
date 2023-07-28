@@ -2,12 +2,16 @@ import Select from "@/components/Input/Select";
 import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/constants/format";
 import useSearchParams from "@/hooks/useSearchParams";
 import { SearchParams } from "@/interfaces/Main";
+import { useToken } from "@/lib/antd";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { useSessionStorage } from "@mantine/hooks";
 import { Popover } from "antd";
 import dayjs, { ManipulateType, QUnitType } from "dayjs";
+import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { useCallback, useLayoutEffect } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
+
+dayjs.extend(quarterOfYear);
 
 interface IDuration {
   label: string;
@@ -28,7 +32,9 @@ const DURATION: IDuration[] = [
 
 function getDateKeys(layoutSegment: string | null): SearchParams[] {
   switch (layoutSegment) {
-    case "":
+    case "t+1":
+    case "statements":
+      return ["statement_date__gte", "statement_date__lte"];
     default:
       return ["start_date", "end_date"];
   }
@@ -39,7 +45,7 @@ function useDurationWithParams() {
   const layoutSegment = useSelectedLayoutSegment();
   const [duration, setDuration] = useSessionStorage({
     key: "duration",
-    defaultValue: "w",
+    defaultValue: "w" as ManipulateType,
   });
 
   const [startDateKey, endDateKey] = getDateKeys(layoutSegment);
@@ -58,22 +64,22 @@ function useDurationWithParams() {
   );
 
   useLayoutEffect(() => {
-    if (!(startDate && endDate)) {
-      onChange("w");
+    if (!startDate) {
+      onChange(duration);
     }
-  }, [startDate, endDate, onChange]);
+  }, [duration, onChange, startDate]);
 
   return {
     startDate,
     endDate,
     onChange,
-    defaultValue: duration,
+    value: duration,
   };
 }
 
 function PopoverContent({ startDate, endDate }: IPopoverContentProps) {
   return (
-    <div className="flex gap-x-2">
+    <div className="flex gap-x-2 text-white">
       {dayjs(startDate).format(DATE_DISPLAY_FORMAT)}
       <ArrowRightOutlined />
       {dayjs(endDate).format(DATE_DISPLAY_FORMAT)}
@@ -82,15 +88,23 @@ function PopoverContent({ startDate, endDate }: IPopoverContentProps) {
 }
 
 export default function SelectDurationWithParams() {
-  const { onChange, startDate, endDate, defaultValue } =
-    useDurationWithParams();
+  const { onChange, startDate, endDate, value } = useDurationWithParams();
+  const [visible, setVisible] = useState(false);
+  const { token } = useToken();
   return (
     <Popover
-      className="p-2 bg-primary-6"
+      open={visible ? false : undefined}
+      className="p-2"
       content={<PopoverContent startDate={startDate} endDate={endDate} />}
+      color={token.blue6}
     >
       <Select
-        defaultValue={defaultValue}
+        onDropdownVisibleChange={setVisible}
+        showSearch={false}
+        allowClear={false}
+        size="middle"
+        className="w-28 pr-2"
+        value={value}
         onChange={onChange}
         options={DURATION}
       />

@@ -57,7 +57,9 @@ export default function StatementFilter() {
             icon={<DownloadOutlined />}
             href={URLs.trade}
             download
-          />
+          >
+            Download as CSV
+          </Button>
         ) : (
           <DownloadBankStatement />
         )}

@@ -17,13 +17,14 @@ export default function useSearchParams() {
 
   const updateSearchParams = useCallback(
     (params: IUpdateSearchParams) => {
+      const _searchParams = new URLSearchParams(window.location.search);
       const urlSearchParams = new URLSearchParams();
 
       Object.entries(params).forEach(([key, value]) => {
         if (value != null) urlSearchParams.append(key, String(value));
       });
 
-      searchParams.forEach((value, key) => {
+      _searchParams.forEach((value, key) => {
         if (!Object.keys(params).includes(key)) {
           urlSearchParams.append(key, value);
         }
@@ -32,7 +33,7 @@ export default function useSearchParams() {
       urlSearchParams.sort();
       router.push(`${pathname}?${urlSearchParams}`, { scroll: false });
     },
-    [pathname, router, searchParams]
+    [pathname, router]
   );
 
   function get(name: SearchParams) {

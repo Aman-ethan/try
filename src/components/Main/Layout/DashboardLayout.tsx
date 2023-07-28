@@ -142,6 +142,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           </Row>
           <Row className="gap-x-6" align="middle">
             <SelectDurationWithParams />
+            <Divider type="vertical" className="text-neutral-13/5" />
             <CurrencyTag currency={reporting_currency || "usd"} />
             <Divider type="vertical" className="text-neutral-13/5" />
             <UserProfile name={name} username={username} />

@@ -2,12 +2,8 @@
 
 import useClientDropdown from "@/hooks/useClientDropdown";
 import { IAssetNetWorth } from "@/interfaces/Main";
-import dayjs from "dayjs";
-import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import Dropdown from "../General/Dropdown";
 import IndexChart from "./IndexChart";
-
-dayjs.extend(quarterOfYear);
 
 const urlKey = "/relative-performance/net-worth";
 const searchParamKey = "asset_client";
