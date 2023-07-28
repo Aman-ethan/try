@@ -12,7 +12,7 @@ export default function Dropdown({ children, menu, ...props }: DropdownProps) {
       trigger={["click"]}
       {...props}
     >
-      <Button type="text" className="flex items-center space-x-2 px-2 -ml-2">
+      <Button type="text" className="-ml-2 flex items-center space-x-2 px-2">
         <Title level={5}>{children}</Title>
         <CaretDownFilled className="text-sm" />
       </Button>

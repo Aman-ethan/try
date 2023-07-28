@@ -76,7 +76,7 @@ export default function Transaction() {
           <Button
             size="large"
             icon={<FilterOutlined />}
-            className="flex tab:hidden "
+            className="flex items-center justify-center tab:hidden"
             onClick={() => setShowFilter(!showFilter)}
           />
         </div>

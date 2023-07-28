@@ -13,7 +13,7 @@ export default function AssetNetWorth() {
     useClientDropdown<IAssetNetWorth>({ urlKey, searchParamKey });
 
   return (
-    <div className="space-y-6 h-[25.5rem]">
+    <div className="h-[25.5rem] space-y-6">
       <Dropdown
         disabled={loading}
         menu={{

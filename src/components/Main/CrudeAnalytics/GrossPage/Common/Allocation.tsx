@@ -23,7 +23,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
 
   return (
     <div className="flex-1 space-y-4 text-center">
-      <h2 className="text-xl font-medium tab:text-2xl capitalize">
+      <h2 className="text-xl font-medium capitalize tab:text-2xl">
         {title.replace("Gross Allocation by ", "")}
       </h2>
       <div className="tab:flex tab:items-center lap:flex-col">
