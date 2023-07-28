@@ -28,6 +28,7 @@ import { usePathname, useSelectedLayoutSegments } from "next/navigation";
 import { ReactNode, useLayoutEffect, useState } from "react";
 import CurrencyTag from "../General/CurrencyTag";
 import CollapsedLogo from "../Icon/CollapsedLogo";
+import SelectDurationWithParams from "../Input/SelectDurationWithParams";
 
 interface ILayoutProps {
   children: ReactNode;
@@ -140,6 +141,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
             />
           </Row>
           <Row className="gap-x-6" align="middle">
+            <SelectDurationWithParams />
             <CurrencyTag currency={reporting_currency || "usd"} />
             <Divider type="vertical" className="text-neutral-13/5" />
             <UserProfile name={name} username={username} />

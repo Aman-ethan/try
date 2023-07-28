@@ -25,7 +25,7 @@ export default function useSelectClientWithParams(
       isLoading,
       reset: () => {
         updateSearchParams({
-          client: null,
+          [searchParamKey]: null,
         });
       },
     },
@@ -43,6 +43,5 @@ export default function useSelectClientWithParams(
     onChange,
     clientId,
     getSearchParams,
-    updateSearchParams,
   };
 }

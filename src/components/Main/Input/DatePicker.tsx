@@ -1,4 +1,4 @@
-import { DATE_DISPLAY_FORMAT } from "@/constants/format";
+import { DATE_SELECT_FORMAT } from "@/constants/format";
 import { DatePicker as AntdDatePicker, DatePickerProps } from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
 import clsx from "clsx";
@@ -15,7 +15,7 @@ export function DatePicker({
   value,
   className,
   size = "large",
-  format = DATE_DISPLAY_FORMAT,
+  format = DATE_SELECT_FORMAT,
   ...props
 }: DatePickerProps & { loading?: boolean }) {
   const datePickerId = useId();
