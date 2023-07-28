@@ -7,6 +7,7 @@ import { useSessionStorage } from "@mantine/hooks";
 import { Popover } from "antd";
 import dayjs, { ManipulateType, QUnitType } from "dayjs";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { useCallback, useLayoutEffect } from "react";
 
 interface IDuration {
   label: string;
@@ -45,17 +46,22 @@ function useDurationWithParams() {
   const startDate = getSearchParams(startDateKey);
   const endDate = getSearchParams(endDateKey);
 
-  function onChange(value: ManipulateType) {
-    setDuration(value);
-    updateSearchParams({
-      [startDateKey]: dayjs().subtract(1, value).format(DATE_PARAM_FORMAT),
-      [endDateKey]: dayjs().format(DATE_PARAM_FORMAT),
-    });
-  }
+  const onChange = useCallback(
+    (value: ManipulateType) => {
+      setDuration(value);
+      updateSearchParams({
+        [startDateKey]: dayjs().subtract(1, value).format(DATE_PARAM_FORMAT),
+        [endDateKey]: dayjs().format(DATE_PARAM_FORMAT),
+      });
+    },
+    [endDateKey, startDateKey, setDuration, updateSearchParams]
+  );
 
-  if (!(startDate && endDate)) {
-    onChange("w");
-  }
+  useLayoutEffect(() => {
+    if (!(startDate && endDate)) {
+      onChange("w");
+    }
+  }, [startDate, endDate, onChange]);
 
   return {
     startDate,

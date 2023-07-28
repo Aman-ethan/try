@@ -1,4 +1,5 @@
 import { SearchParams } from "@/interfaces/Main";
+import { useCallback } from "react";
 import useDependentSelect from "./useDependentSelect";
 import useSearchParams from "./useSearchParams";
 import useSelectClient from "./useSelectClient";
@@ -31,11 +32,14 @@ export default function useSelectClientWithParams(
     },
   });
 
-  function onChange(value: string) {
-    updateSearchParams({
-      [searchParamKey]: value,
-    });
-  }
+  const onChange = useCallback(
+    (value: string) => {
+      updateSearchParams({
+        [searchParamKey]: value,
+      });
+    },
+    [searchParamKey, updateSearchParams]
+  );
 
   return {
     isLoading,

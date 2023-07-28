@@ -4,6 +4,7 @@ import {
   useSearchParams as useNextSearchParams,
   useRouter,
 } from "next/navigation";
+import { useCallback } from "react";
 
 export type IUpdateSearchParams = Partial<
   Record<SearchParams, string | number | null>
@@ -14,22 +15,25 @@ export default function useSearchParams() {
   const pathname = usePathname();
   const searchParams = useNextSearchParams();
 
-  function updateSearchParams(params: IUpdateSearchParams) {
-    const urlSearchParams = new URLSearchParams();
+  const updateSearchParams = useCallback(
+    (params: IUpdateSearchParams) => {
+      const urlSearchParams = new URLSearchParams();
 
-    Object.entries(params).forEach(([key, value]) => {
-      if (value != null) urlSearchParams.append(key, String(value));
-    });
+      Object.entries(params).forEach(([key, value]) => {
+        if (value != null) urlSearchParams.append(key, String(value));
+      });
 
-    searchParams.forEach((value, key) => {
-      if (!Object.keys(params).includes(key)) {
-        urlSearchParams.append(key, value);
-      }
-    });
+      searchParams.forEach((value, key) => {
+        if (!Object.keys(params).includes(key)) {
+          urlSearchParams.append(key, value);
+        }
+      });
 
-    urlSearchParams.sort();
-    router.push(`${pathname}?${urlSearchParams}`, { scroll: false });
-  }
+      urlSearchParams.sort();
+      router.push(`${pathname}?${urlSearchParams}`, { scroll: false });
+    },
+    [pathname, router, searchParams]
+  );
 
   function get(name: SearchParams) {
     return searchParams.get(name) ?? undefined;
