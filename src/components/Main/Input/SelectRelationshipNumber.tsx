@@ -13,7 +13,8 @@ export default function SelectRelationshipNumber({
     params: TBankAccountParams;
     reset: () => void;
   }>) {
-  const { relationshipNumberOptions, isLoading } = useBankAccounts(params);
+  const { relationshipNumberOptions, isLoading, onChange } =
+    useBankAccounts(params);
   const dependentProps = {
     isLoading,
     relationshipNumberOptions,
@@ -32,6 +33,7 @@ export default function SelectRelationshipNumber({
     <Select
       options={relationshipNumberOptions}
       loading={isLoading}
+      onChange={onChange}
       {...props}
     />
   );

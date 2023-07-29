@@ -49,6 +49,10 @@ module.exports = {
           12: "#141414",
           13: "#000000",
         },
+        summary: {
+          loss: "#CF1322",
+          profit: "#389E0D",
+        },
         progress: {
           success: "#D9F7BE",
           failure: "#FFCCC7",

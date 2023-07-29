@@ -69,3 +69,10 @@ export function useAnalyticsServerQuery<Data>(
     config
   );
 }
+
+export function useAnalyticsServerGetQuery<Data>(
+  key: string | null,
+  config?: SWRConfiguration<Data, Error>
+) {
+  return useQuery<Data>(key, getFetcher(AnalyticsServerUrl), config);
+}

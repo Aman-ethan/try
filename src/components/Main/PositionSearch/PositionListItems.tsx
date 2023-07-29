@@ -1,17 +1,36 @@
 "use client";
 
-import { Button, Card, Input } from "antd";
+import { Button, Card, Segmented } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import clsx from "clsx";
 import Select from "@/components/Input/Select";
-import ListItem from "./General/ListItem";
-import SelectAsset from "../Input/SelectAsset";
+import usePositions from "@/hooks/usePositions";
+import ListView from "./General/ListView";
+import SelectAssetWithParams from "../Input/SelectAssetWithParams";
 import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
-import TabMenu from "./General/TabMenu";
+import SearchPositionSecurities from "../Input/SearchPositionSecurities";
 
 export default function PositionListItems() {
   const [showFilter, setShowFilter] = useState(false);
+  const {
+    client: clientId,
+    custodian: custodianId,
+    onChange,
+    onSegmentChange,
+  } = usePositions();
+
+  const SortOptionsMap: Record<string, string> = {
+    "Largest Position First": "-quantity",
+    "Smallest Position First": "quantity",
+    "Most Profitable Positions First": "-unrealised_pnl",
+    "Most Loss Making First": "unrealised_pnl",
+  };
+
+  const Options = Object.keys(SortOptionsMap).map((option) => ({
+    label: option,
+    value: SortOptionsMap[option],
+  }));
 
   const listItemsClasses =
     "mb-4 flex flex-col space-y-4 tab:flex-row tab:justify-between tab:items-center tab:space-y-0 lap:flex-col lap:items-stretch lap:space-y-4";
@@ -24,10 +43,8 @@ export default function PositionListItems() {
   return (
     <>
       <div className="flex flex-col space-y-4 tab:flex-row tab:space-x-4 tab:space-y-0">
-        <Input.Search
-          allowClear
-          placeholder="Search security or description"
-          size="large"
+        <SearchPositionSecurities
+          placeholder="Search security name or id"
           className="w-full tab:w-1/3"
         />
         <Button
@@ -40,10 +57,12 @@ export default function PositionListItems() {
         </Button>
         <div className="flex flex-1 flex-col items-center space-y-4 tab:flex-row tab:space-x-4 tab:space-y-0">
           <SelectRelationshipNumber
+            disabled={!clientId}
+            params={{ clientId, custodianId }}
             placeholder="Select Relationship Number"
             className={primarySelectClasses}
           />
-          <SelectAsset
+          <SelectAssetWithParams
             placeholder="Select Asset Class"
             className={primarySelectClasses}
           />
@@ -55,11 +74,18 @@ export default function PositionListItems() {
           <Select
             placeholder="Choose sort option"
             className="flex w-auto lap:hidden"
+            options={Options}
+            onChange={onChange}
           />
-          <TabMenu />
+          <Segmented
+            block
+            options={Options}
+            className="hidden lap:block"
+            onChange={onSegmentChange}
+          />
         </div>
         <div>
-          <ListItem />
+          <ListView />
         </div>
       </Card>
     </>

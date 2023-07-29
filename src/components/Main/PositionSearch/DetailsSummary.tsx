@@ -1,27 +1,58 @@
 "use client";
 
 import { Card, Col, Row } from "antd";
+import { useAnalyticsServerGetQuery } from "@/hooks/useQuery";
+import { IBalanceSheetOverview } from "@/interfaces/Main";
+import useBalanceSheet from "@/hooks/useBalanceSheet";
+import { useSearchParams } from "next/navigation";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import CurrencyTag from "../General/CurrencyTag";
-import AssetChart from "./Table/AssetChart";
-import LiabilityChart from "./Table/LiabilityChart";
 import SummaryCard from "./Common/SummaryCard";
+import ChartTable from "./Table/ChartTable";
 
 export default function DetailsSummary() {
+  const { get: getSearchParams } = useSearchParams();
+  const client = getSearchParams("client");
+  const { data, isLoading } = useAnalyticsServerGetQuery<IBalanceSheetOverview>(
+    `/networth${buildURLSearchParams({ client })}`
+  );
+
+  const {
+    totalAsset,
+    totalLiability,
+    leverage,
+    netWorth,
+    assetPercentage,
+    liabilityPercentage,
+  } = useBalanceSheet({ data });
+
   return (
     <Card>
       <div className="mb-4 flex justify-between">
         <h2 className="text-xl font-medium tab:text-2xl">Overview</h2>
         <CurrencyTag currency="sgd" />
       </div>
-      <Row className="flex flex-col lap:flex-row lap:justify-between lap:space-x-4">
+      <Row className="flex flex-col lap:flex-row lap:justify-between lap:space-x-8">
         <Col className="flex-1">
-          <AssetChart />
+          <ChartTable
+            loading={isLoading}
+            data={data?.asset}
+            progressType="success"
+            total={totalAsset}
+            percentage={assetPercentage}
+          />
         </Col>
         <Col className="flex-1 space-y-8">
-          <LiabilityChart />
+          <ChartTable
+            loading={isLoading}
+            data={data?.liability}
+            progressType="failure"
+            total={totalLiability}
+            percentage={liabilityPercentage}
+          />
           <div className="flex space-x-4">
-            <SummaryCard type="Net Worth" value={36.6} />
-            <SummaryCard type="Leverage" value={0.06} />
+            <SummaryCard type="Net Worth" value={netWorth} />
+            <SummaryCard type="Leverage" value={leverage} />
           </div>
         </Col>
       </Row>

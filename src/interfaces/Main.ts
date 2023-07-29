@@ -110,11 +110,6 @@ export interface IPaginatedResponse<T> {
   results: T[];
 }
 
-export interface ISelectRelationshipNumberProps {
-  placeholder?: string;
-  className?: string;
-}
-
 export interface IStatementFormProps {
   id: string;
 }
@@ -151,13 +146,55 @@ export interface IFormDrawerProps {
   drawerProps: IDrawerProps;
 }
 
+export interface IPositionsData {
+  id: string;
+  custodian_name: string;
+  client_name: string;
+  security_name: string;
+  isin: string;
+  quantity: number;
+  average_price: number;
+  currency: TCurrency;
+  mtm_price: number;
+  asset_class: string;
+  unrealised_pl: number;
+  client: string;
+  custodian: string;
+  security: string;
+  relationship_number: string;
+}
+
+export interface IPositionsResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: IPositionsData[];
+}
+
+export interface IPositionNetWorth {
+  client_id: string;
+  client_name: string;
+  assets: number;
+  liabilities: number;
+  networth: number;
+  currency: TCurrency;
+}
+export interface IPositionSearchResponse {
+  client_cards: IPositionNetWorth[];
+  company_card: IPositionNetWorth;
+}
+
 // These fields will change according to data, for now the values and types are placeholders
 export interface IBalanceSheetChart {
   key: string;
-  assetClass?: string;
-  liabilities?: string;
-  totalValue: string;
-  percentage: string;
+  asset_class: string;
+  total_value: number;
+  percentage: number;
+}
+
+export interface IBalanceSheetOverview {
+  asset: IBalanceSheetChart[];
+  liability: IBalanceSheetChart[];
 }
 
 export type TProgressType = "success" | "failure";
@@ -224,6 +261,8 @@ export type SearchParams =
   | "client_id"
   | "custodian"
   | "custodian_id"
+  | "relationship_number"
+  | "search"
   | "asset_duration"
   | "gain_loss_duration";
 

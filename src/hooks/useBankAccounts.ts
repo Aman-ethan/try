@@ -1,8 +1,10 @@
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { IBankAccount, TBankAccountParams } from "@/interfaces/Main";
 import { useTransactionServerQuery } from "./useQuery";
+import useSearchParams from "./useSearchParams";
 
 export default function useBankAccounts(params?: TBankAccountParams) {
+  const { updateSearchParams } = useSearchParams();
   const { data, isLoading, isValidating } = useTransactionServerQuery<
     IBankAccount[]
   >(
@@ -24,10 +26,15 @@ export default function useBankAccounts(params?: TBankAccountParams) {
       value: portfolio_number,
     }));
 
+  function onChange(value: string) {
+    updateSearchParams({ relationship_number: value });
+  }
+
   return {
     data,
     relationshipNumberOptions,
     portfolioNumberOptions,
+    onChange,
     isLoading: isLoading && !isValidating,
   };
 }

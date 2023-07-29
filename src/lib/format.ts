@@ -45,7 +45,14 @@ const f = format("~s");
 
 export function formatCompactNumber(num?: number | string) {
   if (Number.isNaN(Number(num))) return "";
-  return f(Number(num))
+
+  // Convert num to a string with two decimal places
+  const formattedNumString = typeof num === "number" ? num.toFixed(2) : "";
+
+  // Convert the formatted string back to a number before calling f
+  const formattedNumber = f(Number(formattedNumString));
+
+  return formattedNumber
     .replace("k", " K")
     .replace("G", " B")
     .replace("M", " M");
