@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { ProList } from "@ant-design/pro-components";
-import { IPieData } from "@/interfaces/Main";
+import * as d3 from "d3";
+import { IPieData, mapDataToPieChartData } from "@/constants/pieChartConfig";
+import { Empty } from "antd";
 import AnalyticsPieChart from "../../Charts/AnalyticsPieChart";
 import AnalyticsModal from "./AnalyticsModal";
 
@@ -12,14 +14,24 @@ interface IAllocationProps {
 }
 
 export default function Allocation({ title, data = [] }: IAllocationProps) {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const handleSegmentClick = () => setModalVisible(true);
-  const handleModalClose = () => setModalVisible(false);
-
   const totalValue =
     data?.reduce((accumulator, currentObject) => {
       return accumulator + currentObject.value;
     }, 0) || 0;
+
+  const z = d3
+    .scaleOrdinal(d3.schemeCategory10)
+    .domain(data?.map((d: any) => d.type));
+
+  const colorMap: { [key: string]: string } = {};
+  z.domain().forEach((d) => {
+    colorMap[d] = z(d);
+  });
+
+  const proListMockData = mapDataToPieChartData(data);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const handleSegmentClick = () => setModalVisible(true);
+  const handleModalClose = () => setModalVisible(false);
 
   return (
     <div className="flex-1 space-y-4 text-center">
@@ -36,19 +48,39 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
           data={data}
           totalValue={totalValue}
           handleSegmentClick={handleSegmentClick}
+          colorMap={colorMap}
         />
-        <ProList
-          dataSource={data}
-          metas={{
-            title: {
-              dataIndex: "title",
-            },
-            extra: {
-              render: () => [<p>50%</p>],
-            },
-          }}
-          className="tab:flex-1 lap:w-full"
-        />
+        {proListMockData.length !== 0 ? (
+          <ProList
+            // data source will be replaced with dynamic data from pie chart
+
+            rowClassName="p-2"
+            dataSource={proListMockData}
+            metas={{
+              title: {
+                dataIndex: "title",
+                render: (dom, entity) => (
+                  <div className="flex items-center justify-center gap-x-4">
+                    <div
+                      style={{
+                        backgroundColor: colorMap[entity.type],
+                        width: "10px",
+                        height: "10px",
+                      }}
+                    />
+                    {entity.type}
+                  </div>
+                ),
+              },
+              extra: {
+                render: (_: any, record: any) => [<p>{record.value}%</p>],
+              },
+            }}
+            className="tab:flex-1 lap:w-full"
+          />
+        ) : (
+          <Empty />
+        )}
       </div>
     </div>
   );

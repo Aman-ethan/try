@@ -41,11 +41,16 @@ export default function useSelectClientWithParams(
     [searchParamKey, updateSearchParams]
   );
 
+  const selectedClient =
+    options?.find((option) => option.value === clientId) || options?.[0];
+
   return {
     isLoading,
     options,
     onChange,
     clientId,
     getSearchParams,
+    updateSearchParams,
+    selectedClient,
   };
 }

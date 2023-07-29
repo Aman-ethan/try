@@ -1,59 +1,93 @@
 "use client";
 
-import { Segmented } from "antd";
-import { SegmentedValue } from "antd/es/segmented";
-import { ManipulateType, QUnitType } from "dayjs";
+import { Skeleton } from "antd";
+import { useEffect } from "react";
 import useSearchParams from "@/hooks/useSearchParams";
+import { useAnalyticsServerQuery } from "@/hooks/useQuery";
+import revalidate from "@/lib/revalidate";
 import FinanceChart from "./Common/FinanceChart";
 
-interface IDuration {
-  label: string;
-  value: ManipulateType | QUnitType;
-}
+const URLS = {
+  netWorth: `/gross-allocation/networth/`,
+  ProfitAndLoss: `/gross-allocation/pl-history/`,
+};
 
-const GRAPHS = ["Net Worth", "P/L History"];
+type TResponseData = {
+  asset_class: string;
+  date: string;
+  value: number;
+};
 
-const DURATION: IDuration[] = [
-  { label: "1 Week", value: "w" },
-  { label: "1 Month", value: "M" },
-  { label: "1 Quarter", value: "Q" },
-  { label: "1 Year", value: "y" },
-];
+type TData = {
+  title: string;
+  x_label: string;
+  y_label: string;
+  data: TResponseData[];
+};
 
-// const DURATION_AMOUNT = 1;
+const useFinanceChart = () => {
+  const { get: getSearchParams } = useSearchParams();
+  const client_id = getSearchParams("client");
+  const custodian_id = getSearchParams("custodian");
+  const start_date = getSearchParams("start_date");
+  const end_date = getSearchParams("end_date");
 
-function useFinanceResult() {
-  const { get: getSearchParams, updateSearchParams } = useSearchParams();
+  const { data, isLoading } = useAnalyticsServerQuery<TData>(
+    URLS.ProfitAndLoss,
+    {
+      start_date,
+      end_date,
+      client_id,
+      custodian_id,
+    }
+  );
 
-  const assetDuration = getSearchParams("asset_duration") as ManipulateType;
-  function onDurationChange(value: SegmentedValue) {
-    updateSearchParams({
-      asset_duration: value,
+  const { data: netWorthData, isLoading: netWorthLoading } =
+    useAnalyticsServerQuery<TData>(URLS.netWorth, {
+      start_date,
+      end_date,
+      client_id,
+      custodian_id,
     });
-  }
 
   return {
-    assetDuration,
-    onDurationChange,
+    data: data as TData,
+    netWorthData: netWorthData as TData,
+    isLoading,
+    netWorthLoading,
+    client_id,
+    custodian_id,
+    start_date,
+    end_date,
   };
-}
+};
 
 export default function FinanceResult() {
-  const { assetDuration, onDurationChange } = useFinanceResult();
+  const {
+    data,
+    netWorthData,
+    isLoading,
+    netWorthLoading,
+    client_id,
+    custodian_id,
+    start_date,
+    end_date,
+  } = useFinanceChart();
+
+  useEffect(() => {
+    revalidate(URLS.ProfitAndLoss, false);
+    revalidate(URLS.netWorth, false);
+  }, [client_id, custodian_id, start_date, end_date]);
+
+  if (isLoading || netWorthLoading) {
+    return <Skeleton />;
+  }
 
   return (
-    <div className="flex flex-col space-y-4 rounded-lg bg-neutral-1 p-6">
-      <div className="space-x-2 self-end">
-        <Segmented
-          onChange={onDurationChange}
-          options={DURATION}
-          defaultValue={assetDuration}
-        />
-      </div>
-      <div className="flex flex-col lap:flex-row">
-        {GRAPHS.map((graph: string) => (
-          <FinanceChart key={graph} title={graph} />
-        ))}
+    <div className="space-y-6 h-[25.5rem]">
+      <div className="flex flex-col gap-10 lap:flex-row ">
+        <FinanceChart title={data?.title} data={data?.data} />
+        <FinanceChart title={netWorthData?.title} data={netWorthData?.data} />
       </div>
     </div>
   );

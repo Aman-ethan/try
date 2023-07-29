@@ -1,6 +1,11 @@
 import React from "react";
 import { PieConfig, measureTextWidth } from "@ant-design/plots";
 
+export interface IPieData {
+  type: string;
+  value: number;
+}
+
 /**
  * Function to render text with appropriate scaling based on the container width.
  * @param {number} containerWidth - The width of the container where the text will be placed.
@@ -23,7 +28,7 @@ function renderTextInsideContainer(
   const R = containerWidth / 2;
 
   // Initialize scale to 1
-  let scale = 1;
+  let scale = 0.8;
 
   // If the container width is less than the text width
   // Adjust the scale such that the text fits in the container
@@ -42,6 +47,13 @@ function renderTextInsideContainer(
   return `<div style="${textStyleStr};font-size:${scale}em;line-height:${
     scale < 1 ? 1 : "inherit"
   };">${text}</div>`;
+}
+
+export function mapDataToPieChartData(data: any[]): IPieData[] {
+  return data.map((item: any) => ({
+    type: item.type,
+    value: Math.abs(parseInt(item.value || `0`, 10)),
+  }));
 }
 
 const defaultPieChartConfig: PieConfig = {

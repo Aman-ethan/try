@@ -1,6 +1,12 @@
 "use client";
 
-import { AuthServerUrl, TransactionServerUrl } from "@/constants/strings";
+import { message } from "antd";
+import useSWRMutation, { SWRMutationConfiguration } from "swr/mutation";
+import {
+  AuthServerUrl,
+  TransactionServerUrl,
+  AnalyticsServerUrl,
+} from "@/constants/strings";
 import {
   deleteFetcher,
   patchFetcher,
@@ -8,8 +14,6 @@ import {
   postJsonFetcher,
   putFetcher,
 } from "@/lib/fetcher";
-import { message } from "antd";
-import useSWRMutation, { SWRMutationConfiguration } from "swr/mutation";
 
 export default function useMutation<ExtraArgs, Data>(
   key: string,
@@ -94,6 +98,17 @@ export function useTransactionServerPatchMutation<Data>(
   return useMutation<unknown, Data>(
     key,
     patchFetcher(TransactionServerUrl),
+    config
+  );
+}
+
+export function useAnalyticsServerMutation<ExtraArgs, Data>(
+  key: string,
+  config?: SWRMutationConfiguration<Data, Error, string, ExtraArgs>
+) {
+  return useMutation<ExtraArgs, Data>(
+    key,
+    postJsonFetcher(AnalyticsServerUrl),
     config
   );
 }

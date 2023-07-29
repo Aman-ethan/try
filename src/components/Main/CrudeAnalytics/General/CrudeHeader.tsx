@@ -58,7 +58,7 @@ export default function CrudeHeader() {
 
   selectedLayoutSegment.forEach((segment) => {
     items.push({
-      title: segment,
+      title: segment.split("-").join(" "),
     });
   });
 
@@ -69,7 +69,7 @@ export default function CrudeHeader() {
       <Breadcrumb className="capitalize" items={items} />
       <Row justify="space-between" align="middle">
         {isPositions ? (
-          <Title className="capitalize">{title}</Title>
+          <Title className="capitalize font-semibold">{title}</Title>
         ) : (
           <Row justify="space-between" align="middle">
             <Row
@@ -79,7 +79,9 @@ export default function CrudeHeader() {
               align="middle"
               className="space-x-2"
             >
-              <Title className="capitalize">{title}</Title>
+              <Title level={2} className="capitalize font-semibold">
+                {title}
+              </Title>
               <Dropdown
                 menu={{
                   items: CrudeRoutes,

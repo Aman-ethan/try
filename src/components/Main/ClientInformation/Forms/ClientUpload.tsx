@@ -1,12 +1,13 @@
-import { ClientUploadSample } from "@/constants/samples";
+import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
+import { Button, Form, FormRule, Row, message } from "antd";
+import { lazy } from "react";
 import useAuth from "@/hooks/useAuth";
 import useFormState, { useFormType } from "@/hooks/useForm";
 import { useTransactionServerFormMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
-import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
-import { Button, Form, FormRule, Radio, Row, message } from "antd";
-import { lazy } from "react";
+import { ClientUploadSample } from "@/constants/samples";
 import Upload from "../../Input/Upload";
+import FormType from "../../General/FormType";
 
 const ManualEntry = lazy(() => import("./ClientManualEntry"));
 
@@ -25,11 +26,6 @@ interface IUploadClientForm {
 const FormRules: Partial<Record<keyof IUploadClientForm, FormRule[]>> = {
   file: [{ required: true, message: "Please upload a file" }],
 };
-
-const UploadTypeOptions = [
-  { label: "Bulk Upload", value: "bulk" },
-  { label: "Manual Entry", value: "manual" },
-];
 
 function BulkUpload({ sampleLink }: IUploadClientProps) {
   const { refresh } = useAuth();
@@ -95,23 +91,14 @@ function BulkUpload({ sampleLink }: IUploadClientProps) {
   );
 }
 
-export default function ClientUpload(props: IUploadClientProps) {
-  const { uploadType, setUploadType } = useFormType();
+export default function ClientUpload() {
+  const { uploadType } = useFormType();
   return (
     <div className="space-y-8">
-      <Radio.Group
-        options={UploadTypeOptions}
-        optionType="button"
-        buttonStyle="solid"
-        value={uploadType}
-        onChange={(e) => {
-          setUploadType(e.target.value);
-        }}
-        size="large"
-      />
+      <FormType />
       <div className="space-y-6">
         {uploadType === "bulk" ? (
-          <BulkUpload sampleLink={ClientUploadSample} {...props} />
+          <BulkUpload sampleLink={ClientUploadSample} />
         ) : (
           <ManualEntry />
         )}

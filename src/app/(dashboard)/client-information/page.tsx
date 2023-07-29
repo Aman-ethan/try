@@ -1,15 +1,26 @@
 "use client";
 
+import { Col, Row, Space } from "antd";
+import { useEffect } from "react";
 import ClientInfoCard from "@/components/Main/ClientInformation/ClientInfoCard";
 import Title from "@/components/Typography/Title";
-import { Col, Row, Space } from "antd";
 import AddClient from "@/components/Main/ClientInformation/AddClient";
 import useSearchParams from "@/hooks/useSearchParams";
+import useSelectClientWithParams from "@/hooks/useSelectClientWithParams";
 import SelectClientWithParams from "@/components/Main/Input/SelectClientWithParams";
 
 export default function ClientInformationPage() {
-  const { get: getSearchParams } = useSearchParams();
-  const isClientSelected = !!getSearchParams("client_id");
+  const { get: getSearchParams, updateSearchParams } = useSearchParams();
+  const searchParamKey = "client_id";
+  const { selectedClient } = useSelectClientWithParams({
+    searchParamKey,
+  });
+
+  useEffect(() => {
+    updateSearchParams({
+      [searchParamKey]: selectedClient?.value,
+    });
+  }, [selectedClient, updateSearchParams, searchParamKey]);
 
   return (
     <Space
@@ -30,10 +41,14 @@ export default function ClientInformationPage() {
           <SelectClientWithParams
             searchParamKey="client_id"
             className="mob:w-full"
+            disabled={!getSearchParams("client_id")}
+            value={selectedClient}
           />
         </Col>
       </Row>
-      <Row>{isClientSelected && <ClientInfoCard />}</Row>
+      <Row>
+        <ClientInfoCard />
+      </Row>
     </Space>
   );
 }

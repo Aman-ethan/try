@@ -1,21 +1,24 @@
 import { Area, AreaConfig } from "@ant-design/charts";
 
 type TDataItem = {
-  report_date: string;
+  date: string;
   asset_class: string;
   value: number;
 };
 
 interface IAreaChartProps {
-  data: TDataItem[];
+  data?: TDataItem[];
+  xField?: string;
+  yField?: string;
+  seriesField?: string;
 }
 
-function AreaChart({ data }: IAreaChartProps) {
+function AreaChart({ data, xField, yField, seriesField }: IAreaChartProps) {
   const config: AreaConfig = {
-    data,
-    xField: "report_date",
-    yField: "value",
-    seriesField: "asset_class",
+    data: data || [],
+    xField: xField || "date",
+    yField: yField || "value",
+    seriesField: seriesField || "asset_class",
   };
 
   return <Area {...config} />;

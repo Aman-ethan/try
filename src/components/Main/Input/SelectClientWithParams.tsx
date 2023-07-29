@@ -1,6 +1,6 @@
+import { SelectProps } from "antd";
 import useSelectClientWithParams from "@/hooks/useSelectClientWithParams";
 import { SearchParams } from "@/interfaces/Main";
-import { SelectProps } from "antd";
 import Select from "../../Input/Select";
 
 export default function SelectClientWithParams({

@@ -1,10 +1,5 @@
 "use client";
 
-import Logo from "@/components/Icon/Logo";
-import ROUTE from "@/constants/route";
-import useAuth from "@/hooks/useAuth";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
-import { TCurrency } from "@/interfaces/Main";
 import {
   CaretDownFilled,
   LogoutOutlined,
@@ -26,6 +21,11 @@ import {
 import Link from "next/link";
 import { usePathname, useSelectedLayoutSegments } from "next/navigation";
 import { ReactNode, useLayoutEffect, useState } from "react";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
+import useAuth from "@/hooks/useAuth";
+import ROUTE from "@/constants/route";
+import Logo from "@/components/Icon/Logo";
+import { TCurrency } from "@/interfaces/Main";
 import CurrencyTag from "../General/CurrencyTag";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 import SelectDurationWithParams from "../Input/SelectDurationWithParams";
@@ -111,7 +111,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         collapsed={collapsed}
         onCollapse={() => setCollapsed(true)}
         collapsible
-        className="fixed h-screen bg-neutral-1"
+        className="fixed h-screen bg-neutral-1 border-r-2"
         width={240}
       >
         <div className="px-6 pb-6 pt-4">
