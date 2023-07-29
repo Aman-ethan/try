@@ -13,7 +13,7 @@ export default function DetailsSummary() {
   const { client_id } = useParams();
 
   const { data, isLoading } = useAnalyticsServerGetQuery<IBalanceSheetOverview>(
-    client_id ? `/networth/${client_id}` : null
+    client_id ? `/networth/${client_id}/` : null
   );
 
   const {
