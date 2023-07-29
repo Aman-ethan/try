@@ -56,7 +56,7 @@ export default function PositionStatementForm({
           <SelectCustodian placeholder="Select custodian" />
         </Form.Item>
         <Form.Item
-          label="Account Number" 
+          label="Account Number"
           name="relationship_number"
           className="flex-1"
         >
