@@ -44,7 +44,7 @@ const FormRules: Partial<Record<keyof ITradeForm, FormRule[]>> = {
   client: [{ required: true, message: "Please select the client" }],
   custodian: [{ required: true, message: "Please select the custodian" }],
   relationship_number: [
-    { required: true, message: "Please select the relationship Number" },
+    { required: true, message: "Please select the account number" },
   ],
   security: [
     { required: true, message: "Please select the security or add one" },
@@ -163,7 +163,7 @@ export default function TradeForm({
           />
         </Form.Item>
         <Form.Item
-          label="Relationship Number"
+          label="Account Number"
           name="relationship_number"
           rules={FormRules.relationship_number}
           className="flex-1"
@@ -172,7 +172,7 @@ export default function TradeForm({
             params={{ clientId, custodianId }}
             reset={resetField("relationship_number")}
             disabled={isMutating}
-            placeholder="Enter the relationship number"
+            placeholder="Enter the account number"
           />
         </Form.Item>
       </Row>

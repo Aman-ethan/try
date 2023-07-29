@@ -79,7 +79,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     width: 225,
   },
   {
-    title: "Relationship Number",
+    title: "Account Number",
     key: "relationship-number",
     dataIndex: "relationship_number",
     width: 165,

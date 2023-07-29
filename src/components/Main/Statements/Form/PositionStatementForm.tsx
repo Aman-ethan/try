@@ -56,11 +56,11 @@ export default function PositionStatementForm({
           <SelectCustodian placeholder="Select custodian" />
         </Form.Item>
         <Form.Item
-          label="Relationship Number"
+          label="Account Number" 
           name="relationship_number"
           className="flex-1"
         >
-          <SelectRelationshipNumber placeholder="Select relationship number" />
+          <SelectRelationshipNumber placeholder="Select account number" />
         </Form.Item>
       </div>
       <Form.Item label="Description" name="description">

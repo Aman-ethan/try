@@ -70,7 +70,7 @@ const Columns: TableColumnsType<ITradeStatement> = [
     width: 165,
   },
   {
-    title: "Relationship Number",
+    title: "Account Number",
     key: "relationship-number",
     dataIndex: "relationship_number",
     width: 165,

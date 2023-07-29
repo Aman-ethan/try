@@ -29,7 +29,7 @@ function DetailsForm({ id, type, onClose }: IDetailsFormProps) {
       return <GoalsForm id={id} onClose={onClose} />;
     case "estates":
       return <EstatesForm id={id} onClose={onClose} />;
-    case "bank_accounts":
+    case "accounts":
       return <BankAccountsForm id={id} onClose={onClose} />;
     default:
       return null;

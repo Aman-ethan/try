@@ -80,7 +80,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     width: 140,
   },
   {
-    title: "Relationship Number",
+    title: "Account Number",
     key: "relationship_number",
     dataIndex: "relationship_number",
     sorter: true,

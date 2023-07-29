@@ -20,7 +20,7 @@ const StatementHeaders: IStatementHeader[] = [
   { label: "Upload Date", key: "upload_date" },
   { label: "Status", key: "status" },
   { label: "Reporting Currency", key: "reporting_currency" },
-  { label: "Relationship Number", key: "relationship_number" },
+  { label: "Account Number", key: "relationship_number" },
   { label: "Type of Statement", key: "statement_type" },
 ];
 

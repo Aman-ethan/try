@@ -52,7 +52,7 @@ const Columns: TableColumnsType<IActivePosition> = [
     width: 145,
   },
   {
-    title: "Relationship Number",
+    title: "Account Number",
     key: "relationship_number",
     dataIndex: "relationship_number",
     sorter: true,

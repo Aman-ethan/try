@@ -81,7 +81,7 @@ const Columns: TableColumnsType<IBankStatement> = [
     render: (currency) => <CurrencyTag currency={currency} />,
   },
   {
-    title: "Relationship Number",
+    title: "Account Number",
     key: "relationship_number",
     dataIndex: "relationship_number",
     width: 170,

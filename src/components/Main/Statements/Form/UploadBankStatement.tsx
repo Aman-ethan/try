@@ -36,7 +36,7 @@ const FormRules: Partial<Record<keyof IUploadBankStatementForm, FormRule[]>> = {
     { required: true, message: "Please select a statement date" },
   ],
   relationship_number: [
-    { required: true, message: "Please select a relationship number" },
+    { required: true, message: "Please select an account number" },
   ],
   portfolio_number: [
     { required: false, message: "Please input a portfolio number" },
@@ -155,7 +155,7 @@ export default function UploadBankStatement() {
           />
         </Form.Item>
         <Form.Item
-          label="Relationship Number"
+          label="Account Number"
           name="relationship_number"
           className="flex-1"
           rules={FormRules.relationship_number}
@@ -169,7 +169,7 @@ export default function UploadBankStatement() {
             reset={() => {
               form.resetFields(["relationship_number"]);
             }}
-            placeholder="Enter the relationship number"
+            placeholder="Enter the account number"
           />
         </Form.Item>
       </div>

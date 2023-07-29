@@ -59,7 +59,7 @@ export default function PositionListItems() {
           <SelectRelationshipNumber
             disabled={!clientId}
             params={{ clientId, custodianId }}
-            placeholder="Select Relationship Number"
+            placeholder="Select Account Number"
             className={primarySelectClasses}
           />
           <SelectAssetWithParams

@@ -60,7 +60,7 @@ export default function TradeStatementForm({
       </div>
       <div className={formWrapper}>
         <Form.Item
-          label="Relationship Number"
+          label="Account Number"
           name="relationship_number"
           className="flex-1"
         >
@@ -69,7 +69,7 @@ export default function TradeStatementForm({
             reset={() => {
               form.resetFields(["relationship_number"]);
             }}
-            placeholder="Select relationship number"
+            placeholder="Select account number"
           />
         </Form.Item>
         <Form.Item

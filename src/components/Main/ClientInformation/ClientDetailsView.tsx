@@ -7,7 +7,7 @@ import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import Estates from "./Estates";
 import Goals from "./Goals";
 
-type TabType = "goals" | "estates" | "bank_accounts";
+type TabType = "goals" | "estates" | "accounts";
 
 function View({ type }: { type: TabType }) {
   switch (type) {
@@ -15,7 +15,7 @@ function View({ type }: { type: TabType }) {
       return <Goals />;
     case "estates":
       return <Estates />;
-    case "bank_accounts":
+    case "accounts":
       return <BankAccounts />;
     default:
       return null;
@@ -25,7 +25,7 @@ function View({ type }: { type: TabType }) {
 const DetailOptions: CheckboxOptionType[] = [
   { label: "Goals", value: "goals" },
   { label: "Estates", value: "estates" },
-  { label: "Bank Accounts", value: "bank_accounts" },
+  { label: "Accounts", value: "accounts" },
 ];
 
 export default function ClientDetailsView() {
