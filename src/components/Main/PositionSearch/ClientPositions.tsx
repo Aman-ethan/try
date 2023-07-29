@@ -3,10 +3,10 @@ import { IPositionNetWorth } from "@/interfaces/Main";
 import { formatCompactNumber } from "@/lib/format";
 import { ProCard, ProList } from "@ant-design/pro-components";
 import { Col, Empty, Row } from "antd";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import CurrencyTag from "../General/CurrencyTag";
-import Link from "next/link";
 
 export interface IClientDataProps {
   clients?: IPositionNetWorth[];
