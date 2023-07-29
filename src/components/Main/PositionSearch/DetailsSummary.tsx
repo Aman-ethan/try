@@ -1,20 +1,19 @@
 "use client";
 
-import { Card, Col, Row } from "antd";
+import useBalanceSheet from "@/hooks/useBalanceSheet";
 import { useAnalyticsServerGetQuery } from "@/hooks/useQuery";
 import { IBalanceSheetOverview } from "@/interfaces/Main";
-import useBalanceSheet from "@/hooks/useBalanceSheet";
-import { useSearchParams } from "next/navigation";
-import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { Card, Col, Row } from "antd";
+import { useParams } from "next/navigation";
 import CurrencyTag from "../General/CurrencyTag";
 import SummaryCard from "./Common/SummaryCard";
 import ChartTable from "./Table/ChartTable";
 
 export default function DetailsSummary() {
-  const { get: getSearchParams } = useSearchParams();
-  const client = getSearchParams("client");
+  const { client_id } = useParams();
+
   const { data, isLoading } = useAnalyticsServerGetQuery<IBalanceSheetOverview>(
-    `/networth${buildURLSearchParams({ client })}`
+    client_id ? `/networth/${client_id}` : null
   );
 
   const {

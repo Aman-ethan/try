@@ -19,7 +19,7 @@ export default function PositionList() {
 
   const primarySelectClasses = clsx(
     showFilter ? "block" : "hidden",
-    "w-full tab:flex lap:w-1/3"
+    "w-full tab:flex lap:w-1/4"
   );
 
   return (
