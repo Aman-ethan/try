@@ -1,5 +1,3 @@
-"use client";
-
 import Segmented from "@/components/Main/General/Segmented";
 import Analytics from "@/components/Main/Overview/Analytics";
 import AssetNetWorth from "@/components/Main/Overview/AssetNetWorth";

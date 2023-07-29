@@ -7,28 +7,25 @@ import useSelectClientWithParams from "@/hooks/useSelectClientWithParams";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Card, Col, Row, Skeleton, Typography } from "antd";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CurrencyTag from "../General/CurrencyTag";
+import SelectClientWithParams from "../Input/SelectClientWithParams";
 import ClientDetailsView from "./ClientDetailsView";
 import ClientEmpty from "./ClientEmpty";
 import ProfileEdit from "./ProfileEdit";
-import SelectClientWithParams from "../Input/SelectClientWithParams";
 
 const searchParamKey = "client_id";
 
 export default function ClientInfoCard() {
   const [editClicked, setEditClicked] = useState<boolean>(false);
-  const { data: clientData, isLoading } = useClient();
 
-  const { selectedClient, clientId, onChange } = useSelectClientWithParams({
+  const { selectedClient } = useSelectClientWithParams({
     searchParamKey,
   });
 
-  useEffect(() => {
-    if (!clientId && selectedClient?.value) {
-      onChange(selectedClient?.value);
-    }
-  }, [selectedClient?.value, clientId, onChange]);
+  const { data: clientData, isLoading } = useClient({
+    id: selectedClient?.value,
+  });
 
   const { name, last_name, city, country, first_name, reporting_currency } =
     clientData || {};
@@ -42,8 +39,8 @@ export default function ClientInfoCard() {
           <SelectClientWithParams
             searchParamKey="client_id"
             className="mob:w-full"
-            disabled={!clientId}
-            value={selectedClient}
+            disabled={!selectedClient?.key}
+            value={selectedClient?.value}
           />
         </Col>
       </Row>

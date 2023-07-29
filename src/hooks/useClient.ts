@@ -1,6 +1,5 @@
 import { TCurrency } from "@/interfaces/Main";
 import { useTransactionServerQuery } from "./useQuery";
-import useSearchParams from "./useSearchParams";
 
 interface IClient {
   name: string;
@@ -11,15 +10,13 @@ interface IClient {
   reporting_currency: TCurrency;
 }
 
-export default function useClient() {
-  const { get: getSearchParams } = useSearchParams();
-  const clientId = getSearchParams("client_id");
+export default function useClient({ id }: { id?: string }) {
   const { data, isLoading } = useTransactionServerQuery<IClient>(
-    clientId ? `/client/${clientId}/` : null
+    id ? `/client/${id}/` : null
   );
 
   return {
     data,
-    isLoading: isLoading || !clientId,
+    isLoading: isLoading || !id,
   };
 }
