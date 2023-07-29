@@ -3,10 +3,10 @@ import { IPositionNetWorth } from "@/interfaces/Main";
 import { formatCompactNumber } from "@/lib/format";
 import { ProCard, ProList } from "@ant-design/pro-components";
 import { Col, Empty, Row } from "antd";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import CurrencyTag from "../General/CurrencyTag";
+import Link from "next/link";
 
 export interface IClientDataProps {
   clients?: IPositionNetWorth[];
@@ -17,7 +17,13 @@ export default function ClientPositions({
   clients,
   loading,
 }: IClientDataProps) {
+  const router = useRouter();
   const pathname = usePathname();
+
+  function onItemClicked(record: IPositionNetWorth) {
+    router.push(`${pathname}/${record?.client_id}}`);
+  }
+
   return (
     <ProList
       locale={{ emptyText: <Empty /> }}
@@ -33,10 +39,13 @@ export default function ClientPositions({
         xl: 2,
         xxl: 2,
       }}
+      onItem={(record: IPositionNetWorth) => ({
+        onClick: () => onItemClicked(record), // Handle the click event here
+      })}
       metas={{
         content: {
           render: (text: React.ReactNode, record: IPositionNetWorth) => (
-            <Link href={`${pathname}/${record?.client_id}`}>
+            <Link href={`${pathname}/${record?.client_id}}`}>
               <ProCard.Group direction="column">
                 <div className="mb-8 flex justify-between">
                   <Title level={4}>{record?.client_name}</Title>
