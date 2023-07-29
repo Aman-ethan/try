@@ -162,6 +162,7 @@ export interface IPositionsData {
   custodian: string;
   security: string;
   relationship_number: string;
+  market_value: number;
 }
 
 export interface IPositionsResponse {

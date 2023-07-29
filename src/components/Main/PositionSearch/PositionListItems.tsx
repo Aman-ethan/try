@@ -21,8 +21,8 @@ export default function PositionListItems() {
   } = usePositions();
 
   const SortOptionsMap: Record<string, string> = {
-    "Largest Position First": "-quantity",
-    "Smallest Position First": "quantity",
+    "Largest Position First": "-market_value",
+    "Smallest Position First": "market_value",
     "Most Profitable Positions First": "-unrealised_pnl",
     "Most Loss Making First": "unrealised_pnl",
   };
