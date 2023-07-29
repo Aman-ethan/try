@@ -20,6 +20,6 @@ export default function useClient() {
 
   return {
     data,
-    isLoading,
+    isLoading: isLoading || !clientId,
   };
 }
