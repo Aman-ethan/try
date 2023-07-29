@@ -74,11 +74,11 @@ function UserProfile({
   ];
   return (
     <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
-      <div className="cursor-pointer space-x-2">
+      <div className="flex items-center cursor-pointer gap-x-2">
         <Avatar />
-        <span className="text-sm font-medium capitalize text-neutral-13">
+        <div className="text-sm font-medium capitalize text-neutral-13 min-w-[4rem]">
           {name || username}
-        </span>
+        </div>
         <CaretDownFilled />
       </div>
     </Dropdown>

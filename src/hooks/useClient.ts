@@ -15,7 +15,7 @@ export default function useClient() {
   const { get: getSearchParams } = useSearchParams();
   const clientId = getSearchParams("client_id");
   const { data, isLoading } = useTransactionServerQuery<IClient>(
-    `/client/${clientId ? `${clientId}/` : ""}`
+    clientId ? `/client/${clientId}/` : null
   );
 
   return {

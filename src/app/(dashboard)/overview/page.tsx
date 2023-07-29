@@ -35,14 +35,15 @@ export default function Home() {
         </div>
         <GainerLoserFilter />
         <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-4">
-          <div className="flex-1 space-y-6">
+          {/* Used width as flex-1 was causing weird issue  */}
+          <div className="w-1/2 space-y-6">
             <Title level={5}>Gainer</Title>
             <GainerLoser
               urlKey="/position/history/top_gainer/"
               searchParamKeys={{ page: "page_gainer" }}
             />
           </div>
-          <div className="flex-1 space-y-6">
+          <div className="w-1/2 space-y-6">
             <Title level={5}>Loser</Title>
             <GainerLoser
               urlKey="/position/history/top_loser/"
