@@ -27,12 +27,11 @@ export default function TradeHeader() {
     "flex flex-1 flex-col space-y-4 lap:flex-row lap:items-center lap:space-x-4 lap:space-y-0";
   const innerContainerClasses =
     "flex flex-1 flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0";
-  const filterButtonClasses =
-    "flex-1 order-first mb-4 tab:order-last tab:mb-0 tab:self-start lap:hidden";
+  const filterButtonClasses = "flex-1 order-first mb-4 lap:hidden tab:hidden";
 
   const primarySelectClasses = clsx(
     showFilter ? "block" : "hidden",
-    "w-1/2 tab:flex"
+    "tab:flex"
   );
 
   // const secondarySelectClasses = clsx(
@@ -67,17 +66,6 @@ export default function TradeHeader() {
                 placeholder="All Custodian"
                 className={primarySelectClasses}
               />
-            </div>
-            <div className={innerContainerClasses}>
-              {/* <SelectSecurityWithParams
-                size="large"
-                className={secondarySelectClasses}
-                placeholder="Select a Security"
-              />
-              <SelectAssetWithParams
-                className={secondarySelectClasses}
-                placeholder="All Asset"
-              /> */}
             </div>
           </div>
           <div className="order-first flex w-full space-x-2 tab:order-last tab:w-auto tab:self-start">

@@ -1,3 +1,5 @@
+"use client";
+
 import Segmented from "@/components/Main/General/Segmented";
 import Analytics from "@/components/Main/Overview/Analytics";
 import AssetNetWorth from "@/components/Main/Overview/AssetNetWorth";
@@ -23,23 +25,24 @@ export default function Home() {
       </div>
       <Analytics />
       <div className="space-y-6 rounded-lg bg-white p-6">
-        <div className="tab:item-center flex flex-col space-y-4 tab:flex-row tab:justify-between tab:space-y-0">
+        <div className="tab:item-center flex flex-col space-y-4 mob:w-auto tab:flex-row tab:justify-between tab:space-y-0">
           <Title level={4}>Gainer/Loser</Title>
+
           <div className="w-[16.75rem]">
             <Segmented
-              disabled
               defaultValue="table_view"
               options={GainerLoserViewOptions}
             />
           </div>
         </div>
         <GainerLoserFilter />
-        <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-10">
-          <div className="w-1/2 space-y-6">
+
+        <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-4">
+          <div className="flex-1 space-y-6">
             <Title level={5}>Gainer</Title>
             <GainerLoser path="top_gainers" />
           </div>
-          <div className="w-1/2 space-y-6">
+          <div className="flex-1 space-y-6">
             <Title level={5}>Loser</Title>
             <GainerLoser path="top_losers" />
           </div>
