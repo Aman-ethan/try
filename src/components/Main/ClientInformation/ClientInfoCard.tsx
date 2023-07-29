@@ -36,7 +36,7 @@ export default function ClientInfoCard() {
   if (!(clientData && isLoading)) return <ClientEmpty />;
 
   return (
-    <>
+    <div className="space-y-8">
       <Row>
         <Col className="w-full tab:w-1/2 lap:w-1/3">
           <SelectClientWithParams
@@ -48,37 +48,36 @@ export default function ClientInfoCard() {
         </Col>
       </Row>
       <Row>
-        <ClientInfoCard />
+        <Card className={clsx("w-full rounded-lg", PageCardClassName)}>
+          {isLoading ? (
+            <Skeleton />
+          ) : (
+            <div className="mb-5 space-y-6 border-b-2 py-6">
+              <div className="flex items-center justify-between space-x-4 tab:justify-start">
+                <Title className="text-xl tab:text-3xl">{name}</Title>
+                <Button
+                  className="flex items-center justify-center "
+                  onClick={() => setEditClicked((prev) => !prev)}
+                >
+                  <EditOutlined />
+                </Button>
+              </div>
+              <div className="flex items-center gap-4">
+                <Avatar className="object-contain" icon={<UserOutlined />} />
+                <Typography.Text strong className="text-sm tab:text-3xl">
+                  {first_name} {last_name}
+                </Typography.Text>
+                <CurrencyTag currency={reporting_currency} />
+              </div>
+              <p className="text-lg text-neutral-9">
+                {city && country ? `${city}, ` : city}
+                {country}
+              </p>
+            </div>
+          )}
+          {editClicked ? <ProfileEdit /> : <ClientDetailsView />}
+        </Card>
       </Row>
-      <Card className={clsx("w-full rounded-lg", PageCardClassName)}>
-        {isLoading ? (
-          <Skeleton />
-        ) : (
-          <div className="mb-5 space-y-6 border-b-2 py-6">
-            <div className="flex items-center justify-between space-x-4 tab:justify-start">
-              <Title className="text-xl tab:text-3xl">{name}</Title>
-              <Button
-                className="flex items-center justify-center "
-                onClick={() => setEditClicked((prev) => !prev)}
-              >
-                <EditOutlined />
-              </Button>
-            </div>
-            <div className="flex items-center gap-4">
-              <Avatar className="object-contain" icon={<UserOutlined />} />
-              <Typography.Text strong className="text-sm tab:text-3xl">
-                {first_name} {last_name}
-              </Typography.Text>
-              <CurrencyTag currency={reporting_currency} />
-            </div>
-            <p className="text-lg text-neutral-9">
-              {city && country ? `${city}, ` : city}
-              {country}
-            </p>
-          </div>
-        )}
-        {editClicked ? <ProfileEdit /> : <ClientDetailsView />}
-      </Card>
-    </>
+    </div>
   );
 }

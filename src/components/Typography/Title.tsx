@@ -23,6 +23,6 @@ export default function Title({
     case 6:
       return <h6 className={clsx("text-sm", mergedClassName)}>{children}</h6>;
     default:
-      return <h2 className={clsx("text-3xl", className)}>{children}</h2>;
+      return <h2 className={clsx("text-3xl", mergedClassName)}>{children}</h2>;
   }
 }

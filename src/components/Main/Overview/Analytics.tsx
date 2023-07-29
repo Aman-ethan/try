@@ -18,7 +18,7 @@ export default function Analytics() {
   });
 
   return (
-    <div className="flex flex-col rounded-lg bg-neutral-1 p-6">
+    <div>
       <Dropdown
         className="self-start"
         disabled={loading || !selectedClient?.value}
@@ -30,7 +30,7 @@ export default function Analytics() {
       >
         {selectedClient?.label || "Client"}
       </Dropdown>
-      <div className="flex min-h-[38.125rem] flex-col lap:flex-row lap:items-center lap:justify-center">
+      <div className="flex flex-col min-h-[38.125rem] lap:flex-row lap:items-start lap:justify-center">
         {allocation?.map(({ title, data }) => (
           <Allocation data={data} title={title} />
         ))}

@@ -2,6 +2,7 @@
 
 import useClientDropdown from "@/hooks/useClientDropdown";
 import { IAssetNetWorth } from "@/interfaces/Main";
+import { Empty } from "antd";
 import Dropdown from "../General/Dropdown";
 import IndexChart from "./IndexChart";
 
@@ -11,9 +12,14 @@ const searchParamKey = "asset_client";
 export default function AssetNetWorth() {
   const { loading, onChange, options, selectedClient, data } =
     useClientDropdown<IAssetNetWorth>({ urlKey, searchParamKey });
-
+  if (!(loading && data))
+    return (
+      <div className="h-full w-full flex flex-col">
+        <Empty className="my-auto" />
+      </div>
+    );
   return (
-    <div className="flex-1 rounded-lg bg-white p-6 pb-0 space-y-6">
+    <div className="space-y-6">
       <Dropdown
         disabled={loading || !selectedClient?.value}
         menu={{
@@ -24,7 +30,7 @@ export default function AssetNetWorth() {
       >
         {selectedClient?.label || "Client"}
       </Dropdown>
-      <IndexChart data={data?.data} loading={loading} />
+      <IndexChart data={data.data} loading={loading} />
     </div>
   );
 }
