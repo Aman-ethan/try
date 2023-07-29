@@ -32,6 +32,7 @@ const DURATION: IDuration[] = [
 
 function getDateKeys(layoutSegment: string | null): SearchParams[] {
   switch (layoutSegment) {
+    case "transaction":
     case "t+1":
     case "statements":
       return ["statement_date__gte", "statement_date__lte"];

@@ -218,7 +218,12 @@ export interface IClient {
   daily_pl: number;
 }
 
-type TCommonSearchPrams = "page" | "ordering" | "client" | "client_id";
+type TCommonSearchPrams =
+  | "page"
+  | "ordering"
+  | "client"
+  | "client_id"
+  | "query";
 
 type TAuthSearchParams =
   | "username"
