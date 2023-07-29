@@ -1,5 +1,6 @@
 "use client";
 
+import { LandingPage } from "@/constants/strings";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { ReactNode, useLayoutEffect } from "react";
@@ -14,7 +15,7 @@ export default function AuthTemplate({ children }: IAuthTemplateProps) {
 
   useLayoutEffect(() => {
     if (isLoggedIn) {
-      replace("/overview");
+      replace(LandingPage);
     } else {
       document.body.classList.remove("opacity-0");
     }

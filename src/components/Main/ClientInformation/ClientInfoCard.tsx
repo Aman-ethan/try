@@ -33,7 +33,7 @@ export default function ClientInfoCard() {
   const { name, last_name, city, country, first_name, reporting_currency } =
     clientData || {};
 
-  if (!(clientData && isLoading)) return <ClientEmpty />;
+  if (!(clientData || isLoading)) return <ClientEmpty />;
 
   return (
     <div className="space-y-8">

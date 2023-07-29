@@ -11,7 +11,7 @@ export default function TransactionLayout({
   children,
 }: ITransactionLayoutProps) {
   return (
-    <div className="space-y-8 px-12 py-6">
+    <div className="space-y-8">
       <Breadcrumb
         items={[
           {

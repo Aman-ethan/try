@@ -149,7 +149,9 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           </Row>
         </Layout.Header>
         <Layout.Content>
-          <div className="min-h-full bg-neutral-3">{children}</div>
+          <div className="min-h-full p-4 tab:p-6 lap:py-6 lap:px-12 bg-neutral-3">
+            {children}
+          </div>
           <Layout.Footer className="flex justify-center bg-neutral-3">
             ETHAN-AI &copy; ALL RIGHTS RESERVED {currentDate.getFullYear()}
             {". "}

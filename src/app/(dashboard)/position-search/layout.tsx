@@ -7,5 +7,5 @@ interface IPositionLayoutProps {
 }
 
 export default function PositionLayout({ children }: IPositionLayoutProps) {
-  return <div className="space-y-8 px-12 py-6">{children}</div>;
+  return <div className="space-y-8">{children}</div>;
 }

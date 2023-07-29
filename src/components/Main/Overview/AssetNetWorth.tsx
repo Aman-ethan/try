@@ -12,15 +12,11 @@ const searchParamKey = "asset_client";
 export default function AssetNetWorth() {
   const { loading, onChange, options, selectedClient, data } =
     useClientDropdown<IAssetNetWorth>({ urlKey, searchParamKey });
-  if (!(loading && data))
-    return (
-      <div className="h-full w-full flex flex-col">
-        <Empty className="my-auto" />
-      </div>
-    );
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 flex flex-col h-full w-full">
       <Dropdown
+        className="self-start"
         disabled={loading || !selectedClient?.value}
         menu={{
           onClick: ({ key }) => onChange(key),
@@ -30,7 +26,13 @@ export default function AssetNetWorth() {
       >
         {selectedClient?.label || "Client"}
       </Dropdown>
-      <IndexChart data={data.data} loading={loading} />
+      {!(loading || data?.data) ? (
+        <div className="flex-1 flex flex-col">
+          <Empty className="my-auto -translate-y-6" />
+        </div>
+      ) : (
+        <IndexChart data={data?.data} loading={loading} />
+      )}
     </div>
   );
 }

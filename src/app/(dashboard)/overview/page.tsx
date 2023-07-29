@@ -15,7 +15,7 @@ const GainerLoserViewOptions = [
 
 export default function Home() {
   return (
-    <div className="space-y-8 px-12 py-6">
+    <div className="space-y-8">
       <Title level={2}>Overview</Title>
       <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-8">
         <div className="flex-1 rounded-lg bg-white p-6 lap:flex-1 lap:max-w-[30rem]">
