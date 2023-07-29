@@ -244,7 +244,9 @@ type TOverviewSearchParams =
   | "start_date"
   | "end_date"
   | "asset_client"
-  | "gross_allocation_client";
+  | "gross_allocation_client"
+  | "page_gainer"
+  | "page_loser";
 
 export type SearchParams =
   | TCommonSearchPrams
@@ -265,6 +267,13 @@ export type SearchParams =
   | "search"
   | "asset_duration"
   | "gain_loss_duration";
+
+export interface IUseTableParams {
+  searchParamKeys: {
+    client?: SearchParams;
+    page?: SearchParams;
+  };
+}
 
 export type TUpload = "bulk" | "single";
 export type TUploadStatement = "position" | "trade";

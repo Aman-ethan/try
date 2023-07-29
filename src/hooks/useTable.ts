@@ -1,5 +1,5 @@
 import { StatementOptions, TradeActionOptions } from "@/constants/options";
-import { ICurrency, SearchParams } from "@/interfaces/Main";
+import { ICurrency, IUseTableParams, SearchParams } from "@/interfaces/Main";
 import {
   FilterValue,
   RowSelectionType,
@@ -19,12 +19,14 @@ interface ISelectRow<T> {
   onRowClick?: (_record: T) => void;
 }
 
-export default function useTable() {
+export default function useTable(props?: IUseTableParams) {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
 
-  const client = getSearchParams("client");
+  const searchParamsKeys = props?.searchParamKeys;
+
+  const client = getSearchParams(searchParamsKeys?.client ?? "client");
   const custodian = getSearchParams("custodian");
-  const page = getSearchParams("page");
+  const page = getSearchParams(searchParamsKeys?.page ?? "page");
   const ordering = getSearchParams("ordering");
 
   function onChange<T>(

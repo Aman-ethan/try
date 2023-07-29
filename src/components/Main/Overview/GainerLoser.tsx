@@ -1,42 +1,45 @@
 "use client";
 
 import { useTransactionServerQuery } from "@/hooks/useQuery";
+import useSearchParams from "@/hooks/useSearchParams";
+import { IUseTableParams, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatCompactNumber } from "@/lib/format";
 import { TableColumnsType } from "antd";
+import useTable from "@/hooks/useTable";
 import Table from "../Table";
 
-// interface IGainerResponse {
-//   count: number;
-//   next: string | null;
-//   previous: string | null;
-//   results: {
-//     asset_class: string;
-//     base_ccy_invested_amount: number | null;
-//     base_ccy_realisedpl: number | null;
-//     base_ccy_unrealisedpl: number;
-//     ccy: string;
-//     ccyaccount: string | null;
-//     client_ccy_realisedpl: string | null;
-//     client_ccy_unrealisedpl: number;
-//     client_name: string;
-//     company_ccy_realisedpl: string | null;
-//     company_ccy_unrealisedpl: number;
-//     country: string | null;
-//     custodian: string;
-//     distributions: string | null;
-//     industry: string | null;
-//     mtm_base_ccy: number;
-//     mtm_client_ccy: number;
-//     mtm_company_ccy: number;
-//     mtm_price: number;
-//     position_qty: string;
-//     region: string | null;
-//     sec_name: string;
-//     security_id: string;
-//     total_pl: number;
-//   }[];
-// }
+interface IGainer {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: {
+    asset_class: string;
+    base_ccy_invested_amount: number | null;
+    base_ccy_realisedpl: number | null;
+    base_ccy_unrealisedpl: number;
+    ccy: string;
+    ccyaccount: string | null;
+    client_ccy_realisedpl: string | null;
+    client_ccy_unrealisedpl: number;
+    client_name: string;
+    company_ccy_realisedpl: string | null;
+    company_ccy_unrealisedpl: number;
+    country: string | null;
+    custodian: string;
+    distributions: string | null;
+    industry: string | null;
+    mtm_base_ccy: number;
+    mtm_client_ccy: number;
+    mtm_company_ccy: number;
+    mtm_price: number;
+    position_qty: string;
+    region: string | null;
+    sec_name: string;
+    security_id: string;
+    total_pl: number;
+  }[];
+}
 
 interface IGainerLoser {
   client_name: string;
@@ -53,8 +56,8 @@ export interface ICombinedGainerLoser {
   };
 }
 
-interface IGainerLoserProps {
-  path: "top_gainers" | "top_losers";
+interface IGainerLoserProps extends IUseTableParams {
+  urlKey: string;
 }
 
 const Columns: TableColumnsType = [
@@ -66,7 +69,7 @@ const Columns: TableColumnsType = [
   },
   {
     title: "Security",
-    dataIndex: "security",
+    dataIndex: "security_description",
     key: "security",
     width: "42%",
   },
@@ -78,23 +81,36 @@ const Columns: TableColumnsType = [
   },
   {
     title: "Total PL",
-    dataIndex: "total_pl",
+    dataIndex: "profit_loss",
     key: "total-pl",
     width: "18%",
     render: formatCompactNumber,
   },
 ];
 
-function useGainerLoser() {
-  // const { get: getSearchParams } = useSearchParams();
+const _searchParamKeys = [
+  "start_date",
+  "end_date",
+  "client",
+  "custodian",
+  "reporting_currency",
+  "page_gainer",
+  "page_loser",
+];
+
+function useGainerLoser({ urlKey }: { urlKey: string }) {
+  const { get: getSearchParams } = useSearchParams();
   // const duration = getSearchParams("gain_loss_duration");
-  const { data, isLoading } = useTransactionServerQuery<ICombinedGainerLoser>(
-    `/position/history/top_gainer_loser${buildURLSearchParams({
-      start_date: undefined,
-      end_date: undefined,
-      client_id: undefined,
-      reporting_currency: undefined,
-    })}`
+  const { data, isLoading } = useTransactionServerQuery<IGainer>(
+    `${urlKey}${buildURLSearchParams(
+      _searchParamKeys.reduce(
+        (acc, key) => ({
+          ...acc,
+          [key]: getSearchParams(key as SearchParams),
+        }),
+        {}
+      )
+    )}`
   );
 
   return {
@@ -105,16 +121,22 @@ function useGainerLoser() {
 
 const scroll = { y: "35.75rem" };
 
-export default function GainerLoser({ path }: IGainerLoserProps) {
-  const { data, isLoading } = useGainerLoser();
+export default function GainerLoser({
+  urlKey,
+  searchParamKeys,
+}: IGainerLoserProps) {
+  const { data, isLoading } = useGainerLoser({ urlKey });
+  const { pagination, onChange } = useTable({ searchParamKeys });
   return (
     <Table
       loading={isLoading}
       columns={Columns}
-      dataSource={data?.result[path]}
+      dataSource={data?.results}
       scroll={scroll}
+      onChange={onChange}
       rowClassName="h-[7rem]"
       className="h-[40.75rem]"
+      pagination={{ ...pagination, total: data?.count }}
     />
   );
 }

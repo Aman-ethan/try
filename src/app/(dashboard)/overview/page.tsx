@@ -19,32 +19,35 @@ export default function Home() {
       <Title level={2}>Overview</Title>
       <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-8">
         <ClientNetWorth />
-        <div className="flex-1 rounded-lg bg-white p-6">
-          <AssetNetWorth />
-        </div>
+        <AssetNetWorth />
       </div>
       <Analytics />
       <div className="space-y-6 rounded-lg bg-white p-6">
         <div className="tab:item-center flex flex-col space-y-4 mob:w-auto tab:flex-row tab:justify-between tab:space-y-0">
           <Title level={4}>Gainer/Loser</Title>
-
           <div className="w-[16.75rem]">
             <Segmented
+              disabled
               defaultValue="table_view"
               options={GainerLoserViewOptions}
             />
           </div>
         </div>
         <GainerLoserFilter />
-
         <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-4">
           <div className="flex-1 space-y-6">
             <Title level={5}>Gainer</Title>
-            <GainerLoser path="top_gainers" />
+            <GainerLoser
+              urlKey="/position/history/top_gainer/"
+              searchParamKeys={{ page: "page_gainer" }}
+            />
           </div>
           <div className="flex-1 space-y-6">
             <Title level={5}>Loser</Title>
-            <GainerLoser path="top_losers" />
+            <GainerLoser
+              urlKey="/position/history/top_loser/"
+              searchParamKeys={{ page: "page_loser" }}
+            />
           </div>
         </div>
       </div>

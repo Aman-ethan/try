@@ -1,6 +1,6 @@
 import { IAssetNetWorth } from "@/interfaces/Main";
 import * as Plot from "@observablehq/plot";
-import { Spin } from "antd";
+import { Spin, message } from "antd";
 import clsx from "clsx";
 import { format } from "d3";
 import {
@@ -56,37 +56,13 @@ function fillMissingData({ data, xticks }: IFillMissingDataParams) {
   );
 }
 
-// const OFFSET = 1;
-
-// const data = [
-//   ...aapl.map((item) => ({ x: item.date, y: item.adjusted_close, z: "Cash" })),
-//   ...mcd.map((item) => ({
-//     x: item.date,
-//     y: item.adjusted_close,
-//     z: "Deposit",
-//   })),
-//   ...msft.map((item) => ({
-//     x: item.date,
-//     y: item.adjusted_close,
-//     z: "Equity",
-//   })),
-//   ...aapl.map((item) => ({
-//     x: item.date,
-//     y: item.adjusted_close,
-//     z: "Fixed Income",
-//   })),
-//   ...aapl.map((item) => ({ x: item.date, y: item.adjusted_close, z: "Funds" })),
-//   ...aapl.map((item) => ({ x: item.date, y: item.adjusted_close, z: "Bonds" })),
-// ];
-// const loading = false;
-
 export default function IndexChart({ data, loading }: IIndexChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const [normalizeIndex, setNormalizeIndex] = useState(0);
   const [excludedDomain, setExcludedDomain] = useState<string[]>([]);
   const chartScaleRef = useRef<Plot.Scale>();
 
-  const [filledData, groupedData] = useMemo(() => {
+  const [filledData, filledGroupedData, assets] = useMemo(() => {
     setNormalizeIndex(0);
 
     const absoluteData = data?.map((item) => {
@@ -107,25 +83,29 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
 
     const _groupedData = groupBy(absoluteData, "z");
 
+    const _assets = Object.keys(_groupedData);
+
     excludedDomain.forEach((domain) => {
       delete _groupedData[domain];
     });
 
-    const filledGroupedData = fillMissingData({
+    const _filledGroupedData = fillMissingData({
       data: _groupedData,
       xticks,
     });
-    const _filledData = Object.values(filledGroupedData).flat();
 
-    return [_filledData, filledGroupedData];
+    const _filledData = Object.values(_filledGroupedData).flat();
+
+    return [_filledData, _filledGroupedData, _assets];
   }, [excludedDomain, data]);
 
   useEffect(() => {
     if (filledData.length === 0) return undefined;
     const maxDomain = max(
       map(
-        groupedData,
-        (item) => (maxBy(item, "y") as TData).y / (minBy(item, "y") as TData).y
+        filledGroupedData,
+        (item) =>
+          (maxBy(item, "y") as TData).y / ((minBy(item, "y") as TData).y || 1)
       )
     ) as number;
 
@@ -173,7 +153,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
       const selectedValue = chart.value;
       if (selectedValue) {
         setNormalizeIndex(() =>
-          groupedData[selectedValue.z]?.findIndex((item) =>
+          filledGroupedData[selectedValue.z]?.findIndex((item) =>
             isEqual(item, selectedValue)
           )
         );
@@ -185,7 +165,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
     chartRef.current?.append(chart);
 
     return () => chart.remove();
-  }, [normalizeIndex, filledData, groupedData]);
+  }, [normalizeIndex, filledData, filledGroupedData]);
   if (loading)
     return (
       <div className="flex h-full items-center justify-center">
@@ -197,40 +177,42 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
       <div ref={chartRef} />
       <div className="flex w-full max-w-lg items-center overflow-x-auto py-6">
         <div className="flex gap-x-4">
-          {(chartScaleRef.current?.domain as TScaleRecord)?.map(
-            (domain, index) => {
-              const isExcluded = excludedDomain?.includes(domain);
-              return (
-                <button
-                  type="button"
-                  key={domain}
-                  className={clsx(
-                    "flex items-center rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5",
-                    isExcluded ? "opacity-50" : ""
-                  )}
-                  onClick={() => {
-                    if (isExcluded) {
-                      setExcludedDomain((prev) =>
-                        prev.filter((item) => item !== domain)
-                      );
-                    } else {
-                      setExcludedDomain((prev) => [...prev, domain]);
+          {assets.map((asset, index) => {
+            const isExcluded = excludedDomain?.includes(asset);
+            return (
+              <button
+                type="button"
+                key={asset}
+                className={clsx(
+                  "flex items-center rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5",
+                  isExcluded ? "opacity-50" : ""
+                )}
+                onClick={() => {
+                  if (isExcluded) {
+                    setExcludedDomain((prev) =>
+                      prev.filter((item) => item !== asset)
+                    );
+                  } else {
+                    if (assets.length - 1 === excludedDomain.length) {
+                      message.info("Please select at least one asset");
+                      return;
                     }
+                    setExcludedDomain((prev) => [...prev, asset]);
+                  }
+                }}
+              >
+                <div
+                  className="mr-2 h-4 w-4"
+                  style={{
+                    backgroundColor: (
+                      chartScaleRef.current?.range as TScaleRecord
+                    )?.[index],
                   }}
-                >
-                  <div
-                    className="mr-2 h-4 w-4"
-                    style={{
-                      backgroundColor: (
-                        chartScaleRef.current?.range as TScaleRecord
-                      )?.[index],
-                    }}
-                  />
-                  <div className="whitespace-nowrap">{domain}</div>
-                </button>
-              );
-            }
-          )}
+                />
+                <div className="whitespace-nowrap">{asset}</div>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>

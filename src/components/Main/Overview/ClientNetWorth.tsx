@@ -19,68 +19,7 @@ function useClientNetWorth() {
 
   return {
     isLoading,
-    data: [
-      {
-        client_name: "TT_SS",
-        daily_pl: 1000,
-        total_pl: 1000,
-        net_worth: 1000,
-      },
-      {
-        client_name: "AK_NK",
-        daily_pl: 10000,
-        total_pl: 10000,
-        net_worth: 10000,
-      },
-      {
-        client_name: "TT_SS",
-        daily_pl: 1000,
-        total_pl: 1000,
-        net_worth: 1000,
-      },
-      {
-        client_name: "AK_NK",
-        daily_pl: 10000,
-        total_pl: 10000,
-        net_worth: 10000,
-      },
-      {
-        client_name: "TT_SS",
-        daily_pl: 1000,
-        total_pl: 1000,
-        net_worth: 1000,
-      },
-      {
-        client_name: "AK_NK",
-        daily_pl: 10000,
-        total_pl: 10000,
-        net_worth: 10000,
-      },
-      {
-        client_name: "TT_SS",
-        daily_pl: 1000,
-        total_pl: 1000,
-        net_worth: 1000,
-      },
-      {
-        client_name: "AK_NK",
-        daily_pl: 10000,
-        total_pl: 10000,
-        net_worth: 10000,
-      },
-      {
-        client_name: "TT_SS",
-        daily_pl: 1000,
-        total_pl: 1000,
-        net_worth: 1000,
-      },
-      {
-        client_name: "AK_NK",
-        daily_pl: 10000,
-        total_pl: 10000,
-        net_worth: 10000,
-      },
-    ] as IClient[],
+    data: [] as IClient[],
   };
 }
 
@@ -208,7 +147,7 @@ export default function ClientNetWorth() {
     },
   ];
   return (
-    <div className="h-[28.5rem] flex-1 space-y-6 rounded-lg bg-white p-6 lap:max-w-[30rem]">
+    <div className="flex-1 space-y-6 rounded-lg bg-white p-6 lap:flex-1">
       <div className="flex items-center justify-between">
         <Title level={4}>Net Worth</Title>
         <Title level={3}>

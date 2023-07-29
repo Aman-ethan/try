@@ -65,6 +65,7 @@ export function postJsonFetcher(baseURL: string) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Accept-Encoding": "gzip",
         },
         body: formatBody(options?.arg, isArray ? key[1] : undefined),
       },

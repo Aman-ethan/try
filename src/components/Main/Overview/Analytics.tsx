@@ -21,14 +21,14 @@ export default function Analytics() {
     <div className="flex flex-col rounded-lg bg-neutral-1 p-6">
       <Dropdown
         className="self-start"
-        disabled={loading}
+        disabled={loading || !selectedClient?.value}
         menu={{
           onClick: ({ key }) => onChange(key),
           items: options,
           defaultSelectedKeys: [selectedClient?.key as string],
         }}
       >
-        {selectedClient?.label}
+        {selectedClient?.label || "Client"}
       </Dropdown>
       <div className="flex min-h-[38.125rem] flex-col lap:flex-row lap:items-center lap:justify-center">
         {allocation?.map(({ title, data }) => (
