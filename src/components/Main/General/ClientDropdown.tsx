@@ -7,7 +7,7 @@ interface IClientDropdownProps {
   searchParamKey?: SearchParams;
 }
 
-export default function ClientDropdwon({
+export default function ClientDropdown({
   searchParamKey = "client",
 }: IClientDropdownProps) {
   const {

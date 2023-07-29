@@ -28,7 +28,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
     colorMap[d] = z(d);
   });
 
-  const proListMockData = mapDataToPieChartData(data);
+  const proListData = mapDataToPieChartData(data);
   const [isModalVisible, setModalVisible] = useState(false);
   const handleSegmentClick = () => setModalVisible(true);
   const handleModalClose = () => setModalVisible(false);
@@ -50,12 +50,12 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
           handleSegmentClick={handleSegmentClick}
           colorMap={colorMap}
         />
-        {proListMockData.length !== 0 ? (
+        {proListData.length !== 0 ? (
           <ProList
             // data source will be replaced with dynamic data from pie chart
 
             rowClassName="p-2"
-            dataSource={proListMockData}
+            dataSource={proListData}
             metas={{
               title: {
                 dataIndex: "title",
