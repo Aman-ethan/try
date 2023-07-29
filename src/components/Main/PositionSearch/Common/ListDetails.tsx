@@ -63,9 +63,7 @@ export default function ListDetails({ record }: IListProps) {
           </div>
           <div className="basis-1/2 space-x-4">
             <span className="text-neutral-9">Market value</span>
-            <span>
-              {formatCompactNumber(record?.market_value)}
-            </span>
+            <span>{formatCompactNumber(record?.market_value)}</span>
           </div>
         </div>
       </div>
