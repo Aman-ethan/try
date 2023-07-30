@@ -11,7 +11,7 @@ export default function GainerLoserFilter() {
   const [showFilter, setShowFilter] = useState(false);
   const primarySelectClasses = clsx(
     showFilter ? "block" : "hidden",
-    "tab:flex"
+    "tab:flex tab:w-1/2"
   );
   return (
     <div className="flex max-w-lg flex-col">
