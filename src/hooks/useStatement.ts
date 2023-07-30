@@ -17,7 +17,7 @@ const searchParamsKey = [
   "statement_type__in",
   "transaction_type__in",
   "trade_action__in",
-  "query",
+  "search",
 ];
 
 export default function useStatement<T>({ urlKey }: IUseStatementParams) {
