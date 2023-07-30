@@ -1,5 +1,5 @@
-import { ISecurity } from "@/interfaces/Main";
 import { SWRConfiguration } from "swr";
+import { ISecurity } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { useTransactionServerQuery } from "./useQuery";
 

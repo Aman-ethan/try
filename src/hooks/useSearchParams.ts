@@ -1,10 +1,10 @@
-import { SearchParams } from "@/interfaces/Main";
 import {
   usePathname,
   useSearchParams as useNextSearchParams,
   useRouter,
 } from "next/navigation";
 import { useCallback } from "react";
+import { SearchParams } from "@/interfaces/Main";
 
 export type IUpdateSearchParams = Partial<
   Record<SearchParams, string | number | null>

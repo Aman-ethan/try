@@ -1,7 +1,7 @@
 "use client";
 
-import { AccessTokenKey } from "@/constants/strings";
 import { Cookies } from "react-cookie";
+import { AccessTokenKey } from "@/constants/strings";
 
 interface IFetcherParams {
   url: string;

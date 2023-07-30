@@ -1,7 +1,7 @@
+import { Image, SelectProps } from "antd";
 import { flags } from "@/constants/flags";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { ICurrency, TCurrency } from "@/interfaces/Main";
-import { Image, SelectProps } from "antd";
 import Select from "../../Input/Select";
 
 export default function SelectCurrency(props: SelectProps) {

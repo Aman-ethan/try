@@ -1,6 +1,6 @@
-import Title from "@/components/Typography/Title";
 import { CaretDownFilled } from "@ant-design/icons";
 import { Dropdown as AntdDropdown, Button, DropdownProps } from "antd";
+import Title from "@/components/Typography/Title";
 
 export default function Dropdown({ children, menu, ...props }: DropdownProps) {
   return (

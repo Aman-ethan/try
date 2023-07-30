@@ -1,6 +1,6 @@
+import { SelectProps } from "antd";
 import Select from "@/components/Input/Select";
 import useSelectAssetWithParams from "@/hooks/useSelectAssetWithParams";
-import { SelectProps } from "antd";
 
 export default function SelectAssetWithParams(props: SelectProps) {
   const { value, isLoading, options, onChange } = useSelectAssetWithParams();

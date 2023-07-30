@@ -1,8 +1,8 @@
-import Title from "@/components/Typography/Title";
-import useUpdatePassword from "@/hooks/useUpdatePassword";
 import { CloseOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, Row, message } from "antd";
 import { useState } from "react";
+import useUpdatePassword from "@/hooks/useUpdatePassword";
+import Title from "@/components/Typography/Title";
 
 export default function ChangePassword() {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,11 +1,11 @@
 "use client";
 
+import { TableColumnsType } from "antd";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import { IUseTableParams, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatCompactNumber } from "@/lib/format";
-import { TableColumnsType } from "antd";
 import useTable from "@/hooks/useTable";
 import Table from "../Table";
 

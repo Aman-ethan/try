@@ -1,8 +1,8 @@
 "use client";
 
 import { Radio, Skeleton } from "antd";
-import useSearchParams from "@/hooks/useSearchParams";
 import { useCallback, useEffect, useState } from "react";
+import useSearchParams from "@/hooks/useSearchParams";
 import { useAnalyticsServerMutation } from "@/hooks/useMutation";
 import AssetSelect from "./AssetSelect";
 import TickerSelect from "./TickerSelect";

@@ -1,9 +1,9 @@
 "use client";
 
-import { flags } from "@/constants/flags";
-import { TCurrency } from "@/interfaces/Main";
 import { Tag } from "antd";
 import Image from "next/image";
+import { flags } from "@/constants/flags";
+import { TCurrency } from "@/interfaces/Main";
 
 interface ICurrencyTagProps {
   currency?: TCurrency;

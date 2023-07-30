@@ -1,7 +1,7 @@
 "use client";
 
-import useSearchParams from "@/hooks/useSearchParams";
 import { Suspense } from "react";
+import useSearchParams from "@/hooks/useSearchParams";
 
 export default function PhoneNumber() {
   const searchParams = useSearchParams();

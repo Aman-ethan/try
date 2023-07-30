@@ -1,4 +1,3 @@
-import { TUpload } from "@/interfaces/Main";
 import {
   Dispatch,
   ReactNode,
@@ -8,6 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { TUpload } from "@/interfaces/Main";
 
 export interface IFormStateContext {
   formId: string;

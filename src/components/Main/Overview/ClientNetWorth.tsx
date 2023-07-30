@@ -1,12 +1,12 @@
 "use client";
 
+import { SettingOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Dropdown, MenuProps, TableColumnsType } from "antd";
+import { Dispatch, SetStateAction, useState } from "react";
 import Title from "@/components/Typography/Title";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { IClient } from "@/interfaces/Main";
 import { formatCompactNumber } from "@/lib/format";
-import { SettingOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Dropdown, MenuProps, TableColumnsType } from "antd";
-import { Dispatch, SetStateAction, useState } from "react";
 import ScrollableTable from "../Table/ScrollableTable";
 
 interface ISettingProps {

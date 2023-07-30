@@ -1,8 +1,8 @@
 "use client";
 
-import useChangePassword from "@/hooks/useChangePassword";
 import { Button, Form, FormRule, Input, message } from "antd";
 import { useRouter } from "next/navigation";
+import useChangePassword from "@/hooks/useChangePassword";
 
 interface IChangePasswordForm {
   old_password: string;

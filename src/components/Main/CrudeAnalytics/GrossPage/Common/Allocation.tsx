@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { ProList } from "@ant-design/pro-components";
 import * as d3 from "d3";
-import { IPieData, mapDataToPieChartData } from "@/constants/pieChartConfig";
 import { Empty } from "antd";
+import { IPieData, mapDataToPieChartData } from "@/constants/pieChartConfig";
 import AnalyticsPieChart from "../../Charts/AnalyticsPieChart";
 import AnalyticsModal from "./AnalyticsModal";
 

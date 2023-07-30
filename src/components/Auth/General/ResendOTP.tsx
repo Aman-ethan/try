@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { Cookies } from "react-cookie";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import {
   ILoginArgs,
@@ -7,8 +9,6 @@ import {
   IResendOTPProps,
   IUserArgs,
 } from "@/interfaces/Auth";
-import { useEffect, useState } from "react";
-import { Cookies } from "react-cookie";
 
 const OTP_WAIT_TIME = 60;
 

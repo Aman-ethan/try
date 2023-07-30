@@ -1,11 +1,11 @@
 "use client";
 
+import { TableColumnsType } from "antd";
+import { capitalize } from "lodash";
 import { MenuItemClassName } from "@/constants/strings";
 import { ActionColumn } from "@/constants/table";
 import { IBlotterTransactionStatement } from "@/interfaces/Main";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
-import { TableColumnsType } from "antd";
-import { capitalize } from "lodash";
 import TradeTable from ".";
 import HashTag from "../../General/HashTag";
 import MoreMenu, { DeleteItem } from "../../General/MoreMenu";

@@ -1,9 +1,9 @@
-import useStatement from "@/hooks/useStatement";
-import { IBankStatement } from "@/interfaces/Main";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { CSVLink } from "react-csv";
+import { IBankStatement } from "@/interfaces/Main";
+import useStatement from "@/hooks/useStatement";
 
 const urlKey = "/statement/bank/";
 

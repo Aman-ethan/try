@@ -1,7 +1,7 @@
+import { Divider } from "antd";
 import Title from "@/components/Typography/Title";
 import { ISecuritySearchProps, TCurrency } from "@/interfaces/Main";
 import { formatPrice } from "@/lib/format";
-import { Divider } from "antd";
 import CurrencyTag from "../../General/CurrencyTag";
 
 const DescriptionItemsMap: Record<string, keyof ISecuritySearchProps> = {

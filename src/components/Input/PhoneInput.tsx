@@ -1,7 +1,7 @@
 "use client";
 
-import CallingCodes from "@/constants/callingCodes";
 import { Form, FormItemProps, Input, Select, Space } from "antd";
+import CallingCodes from "@/constants/callingCodes";
 
 const UniqueCallingCodes = [...new Set(Object.values(CallingCodes))]
   .sort()

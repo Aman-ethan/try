@@ -1,5 +1,8 @@
 "use client";
 
+import { useCookies } from "react-cookie";
+import useSWR, { SWRConfiguration } from "swr";
+import { SWRMutationConfiguration } from "swr/mutation";
 import {
   AccessTokenKey,
   AnalyticsServerUrl,
@@ -7,9 +10,6 @@ import {
 } from "@/constants/strings";
 import { SearchParams } from "@/interfaces/Main";
 import { getFetcher, postJsonFetcher } from "@/lib/fetcher";
-import { useCookies } from "react-cookie";
-import useSWR, { SWRConfiguration } from "swr";
-import { SWRMutationConfiguration } from "swr/mutation";
 import useMutation from "./useMutation";
 
 type TKey = string | [string, Record<string, string>] | null;

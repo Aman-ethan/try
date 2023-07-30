@@ -1,7 +1,7 @@
 "use client";
 
-import { formatCompactNumber } from "@/lib/format";
 import { Card } from "antd";
+import { formatCompactNumber } from "@/lib/format";
 
 interface ISummaryCardProps {
   type: string;

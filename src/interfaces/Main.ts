@@ -1,6 +1,6 @@
-import { flags } from "@/constants/flags";
 import { DrawerProps, FormInstance } from "antd";
 import { ReactElement, ReactNode } from "react";
+import { flags } from "@/constants/flags";
 
 export interface ILayoutProps {
   children: ReactNode;

@@ -1,7 +1,7 @@
 "use client";
 
-import { formatPrice } from "@/lib/format";
 import { InputNumberProps } from "antd";
+import { formatPrice } from "@/lib/format";
 import InputNumber from "./InputNumber";
 
 export default function InputPrice({

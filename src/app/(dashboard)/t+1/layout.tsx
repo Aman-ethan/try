@@ -1,5 +1,5 @@
-import TradeHeader from "@/components/Main/T+1/General/TradeHeader";
 import { ReactNode } from "react";
+import TradeHeader from "@/components/Main/T+1/General/TradeHeader";
 
 interface ITradeLayoutProps {
   children: ReactNode;

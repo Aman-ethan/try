@@ -1,6 +1,6 @@
-import Select from "@/components/Input/Select";
 import { Tag as AntdTag, SelectProps } from "antd";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
+import Select from "@/components/Input/Select";
 
 function Tag({ label }: CustomTagProps) {
   return (

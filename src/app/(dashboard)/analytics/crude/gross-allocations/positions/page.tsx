@@ -1,7 +1,7 @@
 "use client";
 
-import Table from "@/components/Main/Table";
 import { TableColumnsType } from "antd";
+import Table from "@/components/Main/Table";
 
 const columns: TableColumnsType = [
   {

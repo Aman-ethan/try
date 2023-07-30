@@ -1,12 +1,12 @@
-import Logo from "@/components/Icon/Logo";
-import { Layout, Sider, Content } from "@/lib/antd";
 import Link from "next/link";
-import AppProvider from "@/context/AppProvider";
-import AuthIllustration from "@/components/Auth/Icon/AuthIllustration";
-
-import "antd/dist/reset.css";
-import "@/styles/global.css";
 import { ReactNode } from "react";
+import AuthIllustration from "@/components/Auth/Icon/AuthIllustration";
+import Logo from "@/components/Icon/Logo";
+import AppProvider from "@/context/AppProvider";
+import { Content, Layout, Sider } from "@/lib/antd";
+
+import "@/styles/global.css";
+import "antd/dist/reset.css";
 
 export default function AuthRootLayout({ children }: { children: ReactNode }) {
   return (

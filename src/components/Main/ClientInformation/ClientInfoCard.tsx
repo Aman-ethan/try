@@ -1,13 +1,13 @@
 "use client";
 
-import Title from "@/components/Typography/Title";
-import { PageCardClassName } from "@/constants/strings";
-import useClient from "@/hooks/useClient";
-import useSelectClientWithParams from "@/hooks/useSelectClientWithParams";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Card, Col, Row, Skeleton, Typography } from "antd";
 import clsx from "clsx";
 import { useState } from "react";
+import Title from "@/components/Typography/Title";
+import { PageCardClassName } from "@/constants/strings";
+import useClient from "@/hooks/useClient";
+import useSelectClientWithParams from "@/hooks/useSelectClientWithParams";
 import CurrencyTag from "../General/CurrencyTag";
 import SelectClientWithParams from "../Input/SelectClientWithParams";
 import ClientDetailsView from "./ClientDetailsView";

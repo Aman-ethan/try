@@ -1,5 +1,5 @@
-import useSearchSecurity from "@/hooks/useSearchSecurity";
 import { Input } from "antd";
+import useSearchSecurity from "@/hooks/useSearchSecurity";
 
 interface ISearchSecurityProps {
   placeholder?: string;

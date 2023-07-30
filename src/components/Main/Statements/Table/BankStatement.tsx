@@ -1,10 +1,10 @@
 "use client";
 
+import { TableColumnsType } from "antd";
+import { capitalize } from "lodash";
 import { ActionColumn } from "@/constants/table";
 import { IBankStatement } from "@/interfaces/Main";
 import { formatTableDate } from "@/lib/format";
-import { TableColumnsType } from "antd";
-import { capitalize } from "lodash";
 import Statement from ".";
 import CurrencyTag from "../../General/CurrencyTag";
 import MoreMenu, { DeleteItem, DownloadItem } from "../../General/MoreMenu";

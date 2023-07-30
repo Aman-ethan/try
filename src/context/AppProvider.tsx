@@ -6,8 +6,8 @@ import { createCache, extractStyle, StyleProvider } from "@ant-design/cssinjs";
 import { CookiesProvider } from "react-cookie";
 import { ConfigProvider } from "antd";
 import enUSIntl from "antd/es/locale/en_US";
-import theme from "@/config/theme";
 import { SWRConfig } from "swr";
+import theme from "@/config/theme";
 import AuthProvider from "./AuthProvider";
 
 interface IStyleRegistryProps {

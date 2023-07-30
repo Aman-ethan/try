@@ -1,5 +1,5 @@
-import { ITypographyProps } from "@/interfaces/Typography";
 import clsx from "clsx";
+import { ITypographyProps } from "@/interfaces/Typography";
 
 const titleClassName = "font-medium text-neutral-13/80";
 

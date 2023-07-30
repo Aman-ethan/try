@@ -1,8 +1,8 @@
 "use client";
 
+import { TableColumnsType } from "antd";
 import { ActionColumn } from "@/constants/table";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
-import { TableColumnsType } from "antd";
 import Statement from ".";
 import CurrencyTag from "../../General/CurrencyTag";
 import MoreMenu, { DeleteItem } from "../../General/MoreMenu";

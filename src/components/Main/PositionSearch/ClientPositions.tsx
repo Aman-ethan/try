@@ -1,11 +1,11 @@
-import Title from "@/components/Typography/Title";
-import { IPositionNetWorth } from "@/interfaces/Main";
-import { formatCompactNumber } from "@/lib/format";
 import { ProCard, ProList } from "@ant-design/pro-components";
 import { Col, Empty, Row } from "antd";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
+import { formatCompactNumber } from "@/lib/format";
+import { IPositionNetWorth } from "@/interfaces/Main";
+import Title from "@/components/Typography/Title";
 import CurrencyTag from "../General/CurrencyTag";
 
 export interface IClientDataProps {

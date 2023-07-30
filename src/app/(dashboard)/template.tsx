@@ -1,8 +1,8 @@
 "use client";
 
-import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { ReactNode, useLayoutEffect } from "react";
+import useAuth from "@/hooks/useAuth";
 
 interface ITemplateProps {
   children: ReactNode;

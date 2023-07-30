@@ -1,7 +1,7 @@
+import Link from "next/link";
 import Paragraph from "@/components/Typography/Paragraph";
 import Title from "@/components/Typography/Title";
 import LoginForm from "@/components/Auth/Form/LoginForm";
-import Link from "next/link";
 
 export default function LoginPage() {
   return (

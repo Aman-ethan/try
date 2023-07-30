@@ -1,8 +1,8 @@
+import { Form, Input } from "antd";
 import useFormState from "@/hooks/useForm";
 import { IFormProps } from "@/interfaces/Main";
 import formatInitialValues from "@/lib/formatInitialValues";
 import formatTriggerValues from "@/lib/formatTriggerValues";
-import { Form, Input } from "antd";
 import { formWrapper } from "@/constants/strings";
 import { DatePicker } from "../../Input/DatePicker";
 import InputPrice from "../../Input/InputPrice";

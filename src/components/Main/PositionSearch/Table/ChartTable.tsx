@@ -1,7 +1,7 @@
-import { IBalanceSheetChart, TProgressType } from "@/interfaces/Main";
 import { TableColumnsType } from "antd";
 import clsx from "clsx";
 import React from "react";
+import { IBalanceSheetChart, TProgressType } from "@/interfaces/Main";
 import { formatCompactNumber } from "@/lib/format";
 import Table from "../../Table";
 import ProgressBar from "../Common/ProgressBar";

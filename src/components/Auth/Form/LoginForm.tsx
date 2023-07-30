@@ -1,12 +1,12 @@
 "use client";
 
+import { Button, Form, FormRule, Input } from "antd";
+import { useRouter } from "next/navigation";
+import { Cookies } from "react-cookie";
 import { cookieOptions } from "@/constants/cookie";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import { ILoginArgs, ILoginResponse } from "@/interfaces/Auth";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { Button, Form, FormRule, Input } from "antd";
-import { useRouter } from "next/navigation";
-import { Cookies } from "react-cookie";
 
 const FormRules: Record<keyof ILoginArgs, FormRule[]> = {
   username: [{ required: true, message: "Please enter your username" }],

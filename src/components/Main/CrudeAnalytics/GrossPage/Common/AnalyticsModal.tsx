@@ -1,5 +1,5 @@
-import Title from "@/components/Typography/Title";
 import { Modal, TableColumnsType } from "antd";
+import Title from "@/components/Typography/Title";
 import SelectAsset from "@/components/Main/Input/SelectAsset";
 import Table from "@/components/Main/Table";
 

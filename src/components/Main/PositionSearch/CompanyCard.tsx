@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import Title from "@/components/Typography/Title";
 import { Card, Row, Col } from "antd";
 import { usePathname, useRouter } from "next/navigation";
+import Title from "@/components/Typography/Title";
 import { IPositionNetWorth } from "@/interfaces/Main";
 import { formatCompactNumber } from "@/lib/format";
 import CurrencyTag from "../General/CurrencyTag";

@@ -1,9 +1,9 @@
 "use client";
 
-import { LandingPage } from "@/constants/strings";
-import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { ReactNode, useLayoutEffect } from "react";
+import { LandingPage } from "@/constants/strings";
+import useAuth from "@/hooks/useAuth";
 
 interface IAuthTemplateProps {
   children: ReactNode;

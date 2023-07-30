@@ -1,10 +1,10 @@
 "use client";
 
-import { AccessTokenKey } from "@/constants/strings";
-import useUpdatePassword from "@/hooks/useUpdatePassword";
 import { Button, Form, FormRule, Input, Progress } from "antd";
 import { useRouter } from "next/navigation";
 import { useCookies } from "react-cookie";
+import useUpdatePassword from "@/hooks/useUpdatePassword";
+import { AccessTokenKey } from "@/constants/strings";
 
 const FormRules: Record<"new_password", FormRule[]> = {
   new_password: [{ required: true, message: "Please enter your new password" }],

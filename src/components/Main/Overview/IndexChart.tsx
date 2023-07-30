@@ -1,4 +1,3 @@
-import { IAssetNetWorth } from "@/interfaces/Main";
 import * as Plot from "@observablehq/plot";
 import { Spin, message } from "antd";
 import clsx from "clsx";
@@ -15,6 +14,7 @@ import {
   uniqBy,
 } from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { IAssetNetWorth } from "@/interfaces/Main";
 
 type TData = IAssetNetWorth["data"][0];
 
@@ -60,9 +60,9 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const [normalizeIndex, setNormalizeIndex] = useState(0);
   const [excludedDomain, setExcludedDomain] = useState<string[]>([]);
-  const chartScaleRef = useRef<Plot.Scale>();
+  const [chartScale, setChartScale] = useState<Plot.Scale>();
 
-  const [filledData, filledGroupedData, assets] = useMemo(() => {
+  const [filledData, filledGroupedData, domains] = useMemo(() => {
     setNormalizeIndex(0);
 
     const absoluteData = data?.map((item) => {
@@ -83,7 +83,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
 
     const _groupedData = groupBy(absoluteData, "z");
 
-    const _assets = Object.keys(_groupedData);
+    const _domains = Object.keys(_groupedData);
 
     excludedDomain.forEach((domain) => {
       delete _groupedData[domain];
@@ -96,7 +96,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
 
     const _filledData = Object.values(_filledGroupedData).flat();
 
-    return [_filledData, _filledGroupedData, _assets];
+    return [_filledData, _filledGroupedData, _domains];
   }, [excludedDomain, data]);
 
   useEffect(() => {
@@ -139,8 +139,8 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
         grid: true,
       },
       color: {
-        domain: chartScaleRef.current?.domain,
-        range: chartScaleRef.current?.range,
+        domain: chartScale?.domain,
+        range: chartScale?.range,
       },
       marks: [
         Plot.ruleY([1]),
@@ -159,57 +159,65 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
         );
       }
     };
-    if (!chartScaleRef.current) {
-      chartScaleRef.current = chart.scale("color");
+
+    if (!chartScale) {
+      setChartScale(chart.scale("color"));
     }
+
     chartRef.current?.append(chart);
 
     return () => chart.remove();
-  }, [normalizeIndex, filledData, filledGroupedData]);
+  }, [normalizeIndex, filledData, filledGroupedData, chartScale]);
+
   if (loading)
     return (
       <div className="flex h-full items-center justify-center">
         <Spin />
       </div>
     );
+
+  const handleDomainChange = (domain: string) => {
+    return () => {
+      const isExcluded = excludedDomain?.includes(domain);
+      if (isExcluded) {
+        setExcludedDomain((prev) => prev.filter((item) => item !== domain));
+      } else {
+        if (domains.length - 1 === excludedDomain.length) {
+          message.info("Please select at least one asset");
+          return;
+        }
+        setExcludedDomain((prev) => [...prev, domain]);
+      }
+    };
+  };
+
   return (
     <div className="flex h-full flex-col">
       <div ref={chartRef} />
       <div className="flex w-full max-w-lg items-center overflow-x-auto py-6">
         <div className="flex gap-x-4">
-          {assets.map((asset, index) => {
-            const isExcluded = excludedDomain?.includes(asset);
+          {domains.map((domain, index) => {
+            const isExcluded = excludedDomain?.includes(domain);
+            const backgroundColor = (chartScale?.range as TScaleRecord)?.[
+              index
+            ];
             return (
               <button
                 type="button"
-                key={asset}
+                key={domain}
                 className={clsx(
                   "flex items-center rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5",
                   isExcluded ? "opacity-50" : ""
                 )}
-                onClick={() => {
-                  if (isExcluded) {
-                    setExcludedDomain((prev) =>
-                      prev.filter((item) => item !== asset)
-                    );
-                  } else {
-                    if (assets.length - 1 === excludedDomain.length) {
-                      message.info("Please select at least one asset");
-                      return;
-                    }
-                    setExcludedDomain((prev) => [...prev, asset]);
-                  }
-                }}
+                onClick={handleDomainChange(domain)}
               >
                 <div
                   className="mr-2 h-4 w-4"
                   style={{
-                    backgroundColor: (
-                      chartScaleRef.current?.range as TScaleRecord
-                    )?.[index],
+                    backgroundColor,
                   }}
                 />
-                <div className="whitespace-nowrap">{asset}</div>
+                <div className="whitespace-nowrap">{domain}</div>
               </button>
             );
           })}

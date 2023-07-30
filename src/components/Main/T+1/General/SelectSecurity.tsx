@@ -1,6 +1,6 @@
+import { SelectProps } from "antd";
 import Select from "@/components/Input/Select";
 import useSecurities from "@/hooks/useSecurities";
-import { SelectProps } from "antd";
 
 export default function SelectSecurity({
   extraOptions,

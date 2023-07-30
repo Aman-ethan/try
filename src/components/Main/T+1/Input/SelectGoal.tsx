@@ -1,6 +1,6 @@
+import { SelectProps } from "antd";
 import Select from "@/components/Input/Select";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import { SelectProps } from "antd";
 
 interface IGoal {
   id: string;

@@ -1,9 +1,9 @@
+import { ReactNode } from "react";
 import DashboardLayout from "@/components/Main/Layout/DashboardLayout";
 import AppProvider from "@/context/AppProvider";
 
 import "antd/dist/reset.css";
 import "@/styles/global.css";
-import { ReactNode } from "react";
 
 export default function MainRootLayout({ children }: { children: ReactNode }) {
   return (

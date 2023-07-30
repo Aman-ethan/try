@@ -1,6 +1,6 @@
+import { TableProps } from "antd";
 import useStatement from "@/hooks/useStatement";
 import { useTableFilter } from "@/hooks/useTable";
-import { TableProps } from "antd";
 import ScrollableTable from "../../Table/ScrollableTable";
 
 export default function Statement<T>({

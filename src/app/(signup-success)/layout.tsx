@@ -1,7 +1,7 @@
-import Logo from "@/components/Icon/Logo";
-import AppProvider from "@/context/AppProvider";
 import { ReactNode } from "react";
 import Link from "next/link";
+import Logo from "@/components/Icon/Logo";
+import AppProvider from "@/context/AppProvider";
 
 import "antd/dist/reset.css";
 import "@/styles/global.css";

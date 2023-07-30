@@ -1,8 +1,8 @@
 "use client";
 
+import { Empty } from "antd";
 import AreaChart from "@/components/Main/General/AreaChart";
 import Title from "@/components/Typography/Title";
-import { Empty } from "antd";
 
 type TDataItem = {
   date: string;

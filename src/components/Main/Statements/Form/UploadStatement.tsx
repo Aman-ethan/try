@@ -1,12 +1,12 @@
+import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
+import { Button, Form, FormRule, Row, message } from "antd";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { lazy } from "react";
 import { StatementUploadSamples } from "@/constants/samples";
 import useFormState, { useFormType } from "@/hooks/useForm";
 import { useTransactionServerFormMutation } from "@/hooks/useMutation";
 import { TUploadStatement } from "@/interfaces/Main";
 import revalidate from "@/lib/revalidate";
-import { DownloadOutlined, InfoCircleFilled } from "@ant-design/icons";
-import { Button, Form, FormRule, Row, message } from "antd";
-import { useSelectedLayoutSegment } from "next/navigation";
-import { lazy } from "react";
 import FormType from "../../General/FormType";
 import SelectClient from "../../Input/SelectClient";
 import Upload from "../../Input/Upload";

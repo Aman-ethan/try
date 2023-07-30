@@ -1,7 +1,7 @@
-import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { Divider, Row, TableColumnsType } from "antd";
 import { get } from "lodash";
 import { ReactNode } from "react";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
 import Drawer from "./Drawer";
 
 interface IViewDrawerProps<T> {

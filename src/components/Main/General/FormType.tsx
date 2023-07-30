@@ -1,7 +1,7 @@
-import { useFormType } from "@/hooks/useForm";
-import { useToken } from "@/lib/antd";
 import { CheckboxOptionType, Radio } from "antd";
 import { CSSProperties } from "react";
+import { useFormType } from "@/hooks/useForm";
+import { useToken } from "@/lib/antd";
 
 const UploadTypeOptions: CheckboxOptionType[] = [
   {

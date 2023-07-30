@@ -1,9 +1,9 @@
 "use client";
 
+import { Card, Col, Row, Skeleton, Typography } from "antd";
 import useBankAccounts from "@/hooks/useBankAccounts";
 import useSearchParams from "@/hooks/useSearchParams";
 import { IBankAccount } from "@/interfaces/Main";
-import { Card, Col, Row, Skeleton, Typography } from "antd";
 import CurrencyTag from "../General/CurrencyTag";
 import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import DeleteModal from "./Common/DeleteModal";

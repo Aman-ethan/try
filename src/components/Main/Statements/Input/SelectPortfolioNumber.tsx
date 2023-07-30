@@ -1,7 +1,7 @@
+import { Select, SelectProps } from "antd";
 import useBankAccounts from "@/hooks/useBankAccounts";
 import useDependentSelect from "@/hooks/useDependentSelect";
 import { TBankAccountParams } from "@/interfaces/Main";
-import { Select, SelectProps } from "antd";
 
 export default function SelectPortfolioNumber({
   params,
