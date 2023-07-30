@@ -8,6 +8,8 @@ interface IParagraphProps {
 
 export default function Paragraph({ children, className }: IParagraphProps) {
   return (
-    <p className={clsx("text-sm text-neutral-9", className)}>{children}</p>
+    <p className={clsx("text-sm initial:text-neutral-9", className)}>
+      {children}
+    </p>
   );
 }
