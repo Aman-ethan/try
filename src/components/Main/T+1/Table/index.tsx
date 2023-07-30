@@ -13,7 +13,13 @@ interface ITradeTableProps<T> {
   edit?: boolean;
 }
 
-const searchParamKeys = ["asset_class__in", "security__in", "trade_action__in"];
+const searchParamKeys = [
+  "asset_class__in",
+  "security__in",
+  "trade_action__in",
+  "statement_date__gte",
+  "statement_date__lte",
+];
 
 export default function TradeTable<T>({
   columns,

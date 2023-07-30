@@ -14,8 +14,7 @@ export default function useSelectClientWithParams(
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
   const searchParamKey = props?.searchParamKey || "client";
   const clientId = getSearchParams(searchParamKey);
-  const custodianId =
-    getSearchParams("custodian") || getSearchParams("custodian_id");
+  const custodianId = getSearchParams("custodian");
 
   const { isLoading, options } = useSelectClient({ custodianId });
 
