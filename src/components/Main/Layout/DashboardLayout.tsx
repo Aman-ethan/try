@@ -74,7 +74,11 @@ function UserProfile({
     },
   ];
   return (
-    <Dropdown menu={{ items: ProfileItems }} trigger={["click"]}>
+    <Dropdown
+      menu={{ items: ProfileItems }}
+      placement="bottomRight"
+      trigger={["click"]}
+    >
       <div className="flex items-center cursor-pointer gap-x-2">
         <Avatar />
         <div className="text-sm font-medium capitalize text-neutral-13 min-w-[4rem]">
