@@ -19,6 +19,7 @@ export default function GainerLoserFilter() {
         <SelectClient
           placeholder="All Client"
           className={primarySelectClasses}
+          searchParamKey="client_id"
         />
         <SelectCustodian
           placeholder="All Custodian"

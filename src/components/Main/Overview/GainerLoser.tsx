@@ -1,6 +1,8 @@
 "use client";
 
 import { TableColumnsType } from "antd";
+import dayjs from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import { IUseTableParams, SearchParams } from "@/interfaces/Main";
@@ -8,6 +10,8 @@ import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatCompactNumber } from "@/lib/format";
 import useTable from "@/hooks/useTable";
 import Table from "../Table";
+
+dayjs.extend(isBetween);
 
 interface IGainer {
   count: number;
@@ -45,6 +49,11 @@ interface IGainerLoser {
   client_name: string;
   security_description: string;
   profit_loss: number;
+}
+
+interface IDateRange {
+  start_date: string;
+  end_date: string;
 }
 
 export interface ICombinedGainerLoser {
@@ -89,9 +98,7 @@ const Columns: TableColumnsType = [
 ];
 
 const _searchParamKeys = [
-  "start_date",
-  "end_date",
-  "client",
+  "client_id",
   "custodian",
   "reporting_currency",
   "page_gainer",
@@ -100,17 +107,31 @@ const _searchParamKeys = [
 
 function useGainerLoser({ urlKey }: { urlKey: string }) {
   const { get: getSearchParams } = useSearchParams();
-  // const duration = getSearchParams("gain_loss_duration");
+  const { data: dateRange } = useTransactionServerQuery<IDateRange>(
+    "/position/history/date/"
+  );
+  const start_date = getSearchParams("start_date");
+
   const { data, isLoading } = useTransactionServerQuery<IGainer>(
-    `${urlKey}${buildURLSearchParams(
-      _searchParamKeys.reduce(
-        (acc, key) => ({
-          ...acc,
-          [key]: getSearchParams(key as SearchParams),
-        }),
-        {}
-      )
-    )}`
+    dateRange
+      ? `${urlKey}${buildURLSearchParams(
+          _searchParamKeys.reduce(
+            (acc, key) => ({
+              ...acc,
+              [key]: getSearchParams(key as SearchParams),
+            }),
+            {
+              start_date: dayjs(start_date).isBetween(
+                dateRange.start_date,
+                dateRange.end_date
+              )
+                ? start_date
+                : dateRange.start_date,
+              end_date: dateRange.end_date,
+            }
+          )
+        )}`
+      : null
   );
 
   return {
@@ -119,7 +140,7 @@ function useGainerLoser({ urlKey }: { urlKey: string }) {
   };
 }
 
-const scroll = { y: "35.75rem" };
+const scroll = { y: "30rem" };
 
 export default function GainerLoser({
   urlKey,
@@ -134,8 +155,8 @@ export default function GainerLoser({
       dataSource={data?.results}
       scroll={scroll}
       onChange={onChange}
-      rowClassName="h-[7rem]"
-      className="h-[40.75rem]"
+      rowClassName="h-[5rem]"
+      className="h-[35rem]"
       pagination={{ ...pagination, total: data?.count }}
     />
   );
