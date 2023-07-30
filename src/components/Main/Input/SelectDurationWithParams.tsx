@@ -46,7 +46,7 @@ function useDurationWithParams() {
   const layoutSegment = useSelectedLayoutSegment();
   const [duration, setDuration] = useSessionStorage({
     key: "duration",
-    defaultValue: "q" as ManipulateType,
+    defaultValue: "Q" as ManipulateType,
   });
 
   const [startDateKey, endDateKey] = getDateKeys(layoutSegment);
