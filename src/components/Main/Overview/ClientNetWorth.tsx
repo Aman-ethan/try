@@ -15,9 +15,9 @@ interface ISettingProps {
 }
 
 function useClientNetWorth() {
-  const { isLoading, data } = useTransactionServerQuery<IClient[]>(
-    `/position/history/networth_overview`
-  );
+  const { isLoading, data } = useTransactionServerQuery<{
+    overview: IClient[];
+  }>(`/position/history/networth_overview/`);
 
   return {
     isLoading,
@@ -34,42 +34,42 @@ const columns: TableColumnsType<IClient> = [
   },
   {
     title: "Daily P/L",
-    dataIndex: "daily_pl",
+    dataIndex: "daily_change",
     key: "daily-pl",
     align: "right",
     render: formatCompactNumber,
   },
   {
     title: "Total P/L",
-    dataIndex: "total_pl",
+    dataIndex: "total_change",
     key: "total-pl",
     align: "right",
     render: formatCompactNumber,
   },
   {
     title: "Net Worth",
-    dataIndex: "net_worth",
+    dataIndex: "networth",
     key: "net-worth",
     align: "right",
     render: formatCompactNumber,
   },
   {
     title: "MTD",
-    dataIndex: "mtd",
+    dataIndex: "month_change",
     key: "mtd",
     align: "right",
     render: formatCompactNumber,
   },
   {
     title: "QTD",
-    dataIndex: "qtd",
+    dataIndex: "quarter_change",
     key: "qtd",
     align: "right",
     render: formatCompactNumber,
   },
   {
     title: "YTD",
-    dataIndex: "ytd",
+    dataIndex: "year_change",
     key: "ytd",
     align: "right",
     render: formatCompactNumber,
@@ -87,7 +87,6 @@ function Setting({ selectedColumns, setSelectedColumns }: ISettingProps) {
   });
   return (
     <Dropdown
-      disabled
       trigger={["click"]}
       menu={{
         items,
@@ -154,15 +153,15 @@ export default function ClientNetWorth() {
         <Title level={4}>Net Worth</Title>
         <Title level={3}>
           {formatCompactNumber(
-            data?.reduce((acc, cur) => acc + cur.net_worth, 0)
+            data?.overview.reduce((acc, cur) => acc + cur.net_worth, 0)
           )}
         </Title>
       </div>
       <ScrollableTable
         loading={isLoading}
         columns={Columns}
-        dataSource={data}
-        rowKey="id"
+        dataSource={data?.overview}
+        rowKey="client_id"
         className="table-reset h-[23.5rem]"
         scroll={{ y: "21rem" }}
       />
