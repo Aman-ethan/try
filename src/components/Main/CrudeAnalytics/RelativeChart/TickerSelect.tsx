@@ -1,50 +1,59 @@
 "use client";
 
 import { useState } from "react";
-import { Tag, message, Select } from "antd";
+import { Select, Spin } from "antd";
+import { debounce } from "lodash";
+import { useAnalyticsServerGetQuery } from "@/hooks/useQuery";
 
-const MAX_SELECTIONS = 5;
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
 
-export default function TickerSelect() {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+const URLS = {
+  get: `/security/search/`,
+};
 
-  const handleOptionChange = (value: string) => {
-    if (selectedOptions.length >= MAX_SELECTIONS) {
-      message.error("Limit reached, cannot add more than 5 tickers");
-      return; // Limit reached, do not add more options
-    }
-    setSelectedOptions(Array.from(new Set([...selectedOptions, value])));
-  };
+type TSecurities = string[];
 
-  const handleTagClose = (removedTag: string) => {
-    const updatedOptions = selectedOptions.filter((tag) => tag !== removedTag);
-    setSelectedOptions(updatedOptions);
-  };
+const useTickerSelect = (searchTerm: string) => {
+  const { data, isLoading } = useAnalyticsServerGetQuery<TSecurities>(
+    `${URLS.get}${buildURLSearchParams({ query: searchTerm })}`
+  );
+
+  const selectOptions = data?.map?.((item: string) => ({
+    label: item,
+    value: item,
+  }));
+
+  return { selectOptions, isLoading };
+};
+
+interface ITickerSelect {
+  handleOptionChange: (_value: string) => void;
+}
+
+export default function TickerSelect({ handleOptionChange }: ITickerSelect) {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const { selectOptions, isLoading } = useTickerSelect(searchTerm);
+
+  const handleSearchChange = debounce((value: string) => {
+    setSearchTerm(value);
+  }, 1000);
 
   return (
     <div className="flex items-center space-x-4">
       <p className="text-lg font-medium">Ticker</p>
       <Select
+        labelInValue
         placeholder="Select Ticker"
-        onSelect={handleOptionChange}
-        // options will change dynamically with api data
-        options={[
-          { value: "BABA UN", label: "BABA UN" },
-          { value: "BABA US", label: "BABA US" },
-          { value: "DXJ UP", label: "DXJ UP" },
-          { value: "DXJ US", label: "DXJ US" },
-          { value: "GLIN UP", label: "GLIN UP" },
-          { value: "GLIN US", label: "GLIN US" },
-        ]}
+        filterOption={false}
+        loading={isLoading}
+        onSelect={(value) => handleOptionChange(value.value)}
+        onSearch={handleSearchChange}
+        notFoundContent={isLoading ? <Spin size="small" /> : null}
+        options={selectOptions}
         className="w-[300px]"
+        showSearch
+        allowClear
       />
-      <div>
-        {selectedOptions.map((tag) => (
-          <Tag key={tag} closable onClose={() => handleTagClose(tag)}>
-            {tag}
-          </Tag>
-        ))}
-      </div>
     </div>
   );
 }

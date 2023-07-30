@@ -5,7 +5,9 @@ export interface IPieData {
   type: string;
   value: number;
 }
-
+export interface IPercentageData extends IPieData {
+  percentage: number;
+}
 /**
  * Function to render text with appropriate scaling based on the container width.
  * @param {number} containerWidth - The width of the container where the text will be placed.
@@ -13,7 +15,7 @@ export interface IPieData {
  * @param {React.CSSProperties} style - The style properties of the text.
  * @return {string} - A string representing a div containing the text with adjusted style.
  */
-function renderTextInsideContainer(
+export function renderTextInsideContainer(
   containerWidth: number,
   text: string,
   textStyle: React.CSSProperties
@@ -49,25 +51,30 @@ function renderTextInsideContainer(
   };">${text}</div>`;
 }
 
-export function mapDataToPieChartData(data: any[]): IPieData[] {
-  return data.map((item: any) => ({
-    type: item.type,
-    value: Math.abs(parseInt(item.value || `0`, 10)),
-  }));
+export function mapDataToPieChartData(
+  data: IPercentageData[]
+): IPercentageData[] {
+  return data
+    .map((item: any) => ({
+      type: item.type,
+      value: Math.abs(parseInt(item.value || `0`, 10)),
+      percentage: Math.abs(parseFloat(item.percentage || `0`)),
+    }))
+    .sort((a, b) => b.percentage - a.percentage);
 }
 
 const defaultPieChartConfig: PieConfig = {
   legend: false,
   appendPadding: 10,
   data: [],
-  angleField: "value",
+  angleField: "percentage",
   colorField: "type",
   radius: 1,
   innerRadius: 0.6,
   label: {
     type: "inner",
     offset: "-50%",
-    content: "{value}%",
+    content: "{percentage}",
     style: {
       textAlign: "center",
       fontSize: 14,
@@ -93,13 +100,6 @@ const defaultPieChartConfig: PieConfig = {
         marginTop: "10px",
       },
       content: "",
-      customHtml: (container, _view, datum, pieDataPoints) => {
-        const { width } = container.getBoundingClientRect();
-        const text = datum
-          ? `${datum.value}M`
-          : `${pieDataPoints?.reduce((r, d) => r + d.value, 0)}M`;
-        return renderTextInsideContainer(width, text, { fontSize: 14 });
-      },
     },
   },
 };

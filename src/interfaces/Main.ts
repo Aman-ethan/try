@@ -267,6 +267,8 @@ export type SearchParams =
   | "relationship_number"
   | "search"
   | "asset_duration"
+  | "security_id"
+  | "asset_class"
   | "gain_loss_duration";
 
 export interface IUseTableParams {

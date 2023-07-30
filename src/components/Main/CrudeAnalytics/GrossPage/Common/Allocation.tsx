@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { Empty } from "antd";
 import { ProList } from "@ant-design/pro-components";
 import * as d3 from "d3";
-import { Empty } from "antd";
-import { IPieData, mapDataToPieChartData } from "@/constants/pieChartConfig";
+import {
+  IPercentageData,
+  IPieData,
+  mapDataToPieChartData,
+} from "@/constants/pieChartConfig";
 import AnalyticsPieChart from "../../Charts/AnalyticsPieChart";
 import AnalyticsModal from "./AnalyticsModal";
 
@@ -19,6 +23,11 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
       return accumulator + currentObject.value;
     }, 0) || 0;
 
+  const percentageData: IPercentageData[] = data.map((type) => ({
+    ...type,
+    percentage: parseFloat(((type.value / totalValue) * 100).toFixed(2)),
+  }));
+
   const z = d3
     .scaleOrdinal(d3.schemeCategory10)
     .domain(data?.map((d: any) => d.type));
@@ -28,24 +37,30 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
     colorMap[d] = z(d);
   });
 
-  const proListData = mapDataToPieChartData(data);
+  const proListData = mapDataToPieChartData(percentageData);
   const [isModalVisible, setModalVisible] = useState(false);
-  const handleSegmentClick = () => setModalVisible(true);
+  const [selectedType, setSelectedType] = useState("");
+  const handleSegmentClick = (type: string) => {
+    setSelectedType(type);
+    setModalVisible(true);
+  };
   const handleModalClose = () => setModalVisible(false);
-
+  const pieChartCategory = title.replace("Gross Allocation by ", "");
   return (
     <div className="flex-1 space-y-4 text-center">
       <h2 className="text-xl font-medium capitalize tab:text-2xl">
-        {title.replace("Gross Allocation by ", "")}
+        {pieChartCategory}
       </h2>
       <div className="tab:flex tab:items-center lap:flex-col">
         <AnalyticsModal
-          title={title}
           isModalOpen={isModalVisible}
           handleModalClose={handleModalClose}
+          data={data}
+          selectedType={selectedType}
+          category={pieChartCategory}
         />
         <AnalyticsPieChart
-          data={data}
+          data={percentageData}
           totalValue={totalValue}
           handleSegmentClick={handleSegmentClick}
           colorMap={colorMap}
@@ -53,7 +68,6 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
         {proListData.length !== 0 ? (
           <ProList
             // data source will be replaced with dynamic data from pie chart
-
             rowClassName="p-2"
             dataSource={proListData}
             metas={{
@@ -73,10 +87,10 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
                 ),
               },
               extra: {
-                render: (_: any, record: any) => [<p>{record.value}%</p>],
+                render: (_: any, record: any) => [<p>{record.percentage}%</p>],
               },
             }}
-            className="tab:flex-1 lap:w-full"
+            className="tab:flex-1 lap:w-full max-h-52 overflow-y-scroll"
           />
         ) : (
           <Empty />

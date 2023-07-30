@@ -1,85 +1,64 @@
 "use client";
 
-import { Radio, Skeleton } from "antd";
-import { useCallback, useEffect, useState } from "react";
-import useSearchParams from "@/hooks/useSearchParams";
-import { useAnalyticsServerMutation } from "@/hooks/useMutation";
-import AssetSelect from "./AssetSelect";
-import TickerSelect from "./TickerSelect";
-import IndexChart from "../../Overview/IndexChart";
+import { useLayoutEffect, useState } from "react";
+import { SegmentedValue } from "antd/es/segmented";
+import { IAssetNetWorth } from "@/interfaces/Main";
+import useRelativeChart from "@/hooks/useRelativeChart";
+import Segmented from "../../General/Segmented";
+import PerformanceChart from "./PerformanceRelative";
 
 const options = [
   { label: "By Asset Class", value: "asset" },
   { label: "By Ticker", value: "ticker" },
 ];
 
-const URLS = {
-  post: `/relative-performance/networth`,
-};
-type ChartData = {
-  title: string;
-  x_label: string;
-  y_label: string;
-  data: {
-    x: string;
-    y: number;
-    z: string;
-  }[];
-};
-
-const useRelativePerformance = () => {
-  const { get: getSearchParams } = useSearchParams();
-  const client_id = getSearchParams("client");
-  const { trigger, isMutating, data } = useAnalyticsServerMutation(URLS.post);
-  return {
-    data: data as ChartData,
-    isLoading: isMutating,
-    client_id,
-    trigger,
-  };
-};
+const tickerUrlKey = "/relative-performance/stocks/";
+const networthUrlKey = "/relative-performance/networth/";
 
 export default function RelativeChart() {
-  const [value, setValue] = useState("asset");
-  const onRadioChange = (e: any) => {
-    setValue(e.target.value);
+  const [value, setValue] = useState<SegmentedValue>("ticker");
+  const [ticker, setTicker] = useState<string[]>([]);
+  const onValueChange = (e: SegmentedValue) => {
+    setValue(e);
   };
+  const urlKey = value === "ticker" ? tickerUrlKey : networthUrlKey;
+  const { data } = useRelativeChart<IAssetNetWorth>({
+    urlKey,
+    ticker,
+  });
 
-  const { data, isLoading, client_id, trigger } = useRelativePerformance();
-
-  const onChange = useCallback(() => {
-    trigger({
-      client_id,
-      start_date: "2023-07-27",
-      end_date: "2023-07-27",
-    });
-  }, [client_id, trigger]);
-
-  useEffect(() => {
-    onChange();
-  }, [onChange]);
-
-  if (isLoading) {
-    return <Skeleton />;
-  }
+  useLayoutEffect(() => {
+    if (value === "ticker") {
+      setTicker([]);
+    } else {
+      setTicker([]);
+    }
+  }, [value]);
 
   return (
     <div className="space-y-6 rounded-lg bg-neutral-1 p-6">
       <div className="flex items-center justify-between">
         <div className="space-x-4">
-          <Radio.Group
-            size="large"
+          <Segmented
             options={options}
-            onChange={onRadioChange}
             value={value}
-            optionType="button"
-            buttonStyle="solid"
+            onChange={onValueChange}
             defaultValue={options[0].value}
+            size="large"
+            className="w-[300px]"
           />
         </div>
       </div>
-      {value === "ticker" ? <TickerSelect /> : <AssetSelect />}
-      <IndexChart data={data?.data} />
+      <PerformanceChart
+        data={
+          value === "ticker"
+            ? data?.data
+            : data?.data?.filter((item) => ticker.includes(item.z))
+        }
+        setTicker={setTicker}
+        value={value}
+        ticker={ticker}
+      />
     </div>
   );
 }
