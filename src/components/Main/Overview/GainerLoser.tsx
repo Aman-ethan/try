@@ -98,7 +98,7 @@ const Columns: TableColumnsType = [
 ];
 
 const _searchParamKeys = [
-  "client_id",
+  "client",
   "custodian_id",
   "reporting_currency",
   "page_gainer",
