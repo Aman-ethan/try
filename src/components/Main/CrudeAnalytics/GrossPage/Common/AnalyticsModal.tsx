@@ -31,6 +31,7 @@ const columns: TableColumnsType = [
     title: "Quantity",
     dataIndex: "quantity",
     key: "quantity",
+    align: "right",
   },
   {
     title: "Currency",
@@ -41,21 +42,25 @@ const columns: TableColumnsType = [
     title: "Average Price",
     dataIndex: "averagePrice",
     key: "averagePrice",
+    align: "right",
   },
   {
     title: "MTM Price",
     dataIndex: "mtmPrice",
     key: "mtmPrice",
+    align: "right",
   },
   {
     title: "Market Value",
     dataIndex: "marketValue",
     key: "marketValue",
+    align: "right",
   },
   {
     title: "Unrealized P&L",
     dataIndex: "unrealizedPL",
     key: "unrealizedPL",
+    align: "right",
   },
 ];
 

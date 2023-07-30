@@ -106,7 +106,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
   const openKey = layoutSegments.length > 1 ? [layoutSegments[0]] : undefined;
   const selectedKeys = pathname ? [pathname] : undefined;
   return (
-    <Layout suppressHydrationWarning hasSider className="h-full">
+    <Layout suppressHydrationWarning hasSider>
       <Layout.Sider
         trigger={null}
         collapsed={collapsed}

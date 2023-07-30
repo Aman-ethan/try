@@ -1,10 +1,8 @@
 "use client";
 
 import { Skeleton } from "antd";
-import { useEffect } from "react";
 import useSearchParams from "@/hooks/useSearchParams";
 import { useAnalyticsServerQuery } from "@/hooks/useQuery";
-import revalidate from "@/lib/revalidate";
 import FinanceChart from "./Common/FinanceChart";
 
 const URLS = {
@@ -55,36 +53,18 @@ const useFinanceChart = () => {
     netWorthData: netWorthData as TData,
     isLoading,
     netWorthLoading,
-    client_id,
-    custodian_id,
-    start_date,
-    end_date,
   };
 };
 
 export default function FinanceResult() {
-  const {
-    data,
-    netWorthData,
-    isLoading,
-    netWorthLoading,
-    client_id,
-    custodian_id,
-    start_date,
-    end_date,
-  } = useFinanceChart();
-
-  useEffect(() => {
-    revalidate(URLS.ProfitAndLoss, false);
-    revalidate(URLS.netWorth, false);
-  }, [client_id, custodian_id, start_date, end_date]);
+  const { data, netWorthData, isLoading, netWorthLoading } = useFinanceChart();
 
   if (isLoading || netWorthLoading) {
     return <Skeleton />;
   }
 
   return (
-    <div className="space-y-6 h-[25.5rem]">
+    <div className="space-y-6 rounded-lg bg-neutral-1 p-6">
       <div className="flex flex-col gap-10 lap:flex-row ">
         <FinanceChart title={data?.title} data={data?.data} />
         <FinanceChart title={netWorthData?.title} data={netWorthData?.data} />
