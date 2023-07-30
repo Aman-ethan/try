@@ -22,6 +22,10 @@
   color: #686464 !important;
 }
 
+th {
+  font-weight: 500 !important;
+}
+
 .table-reset th::before {
   content: unset !important;
 }
