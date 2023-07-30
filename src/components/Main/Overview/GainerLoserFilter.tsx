@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FilterOutlined } from "@ant-design/icons";
 import clsx from "clsx";
 import SelectClient from "@/components/Main/Input/SelectClientWithParams";
-import SelectCustodian from "@/components/Main/Input/SelectCustodianWithParams";
+// import SelectCustodian from "@/components/Main/Input/SelectCustodianWithParams";
 import { Button } from "@/lib/antd";
 
 export default function GainerLoserFilter() {
@@ -19,13 +19,13 @@ export default function GainerLoserFilter() {
         <SelectClient
           placeholder="All Client"
           className={primarySelectClasses}
-          searchParamKey="client_id"
+          // searchParamKey="client_id"
         />
-        <SelectCustodian
+        {/* <SelectCustodian
           placeholder="All Custodian"
           className={primarySelectClasses}
-          searchParamKey="custodian_id"
-        />
+          // searchParamKey="custodian_id"
+        /> */}
       </div>
       <Button
         size="large"

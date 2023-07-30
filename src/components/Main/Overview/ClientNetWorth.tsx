@@ -15,11 +15,13 @@ interface ISettingProps {
 }
 
 function useClientNetWorth() {
-  const { isLoading } = useTransactionServerQuery<IClient[]>(`/client/`);
+  const { isLoading, data } = useTransactionServerQuery<IClient[]>(
+    `/position/history/networth_overview`
+  );
 
   return {
     isLoading,
-    data: [] as IClient[],
+    data,
   };
 }
 

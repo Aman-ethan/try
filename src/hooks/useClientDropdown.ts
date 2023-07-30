@@ -23,11 +23,14 @@ export default function useClientDropdown<T>({
   const selectedClient =
     options?.find(({ value }) => value === clientId) || defaultOption;
 
-  const { data, isLoading } = useAnalyticsServerQuery<T>(urlKey, {
-    client_id: selectedClient?.value,
-    start_date: getSearchParams("start_date"),
-    end_date: getSearchParams("end_date"),
-  });
+  const { data, isLoading } = useAnalyticsServerQuery<T>(
+    selectedClient ? urlKey : null,
+    {
+      client_id: selectedClient?.value,
+      start_date: getSearchParams("start_date"),
+      end_date: getSearchParams("end_date"),
+    }
+  );
 
   const loading = isClientLoading || isLoading;
 

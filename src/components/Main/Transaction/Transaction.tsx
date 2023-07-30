@@ -175,9 +175,9 @@ export default function Transaction() {
         </div>
         <Input.Search
           onChange={(e) => {
-            const value = e.target.value as string;
-            if (!value) updateSearchParams({ query: undefined });
-            updateSearchParams({ query: value });
+            const search = e.target.value as string;
+            if (!search) updateSearchParams({ search: undefined });
+            updateSearchParams({ search });
           }}
           size="large"
           placeholder="Search Security, Description"
