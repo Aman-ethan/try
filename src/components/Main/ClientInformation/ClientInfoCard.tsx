@@ -19,7 +19,7 @@ const searchParamKey = "client_id";
 export default function ClientInfoCard() {
   const [editClicked, setEditClicked] = useState<boolean>(false);
 
-  const { selectedClient } = useSelectClientWithParams({
+  const { options, selectedClient } = useSelectClientWithParams({
     searchParamKey,
   });
 
@@ -30,7 +30,7 @@ export default function ClientInfoCard() {
   const { name, last_name, city, country, first_name, reporting_currency } =
     clientData || {};
 
-  if (!(clientData || isLoading)) return <ClientEmpty />;
+  if (options?.length === 0) return <ClientEmpty />;
 
   return (
     <div className="space-y-8">
