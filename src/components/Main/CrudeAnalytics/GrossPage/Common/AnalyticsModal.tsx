@@ -6,6 +6,7 @@ import ScrollableTable from "@/components/Main/Table/ScrollableTable";
 import { IPieData, IPositionsResponse } from "@/interfaces/Main";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import useSearchParams from "@/hooks/useSearchParams";
 
 interface IAnalyticsModalProps {
   isModalOpen: boolean;
@@ -59,10 +60,16 @@ const columns: TableColumnsType = [
 ];
 
 function useAnalytics(category: string, value: string) {
+  const { get: getSearchParams } = useSearchParams();
+  const client_id = getSearchParams("client") || undefined;
+  const custodian_id = getSearchParams("custodian") || undefined;
+
   const params: Record<string, string | undefined> = {
     asset_class: category === "asset class" ? value : undefined,
-    country_name: category === "region" ? value : undefined,
+    security__country_name: category === "region" ? value : undefined,
     security__sub_industry: category === "industry" ? value : undefined,
+    client: client_id,
+    custodian: custodian_id,
   };
 
   const { data: analyticsData, isLoading } =
