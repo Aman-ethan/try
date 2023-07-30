@@ -63,7 +63,7 @@ export default function TradeTable<T>({
       <ViewDrawer<T>
         open={!!selectedRowKey}
         onClose={() => setSelectedRowKey(undefined)}
-        title="Trade View"
+        title={edit ? "Trade View" : "Active Position View"}
         columns={columns}
         urlKey={`${urlKey + selectedRowKey}/`}
         footer={

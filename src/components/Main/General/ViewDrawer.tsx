@@ -39,7 +39,7 @@ export default function ViewDrawer<T>({
               dataIndex,
             } = { dataIndex: "", ...column };
             const value = get(data, dataIndex as string);
-            return dataIndex !== "actions" ? (
+            return key !== "actions" ? (
               <Row key={key} className="gap-x-2">
                 <span className="w-44 font-medium">{label as ReactNode}:</span>
                 {render ? (render(value, data, index) as ReactNode) : value}
