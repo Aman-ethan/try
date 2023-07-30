@@ -1,11 +1,19 @@
+import { SearchParams } from "@/interfaces/Main";
 import useDependentSelect from "./useDependentSelect";
 import useSearchParams from "./useSearchParams";
 import useSelectCustodian from "./useSelectCustodian";
 
-export default function useSelectCustodianWithParams() {
+interface IUseSelectClientWithParams {
+  searchParamKey?: SearchParams;
+}
+
+export default function useSelectCustodianWithParams(
+  props?: IUseSelectClientWithParams
+) {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
-  const clientId = getSearchParams("client") || getSearchParams("client_id");
-  const custodianId = getSearchParams("custodian");
+  const searchParamKey = props?.searchParamKey || "custodian";
+  const clientId = getSearchParams("client");
+  const custodianId = getSearchParams(searchParamKey);
 
   const { options, isLoading } = useSelectCustodian({ clientId });
 
@@ -17,7 +25,7 @@ export default function useSelectCustodianWithParams() {
       isLoading,
       reset: () => {
         updateSearchParams({
-          custodian: null,
+          [searchParamKey]: null,
         });
       },
     },
@@ -25,7 +33,7 @@ export default function useSelectCustodianWithParams() {
 
   function onChange(value: string) {
     updateSearchParams({
-      custodian: value,
+      [searchParamKey]: value,
     });
   }
 
