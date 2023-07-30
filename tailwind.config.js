@@ -20,6 +20,10 @@ module.exports = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      boxShadow: {
+        DEFAULT:
+          "0px 2px 16px 0px rgba(71, 86, 107, 0.05), 0px 2px 5px 0px rgba(71, 86, 107, 0.05);",
+      },
       colors: {
         primary: Object.entries(globalToken)
           .filter(([key]) => key.startsWith(`${primaryColorName}-`))
