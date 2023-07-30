@@ -18,7 +18,7 @@ export default function ListItem() {
   } = usePositions();
 
   const { data, isLoading } = useTransactionServerQuery<IPositionsResponse>(
-    `/position/active/${buildURLSearchParams({
+    `/position/history/${buildURLSearchParams({
       client,
       custodian,
       relationship_number: relationshipNumber,

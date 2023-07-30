@@ -6,6 +6,9 @@ import { formatCompactNumber } from "@/lib/format";
 import Table from "../../Table";
 import ProgressBar from "../Common/ProgressBar";
 
+interface RowData {
+  "data-row-key": string | number;
+}
 interface IChartTableProps {
   total: number;
   percentage: number;
@@ -61,13 +64,14 @@ export default function ChartTable({
   const renderRow = ({
     children,
     ...props
-  }: React.HTMLAttributes<HTMLElement>) => {
+  }: React.HTMLAttributes<HTMLTableRowElement> & RowData) => {
     return (
       <tr {...props} className="relative last:border-t-2">
         {children}
         <ProgressBar
+          percent={Math.round(Number(props["data-row-key"]))}
           className={clsx(
-            "absolute bottom-1 left-0 right-0 top-1 z-0 w-[65%]",
+            "absolute bottom-1 left-0 right-0 top-1 z-0",
             progressType === "success"
               ? "bg-progress-success"
               : "bg-progress-failure"
@@ -76,12 +80,13 @@ export default function ChartTable({
       </tr>
     );
   };
+
   return (
     <>
       <Table
         loading={loading}
         dataSource={data}
-        rowKey="id"
+        rowKey="percentage"
         columns={Columns}
         pagination={false}
         className="mb-2"

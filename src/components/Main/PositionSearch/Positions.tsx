@@ -8,7 +8,7 @@ import ClientPositions from "./ClientPositions";
 export default function Positions() {
   const { data, isLoading } =
     useTransactionServerQuery<IPositionSearchResponse>(
-      "/position/active/networth_cards"
+      "/position/statement/networth_cards"
     );
 
   return (
