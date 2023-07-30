@@ -153,7 +153,7 @@ export default function ClientNetWorth() {
         <Title level={4}>Net Worth</Title>
         <Title level={3}>
           {formatCompactNumber(
-            data?.overview.reduce((acc, cur) => acc + cur.net_worth, 0)
+            data?.overview.reduce((acc, cur) => acc + cur.networth, 0)
           )}
         </Title>
       </div>
