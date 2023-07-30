@@ -12,7 +12,7 @@ export default function useSelectCustodianWithParams(
 ) {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
   const searchParamKey = props?.searchParamKey || "custodian";
-  const clientId = getSearchParams("client");
+  const clientId = getSearchParams("client") || getSearchParams("client_id");
   const custodianId = getSearchParams(searchParamKey);
 
   const { options, isLoading } = useSelectCustodian({ clientId });

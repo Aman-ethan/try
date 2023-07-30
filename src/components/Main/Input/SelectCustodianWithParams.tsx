@@ -3,11 +3,12 @@ import { SearchParams } from "@/interfaces/Main";
 import { SelectProps } from "antd";
 import Select from "../../Input/Select";
 
-export default function SelectCustodianWithParams(
-  props: SelectProps & { searchParamKey?: SearchParams }
-) {
+export default function SelectCustodianWithParams({
+  searchParamKey,
+  ...props
+}: SelectProps & { searchParamKey?: SearchParams }) {
   const { isLoading, options, onChange, custodianId } =
-    useSelectCustodianWithParams();
+    useSelectCustodianWithParams({ searchParamKey });
   return (
     <Select
       loading={isLoading}
