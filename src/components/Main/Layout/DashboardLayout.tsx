@@ -21,6 +21,7 @@ import {
 import Link from "next/link";
 import { usePathname, useSelectedLayoutSegments } from "next/navigation";
 import { ReactNode, useLayoutEffect, useState } from "react";
+import clsx from "clsx";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useAuth from "@/hooks/useAuth";
 import ROUTE from "@/constants/route";
@@ -125,7 +126,12 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         />
       </Layout.Sider>
       <Layout className={collapsed ? "ml-20" : "ml-60"}>
-        <Layout.Header className="sticky top-0 z-10 flex bg-neutral-1 pl-6 pr-12">
+        <Layout.Header
+          className={clsx(
+            "fixed inset-0 z-10 flex bg-neutral-1 pl-6 pr-12",
+            collapsed ? "ml-20" : "ml-60"
+          )}
+        >
           <Row className="flex-1 gap-x-6" align="middle">
             <Button
               onClick={() => setCollapsed((prev) => !prev)}
@@ -148,7 +154,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
             <UserProfile name={name} username={username} />
           </Row>
         </Layout.Header>
-        <Layout.Content>
+        <Layout.Content className="mt-16">
           <div className="min-h-full p-4 tab:p-6 lap:py-6 lap:px-12 bg-neutral-3">
             {children}
           </div>
