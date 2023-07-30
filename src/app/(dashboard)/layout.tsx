@@ -16,7 +16,7 @@ const roboto = Roboto({
 
 export default function MainRootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={roboto.className}>
+    <html lang="en" className={roboto.variable}>
       <body id="layout" className="opacity-0 transition-opacity">
         <AppProvider>
           <DashboardLayout>{children}</DashboardLayout>
