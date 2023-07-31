@@ -10,7 +10,7 @@ import { useCookies } from "react-cookie";
 import { cookieOptions } from "@/constants/cookie";
 import { AccessTokenKey, RefreshTokenKey } from "@/constants/strings";
 import { useAuthServerMutation } from "@/hooks/useMutation";
-import { getExpiryFromToken, getTimeoutFromToken } from "@/lib/token";
+import { getExpiryFromToken, getTimeoutFromToken } from "@/lib/jwt";
 
 interface ITokenRefreshArgs {
   refresh: string;

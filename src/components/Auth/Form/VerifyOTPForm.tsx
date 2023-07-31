@@ -8,7 +8,7 @@ import { cookieOptions } from "@/constants/cookie";
 import { AccessTokenKey, RefreshTokenKey } from "@/constants/strings";
 import { useAuthServerMutation } from "@/hooks/useMutation";
 import useSearchParams from "@/hooks/useSearchParams";
-import { getExpiryFromToken } from "@/lib/token";
+import { getExpiryFromToken } from "@/lib/jwt";
 import Paragraph from "../../Typography/Paragraph";
 import ResendOTP from "../General/ResendOTP";
 

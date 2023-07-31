@@ -9,6 +9,8 @@ import { IUseTableParams, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatCompactNumber } from "@/lib/format";
 import useTable from "@/hooks/useTable";
+import Title from "@/components/Typography/Title";
+import Paragraph from "@/components/Typography/Paragraph";
 import Table from "../Table";
 
 dayjs.extend(isBetween);
@@ -43,6 +45,8 @@ interface IGainer {
     security_id: string;
     total_pl: number;
   }[];
+  total_loss?: number;
+  total_gain?: number;
 }
 
 interface IGainerLoser {
@@ -67,6 +71,7 @@ export interface ICombinedGainerLoser {
 
 interface IGainerLoserProps extends IUseTableParams {
   urlKey: string;
+  title: "gainer" | "loser";
 }
 
 const Columns: TableColumnsType = [
@@ -98,7 +103,7 @@ const Columns: TableColumnsType = [
 ];
 
 const _searchParamKeys = [
-  "client_id",
+  "client",
   "custodian_id",
   "reporting_currency",
   "page_gainer",
@@ -143,21 +148,38 @@ function useGainerLoser({ urlKey }: { urlKey: string }) {
 const scroll = { y: "30rem" };
 
 export default function GainerLoser({
+  title,
   urlKey,
   searchParamKeys,
 }: IGainerLoserProps) {
   const { data, isLoading } = useGainerLoser({ urlKey });
   const { pagination, onChange } = useTable({ searchParamKeys });
+  const isGainer = title === "gainer";
   return (
-    <Table
-      loading={isLoading}
-      columns={Columns}
-      dataSource={data?.results}
-      scroll={scroll}
-      onChange={onChange}
-      rowClassName="h-[5rem]"
-      className="h-[35rem]"
-      pagination={{ ...pagination, total: data?.count }}
-    />
+    <div className="w-1/2 space-y-6">
+      <div className="flex justify-between items-center">
+        <Title level={5} className="capitalize">
+          {title}
+        </Title>
+        <Paragraph className="flex items-center gap-x-1.5 text-neutral-13/80">
+          {isGainer ? "Top Gain:" : "Top Loss:"}
+          <Title level={5}>
+            {formatCompactNumber(
+              isGainer ? data?.total_gain : data?.total_loss
+            )}
+          </Title>
+        </Paragraph>
+      </div>
+      <Table
+        loading={isLoading}
+        columns={Columns}
+        dataSource={data?.results}
+        scroll={scroll}
+        onChange={onChange}
+        rowClassName="h-[5rem]"
+        className="h-[35rem]"
+        pagination={{ ...pagination, total: data?.count }}
+      />
+    </div>
   );
 }

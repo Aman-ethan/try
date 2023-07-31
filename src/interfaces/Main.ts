@@ -213,9 +213,9 @@ export interface IAssetClass {
 export interface IClient {
   client_id: number;
   client_name: string;
-  net_worth: number;
-  total_pl: number;
-  daily_pl: number;
+  networth: number;
+  total_change: number;
+  daily_change: number;
 }
 
 type TCommonSearchPrams = "page" | "ordering" | "client" | "client_id";

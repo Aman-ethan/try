@@ -3,7 +3,7 @@
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Card, Col, Row, Skeleton, Typography } from "antd";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Title from "@/components/Typography/Title";
 import { PageCardClassName } from "@/constants/strings";
 import useClient from "@/hooks/useClient";
@@ -19,9 +19,10 @@ const searchParamKey = "client_id";
 export default function ClientInfoCard() {
   const [editClicked, setEditClicked] = useState<boolean>(false);
 
-  const { selectedClient } = useSelectClientWithParams({
-    searchParamKey,
-  });
+  const { options, selectedClient, clientId, updateSearchParams } =
+    useSelectClientWithParams({
+      searchParamKey,
+    });
 
   const { data: clientData, isLoading } = useClient({
     id: selectedClient?.value,
@@ -30,7 +31,16 @@ export default function ClientInfoCard() {
   const { name, last_name, city, country, first_name, reporting_currency } =
     clientData || {};
 
-  if (!(clientData || isLoading)) return <ClientEmpty />;
+  useEffect(() => {
+    if (clientId) return;
+    if (selectedClient?.value) {
+      updateSearchParams({
+        client_id: selectedClient?.value,
+      });
+    }
+  }, [clientId, selectedClient?.value, updateSearchParams]);
+
+  if (options?.length === 0) return <ClientEmpty />;
 
   return (
     <div className="space-y-8">

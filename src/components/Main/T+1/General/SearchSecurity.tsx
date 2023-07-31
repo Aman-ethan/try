@@ -64,16 +64,15 @@ function PublicSecurityForm() {
   const addSecurity = () => {
     if (!newSecurity) return;
     const { code, exchange, name, previous_close, type, ...rest } = newSecurity;
-    const _symbol = code.includes(".") ? code : `${code}.${exchange}`;
     form.setFieldsValue({
-      security: _symbol,
+      security: code,
       security_name: name,
       asset_class: type,
       exchange,
       market_close: previous_close,
       search_security: false,
       private: false,
-      extra_option: { label: name, value: _symbol },
+      extra_option: { label: name, value: code },
       ...rest,
     });
     form.resetFields([fieldName]);
@@ -202,7 +201,7 @@ function PrivateSecurityForm() {
               <div>
                 <Button
                   shape="circle"
-                  className="shadow"
+                  className="shadow-large"
                   icon={<PlusOutlined className="text-sm" />}
                   onClick={add}
                 />
@@ -279,7 +278,7 @@ const SecurityOptions = [
 export default function SearchSecurity() {
   const form = Form.useFormInstance();
   return (
-    <div className="w-full space-y-6 rounded-lg p-4 text-base shadow-lg">
+    <div className="w-full space-y-6 rounded-lg p-4 text-base shadow-large">
       <Row justify="space-between" align="middle">
         <Title level={5}>Search New Security</Title>
         <Button

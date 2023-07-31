@@ -9,7 +9,7 @@ export default function TradeLayout({ children }: ITradeLayoutProps) {
   return (
     <div className="space-y-8">
       <TradeHeader />
-      <div className="rounded-lg bg-neutral-1 p-6">{children}</div>
+      <div className="rounded-lg shadow-large bg-neutral-1 p-6">{children}</div>
     </div>
   );
 }

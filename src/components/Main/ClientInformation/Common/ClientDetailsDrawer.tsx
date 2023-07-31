@@ -71,10 +71,10 @@ export default function ClientDetailsDrawer({
         </Button>
       }
       footer={
-        <div className="absolute bottom-0 right-0 h-16 space-x-4 mr-12">
+        <>
           <ResetButton>Clear All</ResetButton>
           <SubmitButton>Submit</SubmitButton>
-        </div>
+        </>
       }
     >
       <DetailsForm id={id} type={type} onClose={() => setIsDrawerOpen(false)} />

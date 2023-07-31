@@ -7,10 +7,11 @@ import { Content, Layout, Sider } from "@/lib/antd";
 
 import "@/styles/global.css";
 import "antd/dist/reset.css";
+import fontFamily from "@/constants/font";
 
 export default function AuthRootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={fontFamily.variable}>
       <body id="layout" className="opacity-0 transition-opacity">
         <AppProvider>
           <Layout suppressHydrationWarning hasSider className="h-full">
