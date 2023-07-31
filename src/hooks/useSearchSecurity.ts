@@ -4,7 +4,8 @@ export default function useSearchSecurity() {
   const { updateSearchParams } = useSearchParams();
 
   function onSearch(value: string) {
-    updateSearchParams({ search: value });
+    if (!value) updateSearchParams({ search: undefined });
+    else updateSearchParams({ search: value });
   }
 
   return { onSearch };

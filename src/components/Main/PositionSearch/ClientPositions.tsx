@@ -1,14 +1,15 @@
-import React, { Dispatch, SetStateAction } from "react";
 import { ProCard, ProList } from "@ant-design/pro-components";
 import { Col, DatePicker, Empty, Row } from "antd";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import dayjs, { Dayjs } from "dayjs";
-import { formatCompactNumber } from "@/lib/format";
-import { IMonthPicker, IPositionNetWorth } from "@/interfaces/Main";
+import { useRouter } from "next/navigation";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import Title from "@/components/Typography/Title";
 import { DATE_SELECT_FORMAT } from "@/constants/format";
+import { BalanceSheetUrl } from "@/constants/strings";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
+import { IMonthPicker, IPositionNetWorth } from "@/interfaces/Main";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { formatCompactNumber } from "@/lib/format";
 import CurrencyTag from "../General/CurrencyTag";
 
 export interface IClientDataProps {
@@ -22,16 +23,23 @@ export default function ClientPositions({
   loading,
   setSelectedMonth,
 }: IClientDataProps) {
-  const router = useRouter();
-  const pathname = usePathname();
+  const { push, prefetch } = useRouter();
 
   const { data } = useTransactionServerQuery<IMonthPicker>(
-    `/statement/position/date`
+    `/statement/position/date/`
   );
 
   function onItemClicked(record: IPositionNetWorth) {
-    router.push(`${pathname}/${record?.client_id}}`);
+    push(
+      `${BalanceSheetUrl}/${buildURLSearchParams({
+        client: record?.client_id,
+      })}`
+    );
   }
+
+  useEffect(() => {
+    prefetch(BalanceSheetUrl);
+  }, [prefetch]);
 
   return (
     <ProList
@@ -67,34 +75,32 @@ export default function ClientPositions({
       metas={{
         content: {
           render: (text: React.ReactNode, record: IPositionNetWorth) => (
-            <Link href={`${pathname}/${record?.client_id}}`}>
-              <ProCard.Group direction="column">
-                <div className="mb-8 flex justify-between">
-                  <Title level={4}>{record?.client_name}</Title>
-                  <CurrencyTag currency={record?.currency} />
-                </div>
-                <Row gutter={16}>
-                  <Col sm={12} md={8} lg={8}>
-                    <h1>Net Worth</h1>
-                    <h1 className="text-2xl">
-                      {formatCompactNumber(record?.networth)}
-                    </h1>
-                  </Col>
-                  <Col sm={12} md={8} lg={8}>
-                    <h1>Assets</h1>
-                    <h1 className="text-2xl text-summary-profit">
-                      {formatCompactNumber(record?.assets)}
-                    </h1>
-                  </Col>
-                  <Col sm={12} md={8} lg={8}>
-                    <h1>Liabilities</h1>
-                    <h1 className="text-2xl text-summary-loss">
-                      {formatCompactNumber(record?.liabilities)}
-                    </h1>
-                  </Col>
-                </Row>
-              </ProCard.Group>
-            </Link>
+            <ProCard.Group direction="column">
+              <div className="mb-8 flex justify-between">
+                <Title level={4}>{record?.client_name}</Title>
+                <CurrencyTag currency={record?.currency} />
+              </div>
+              <Row gutter={16}>
+                <Col sm={12} md={8} lg={8}>
+                  <h1>Net Worth</h1>
+                  <h1 className="text-2xl">
+                    {formatCompactNumber(record?.networth)}
+                  </h1>
+                </Col>
+                <Col sm={12} md={8} lg={8}>
+                  <h1>Assets</h1>
+                  <h1 className="text-2xl text-summary-profit">
+                    {formatCompactNumber(record?.assets)}
+                  </h1>
+                </Col>
+                <Col sm={12} md={8} lg={8}>
+                  <h1>Liabilities</h1>
+                  <h1 className="text-2xl text-summary-loss">
+                    {formatCompactNumber(record?.liabilities)}
+                  </h1>
+                </Col>
+              </Row>
+            </ProCard.Group>
           ),
         },
       }}

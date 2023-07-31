@@ -1,7 +1,8 @@
-import { useCallback } from "react";
-import { Card, Row, Col } from "antd";
-import { usePathname, useRouter } from "next/navigation";
+import { Card, Col, Row } from "antd";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import Title from "@/components/Typography/Title";
+import { BalanceSheetUrl } from "@/constants/strings";
 import { IPositionNetWorth } from "@/interfaces/Main";
 import { formatCompactNumber } from "@/lib/format";
 import CurrencyTag from "../General/CurrencyTag";
@@ -15,12 +16,15 @@ export default function CompanyCard({
   companyData,
   loading,
 }: ICompanyCardProps) {
-  const router = useRouter();
-  const pathname = usePathname();
+  const { push, prefetch } = useRouter();
 
-  const onClick = useCallback(() => {
-    router.push(`${pathname}/${companyData?.client_name}`);
-  }, [pathname, companyData?.client_name, router]);
+  const onClick = () => {
+    push(`${BalanceSheetUrl}/`);
+  };
+
+  useEffect(() => {
+    prefetch(BalanceSheetUrl);
+  }, [prefetch]);
 
   return (
     <Card onClick={onClick} loading={loading} className="pointer">
