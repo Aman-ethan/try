@@ -198,6 +198,11 @@ export interface IBalanceSheetOverview {
   liability: IBalanceSheetChart[];
 }
 
+export interface IMonthPicker {
+  start_date: string;
+  end_date: string;
+}
+
 export type TProgressType = "success" | "failure";
 
 export interface ICurrency {

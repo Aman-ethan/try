@@ -1,24 +1,33 @@
 import { ProCard, ProList } from "@ant-design/pro-components";
-import { Col, Empty, Row } from "antd";
+import { Col, DatePicker, Empty, Row } from "antd";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { formatCompactNumber } from "@/lib/format";
-import { IPositionNetWorth } from "@/interfaces/Main";
+import { IMonthPicker, IPositionNetWorth } from "@/interfaces/Main";
 import Title from "@/components/Typography/Title";
+import { DATE_SELECT_FORMAT } from "@/constants/format";
+import dayjs, { Dayjs } from "dayjs";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
 import CurrencyTag from "../General/CurrencyTag";
 
 export interface IClientDataProps {
   clients?: IPositionNetWorth[];
   loading: boolean;
+  setSelectedMonth: Dispatch<SetStateAction<string>>;
 }
 
 export default function ClientPositions({
   clients,
   loading,
+  setSelectedMonth,
 }: IClientDataProps) {
   const router = useRouter();
   const pathname = usePathname();
+
+  const { data } = useTransactionServerQuery<IMonthPicker>(
+    `/statement/position/date`
+  );
 
   function onItemClicked(record: IPositionNetWorth) {
     router.push(`${pathname}/${record?.client_id}}`);
@@ -28,6 +37,19 @@ export default function ClientPositions({
     <ProList
       locale={{ emptyText: <Empty /> }}
       loading={loading}
+      toolBarRender={() => [
+        <DatePicker.MonthPicker
+          format={DATE_SELECT_FORMAT}
+          disabledDate={(current: Dayjs) =>
+            dayjs(current).isAfter(data?.end_date) ||
+            dayjs(current).isBefore(data?.start_date)
+          }
+          onChange={(value: Dayjs | null, dateString: string) => {
+            setSelectedMonth(dateString);
+          }}
+          allowClear
+        />,
+      ]}
       dataSource={clients}
       grid={{
         gutter: 16,
