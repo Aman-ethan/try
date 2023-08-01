@@ -22,6 +22,10 @@
   color: #686464 !important;
 }
 
+button {
+  @apply border-0 bg-transparent;
+}
+
 th {
   font-weight: 500 !important;
 }
