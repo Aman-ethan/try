@@ -71,6 +71,7 @@ const Columns: TableColumnsType<IBankStatement> = [
     key: "status",
     width: 145,
     dataIndex: "status",
+    sorter: true,
     render: (status) => <StatusTag status={status} />,
   },
   {
