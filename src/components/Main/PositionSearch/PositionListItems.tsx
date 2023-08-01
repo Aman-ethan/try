@@ -6,12 +6,14 @@ import { useState } from "react";
 import clsx from "clsx";
 import Select from "@/components/Input/Select";
 import usePositions from "@/hooks/usePositions";
+import useSearchParams from "@/hooks/useSearchParams";
 import ListView from "./General/ListView";
-import SelectAssetWithParams from "../Input/SelectAssetWithParams";
 import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
 import SearchPositionSecurities from "../Input/SearchPositionSecurities";
+import ClientAssetSelect from "../Input/ClientAssetSelect";
 
 export default function PositionListItems() {
+  const { updateSearchParams } = useSearchParams();
   const [showFilter, setShowFilter] = useState(false);
   const {
     client: clientId,
@@ -62,9 +64,12 @@ export default function PositionListItems() {
             placeholder="Select Account Number"
             className={primarySelectClasses}
           />
-          <SelectAssetWithParams
+          <ClientAssetSelect
             placeholder="Select Asset Class"
             className={primarySelectClasses}
+            onChange={(value: string) =>
+              updateSearchParams({ asset_class: value })
+            }
           />
         </div>
       </div>

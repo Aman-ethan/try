@@ -10,7 +10,7 @@ export default function usePositions() {
   const custodian = getSearchParams("custodian");
   const relationshipNumber = getSearchParams("relationship_number");
   const search = getSearchParams("search");
-  const assetClass = getSearchParams("asset_class__in");
+  const assetClass = getSearchParams("asset_class");
   const ordering = getSearchParams("ordering");
 
   function onSegmentChange(value: SegmentedValue) {

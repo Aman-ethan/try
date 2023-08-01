@@ -16,7 +16,7 @@ export default function ListDetails({ record }: IListProps) {
   return (
     <div className="w-full flex flex-col space-y-4 lap:flex-row lap:justify-between lap:space-y-0">
       <div className="basis-1/2 space-y-4">
-        <div className="flex flex-col space-y-2 tab:flex-row tab:space-x-8 tab:space-y-0">
+        <div className="flex flex-col space-y-2 tab:flex-row tab:space-x-4 tab:space-y-0">
           <div className="space-x-2">
             <PieChartOutlined />
             <span>{record?.asset_class}</span>
