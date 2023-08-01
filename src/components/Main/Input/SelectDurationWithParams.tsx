@@ -104,7 +104,7 @@ export default function SelectDurationWithParams() {
         showSearch={false}
         allowClear={false}
         size="middle"
-        className="w-28 pr-2"
+        className="w-28 pr-0"
         value={value}
         onChange={onChange}
         options={DURATION}
