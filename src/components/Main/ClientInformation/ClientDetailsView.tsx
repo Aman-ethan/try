@@ -25,7 +25,7 @@ function View({ type }: { type: TabType }) {
 const DetailOptions: CheckboxOptionType[] = [
   { label: "Goals", value: "goals" },
   { label: "Estates", value: "estates" },
-  { label: "Accounts", value: "accounts" },
+  { label: "Bank accounts", value: "accounts" },
 ];
 
 export default function ClientDetailsView() {
