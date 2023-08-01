@@ -50,8 +50,8 @@ export default function Drawer({
             icon={<CloseOutlined className="text-xl" />}
           />
         </Row>
-        {children}
-        <div className="absolute bottom-0 right-0 h-16 space-x-4 mr-6">
+        <div className="mb-20">{children}</div>
+        <div className="absolute flex justify-end bg-white bottom-0 left-0 right-0 p-6 space-x-4">
           {closeButton ? (
             <Button size="large" className="px-7" onClick={handleClose}>
               {closeButton}
