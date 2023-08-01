@@ -2,7 +2,11 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { Button, message } from "antd";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { CSVLink } from "react-csv";
-import { Data, Headers } from "react-csv/components/CommonPropTypes";
+import {
+  AsyncClickHandler,
+  Data,
+  Headers,
+} from "react-csv/components/CommonPropTypes";
 import useStatement from "@/hooks/useStatement";
 import { useTransactionServerLazyQuery } from "@/hooks/useQuery";
 import { IPaginatedResponse } from "@/interfaces/Main";
@@ -40,20 +44,27 @@ export default function DownloadStatement() {
     urlWithParams
   );
 
+  const handleDownload: AsyncClickHandler = async (_, done) => {
+    if (isMutating) return;
+    try {
+      await trigger();
+      done(true);
+    } catch {
+      message.error("Failed to download statement");
+      done(false);
+    }
+  };
+
+  const getStatement = () => {
+    return typeof data === "string" ? data : data?.results;
+  };
+
   return (
     <CSVLink
       headers={layoutSegment === "bank" ? BankStatementHeaders : undefined}
-      data={typeof data === "string" ? data : data?.results}
+      data={getStatement}
       asyncOnClick
-      onClick={async (_, done) => {
-        try {
-          await trigger();
-          done(true);
-        } catch {
-          message.error("Failed to download statement");
-          done(false);
-        }
-      }}
+      onClick={handleDownload}
       filename={`${layoutSegment}_statement.csv`}
     >
       <Button
