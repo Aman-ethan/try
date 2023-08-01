@@ -8,9 +8,10 @@ import ClientPositions from "./ClientPositions";
 
 export default function Positions() {
   const [selectedMonth, setSelectedMonth] = useState("");
-  const endpoint = selectedMonth
-    ? `/statement/position/networth_cards?date=${selectedMonth}`
-    : "/statement/position/networth_cards";
+  const endpoint =
+    selectedMonth !== "" && selectedMonth !== "Invalid Date"
+      ? `/statement/position/networth_cards?date=${selectedMonth}`
+      : "/statement/position/networth_cards";
   const { data, isLoading } =
     useTransactionServerQuery<IPositionSearchResponse>(endpoint);
 
@@ -20,6 +21,7 @@ export default function Positions() {
       <ClientPositions
         clients={data?.client_cards}
         loading={isLoading}
+        selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
       />
     </div>

@@ -15,12 +15,14 @@ import CurrencyTag from "../General/CurrencyTag";
 export interface IClientDataProps {
   clients?: IPositionNetWorth[];
   loading: boolean;
+  selectedMonth: string;
   setSelectedMonth: Dispatch<SetStateAction<string>>;
 }
 
 export default function ClientPositions({
   clients,
   loading,
+  selectedMonth,
   setSelectedMonth,
 }: IClientDataProps) {
   const { push, prefetch } = useRouter();
@@ -41,12 +43,18 @@ export default function ClientPositions({
     prefetch(BalanceSheetUrl);
   }, [prefetch]);
 
+  const currentDate =
+    selectedMonth !== "" && selectedMonth !== "Invalid Date"
+      ? dayjs(selectedMonth, DATE_SELECT_FORMAT)
+      : null;
+
   return (
     <ProList
       locale={{ emptyText: <Empty /> }}
       loading={loading}
       toolBarRender={() => [
         <DatePicker.MonthPicker
+          value={currentDate}
           format={DATE_SELECT_FORMAT}
           disabledDate={(current: Dayjs) =>
             dayjs(current).isAfter(data?.end_date) ||
