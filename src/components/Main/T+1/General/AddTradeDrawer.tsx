@@ -7,10 +7,10 @@ import TradeForm from "../Form/Trade";
 const drawerProps: IDrawerProps = {
   button: (
     <Button type="primary" size="large" className="w-full">
-      Add Blotter Trade
+      Add Trade
     </Button>
   ),
-  title: "Add a Trade",
+  title: "Add Trade",
   footer: (
     <>
       <ResetButton>Clear All</ResetButton>
