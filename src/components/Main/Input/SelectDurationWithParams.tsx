@@ -24,10 +24,10 @@ interface IPopoverContentProps {
 }
 
 const DURATION: IDuration[] = [
-  { label: "Week", value: "w" },
-  { label: "Month", value: "M" },
-  { label: "Quarter", value: "Q" },
-  { label: "Year", value: "y" },
+  { label: "Weekly", value: "w" },
+  { label: "Monthly", value: "M" },
+  { label: "Quarterly", value: "Q" },
+  { label: "Yearly", value: "y" },
 ];
 
 function getDateKeys(layoutSegment: string | null): SearchParams[] {
