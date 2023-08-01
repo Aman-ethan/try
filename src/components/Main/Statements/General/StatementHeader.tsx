@@ -1,6 +1,6 @@
 "use client";
 
-import { DownloadOutlined, FilterOutlined } from "@ant-design/icons";
+import { FilterOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import clsx from "clsx";
 import { useSelectedLayoutSegment } from "next/navigation";
@@ -8,12 +8,8 @@ import { useState } from "react";
 import Title from "@/components/Typography/Title";
 import SelectClient from "../../Input/SelectClientWithParams";
 import SelectCustodian from "../../Input/SelectCustodianWithParams";
-import DownloadBankStatement from "./DownloadBankStatement";
+import DownloadStatement from "./DownloadStatement";
 import UploadStatementDrawer from "./UploadStatementDrawer";
-
-const URLs = {
-  trade: "",
-};
 
 export default function StatementFilter() {
   const layoutSegment = useSelectedLayoutSegment();
@@ -51,18 +47,7 @@ export default function StatementFilter() {
             className={primarySelectClasses}
           />
         </div>
-        {layoutSegment === "trade" ? (
-          <Button
-            size="large"
-            icon={<DownloadOutlined />}
-            href={URLs.trade}
-            download
-          >
-            Download as CSV
-          </Button>
-        ) : (
-          <DownloadBankStatement />
-        )}
+        <DownloadStatement />
       </div>
     </div>
   );

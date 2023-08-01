@@ -1,24 +1,12 @@
 import { IPaginatedResponse, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { StatementSearchParamsKey } from "@/constants/searchParams";
 import { useTransactionServerQuery } from "./useQuery";
 import useTable from "./useTable";
 
 interface IUseStatementParams {
   urlKey: string;
 }
-
-const searchParamsKey = [
-  "asset_class__in",
-  "currency__in",
-  "custodian__in",
-  "reporting_currency__in",
-  "statement_date__gte",
-  "statement_date__lte",
-  "statement_type__in",
-  "transaction_type__in",
-  "trade_action__in",
-  "search",
-];
 
 export default function useStatement<T>({ urlKey }: IUseStatementParams) {
   const {
@@ -31,27 +19,30 @@ export default function useStatement<T>({ urlKey }: IUseStatementParams) {
     custodian,
   } = useTable();
 
-  const { data, isLoading } = useTransactionServerQuery<IPaginatedResponse<T>>(
+  const urlWithParams =
     urlKey +
-      buildURLSearchParams({
-        client,
-        custodian,
-        page,
-        ordering,
-        ...searchParamsKey.reduce(
-          (acc, key) => ({
-            ...acc,
-            [key]: getSearchParams(key as SearchParams),
-          }),
-          {}
-        ),
-      })
-  );
+    buildURLSearchParams({
+      client,
+      custodian,
+      page,
+      ordering,
+      ...StatementSearchParamsKey.reduce(
+        (acc, key) => ({
+          ...acc,
+          [key]: getSearchParams(key as SearchParams),
+        }),
+        {}
+      ),
+    });
+
+  const { data, isLoading } =
+    useTransactionServerQuery<IPaginatedResponse<T>>(urlWithParams);
 
   return {
     data,
     isLoading,
     pagination,
     onChange,
+    urlWithParams,
   };
 }

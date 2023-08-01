@@ -16,12 +16,18 @@ async function fetcher({ url, init, error }: IFetcherParams) {
     const res = await fetch(url, {
       ...init,
       headers: {
+        "Accept-Encoding": "gzip",
         Authorization: accessToken ? `Bearer ${accessToken}` : "",
         ...init.headers,
       },
     });
 
+    if (res.headers.get("Content-Type") === "text/csv") {
+      return await res.text();
+    }
+
     let json;
+
     try {
       json = await res.json();
     } catch {
@@ -65,7 +71,6 @@ export function postJsonFetcher(baseURL: string) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Accept-Encoding": "gzip",
         },
         body: formatBody(options?.arg, isArray ? key[1] : undefined),
       },
