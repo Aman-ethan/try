@@ -53,7 +53,11 @@ export default function ClientPositions({
             dayjs(current).isBefore(data?.start_date)
           }
           onChange={(value: Dayjs | null, dateString: string) => {
-            setSelectedMonth(dateString);
+            const selectedDate = dayjs(dateString, DATE_SELECT_FORMAT);
+            const lastDay = selectedDate
+              .endOf("month")
+              .format(DATE_SELECT_FORMAT);
+            setSelectedMonth(lastDay);
           }}
           allowClear
         />,

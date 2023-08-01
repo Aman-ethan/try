@@ -12,10 +12,10 @@ import ChartTable from "./Table/ChartTable";
 export default function DetailsSummary() {
   const { get: getSearchParams } = useSearchParams();
 
-  const clientId = getSearchParams("client_id");
+  const clientId = getSearchParams("client");
 
   const { data, isLoading } = useAnalyticsServerGetQuery<IBalanceSheetOverview>(
-    clientId ? `/networth/${clientId}/` : null
+    clientId ? `/networth/${clientId}/` : `/networth/`
   );
 
   const {
