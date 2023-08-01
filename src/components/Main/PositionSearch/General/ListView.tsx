@@ -28,6 +28,12 @@ export default function ListItem() {
     })}`
   );
 
+  const paginationConfig = {
+    pageSize: 5,
+    showTotal: (total: number, range: [number, number]) =>
+      `Displaying ${range[0]}-${range[1]} of ${total} items`,
+  };
+
   return (
     <ProList
       locale={{ emptyText: <Empty /> }}
@@ -35,9 +41,7 @@ export default function ListItem() {
       loading={isLoading}
       rowKey="id"
       dataSource={data?.results}
-      pagination={{
-        defaultPageSize: 5,
-      }}
+      pagination={paginationConfig}
       metas={{
         content: {
           render: (text: React.ReactNode, record: IPositionsData) => {

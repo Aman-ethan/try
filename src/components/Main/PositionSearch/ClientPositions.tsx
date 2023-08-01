@@ -73,37 +73,36 @@ export default function ClientPositions({
         xl: 2,
         xxl: 2,
       }}
-      onItem={(record: IPositionNetWorth) => ({
-        onClick: () => onItemClicked(record), // Handle the click event here
-      })}
       metas={{
         content: {
           render: (text: React.ReactNode, record: IPositionNetWorth) => (
             <ProCard.Group direction="column">
-              <div className="mb-8 flex justify-between">
-                <Title level={4}>{record?.client_name}</Title>
-                <CurrencyTag currency={record?.currency} />
-              </div>
-              <Row gutter={16}>
-                <Col sm={12} md={8} lg={8}>
-                  <h1>Net Worth</h1>
-                  <h1 className="text-2xl">
-                    {formatCompactNumber(record?.networth)}
-                  </h1>
-                </Col>
-                <Col sm={12} md={8} lg={8}>
-                  <h1>Assets</h1>
-                  <h1 className="text-2xl text-summary-profit">
-                    {formatCompactNumber(record?.assets)}
-                  </h1>
-                </Col>
-                <Col sm={12} md={8} lg={8}>
-                  <h1>Liabilities</h1>
-                  <h1 className="text-2xl text-summary-loss">
-                    {formatCompactNumber(record?.liabilities)}
-                  </h1>
-                </Col>
-              </Row>
+              <ProCard onClick={() => onItemClicked(record)}>
+                <div className="mb-8 flex justify-between">
+                  <Title level={4}>{record?.client_name}</Title>
+                  <CurrencyTag currency={record?.currency} />
+                </div>
+                <Row gutter={16}>
+                  <Col sm={12} md={8} lg={8}>
+                    <h1>Net Worth</h1>
+                    <h1 className="text-2xl">
+                      {formatCompactNumber(record?.networth)}
+                    </h1>
+                  </Col>
+                  <Col sm={12} md={8} lg={8}>
+                    <h1>Assets</h1>
+                    <h1 className="text-2xl text-summary-profit">
+                      {formatCompactNumber(record?.assets)}
+                    </h1>
+                  </Col>
+                  <Col sm={12} md={8} lg={8}>
+                    <h1>Liabilities</h1>
+                    <h1 className="text-2xl text-summary-loss">
+                      {formatCompactNumber(record?.liabilities)}
+                    </h1>
+                  </Col>
+                </Row>
+              </ProCard>
             </ProCard.Group>
           ),
         },
