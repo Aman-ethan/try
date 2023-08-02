@@ -35,19 +35,17 @@ export default function CompanyCard({
       <Row gutter={16}>
         <Col sm={12} md={8} lg={8}>
           <Title level={4}>Net Worth</Title>
-          <Title className="text-3xl">
-            {formatCompactNumber(companyData?.networth)}
-          </Title>
+          <Title>{formatCompactNumber(companyData?.networth)}</Title>
         </Col>
         <Col sm={12} md={8} lg={8}>
           <Title level={4}>Assets</Title>
-          <Title className="text-3xl text-summary-profit">
+          <Title className="text-summary-profit">
             {formatCompactNumber(companyData?.assets)}
           </Title>
         </Col>
         <Col sm={12} md={8} lg={8}>
           <Title level={4}>Liabilities</Title>
-          <Title className="text-3xl text-summary-loss">
+          <Title className="text-summary-loss">
             {formatCompactNumber(companyData?.liabilities)}
           </Title>
         </Col>
