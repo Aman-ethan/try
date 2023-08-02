@@ -9,6 +9,7 @@ import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import formatInitialValues from "@/lib/formatInitialValues";
 import formatTriggerValues from "@/lib/formatTriggerValues";
+import { useClientBreadCrumb } from "@/context/ClientContext";
 import revalidate from "@/lib/revalidate";
 import { DatePicker } from "../Input/DatePicker";
 import SelectCurrency from "../Input/SelectCurrency";
@@ -129,15 +130,20 @@ function DetailsForm({ type }: IClientDetailProps) {
       );
   }
 }
-
-interface IEditProfileProps {
-  onSubmit: () => void;
-  onCancel: () => void;
+interface IClientInformationProps {
+  setEditClicked: (_value: boolean) => void;
 }
 
-export default function ProfileEdit({ onSubmit, onCancel }: IEditProfileProps) {
+export default function ProfileEdit({
+  setEditClicked,
+}: IClientInformationProps) {
   const [form] = Form.useForm();
   const { data, loading, updateClient } = useClient();
+  const { setBreadItems } = useClientBreadCrumb();
+
+  useEffect(() => {
+    setBreadItems("Edit Profile");
+  }, [setBreadItems]);
 
   useEffect(() => {
     if (data) {
@@ -171,7 +177,10 @@ export default function ProfileEdit({ onSubmit, onCancel }: IEditProfileProps) {
         className=" w-full"
         onFinish={async (values) => {
           await updateClient(formatTriggerValues(values));
-          onSubmit();
+          setEditClicked(false);
+        }}
+        onReset={() => {
+          setEditClicked(false);
         }}
         size="large"
         disabled={loading}
@@ -182,7 +191,7 @@ export default function ProfileEdit({ onSubmit, onCancel }: IEditProfileProps) {
           ))}
         </Row>
         <Row className=" float-right mt-8 flex gap-4 align-middle">
-          <Button onClick={onCancel} className="px-8" htmlType="reset">
+          <Button className="px-8" htmlType="reset">
             Cancel
           </Button>
           <Button

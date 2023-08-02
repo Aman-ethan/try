@@ -82,10 +82,7 @@ export default function ClientInfoCard() {
               </p>
               <Divider className="bg-neutral-6" />
               {editClicked ? (
-                <ProfileEdit
-                  onSubmit={() => setEditClicked(false)}
-                  onCancel={() => setEditClicked(false)}
-                />
+                <ProfileEdit setEditClicked={setEditClicked} />
               ) : (
                 <ClientDetailsView />
               )}

@@ -76,7 +76,7 @@ export default function Goals() {
   const { data, isLoading } = useGoal();
   if (isLoading) return <Skeleton />;
   return (
-    <div className="mt-4 space-y-6 h-[calc(100vh-35rem)] w-full overflow-y-scroll tab:w-5/6">
+    <div className="mt-4 h-[calc(100vh-35rem)] w-full overflow-y-scroll tab:w-11/12">
       {data?.map((item) => (
         <Card
           key={item?.id}
