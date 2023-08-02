@@ -164,6 +164,7 @@ export default function ClientNetWorth() {
         rowKey="client_id"
         className="table-reset h-[22rem]"
         scroll={{ y: "18.5rem" }}
+        pagination={{ pageSize: data?.overview.length }}
       />
     </div>
   );
