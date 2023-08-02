@@ -1,19 +1,18 @@
 "use client";
 
-import SelectAsset from "../../Input/SelectAsset";
+import ClientAssetSelect from "../../Input/ClientAssetSelect";
 
-interface IAssetSelectProps {
+interface IAssetSelect {
   handleOptionChange: (_value: string) => void;
 }
 
-export default function AssetSelect({ handleOptionChange }: IAssetSelectProps) {
+export default function AssetSelect({ handleOptionChange }: IAssetSelect) {
   return (
     <div className="flex items-center space-x-4">
       <p className="text-lg font-medium">Asset</p>
-      <SelectAsset
+      <ClientAssetSelect
         labelInValue
-        placeholder="Select Ticker"
-        filterOption={false}
+        placeholder="Select Asset"
         onSelect={(value) => handleOptionChange(value.value)}
         className="w-[300px]"
         showSearch

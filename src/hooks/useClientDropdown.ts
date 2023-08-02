@@ -29,6 +29,7 @@ export default function useClientDropdown<T>({
       client_id: selectedClient?.value,
       start_date: getSearchParams("start_date"),
       end_date: getSearchParams("end_date"),
+      asset_class: [] as unknown as string,
     }
   );
 

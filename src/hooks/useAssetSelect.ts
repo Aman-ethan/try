@@ -14,7 +14,7 @@ interface IUseAssetSelect {
 }
 
 export default function useAssetSelect(props?: IUseAssetSelect) {
-  const searchParamKey = props?.searchParamKey || "client";
+  const searchParamKey = props?.searchParamKey;
 
   const { clientId } = useSelectClientWithParams({ searchParamKey });
   const { data, isLoading } = useAnalyticsServerGetQuery<TAsset>(`${

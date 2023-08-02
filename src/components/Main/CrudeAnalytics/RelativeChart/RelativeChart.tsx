@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { SegmentedValue } from "antd/es/segmented";
 import { IAssetNetWorth } from "@/interfaces/Main";
 import useRelativeChart from "@/hooks/useRelativeChart";
@@ -27,12 +27,8 @@ export default function RelativeChart() {
     ticker,
   });
 
-  useLayoutEffect(() => {
-    if (value === "ticker") {
-      setTicker([]);
-    } else {
-      setTicker([]);
-    }
+  useEffect(() => {
+    setTicker([]);
   }, [value]);
 
   return (
@@ -50,11 +46,7 @@ export default function RelativeChart() {
         </div>
       </div>
       <PerformanceChart
-        data={
-          value === "ticker"
-            ? data?.data
-            : data?.data?.filter((item) => ticker.includes(item.z))
-        }
+        data={data?.data}
         setTicker={setTicker}
         value={value}
         ticker={ticker}

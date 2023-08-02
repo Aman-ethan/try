@@ -8,8 +8,8 @@ export default function ClientAssetSelect(props: SelectProps) {
     <Select
       loading={isLoading}
       options={selectOptions}
-      {...props}
       notFoundContent={isLoading ? <Spin size="small" /> : undefined}
+      {...props}
     />
   );
 }

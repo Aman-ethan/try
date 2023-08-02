@@ -1,5 +1,5 @@
 import * as Plot from "@observablehq/plot";
-import { Spin, message } from "antd";
+import { Spin, message, Tag } from "antd";
 import clsx from "clsx";
 import { format } from "d3";
 import {
@@ -79,12 +79,19 @@ export default function PerformanceChart({
   const [filledData, filledGroupedData, assets] = useMemo(() => {
     setNormalizeIndex(0);
 
-    const absoluteData = data?.map((item) => {
-      return {
-        ...item,
-        y: Math.abs(item.y),
-      };
-    });
+    const absoluteData = sortBy(
+      data?.map((item) => {
+        return {
+          ...item,
+          y: Math.abs(item.y),
+        };
+      }),
+      [
+        function sortByDate(o) {
+          return new Date(o.x);
+        },
+      ]
+    );
 
     const xticks = sortBy(
       uniqBy(data, "x").map((item) => item.x),
@@ -123,7 +130,13 @@ export default function PerformanceChart({
       map(
         filledGroupedData,
         (item) =>
-          (maxBy(item, "y") as TData).y / ((minBy(item, "y") as TData).y || 1)
+          (maxBy(item, "y") as TData).y /
+          (
+            minBy(item, (o) => {
+              if (o.y === 0) return Infinity;
+              return o.y;
+            }) as TData
+          ).y
       )
     ) as number;
 
@@ -139,6 +152,8 @@ export default function PerformanceChart({
       }
     );
     const chart = Plot.plot({
+      // width: 1000,
+      width: chartRef.current?.clientWidth,
       style: {
         overflow: "visible",
       },
@@ -177,6 +192,7 @@ export default function PerformanceChart({
         );
       }
     };
+
     if (!chartScaleRef.current) {
       chartScaleRef.current = chart.scale("color");
     }
@@ -209,59 +225,62 @@ export default function PerformanceChart({
     setTicker(Array.from(new Set([...ticker, _value])));
   };
 
+  const handleDomainChange = (domain: string) => {
+    return () => {
+      const isExcluded = excludedDomain?.includes(domain);
+      if (isExcluded) {
+        setExcludedDomain((prev) => prev.filter((item) => item !== domain));
+      } else {
+        if (assets.length - 1 === excludedDomain.length) {
+          message.info("Please select at least one asset");
+          return;
+        }
+        setExcludedDomain((prev) => [...prev, domain]);
+      }
+    };
+  };
+
   return (
     <>
-      <div className="flex">
+      <div className="flex flex-col">
         {value === "ticker" ? (
           <TickerSelect handleOptionChange={handleOptionChange} />
         ) : (
           <AssetSelect handleOptionChange={handleOptionChange} />
         )}
-        <div className="flex w-full max-w-lg items-center overflow-x-auto py-6">
+        <div className="flex w-full max-w-lg items-center py-6">
           <div className="flex gap-x-4">
-            {assets.map((asset, index) => {
-              const isExcluded = excludedDomain?.includes(asset);
+            {assets?.map((domain, index) => {
+              const isExcluded = excludedDomain?.includes(domain);
+              const backgroundColor = (
+                chartScaleRef.current?.range as TScaleRecord
+              )?.[index];
               return (
                 <>
-                  <button
-                    type="button"
-                    key={asset}
+                  <Tag
+                    key={domain}
                     className={clsx(
-                      "flex items-center rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5",
+                      "flex items-center text-sm cursor-pointer rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5",
                       isExcluded ? "opacity-50" : ""
                     )}
-                    onClick={() => {
-                      if (isExcluded) {
-                        setExcludedDomain((prev) =>
-                          prev.filter((item) => item !== asset)
-                        );
-                      } else {
-                        if (assets.length - 1 === excludedDomain.length) {
-                          message.info("Please select at least one asset");
-                          return;
-                        }
-                        setExcludedDomain((prev) => [...prev, asset]);
-                      }
-                    }}
+                    onClick={handleDomainChange(domain)}
                   >
                     <div
                       className="mr-2 h-4 w-4"
                       style={{
-                        backgroundColor: (
-                          chartScaleRef.current?.range as TScaleRecord
-                        )?.[index],
+                        backgroundColor,
                       }}
                     />
-                    <div className="whitespace-nowrap">{asset}</div>
-                  </button>
-                  <CloseCircleOutlined onClick={() => handleTagClose(asset)} />
+                    <div className="whitespace-nowrap">{domain}</div>
+                  </Tag>
+                  <CloseCircleOutlined onClick={() => handleTagClose(domain)} />
                 </>
               );
             })}
           </div>
         </div>
       </div>
-      <div className="flex h-full flex-col">
+      <div style={{ width: "100%" }}>
         <div ref={chartRef} />
       </div>
     </>
