@@ -162,8 +162,8 @@ export default function ClientNetWorth() {
         columns={Columns}
         dataSource={data?.overview}
         rowKey="client_id"
-        className="table-reset h-[23.5rem]"
-        scroll={{ y: "21rem" }}
+        className="table-reset h-[22rem]"
+        scroll={{ y: "18.5rem" }}
       />
     </div>
   );

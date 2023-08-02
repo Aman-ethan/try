@@ -6,16 +6,18 @@ import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useCallback, useLayoutEffect, useState } from "react";
 import { useToken } from "@/lib/antd";
-import { SearchParams } from "@/interfaces/Main";
+import { IDateRange, SearchParams } from "@/interfaces/Main";
 import useSearchParams from "@/hooks/useSearchParams";
 import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/constants/format";
 import Select from "@/components/Input/Select";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
 
 dayjs.extend(quarterOfYear);
 
+type TDurationValue = ManipulateType | QUnitType | "all";
 interface IDuration {
   label: string;
-  value: ManipulateType | QUnitType;
+  value: TDurationValue;
 }
 
 interface IPopoverContentProps {
@@ -24,6 +26,7 @@ interface IPopoverContentProps {
 }
 
 const DURATION: IDuration[] = [
+  { label: "All", value: "all" },
   { label: "Weekly", value: "w" },
   { label: "Monthly", value: "M" },
   { label: "Quarterly", value: "Q" },
@@ -42,11 +45,14 @@ function getDateKeys(layoutSegment: string | null): SearchParams[] {
 }
 
 function useDurationWithParams() {
+  const { data: dateRange, isLoading } = useTransactionServerQuery<IDateRange>(
+    "/position/history/date/"
+  );
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
   const layoutSegment = useSelectedLayoutSegment();
   const [duration, setDuration] = useSessionStorage({
     key: "duration",
-    defaultValue: "Q" as ManipulateType,
+    defaultValue: "all" as TDurationValue,
   });
 
   const [startDateKey, endDateKey] = getDateKeys(layoutSegment);
@@ -54,19 +60,26 @@ function useDurationWithParams() {
   const endDate = getSearchParams(endDateKey);
 
   const onChange = useCallback(
-    (value: ManipulateType) => {
+    (value: ManipulateType | "all") => {
       setDuration(value);
+      if (value === "all") {
+        updateSearchParams({
+          [startDateKey]: dateRange?.start_date,
+          [endDateKey]: dateRange?.end_date,
+        });
+        return;
+      }
       updateSearchParams({
         [startDateKey]: dayjs().subtract(1, value).format(DATE_PARAM_FORMAT),
         [endDateKey]: dayjs().format(DATE_PARAM_FORMAT),
       });
     },
-    [endDateKey, startDateKey, setDuration, updateSearchParams]
+    [dateRange, endDateKey, startDateKey, setDuration, updateSearchParams]
   );
 
   useLayoutEffect(() => {
     if (!startDate) {
-      onChange(duration);
+      onChange(duration as ManipulateType);
     }
   }, [duration, onChange, startDate]);
 
@@ -75,6 +88,7 @@ function useDurationWithParams() {
     endDate,
     onChange,
     value: duration,
+    loading: isLoading,
   };
 }
 
@@ -89,12 +103,13 @@ function PopoverContent({ startDate, endDate }: IPopoverContentProps) {
 }
 
 export default function SelectDurationWithParams() {
-  const { onChange, startDate, endDate, value } = useDurationWithParams();
+  const { onChange, startDate, endDate, value, loading } =
+    useDurationWithParams();
   const [visible, setVisible] = useState(false);
   const { token } = useToken();
   return (
     <Popover
-      open={visible ? false : undefined}
+      open={visible || value === "all" ? false : undefined}
       className="p-2"
       content={<PopoverContent startDate={startDate} endDate={endDate} />}
       color={token.blue6}
@@ -108,6 +123,7 @@ export default function SelectDurationWithParams() {
         value={value}
         onChange={onChange}
         options={DURATION}
+        loading={loading}
       />
     </Popover>
   );

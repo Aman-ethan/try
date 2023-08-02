@@ -19,7 +19,7 @@ export default function Home() {
         <div className="flex-1 rounded-lg shadow-large bg-white p-6 lap:flex-1 lap:max-w-[30rem]">
           <ClientNetWorth />
         </div>
-        <div className="flex-1 rounded-lg shadow-large bg-white p-6 pb-0">
+        <div className="flex-1 overflow-x-auto rounded-lg shadow-large bg-white p-6 pb-0">
           <AssetNetWorth />
         </div>
       </div>

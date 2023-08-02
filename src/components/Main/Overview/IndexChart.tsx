@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as Plot from "@observablehq/plot";
-import { Spin, message } from "antd";
+import { Spin, Tag, message } from "antd";
 import clsx from "clsx";
 import { format } from "d3";
 import {
@@ -82,7 +82,6 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
     );
 
     const _groupedData = groupBy(absoluteData, "z");
-
     const _domains = Object.keys(_groupedData);
 
     excludedDomain.forEach((domain) => {
@@ -105,7 +104,13 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
       map(
         filledGroupedData,
         (item) =>
-          (maxBy(item, "y") as TData).y / ((minBy(item, "y") as TData).y || 1)
+          (maxBy(item, "y") as TData).y /
+          (
+            minBy(item, (o) => {
+              if (o.y === 0) return Infinity;
+              return o.y;
+            }) as TData
+          ).y
       )
     ) as number;
 
@@ -121,6 +126,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
       }
     );
     const chart = Plot.plot({
+      height: 330,
       style: {
         overflow: "visible",
       },
@@ -192,21 +198,20 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
   };
 
   return (
-    <div className="flex h-full flex-col">
-      <div ref={chartRef} />
-      <div className="flex w-full max-w-lg items-center overflow-x-auto py-6">
+    <div className="flex flex-col flex-1">
+      <div className="flex-1 flex" ref={chartRef} />
+      <div className="flex items-center overflow-x-auto py-4">
         <div className="flex gap-x-4">
-          {domains.map((domain, index) => {
+          {(chartScale?.domain as string[])?.map((domain, index) => {
             const isExcluded = excludedDomain?.includes(domain);
             const backgroundColor = (chartScale?.range as TScaleRecord)?.[
               index
             ];
             return (
-              <button
-                type="button"
+              <Tag
                 key={domain}
                 className={clsx(
-                  "flex items-center rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5",
+                  "flex items-center text-sm cursor-pointer rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5",
                   isExcluded ? "opacity-50" : ""
                 )}
                 onClick={handleDomainChange(domain)}
@@ -218,7 +223,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
                   }}
                 />
                 <div className="whitespace-nowrap">{domain}</div>
-              </button>
+              </Tag>
             );
           })}
         </div>

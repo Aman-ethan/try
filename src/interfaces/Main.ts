@@ -23,6 +23,11 @@ export interface IClientResponse {
   custodians: ICustodian[];
 }
 
+export interface IDateRange {
+  start_date: string;
+  end_date: string;
+}
+
 export interface IIndexData {
   x: string;
   y: number;

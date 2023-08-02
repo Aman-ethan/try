@@ -14,7 +14,7 @@ export default function AssetNetWorth() {
     useClientDropdown<IAssetNetWorth>({ urlKey, searchParamKey });
 
   return (
-    <div className="space-y-6 flex flex-col h-full w-full">
+    <div className="space-y-6 flex flex-col h-full">
       <Dropdown
         className="self-start"
         disabled={loading || !selectedClient?.value}
@@ -31,7 +31,11 @@ export default function AssetNetWorth() {
           <Empty className="my-auto -translate-y-6" />
         </div>
       ) : (
-        <IndexChart data={data?.data} loading={loading} />
+        <IndexChart
+          key={selectedClient?.key}
+          data={data?.data}
+          loading={loading}
+        />
       )}
     </div>
   );

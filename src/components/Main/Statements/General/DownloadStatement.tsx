@@ -1,12 +1,8 @@
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button, message } from "antd";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { CSVLink } from "react-csv";
-import {
-  AsyncClickHandler,
-  Data,
-  Headers,
-} from "react-csv/components/CommonPropTypes";
+import { CSVDownload } from "react-csv";
+import { Data, Headers } from "react-csv/components/CommonPropTypes";
 import useStatement from "@/hooks/useStatement";
 import { useTransactionServerLazyQuery } from "@/hooks/useQuery";
 import { IPaginatedResponse } from "@/interfaces/Main";
@@ -36,45 +32,35 @@ export default function DownloadStatement() {
     urlKey: URLs[layoutSegment],
   });
 
-  const {
-    data = "",
-    trigger,
-    isMutating,
-  } = useTransactionServerLazyQuery<string | IPaginatedResponse<Data>>(
-    urlWithParams
-  );
+  const { data, trigger, isMutating } = useTransactionServerLazyQuery<
+    string | IPaginatedResponse<Data>
+  >(urlWithParams);
 
-  const handleDownload: AsyncClickHandler = async (_, done) => {
-    if (isMutating) return;
+  const downloadStatement = async () => {
     try {
       await trigger();
-      done(true);
     } catch {
       message.error("Failed to download statement");
-      done(false);
     }
   };
 
-  const getStatement = () => {
-    return typeof data === "string" ? data : data?.results;
-  };
-
   return (
-    <CSVLink
-      headers={layoutSegment === "bank" ? BankStatementHeaders : undefined}
-      data={getStatement}
-      asyncOnClick
-      onClick={handleDownload}
-      filename={`${layoutSegment}_statement.csv`}
+    <Button
+      disabled={isMutating || layoutSegment === "position"}
+      size="large"
+      icon={<DownloadOutlined />}
+      loading={isMutating}
+      onClick={downloadStatement}
     >
-      <Button
-        disabled={layoutSegment === "position"}
-        size="large"
-        icon={<DownloadOutlined />}
-        loading={isMutating}
-      >
-        Download as CSV
-      </Button>
-    </CSVLink>
+      {data && !isMutating ? (
+        <CSVDownload
+          headers={layoutSegment === "bank" ? BankStatementHeaders : undefined}
+          data={typeof data === "string" ? data : data.results}
+          filename={`${layoutSegment}_statement.csv`}
+          target="_self"
+        />
+      ) : null}
+      Download as CSV
+    </Button>
   );
 }

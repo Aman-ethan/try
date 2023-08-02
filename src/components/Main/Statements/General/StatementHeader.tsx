@@ -47,7 +47,7 @@ export default function StatementFilter() {
             className={primarySelectClasses}
           />
         </div>
-        <DownloadStatement />
+        {layoutSegment === "position" ? null : <DownloadStatement />}
       </div>
     </div>
   );

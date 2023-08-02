@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
-import { IUseTableParams, SearchParams } from "@/interfaces/Main";
+import { IDateRange, IUseTableParams, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatCompactNumber } from "@/lib/format";
 import useTable from "@/hooks/useTable";
@@ -55,11 +55,6 @@ interface IGainerLoser {
   profit_loss: number;
 }
 
-interface IDateRange {
-  start_date: string;
-  end_date: string;
-}
-
 export interface ICombinedGainerLoser {
   result: {
     top_gainers: IGainerLoser[];
@@ -87,12 +82,6 @@ const Columns: TableColumnsType = [
     key: "security",
     width: "50%",
   },
-  // {
-  //   title: "Custodian Name",
-  //   dataIndex: "custodian_name",
-  //   key: "security",
-  //   width: "26%",
-  // },
   {
     title: "Total PL",
     dataIndex: "profit_loss",
@@ -156,7 +145,7 @@ export default function GainerLoser({
   const { pagination, onChange } = useTable({ searchParamKeys });
   const isGainer = title === "gainer";
   return (
-    <div className="w-1/2 space-y-6">
+    <div className="flex-1 space-y-6 lap:basis-1/2">
       <div className="flex justify-between items-center">
         <Title level={5} className="capitalize">
           {title}
