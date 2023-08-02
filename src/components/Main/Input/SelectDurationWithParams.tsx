@@ -13,7 +13,7 @@ import Select from "@/components/Input/Select";
 
 dayjs.extend(quarterOfYear);
 
-type TDurationValue = ManipulateType | QUnitType | "all";
+type TDurationValue = ManipulateType | QUnitType;
 interface IDuration {
   label: string;
   value: TDurationValue;
@@ -48,7 +48,7 @@ function useDurationWithParams() {
   const layoutSegment = useSelectedLayoutSegment();
   const [duration, setDuration] = useSessionStorage({
     key: "duration",
-    defaultValue: "all" as TDurationValue,
+    defaultValue: "year" as TDurationValue,
   });
 
   const [startDateKey, endDateKey] = getDateKeys(layoutSegment);
@@ -96,7 +96,7 @@ export default function SelectDurationWithParams() {
   const { token } = useToken();
   return (
     <Popover
-      open={visible || value === "all" ? false : undefined}
+      open={visible || value === "year" ? false : undefined}
       className="p-2"
       content={<PopoverContent startDate={startDate} endDate={endDate} />}
       color={token.blue6}

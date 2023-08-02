@@ -104,8 +104,8 @@ const searchParamKeys: Record<TGainerLoser, Record<"page", SearchParams>> = {
 };
 
 const URLs = {
-  gainer: "/position/history/top-gainers/",
-  loser: "/position/history/top-losers/",
+  gainer: "/position/history/top_gainer/",
+  loser: "/position/history/top_loser/",
 };
 
 const TABLE_ROW_NUM = 5;
