@@ -25,7 +25,7 @@ function View({ type }: { type: TabType }) {
 const DetailOptions: CheckboxOptionType[] = [
   { label: "Goals", value: "goals" },
   { label: "Estates", value: "estates" },
-  { label: "Bank accounts", value: "accounts" },
+  { label: "Bank Accounts", value: "accounts" },
 ];
 
 export default function ClientDetailsView() {
@@ -34,7 +34,7 @@ export default function ClientDetailsView() {
     setType(e.target.value);
   };
   return (
-    <div className="space-y-8 py-5">
+    <div className="space-y-8">
       <div className="flex flex-col tab:flex-row tab:justify-between">
         <Radio.Group
           options={DetailOptions}

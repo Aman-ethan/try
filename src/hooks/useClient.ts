@@ -11,12 +11,12 @@ interface IClient {
 }
 
 export default function useClient({ id }: { id?: string }) {
-  const { data, isLoading } = useTransactionServerQuery<IClient>(
+  const { data, isLoading, isValidating } = useTransactionServerQuery<IClient>(
     id ? `/client/${id}/` : null
   );
 
   return {
     data,
-    isLoading: isLoading || !id,
+    isLoading: (isLoading && !isValidating) || !id,
   };
 }

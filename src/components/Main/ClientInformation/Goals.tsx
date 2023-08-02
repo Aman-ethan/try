@@ -1,9 +1,11 @@
 "use client";
 
-import { Card, Col, Row, Skeleton, Tag, Typography } from "antd";
+import { Card, Col, Row, Skeleton, Tag } from "antd";
+import Paragraph from "@/components/Typography/Paragraph";
+import Title from "@/components/Typography/Title";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useSearchParams from "@/hooks/useSearchParams";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import DeleteModal from "./Common/DeleteModal";
 import { AssetColorMap } from "./Forms/GoalsForm";
@@ -58,7 +60,7 @@ const renderGoalsType = (key: keyof TGoalsType, item: TGoalsType) => {
       return item[key].map((asset_class: TAssetClassType) => (
         <Tag
           color={AssetColorMap[asset_class]}
-          className="my-2 px-2 py-1 text-sm font-medium"
+          className="px-2 py-1 text-sm font-normal"
         >
           {AssetClassMap[asset_class]}
         </Tag>
@@ -74,11 +76,15 @@ export default function Goals() {
   const { data, isLoading } = useGoal();
   if (isLoading) return <Skeleton />;
   return (
-    <div className="mt-4 h-96 w-full overflow-y-scroll tab:w-11/12">
+    <div className="mt-4 space-y-6 h-[calc(100vh-35rem)] w-full overflow-y-scroll tab:w-5/6">
       {data?.map((item) => (
         <Card
           key={item?.id}
-          title={item?.name || "No Name"}
+          title={
+            <Title level={5} className="font-normal">
+              {item?.name || "No Name"}
+            </Title>
+          }
           bordered
           extra={[
             <div className="flex">
@@ -86,7 +92,6 @@ export default function Goals() {
               <DeleteModal type="goals" id={item?.id} />
             </div>,
           ]}
-          style={{ marginBottom: "1em" }}
           headStyle={{ gap: "0.5rem" }}
           loading={isLoading}
         >
@@ -97,18 +102,19 @@ export default function Goals() {
               lg: 32,
               xl: 48,
             }}
+            className="gap-y-6"
           >
             {Object.entries(GoalsItemsMap).map(([label, key]) => (
               <Col
                 key={key}
                 sm={24}
                 md={key === "asset_class_preference" ? 24 : 12}
-                className="flex flex-col"
+                className="flex flex-col gap-2"
               >
-                <Typography.Text type="secondary">{label}</Typography.Text>
-                <Typography.Text style={{ marginTop: "0.3em" }}>
+                <Paragraph>{label}</Paragraph>
+                <Paragraph className="text-neutral-13/80">
                   {renderGoalsType(key, item)}
-                </Typography.Text>
+                </Paragraph>
               </Col>
             ))}
           </Row>

@@ -130,7 +130,12 @@ function DetailsForm({ type }: IClientDetailProps) {
   }
 }
 
-export default function ProfileEdit() {
+interface IEditProfileProps {
+  onSubmit: () => void;
+  onCancel: () => void;
+}
+
+export default function ProfileEdit({ onSubmit, onCancel }: IEditProfileProps) {
   const [form] = Form.useForm();
   const { data, loading, updateClient } = useClient();
 
@@ -164,8 +169,9 @@ export default function ProfileEdit() {
         initialValues={formatInitialValues(data)}
         layout="vertical"
         className=" w-11/12"
-        onFinish={(values) => {
-          updateClient(formatTriggerValues(values));
+        onFinish={async (values) => {
+          await updateClient(formatTriggerValues(values));
+          onSubmit();
         }}
         size="large"
         disabled={loading}
@@ -175,11 +181,18 @@ export default function ProfileEdit() {
             <DetailsForm key={key} type={key as TFormType} />
           ))}
         </Row>
-        <Row className=" float-right mt-4 flex gap-4 align-middle">
-          <Button type="primary" htmlType="submit" loading={loading}>
-            Submit
+        <Row className=" float-right mt-8 flex gap-4 align-middle">
+          <Button onClick={onCancel} className="px-8" htmlType="reset">
+            Cancel
           </Button>
-          <Button htmlType="reset">Reset</Button>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="px-8"
+            loading={loading}
+          >
+            Save
+          </Button>
         </Row>
       </Form>
     </div>

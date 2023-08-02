@@ -48,11 +48,11 @@ export default function DeleteModal({ id, type }: IDeleteModalProps) {
   return (
     <>
       <Button
-        className="ml-4"
+        className="ml-4 border-red-3"
         type="default"
         onClick={showModal}
         size="large"
-        icon={<DeleteOutlined />}
+        icon={<DeleteOutlined className="text-red-6" />}
       />
       <Popconfirm
         className="mob:hidden tab:block"
