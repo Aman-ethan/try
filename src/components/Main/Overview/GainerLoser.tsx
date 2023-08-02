@@ -64,9 +64,10 @@ export interface ICombinedGainerLoser {
   };
 }
 
+type TGainerLoser = "gainer" | "loser";
+
 interface IGainerLoserProps extends IUseTableParams {
-  urlKey: string;
-  title: "gainer" | "loser";
+  type: TGainerLoser;
 }
 
 const Columns: TableColumnsType = [
@@ -91,15 +92,25 @@ const Columns: TableColumnsType = [
   },
 ];
 
-const _searchParamKeys = [
-  "client",
-  "custodian_id",
-  "reporting_currency",
-  "page_gainer",
-  "page_loser",
-];
+const _searchParamKeys = ["client", "custodian_id", "reporting_currency"];
 
-function useGainerLoser({ urlKey }: { urlKey: string }) {
+const searchParamKeys: Record<TGainerLoser, Record<"page", SearchParams>> = {
+  gainer: {
+    page: "page_gainer",
+  },
+  loser: {
+    page: "page_loser",
+  },
+};
+
+const URLs = {
+  gainer: "/position/history/top-gainers/",
+  loser: "/position/history/top-losers/",
+};
+
+const TABLE_ROW_NUM = 5;
+
+function useGainerLoser({ type }: IGainerLoserProps) {
   const { get: getSearchParams } = useSearchParams();
   const { data: dateRange } = useTransactionServerQuery<IDateRange>(
     "/position/history/date/"
@@ -108,7 +119,7 @@ function useGainerLoser({ urlKey }: { urlKey: string }) {
 
   const { data, isLoading } = useTransactionServerQuery<IGainer>(
     dateRange
-      ? `${urlKey}${buildURLSearchParams(
+      ? `${URLs[type]}${buildURLSearchParams(
           _searchParamKeys.reduce(
             (acc, key) => ({
               ...acc,
@@ -122,6 +133,8 @@ function useGainerLoser({ urlKey }: { urlKey: string }) {
                 ? start_date
                 : dateRange.start_date,
               end_date: dateRange.end_date,
+              page: getSearchParams(searchParamKeys?.[type].page),
+              page_size: TABLE_ROW_NUM.toString(),
             }
           )
         )}`
@@ -134,21 +147,19 @@ function useGainerLoser({ urlKey }: { urlKey: string }) {
   };
 }
 
-const scroll = { y: "30rem" };
+export default function GainerLoser({ type }: IGainerLoserProps) {
+  const isGainer = type === "gainer";
+  const { data, isLoading } = useGainerLoser({ type });
+  const { pagination, onChange } = useTable({
+    searchParamKeys: searchParamKeys[type],
+    page_size: TABLE_ROW_NUM,
+  });
 
-export default function GainerLoser({
-  title,
-  urlKey,
-  searchParamKeys,
-}: IGainerLoserProps) {
-  const { data, isLoading } = useGainerLoser({ urlKey });
-  const { pagination, onChange } = useTable({ searchParamKeys });
-  const isGainer = title === "gainer";
   return (
     <div className="flex-1 space-y-6 lap:basis-1/2">
       <div className="flex justify-between items-center">
         <Title level={5} className="capitalize">
-          {title}
+          {type}
         </Title>
         <Paragraph className="flex items-center gap-x-1.5 text-neutral-13/80">
           {isGainer ? "Top Gain:" : "Top Loss:"}
@@ -163,11 +174,14 @@ export default function GainerLoser({
         loading={isLoading}
         columns={Columns}
         dataSource={data?.results}
-        scroll={scroll}
         onChange={onChange}
-        rowClassName="h-[5rem]"
-        className="h-[35rem]"
-        pagination={{ ...pagination, total: data?.count }}
+        rowClassName="h-[4.375rem]"
+        className="h-[28.375rem]"
+        pagination={{
+          ...pagination,
+          total: data?.count,
+          pageSize: TABLE_ROW_NUM,
+        }}
       />
     </div>
   );

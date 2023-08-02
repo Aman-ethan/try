@@ -16,3 +16,4 @@ export const formWrapper =
 export const PageCardClassName = "calc(100vh - 25rem)";
 
 export const TableScrollDifference = "5.375rem";
+export const DEFAULT_TABLE_ROW = 10;

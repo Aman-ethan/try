@@ -39,16 +39,8 @@ export default function Home() {
         </div>
         <GainerLoserFilter />
         <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-10">
-          <GainerLoser
-            title="gainer"
-            urlKey="/position/history/top_gainer/"
-            searchParamKeys={{ page: "page_gainer" }}
-          />
-          <GainerLoser
-            title="loser"
-            urlKey="/position/history/top_loser/"
-            searchParamKeys={{ page: "page_loser" }}
-          />
+          <GainerLoser type="gainer" />
+          <GainerLoser type="loser" />
         </div>
       </div>
     </div>

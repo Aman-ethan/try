@@ -7,6 +7,7 @@ import {
 import { useLayoutEffect, useState } from "react";
 import { StatementOptions, TradeActionOptions } from "@/constants/options";
 import { ICurrency, IUseTableParams, SearchParams } from "@/interfaces/Main";
+import { DEFAULT_TABLE_ROW } from "@/constants/strings";
 import { useTransactionServerQuery } from "./useQuery";
 import useSearchParams from "./useSearchParams";
 import useCustodian from "./useCustodian";
@@ -19,14 +20,21 @@ interface ISelectRow<T> {
   onRowClick?: (_record: T) => void;
 }
 
+const defaultSearchParamsKeys: Record<string, SearchParams> = {
+  client: "client",
+  page: "page",
+};
+
 export default function useTable(props?: IUseTableParams) {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
 
-  const searchParamsKeys = props?.searchParamKeys;
+  const clientKey =
+    props?.searchParamKeys?.client || defaultSearchParamsKeys.client;
+  const pageKey = props?.searchParamKeys?.page || defaultSearchParamsKeys.page;
 
-  const client = getSearchParams(searchParamsKeys?.client ?? "client");
+  const client = getSearchParams(clientKey);
+  const page = getSearchParams(pageKey);
   const custodian = getSearchParams("custodian");
-  const page = getSearchParams(searchParamsKeys?.page ?? "page");
   const ordering = getSearchParams("ordering");
 
   function onChange<T>(
@@ -39,7 +47,7 @@ export default function useTable(props?: IUseTableParams) {
 
     updateSearchParams({
       ...filters,
-      page: String(pagination.current),
+      [pageKey]: String(pagination.current),
       ordering: order ? _ordering : undefined,
     });
   }
@@ -47,7 +55,7 @@ export default function useTable(props?: IUseTableParams) {
   const pagination: TablePaginationConfig = {
     position: ["bottomRight"],
     current: Number(page) || 1,
-    pageSize: 10,
+    pageSize: props?.page_size || DEFAULT_TABLE_ROW,
   };
 
   return {

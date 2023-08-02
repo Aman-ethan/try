@@ -282,10 +282,11 @@ export type SearchParams =
   | "gain_loss_duration";
 
 export interface IUseTableParams {
-  searchParamKeys: {
+  searchParamKeys?: {
     client?: SearchParams;
     page?: SearchParams;
   };
+  page_size?: number;
 }
 
 export type TUpload = "bulk" | "single";
