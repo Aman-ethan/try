@@ -132,7 +132,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
       <Layout className={collapsed ? "ml-20" : "ml-60"}>
         <Layout.Header
           className={clsx(
-            "fixed inset-0 z-10 flex bg-neutral-1 pl-6 pr-12",
+            "fixed inset-0 z-20 flex bg-neutral-1 pl-6 pr-12",
             collapsed ? "ml-20" : "ml-60"
           )}
         >

@@ -15,6 +15,7 @@ export default function ListItem() {
     search,
     assetClass,
     ordering,
+    report_date,
   } = usePositions();
 
   const { data, isLoading } = useTransactionServerQuery<IPositionsResponse>(
@@ -25,6 +26,7 @@ export default function ListItem() {
       search,
       asset_class: assetClass,
       ordering,
+      report_date,
     })}`
   );
 

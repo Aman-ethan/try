@@ -38,6 +38,7 @@ function getDateKeys(layoutSegment: string | null): SearchParams[] {
     case "t+1":
     case "statements":
       return ["statement_date__gte", "statement_date__lte"];
+    case "position-search":
     case "client-information":
       return [];
     default:

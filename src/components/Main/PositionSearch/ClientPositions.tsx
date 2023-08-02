@@ -2,30 +2,30 @@ import { ProCard, ProList } from "@ant-design/pro-components";
 import { Col, DatePicker, Empty, Row } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import { useRouter } from "next/navigation";
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+import React, { useEffect } from "react";
 import Title from "@/components/Typography/Title";
-import { DATE_SELECT_FORMAT } from "@/constants/format";
+import { DATE_PARAM_FORMAT } from "@/constants/format";
 import { BalanceSheetUrl } from "@/constants/strings";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { IMonthPicker, IPositionNetWorth } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatCompactNumber } from "@/lib/format";
+import useSearchParams from "@/hooks/useSearchParams";
 import CurrencyTag from "../General/CurrencyTag";
 
 export interface IClientDataProps {
   clients?: IPositionNetWorth[];
   loading: boolean;
-  selectedMonth: string;
-  setSelectedMonth: Dispatch<SetStateAction<string>>;
 }
 
 export default function ClientPositions({
   clients,
   loading,
-  selectedMonth,
-  setSelectedMonth,
 }: IClientDataProps) {
   const { push, prefetch } = useRouter();
+  const { get: getSearchParams, updateSearchParams } = useSearchParams();
+
+  const selectedDate = getSearchParams("date");
 
   const { data } = useTransactionServerQuery<IMonthPicker>(
     `/statement/position/date/`
@@ -35,6 +35,7 @@ export default function ClientPositions({
     push(
       `${BalanceSheetUrl}/${buildURLSearchParams({
         client: record?.client_id,
+        report_date: selectedDate,
       })}`
     );
   }
@@ -43,28 +44,23 @@ export default function ClientPositions({
     prefetch(BalanceSheetUrl);
   }, [prefetch]);
 
-  const currentDate =
-    selectedMonth !== "" && selectedMonth !== "Invalid Date"
-      ? dayjs(selectedMonth, DATE_SELECT_FORMAT)
-      : null;
-
   return (
     <ProList
       locale={{ emptyText: <Empty /> }}
       loading={loading}
       toolBarRender={() => [
         <DatePicker.MonthPicker
-          value={currentDate}
-          format={DATE_SELECT_FORMAT}
+          value={selectedDate ? dayjs(selectedDate) : undefined}
+          size="large"
+          format="MMM YYYY"
           disabledDate={(current: Dayjs) =>
             dayjs(current).isAfter(data?.end_date) ||
             dayjs(current).isBefore(data?.start_date)
           }
           onChange={(value: Dayjs | null) => {
-            const selectedDate = value
-              ?.endOf("month")
-              .format(DATE_SELECT_FORMAT);
-            setSelectedMonth(selectedDate ?? "");
+            updateSearchParams({
+              date: value?.endOf("month").format(DATE_PARAM_FORMAT),
+            });
           }}
           allowClear
         />,

@@ -1,29 +1,25 @@
 "use client";
 
-import { useState } from "react";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { IPositionSearchResponse } from "@/interfaces/Main";
+import useSearchParams from "@/hooks/useSearchParams";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import CompanyCard from "./CompanyCard";
 import ClientPositions from "./ClientPositions";
 
 export default function Positions() {
-  const [selectedMonth, setSelectedMonth] = useState("");
-  const endpoint =
-    selectedMonth !== "" && selectedMonth !== "Invalid Date"
-      ? `/statement/position/networth_cards?date=${selectedMonth}`
-      : "/statement/position/networth_cards";
+  const { get: getSearchParams } = useSearchParams();
   const { data, isLoading } =
-    useTransactionServerQuery<IPositionSearchResponse>(endpoint);
+    useTransactionServerQuery<IPositionSearchResponse>(
+      `/statement/position/networth_cards/${buildURLSearchParams({
+        date: getSearchParams("date"),
+      })}`
+    );
 
   return (
     <div className="space-y-8">
       <CompanyCard companyData={data?.company_card} loading={isLoading} />
-      <ClientPositions
-        clients={data?.client_cards}
-        loading={isLoading}
-        selectedMonth={selectedMonth}
-        setSelectedMonth={setSelectedMonth}
-      />
+      <ClientPositions clients={data?.client_cards} loading={isLoading} />
     </div>
   );
 }

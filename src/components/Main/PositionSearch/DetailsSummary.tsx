@@ -5,6 +5,7 @@ import useBalanceSheet from "@/hooks/useBalanceSheet";
 import { useAnalyticsServerGetQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import { IBalanceSheetOverview } from "@/interfaces/Main";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import CurrencyTag from "../General/CurrencyTag";
 import SummaryCard from "./Common/SummaryCard";
 import ChartTable from "./Table/ChartTable";
@@ -13,9 +14,16 @@ export default function DetailsSummary() {
   const { get: getSearchParams } = useSearchParams();
 
   const clientId = getSearchParams("client");
+  const selectedDate = getSearchParams("report_date");
 
   const { data, isLoading } = useAnalyticsServerGetQuery<IBalanceSheetOverview>(
-    clientId ? `/networth/${clientId}/` : `/networth/`
+    (clientId ? `/networth/${clientId}/` : `/networth/`) +
+      buildURLSearchParams({
+        report_date: selectedDate,
+      }),
+    {
+      keepPreviousData: false,
+    }
   );
 
   const {
