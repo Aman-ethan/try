@@ -61,10 +61,11 @@ export default function ChartTable({
 }: IChartTableProps) {
   const TotalText =
     progressType === "success" ? "Total Assets" : "Total Liabilities";
-  const textClass = clsx("text-md", "basis-1/4", "text-center", {
-    "text-summary-profit": progressType === "success",
-    "text-summary-loss": progressType !== "success",
-  });
+
+  const textClass = clsx(
+    progressType === "success" ? "text-summary-profit" : "text-summary-loss",
+    "text-md basis-1/4 text-center"
+  );
 
   const renderRow = ({
     children,
