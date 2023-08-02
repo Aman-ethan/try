@@ -17,7 +17,7 @@ async function fetcher({ url, init, error }: IFetcherParams) {
       ...init,
       headers: {
         "Accept-Encoding": "gzip",
-        Authorization: accessToken ? `Bearer ${accessToken}` : "",
+        Authorization: "Token 84a01cc0d01347eedba4f7f46b8d0e5759e15837",
         ...init.headers,
       },
     });

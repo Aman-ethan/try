@@ -38,6 +38,8 @@ function getDateKeys(layoutSegment: string | null): SearchParams[] {
     case "t+1":
     case "statements":
       return ["statement_date__gte", "statement_date__lte"];
+    case "client-information":
+      return [];
     default:
       return ["start_date", "end_date"];
   }
@@ -58,10 +60,11 @@ function useDurationWithParams() {
   const onChange = useCallback(
     (value: ManipulateType) => {
       setDuration(value);
-      updateSearchParams({
-        [startDateKey]: dayjs().subtract(1, value).format(DATE_PARAM_FORMAT),
-        [endDateKey]: dayjs().format(DATE_PARAM_FORMAT),
-      });
+      if (startDateKey && endDateKey)
+        updateSearchParams({
+          [startDateKey]: dayjs().subtract(1, value).format(DATE_PARAM_FORMAT),
+          [endDateKey]: dayjs().format(DATE_PARAM_FORMAT),
+        });
     },
     [endDateKey, startDateKey, setDuration, updateSearchParams]
   );

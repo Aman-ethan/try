@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Form, Input, Row, Spin, message } from "antd";
+import { Button, Form, FormRule, Input, Row, Spin, message } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import useFormState from "@/hooks/useForm";
 import {
@@ -71,11 +71,26 @@ interface IBankAccountFormInputProps {
   label: string;
 }
 
+const FormRules: Partial<Record<keyof TBankAccount, FormRule[]>> = {
+  account_number: [
+    { required: true, message: "Please enter the account number" },
+  ],
+  custodian: [{ required: true, message: "Please select the custodian" }],
+  relationship_number: [
+    { required: true, message: "Please enter the relationship number" },
+  ],
+};
+
 function BankAccountFormInput({ type, label }: IBankAccountFormInputProps) {
   switch (type) {
     case "custodian":
       return (
-        <Form.Item name="custodian" label="Custodian" className="flex-1">
+        <Form.Item
+          name="custodian"
+          label="Custodian"
+          className="flex-1"
+          rules={FormRules.custodian}
+        >
           <CreateCustodian placeholder="Select Custodian" />
         </Form.Item>
       );
@@ -89,7 +104,12 @@ function BankAccountFormInput({ type, label }: IBankAccountFormInputProps) {
       return null;
     default:
       return (
-        <Form.Item label={label} name={type} className="flex-1">
+        <Form.Item
+          label={label}
+          name={type}
+          className="flex-1"
+          rules={FormRules[type]}
+        >
           <Input placeholder={`Enter the ${label}`} name={type} />
         </Form.Item>
       );
@@ -113,15 +133,15 @@ export default function BankAccountForms({
     onClose();
     form.resetFields();
     revalidate(`/bank_account/`);
+    if (id) {
+      revalidate(`/bank_account/${id}/`, false);
+    }
   };
 
   const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
     onSuccess: () => {
       message.success("Bank Account Added successfully");
       handleMutationSuccess();
-    },
-    onError: (error) => {
-      message.error(error.message);
     },
   });
 
@@ -130,9 +150,6 @@ export default function BankAccountForms({
       onSuccess: () => {
         message.success("Bank Account Updated successfully");
         handleMutationSuccess();
-      },
-      onError: (error) => {
-        message.error(error.message);
       },
     });
 
@@ -182,6 +199,7 @@ export default function BankAccountForms({
       size="large"
       className="space-y-6 pb-20"
       disabled={loading}
+      requiredMark={false}
     >
       <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
         {Object.entries(BankAccountFormMap).map(([key, label]) => (

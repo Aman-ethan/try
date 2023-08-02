@@ -2,20 +2,19 @@
 
 import { CheckboxOptionType, Radio, RadioChangeEvent } from "antd";
 import { useState } from "react";
+import { TTabType } from "@/interfaces/Main";
 import BankAccounts from "./BankAccounts";
 import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import Estates from "./Estates";
 import Goals from "./Goals";
 
-type TabType = "goals" | "estates" | "accounts";
-
-function View({ type }: { type: TabType }) {
+function View({ type }: { type: TTabType }) {
   switch (type) {
     case "goals":
       return <Goals />;
-    case "estates":
+    case "estate":
       return <Estates />;
-    case "accounts":
+    case "bank_account":
       return <BankAccounts />;
     default:
       return null;
@@ -24,12 +23,12 @@ function View({ type }: { type: TabType }) {
 
 const DetailOptions: CheckboxOptionType[] = [
   { label: "Goals", value: "goals" },
-  { label: "Estates", value: "estates" },
-  { label: "Bank Accounts", value: "accounts" },
+  { label: "Estates", value: "estate" },
+  { label: "Bank Accounts", value: "bank_account" },
 ];
 
 export default function ClientDetailsView() {
-  const [type, setType] = useState<TabType>("goals");
+  const [type, setType] = useState<TTabType>("goals");
   const handleTypeChange = (e: RadioChangeEvent) => {
     setType(e.target.value);
   };

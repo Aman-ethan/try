@@ -147,7 +147,7 @@ export default function ProfileEdit({ onSubmit, onCancel }: IEditProfileProps) {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="mb-4 flex w-11/12 items-center justify-between">
+      <div className="mb-4 flex w-full items-center justify-between">
         <Title className="text-base">Edit Profile</Title>
         <div className="text-base">
           <Button
@@ -168,7 +168,7 @@ export default function ProfileEdit({ onSubmit, onCancel }: IEditProfileProps) {
         form={form}
         initialValues={formatInitialValues(data)}
         layout="vertical"
-        className=" w-11/12"
+        className=" w-full"
         onFinish={async (values) => {
           await updateClient(formatTriggerValues(values));
           onSubmit();

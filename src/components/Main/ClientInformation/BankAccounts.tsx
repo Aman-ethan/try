@@ -25,7 +25,7 @@ export default function BankAccounts() {
   if (isLoading) return <Skeleton />;
 
   return (
-    <div className="mt-4 h-96 w-full overflow-y-scroll tab:w-11/12">
+    <div className="mt-4 h-[calc(100vh-35rem)] w-full overflow-y-scroll tab:w-11/12">
       {data?.map((item) => (
         <Card
           key={item?.relationship_number}
@@ -49,7 +49,7 @@ export default function BankAccounts() {
             <div className="flex">
               <ClientDetailsDrawer
                 edit
-                type="bank_accounts"
+                type="bank_account"
                 id={item?.relationship_number}
               />
               <DeleteModal type="bank_account" id={item?.relationship_number} />

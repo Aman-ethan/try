@@ -44,7 +44,7 @@ const URLs = {
 
 function useEstate(id?: string) {
   const { data, isLoading } = useTransactionServerQuery<TEstate>(
-    `${URLs.get}${id ? `${id}/` : ""}`
+    id ? `${URLs.get}${id}/` : URLs.get
   );
   return { data, isLoading };
 }
@@ -108,6 +108,9 @@ export default function EstatesForm({ onClose, id }: IEstatesForm) {
 
   const handleMutationSuccess = () => {
     revalidate(`/estate/`);
+    if (id) {
+      revalidate(`/estate/${id}/`, false);
+    }
     onClose();
     onReset();
   };

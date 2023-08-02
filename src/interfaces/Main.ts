@@ -289,6 +289,7 @@ export interface IUseTableParams {
   page_size?: number;
 }
 
+export type TTabType = "goals" | "estate" | "bank_account";
 export type TUpload = "bulk" | "single";
 export type TUploadStatement = "position" | "trade";
 

@@ -53,7 +53,7 @@ export default function Estates() {
   if (isLoading) return <Skeleton />;
 
   return (
-    <div className="mt-4 h-96 w-full overflow-y-scroll tab:w-11/12">
+    <div className="mt-4 h-[calc(100vh-35rem)] w-full overflow-y-scroll tab:w-11/12">
       {data?.map((item: TEstate) => (
         <Card
           key={item?.id}
@@ -75,7 +75,7 @@ export default function Estates() {
           bordered
           extra={[
             <div className="flex">
-              <ClientDetailsDrawer edit type="estates" id={item?.id} />
+              <ClientDetailsDrawer edit type="estate" id={item?.id} />
               <DeleteModal type="estate" id={item?.id} />
             </div>,
           ]}

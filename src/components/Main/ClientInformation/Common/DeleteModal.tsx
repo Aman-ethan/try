@@ -1,21 +1,20 @@
 "use client";
 
 import { DeleteOutlined, DeleteTwoTone } from "@ant-design/icons";
-import { Button, Drawer, message, Popconfirm } from "antd";
+import { Button, Drawer, Popconfirm, message } from "antd";
 import { useState } from "react";
 import revalidate from "@/lib/revalidate";
 import { useTransactionServerDeleteMutation } from "@/hooks/useMutation";
+import { TTabType } from "@/interfaces/Main";
 
 const DeleteHeader = {
   goals: "Goal",
   bank_account: "Bank Account",
   estate: "Estate",
 };
-
-type TDeleteType = keyof typeof DeleteHeader;
 interface IDeleteModalProps {
   id: string;
-  type: TDeleteType;
+  type: TTabType;
 }
 
 function useDeleteClient({ type, id }: IDeleteModalProps) {
@@ -24,10 +23,8 @@ function useDeleteClient({ type, id }: IDeleteModalProps) {
       message.success(` ${DeleteHeader[type]} deleted successfully`);
       revalidate(`/${type}/`);
     },
-    onError: () => {
-      message.error(`Error deleting ${DeleteHeader[type]}`);
-    },
   });
+
   return {
     trigger,
   };
@@ -48,11 +45,11 @@ export default function DeleteModal({ id, type }: IDeleteModalProps) {
   return (
     <>
       <Button
-        className="ml-4 border-red-3"
+        className="ml-4 border-red-300"
         type="default"
         onClick={showModal}
         size="large"
-        icon={<DeleteOutlined className="text-red-6" />}
+        icon={<DeleteOutlined className="text-red-600" />}
       />
       <Popconfirm
         className="mob:hidden tab:block"

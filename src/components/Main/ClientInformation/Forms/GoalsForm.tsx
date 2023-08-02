@@ -1,6 +1,6 @@
 "use client";
 
-import { Form, Input, Row, Select, Spin, message, Tag } from "antd";
+import { Form, Input, Row, Select, Spin, message, Tag, FormRule } from "antd";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { isArray } from "lodash";
@@ -71,20 +71,19 @@ function useGoal(id?: string) {
       revalidate(`/goals/`);
       message.success("Goal Added successfully");
     },
-    onError: () => {
-      message.error("Something went wrong");
-    },
   });
+
   const { trigger: update, isMutating: isUpdating } =
     useTransactionServerPutMutation(URLs.put.replace("{id}", id!), {
       onSuccess: () => {
         revalidate(`/goals/`);
+        if (id) {
+          revalidate(URLs.get.replace("{id}", id), false);
+        }
         message.success("Goal Updated successfully");
       },
-      onError: () => {
-        message.error("Something went wrong");
-      },
     });
+
   const { formId } = useFormState({ isMutating: isMutating || isUpdating });
 
   return {
@@ -106,6 +105,12 @@ interface IGoalFormInputsProps {
   form: FormInstance<any>;
 }
 
+const FormRules: Record<"asset_class_preference", FormRule[]> = {
+  asset_class_preference: [
+    { required: true, message: "Please select asset class preference" },
+  ],
+};
+
 const tagRender = () => <> </>;
 function GoalFormInputs({
   type,
@@ -123,7 +128,13 @@ function GoalFormInputs({
     case "asset_class_preference":
       return (
         <div className="relative">
-          <Form.Item key={type} label={label} name={type} className="flex-1">
+          <Form.Item
+            key={type}
+            label={label}
+            name={type}
+            className="flex-1"
+            rules={FormRules.asset_class_preference}
+          >
             <Select
               options={AssetClassPreference}
               placeholder="Select asset class preference"
@@ -243,6 +254,7 @@ export default function GoalsForm({ id, onClose }: GoalsFormProps) {
       onFinish={handleSubmit}
       form={form}
       initialValues={data}
+      requiredMark={false}
     >
       <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
         {Object.entries(GoalFormMap).map(([key, label]) => (

@@ -4,17 +4,18 @@ import { EditOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { lazy, useState } from "react";
 import useResize from "@/hooks/useResize";
+import { TTabType } from "@/interfaces/Main";
 import Drawer from "../../General/Drawer";
 import { ResetButton, SubmitButton } from "../../General/DrawerFormButton";
 
 interface IClientDetailsDrawerProps {
-  type: string;
+  type: TTabType;
   edit?: boolean;
   id?: string;
 }
 
 interface IDetailsFormProps {
-  type: string;
+  type: TTabType;
   id?: string;
   onClose: () => void;
 }
@@ -27,9 +28,9 @@ function DetailsForm({ id, type, onClose }: IDetailsFormProps) {
   switch (type) {
     case "goals":
       return <GoalsForm id={id} onClose={onClose} />;
-    case "estates":
+    case "estate":
       return <EstatesForm id={id} onClose={onClose} />;
-    case "accounts":
+    case "bank_account":
       return <BankAccountsForm id={id} onClose={onClose} />;
     default:
       return null;

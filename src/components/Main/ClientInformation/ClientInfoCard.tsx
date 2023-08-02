@@ -33,7 +33,7 @@ export default function ClientInfoCard() {
     if (clientId) return;
     if (selectedClient?.value) {
       updateSearchParams({
-        client_id: selectedClient?.value,
+        [searchParamKey]: selectedClient?.value,
       });
     }
   }, [clientId, selectedClient?.value, updateSearchParams]);
@@ -45,7 +45,7 @@ export default function ClientInfoCard() {
       <Row>
         <Col className="w-full tab:w-1/2 lap:w-1/3">
           <SelectClientWithParams
-            searchParamKey="client_id"
+            searchParamKey={searchParamKey}
             className="mob:w-full"
             disabled={!selectedClient?.key}
             value={selectedClient?.value}
