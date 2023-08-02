@@ -189,7 +189,12 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
       </div>
     );
 
-  if (data?.length === 0) return <Empty />;
+  if (!data?.length)
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Empty />
+      </div>
+    );
 
   const handleDomainChange = (domain: string) => {
     return () => {
