@@ -4,6 +4,7 @@ import clsx from "clsx";
 import React from "react";
 import { IBalanceSheetChart, TProgressType } from "@/interfaces/Main";
 import { formatCompactNumber, formatPercentage } from "@/lib/format";
+import Title from "@/components/Typography/Title";
 import Table from "../../Table";
 import ProgressBar from "../Common/ProgressBar";
 
@@ -21,26 +22,29 @@ interface IChartTableProps {
 const thClassName =
   "relative z-10 bg-transparent border-none text-left text-sm tab:text-md lap:text-lg font-light text-neutral-9";
 
+const trClassName =
+  "relative z-10 bg-transparent border-none text-left text-sm tab:text-md lap:text-lg font-light";
+
 const Columns: TableColumnsType<IBalanceSheetChart> = [
   {
     title: "Asset Class",
     dataIndex: "asset_class",
     key: "assetClass",
-    className: thClassName,
+    className: trClassName,
   },
   {
     title: "Total Value",
     dataIndex: "total_value",
     key: "totalValue",
     render: formatCompactNumber,
-    className: thClassName,
+    className: trClassName,
   },
   {
     title: "in %",
     dataIndex: "percentage",
     key: "percentage",
     render: formatPercentage,
-    className: thClassName,
+    className: trClassName,
   },
 ];
 
@@ -57,7 +61,7 @@ export default function ChartTable({
 }: IChartTableProps) {
   const TotalText =
     progressType === "success" ? "Total Assets" : "Total Liabilities";
-  const textClass = clsx("text-xl", "basis-1/4", "text-center", {
+  const textClass = clsx("text-md", "basis-1/4", "text-center", {
     "text-summary-profit": progressType === "success",
     "text-summary-loss": progressType !== "success",
   });
@@ -91,7 +95,7 @@ export default function ChartTable({
         rowKey="percentage"
         columns={Columns}
         pagination={false}
-        className="overflow-hidden mb-2"
+        className="overflow-hidden"
         components={{
           header: {
             cell: renderCell,
@@ -102,11 +106,15 @@ export default function ChartTable({
         }}
       />
       <div className="flex justify-between border-t-2 py-4">
-        <h2 className="text-sm tab:text-md lap:text-lg basis-1/2">
+        <Title className="text-sm tab:text-md lap:text-lg basis-1/2">
           {TotalText}
-        </h2>
-        <h2 className={textClass}>{formatCompactNumber(total)}</h2>
-        <h2 className={textClass}>{formatPercentage(percentage)}%</h2>
+        </Title>
+        <Title level={4} className={textClass}>
+          {formatCompactNumber(total)}
+        </Title>
+        <Title level={4} className={textClass}>
+          {formatPercentage(percentage)}%
+        </Title>
       </div>
     </>
   );

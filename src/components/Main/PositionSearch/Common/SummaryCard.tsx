@@ -1,7 +1,7 @@
 "use client";
 
 import { Card } from "antd";
-import { formatCompactNumber } from "@/lib/format";
+import { formatCompactNumber, formatPercentage } from "@/lib/format";
 import Title from "@/components/Typography/Title";
 
 interface ISummaryCardProps {
@@ -10,6 +10,8 @@ interface ISummaryCardProps {
 }
 
 export default function SummaryCard({ type, value }: ISummaryCardProps) {
+  const formattedValue =
+    type === "Leverage" ? formatPercentage(value) : formatCompactNumber(value);
   return (
     <Card
       bordered
@@ -19,7 +21,7 @@ export default function SummaryCard({ type, value }: ISummaryCardProps) {
       className="w-full lap:w-1/3"
     >
       <Title level={4} className="font-medium">
-        {formatCompactNumber(value)}
+        {formattedValue}
       </Title>
       <p className="tab:text-md text-sm">{type}</p>
     </Card>
