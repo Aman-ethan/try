@@ -3,7 +3,7 @@ import { TableColumnsType } from "antd";
 import clsx from "clsx";
 import React from "react";
 import { IBalanceSheetChart, TProgressType } from "@/interfaces/Main";
-import { formatCompactNumber } from "@/lib/format";
+import { formatCompactNumber, formatPercentage } from "@/lib/format";
 import Table from "../../Table";
 import ProgressBar from "../Common/ProgressBar";
 
@@ -39,7 +39,7 @@ const Columns: TableColumnsType<IBalanceSheetChart> = [
     title: "in %",
     dataIndex: "percentage",
     key: "percentage",
-    render: formatCompactNumber,
+    render: formatPercentage,
     className: thClassName,
   },
 ];
@@ -91,7 +91,7 @@ export default function ChartTable({
         rowKey="percentage"
         columns={Columns}
         pagination={false}
-        className="mb-2"
+        className="overflow-hidden mb-2"
         components={{
           header: {
             cell: renderCell,
@@ -106,7 +106,7 @@ export default function ChartTable({
           {TotalText}
         </h2>
         <h2 className={textClass}>{formatCompactNumber(total)}</h2>
-        <h2 className={textClass}>{formatCompactNumber(percentage)}%</h2>
+        <h2 className={textClass}>{formatPercentage(percentage)}%</h2>
       </div>
     </>
   );

@@ -4,5 +4,6 @@ interface IProgressBarProps {
 }
 
 export default function ProgressBar({ className, percent }: IProgressBarProps) {
-  return <div className={className} style={{ width: `${percent}%` }} />;
+  const widthPercent = percent && percent >= 0 ? percent : 0;
+  return <div className={className} style={{ width: `${widthPercent}%` }} />;
 }

@@ -2,6 +2,7 @@
 
 import { Card } from "antd";
 import { formatCompactNumber } from "@/lib/format";
+import Title from "@/components/Typography/Title";
 
 interface ISummaryCardProps {
   type: string;
@@ -17,9 +18,9 @@ export default function SummaryCard({ type, value }: ISummaryCardProps) {
       }}
       className="w-full lap:w-1/3"
     >
-      <h2 className="text-xl font-medium tab:text-2xl">
+      <Title level={4} className="font-medium">
         {formatCompactNumber(value)}
-      </h2>
+      </Title>
       <p className="tab:text-md text-sm">{type}</p>
     </Card>
   );
