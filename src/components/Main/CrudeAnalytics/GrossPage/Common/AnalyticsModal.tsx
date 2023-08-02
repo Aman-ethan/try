@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { Modal, Skeleton, TableColumnsType } from "antd";
+import { Modal } from "antd";
 import Title from "antd/lib/typography/Title";
+import { ColumnType } from "antd/es/table";
 import Select from "@/components/Input/Select";
-import ScrollableTable from "@/components/Main/Table/ScrollableTable";
 import { IPieData, IPositionsResponse } from "@/interfaces/Main";
+import useTable, { useTableFilter } from "@/hooks/useTable";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import useSearchParams from "@/hooks/useSearchParams";
+import CurrencyTag from "@/components/Main/General/CurrencyTag";
+import { formatQuantity } from "@/lib/format";
+import Table from "@/components/Main/Table";
 
 interface IAnalyticsModalProps {
   isModalOpen: boolean;
@@ -16,7 +19,55 @@ interface IAnalyticsModalProps {
   category: string;
 }
 
-const columns: TableColumnsType = [
+interface ISelectOption {
+  label: string;
+  value: number;
+}
+
+type TPositionColumn = {
+  isin: string;
+  description: string;
+  quantity: number;
+  currency: string;
+  average_price: number;
+  mtm_price: number;
+  market_value: number;
+  unrealizedPL: number;
+};
+
+function useAnalytics(category: string, value: string) {
+  const {
+    onChange,
+    pagination,
+    page,
+    ordering,
+    client,
+    custodian,
+    currency__in,
+  } = useTable();
+  const params: Record<string, string | undefined> = {
+    asset_class: category === "asset class" ? value : undefined,
+    security__country_name: category === "region" ? value : undefined,
+    security__sub_industry: category === "industry" ? value : undefined,
+    client,
+    custodian,
+    page,
+    ordering,
+    currency__in,
+  };
+  const { data: analyticsData, isLoading } =
+    useTransactionServerQuery<IPositionsResponse>(
+      `/position/history/${buildURLSearchParams(params)}`
+    );
+  return {
+    analyticsData,
+    isLoading,
+    pagination,
+    onChange,
+  };
+}
+
+const columns: ColumnType<TPositionColumn>[] = [
   {
     title: "ISIN",
     dataIndex: "isin",
@@ -32,29 +83,36 @@ const columns: TableColumnsType = [
     dataIndex: "quantity",
     key: "quantity",
     align: "right",
+    sorter: true,
+    render: formatQuantity,
   },
   {
     title: "Currency",
     dataIndex: "currency",
-    key: "currency",
+    key: "currency__in",
+    align: "center",
+    render: (currency) => <CurrencyTag currency={currency} />,
   },
   {
     title: "Average Price",
-    dataIndex: "averagePrice",
-    key: "averagePrice",
+    dataIndex: "average_price",
+    key: "average_price",
     align: "right",
+    sorter: true,
   },
   {
     title: "MTM Price",
-    dataIndex: "mtmPrice",
-    key: "mtmPrice",
+    dataIndex: "mtm_price",
+    key: "mtm_price",
     align: "right",
+    sorter: true,
   },
   {
     title: "Market Value",
-    dataIndex: "marketValue",
-    key: "marketValue",
+    dataIndex: "market_value",
+    key: "market_value",
     align: "right",
+    sorter: true,
   },
   {
     title: "Unrealized P&L",
@@ -63,31 +121,6 @@ const columns: TableColumnsType = [
     align: "right",
   },
 ];
-
-function useAnalytics(category: string, value: string) {
-  const { get: getSearchParams } = useSearchParams();
-  const client_id = getSearchParams("client") || undefined;
-  const custodian_id = getSearchParams("custodian") || undefined;
-
-  const params: Record<string, string | undefined> = {
-    asset_class: category === "asset class" ? value : undefined,
-    security__country_name: category === "region" ? value : undefined,
-    security__sub_industry: category === "industry" ? value : undefined,
-    client: client_id,
-    custodian: custodian_id,
-  };
-
-  const { data: analyticsData, isLoading } =
-    useTransactionServerQuery<IPositionsResponse>(
-      `/position/history/${buildURLSearchParams(params)}`
-    );
-  return { analyticsData, isLoading };
-}
-
-interface ISelectOption {
-  label: string;
-  value: number;
-}
 
 export default function AnalyticsModal({
   isModalOpen,
@@ -100,6 +133,12 @@ export default function AnalyticsModal({
   const [selectedOption, setSelectedOption] = useState<
     ISelectOption | undefined
   >();
+  const { addFilters } = useTableFilter();
+
+  const { analyticsData, isLoading, pagination, onChange } = useAnalytics(
+    category,
+    selectedOption ? selectedOption.label : ""
+  );
 
   useEffect(() => {
     const newSelectOptions: ISelectOption[] = data.map((d) => ({
@@ -120,20 +159,15 @@ export default function AnalyticsModal({
     setSelectedOption(option);
   };
 
-  const { analyticsData, isLoading } = useAnalytics(
-    category,
-    selectedOption ? selectedOption.label : ""
-  );
-
   const tableData = analyticsData?.results?.map((item) => {
     return {
       isin: item.isin,
       description: item.security_name,
       quantity: item.quantity,
       currency: item.currency,
-      averagePrice: item.average_price,
-      mtmPrice: item.mtm_price,
-      marketValue: item.market_value,
+      average_price: item.average_price,
+      mtm_price: item.mtm_price,
+      market_value: item.market_value,
       unrealizedPL: item.unrealised_pl,
     };
   });
@@ -159,15 +193,16 @@ export default function AnalyticsModal({
             onChange={handleSelectChange} // Assign the handler to the Select's onChange event
           />
         </div>
-        {isLoading ? (
-          <Skeleton />
-        ) : (
-          <ScrollableTable
-            columns={columns}
-            dataSource={tableData}
-            scroll={{ y: "21rem" }}
-          />
-        )}
+        <Table
+          columns={columns.map(addFilters)}
+          dataSource={tableData}
+          pagination={{
+            ...pagination,
+            total: analyticsData?.count,
+          }}
+          loading={isLoading}
+          onChange={onChange}
+        />
       </div>
     </Modal>
   );

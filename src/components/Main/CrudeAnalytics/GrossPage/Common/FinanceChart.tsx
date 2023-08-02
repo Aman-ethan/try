@@ -25,7 +25,7 @@ export default function FinanceChart({
   data,
 }: IFinanceChartProps) {
   return (
-    <div className="basis-1/2">
+    <div className="flex flex-col space-y-4 basis-1/2">
       <Title>{title}</Title>
       {data?.length !== 0 ? (
         <AreaChart

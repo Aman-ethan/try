@@ -51,7 +51,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
       <h2 className="text-xl font-medium capitalize tab:text-2xl">
         {pieChartCategory}
       </h2>
-      <div className="tab:flex tab:items-center lap:flex-col">
+      <div className="flex flex-col items-center tab:flex-row  lap:flex-col">
         <AnalyticsModal
           isModalOpen={isModalVisible}
           handleModalClose={handleModalClose}
@@ -90,7 +90,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
                 render: (_: any, record: any) => [<p>{record.percentage}%</p>],
               },
             }}
-            className="tab:flex-1 lap:w-full max-h-52 overflow-y-scroll"
+            className="w-full tab:w-auto tab:flex-1 lap:w-full max-h-52 overflow-y-scroll"
           />
         ) : (
           <Empty />

@@ -116,15 +116,17 @@ export default function CrudeHeader() {
           </Row>
         </Row>
       ) : (
-        <div className="flex max-w-xl flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0">
-          <SelectClient
-            placeholder="Select a Client"
-            className={selectClassName}
-          />
-          <SelectCustodian
-            placeholder="All Custodian"
-            className={selectClassName}
-          />
+        <div className="flex max-w-lg flex-col">
+          <div className="flex max-w-xl flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0">
+            <SelectClient
+              placeholder="All Clients"
+              className={selectClassName}
+            />
+            <SelectCustodian
+              placeholder="All Custodian"
+              className={selectClassName}
+            />
+          </div>
           <Button
             size="large"
             icon={<FilterOutlined />}

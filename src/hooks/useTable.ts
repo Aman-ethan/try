@@ -36,6 +36,7 @@ export default function useTable(props?: IUseTableParams) {
   const page = getSearchParams(pageKey);
   const custodian = getSearchParams("custodian");
   const ordering = getSearchParams("ordering");
+  const currency__in = getSearchParams("currency__in");
 
   function onChange<T>(
     pagination: TablePaginationConfig,
@@ -66,6 +67,7 @@ export default function useTable(props?: IUseTableParams) {
     getSearchParams,
     page,
     ordering,
+    currency__in,
   };
 }
 
