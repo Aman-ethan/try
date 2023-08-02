@@ -66,7 +66,7 @@ const ROUTE = [
     children: [
       {
         key: "/t+1/transaction",
-        label: <Link href="/t+1/transaction">Transaction</Link>,
+        label: <Link href="/t+1/transaction">Trade</Link>,
       },
       {
         key: "/t+1/active-positions",
