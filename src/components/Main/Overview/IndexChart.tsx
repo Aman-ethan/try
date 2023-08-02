@@ -65,12 +65,19 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
   const [filledData, filledGroupedData, domains] = useMemo(() => {
     setNormalizeIndex(0);
 
-    const absoluteData = data?.map((item) => {
-      return {
-        ...item,
-        y: Math.abs(item.y),
-      };
-    });
+    const absoluteData = sortBy(
+      data?.map((item) => {
+        return {
+          ...item,
+          y: Math.abs(item.y),
+        };
+      }),
+      [
+        function sortByDate(o) {
+          return new Date(o.x);
+        },
+      ]
+    );
 
     const xticks = sortBy(
       uniqBy(data, "x").map((item) => item.x),
