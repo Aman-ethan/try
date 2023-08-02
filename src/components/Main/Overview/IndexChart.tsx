@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as Plot from "@observablehq/plot";
-import { Spin, Tag, message } from "antd";
+import { Empty, Spin, Tag, message } from "antd";
 import clsx from "clsx";
 import { format } from "d3";
 import {
@@ -188,6 +188,8 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
         <Spin />
       </div>
     );
+
+  if (data?.length === 0) return <Empty />;
 
   const handleDomainChange = (domain: string) => {
     return () => {
