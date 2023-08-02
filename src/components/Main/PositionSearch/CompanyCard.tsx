@@ -34,22 +34,22 @@ export default function CompanyCard({
       </div>
       <Row gutter={16}>
         <Col sm={12} md={8} lg={8}>
-          <h1>Net Worth</h1>
-          <h1 className="text-3xl">
+          <Title level={4}>Net Worth</Title>
+          <Title className="text-3xl">
             {formatCompactNumber(companyData?.networth)}
-          </h1>
+          </Title>
         </Col>
         <Col sm={12} md={8} lg={8}>
-          <h1>Assets</h1>
-          <h1 className="text-3xl text-summary-profit">
+          <Title level={4}>Assets</Title>
+          <Title className="text-3xl text-summary-profit">
             {formatCompactNumber(companyData?.assets)}
-          </h1>
+          </Title>
         </Col>
         <Col sm={12} md={8} lg={8}>
-          <h1>Liabilities</h1>
-          <h1 className="text-3xl text-summary-loss">
+          <Title level={4}>Liabilities</Title>
+          <Title className="text-3xl text-summary-loss">
             {formatCompactNumber(companyData?.liabilities)}
-          </h1>
+          </Title>
         </Col>
       </Row>
     </Card>

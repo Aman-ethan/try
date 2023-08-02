@@ -60,12 +60,11 @@ export default function ClientPositions({
             dayjs(current).isAfter(data?.end_date) ||
             dayjs(current).isBefore(data?.start_date)
           }
-          onChange={(value: Dayjs | null, dateString: string) => {
-            const selectedDate = dayjs(dateString, DATE_SELECT_FORMAT);
-            const lastDay = selectedDate
-              .endOf("month")
+          onChange={(value: Dayjs | null) => {
+            const selectedDate = value
+              ?.endOf("month")
               .format(DATE_SELECT_FORMAT);
-            setSelectedMonth(lastDay);
+            setSelectedMonth(selectedDate ?? "");
           }}
           allowClear
         />,
@@ -92,22 +91,22 @@ export default function ClientPositions({
                 </div>
                 <Row gutter={16}>
                   <Col sm={12} md={8} lg={8}>
-                    <h1>Net Worth</h1>
-                    <h1 className="text-2xl">
+                    <Title level={6}>Net Worth</Title>
+                    <Title level={4}>
                       {formatCompactNumber(record?.networth)}
-                    </h1>
+                    </Title>
                   </Col>
                   <Col sm={12} md={8} lg={8}>
-                    <h1>Assets</h1>
-                    <h1 className="text-2xl text-summary-profit">
+                    <Title level={6}>Assets</Title>
+                    <Title level={4} className="text-summary-profit">
                       {formatCompactNumber(record?.assets)}
-                    </h1>
+                    </Title>
                   </Col>
                   <Col sm={12} md={8} lg={8}>
-                    <h1>Liabilities</h1>
-                    <h1 className="text-2xl text-summary-loss">
+                    <Title level={6}>Liabilities</Title>
+                    <Title level={4} className="text-summary-loss">
                       {formatCompactNumber(record?.liabilities)}
-                    </h1>
+                    </Title>
                   </Col>
                 </Row>
               </ProCard>
