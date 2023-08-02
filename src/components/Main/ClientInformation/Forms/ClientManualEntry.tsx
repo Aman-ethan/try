@@ -1,4 +1,4 @@
-import { Form, Input, message, Row } from "antd";
+import { Form, FormRule, Input, message, Row } from "antd";
 import { useTransactionServerMutation } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
 import useFormState from "@/hooks/useForm";
@@ -7,6 +7,10 @@ import useAuth from "@/hooks/useAuth";
 const URLs = {
   get: "/client/",
   post: "/client/",
+};
+
+const FormRules: Partial<Record<"name", FormRule[]>> = {
+  name: [{ required: true, message: "Please enter a client name" }],
 };
 
 export default function ClientManualEntry() {
@@ -18,9 +22,6 @@ export default function ClientManualEntry() {
       revalidate(URLs.get, false);
       message.success("Client added successfully");
       form.resetFields();
-    },
-    onError() {
-      message.error("Failed to add client");
     },
   });
   const { formId } = useFormState({ isMutating });
@@ -36,7 +37,12 @@ export default function ClientManualEntry() {
       size="large"
     >
       <Row className="gap-x-8">
-        <Form.Item label="Client Name" name="name" className="flex-1">
+        <Form.Item
+          label="Client Name"
+          name="name"
+          className="flex-1"
+          rules={FormRules.name}
+        >
           <Input placeholder="Enter Client Name" />
         </Form.Item>
       </Row>

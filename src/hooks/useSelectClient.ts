@@ -11,11 +11,13 @@ export default function useSelectClient(params?: TSelectClientParams) {
     })}`
   );
 
-  const options = data?.map(({ id, name }) => ({
-    label: name,
-    value: id,
-    key: id,
-  }));
+  const options = data
+    ?.filter(({ name }) => Boolean(name))
+    .map(({ id, name }) => ({
+      label: name,
+      value: id,
+      key: id,
+    }));
 
   return {
     isLoading: isLoading && !isValidating,

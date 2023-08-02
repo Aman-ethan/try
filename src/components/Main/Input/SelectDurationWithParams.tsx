@@ -6,11 +6,10 @@ import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useCallback, useLayoutEffect, useState } from "react";
 import { useToken } from "@/lib/antd";
-import { IDateRange, SearchParams } from "@/interfaces/Main";
+import { SearchParams } from "@/interfaces/Main";
 import useSearchParams from "@/hooks/useSearchParams";
 import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/constants/format";
 import Select from "@/components/Input/Select";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
 
 dayjs.extend(quarterOfYear);
 
@@ -26,7 +25,7 @@ interface IPopoverContentProps {
 }
 
 const DURATION: IDuration[] = [
-  { label: "All", value: "all" },
+  { label: "All", value: "year" },
   { label: "Weekly", value: "w" },
   { label: "Monthly", value: "M" },
   { label: "Quarterly", value: "Q" },
@@ -45,9 +44,6 @@ function getDateKeys(layoutSegment: string | null): SearchParams[] {
 }
 
 function useDurationWithParams() {
-  const { data: dateRange, isLoading } = useTransactionServerQuery<IDateRange>(
-    "/position/history/date/"
-  );
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
   const layoutSegment = useSelectedLayoutSegment();
   const [duration, setDuration] = useSessionStorage({
@@ -60,21 +56,14 @@ function useDurationWithParams() {
   const endDate = getSearchParams(endDateKey);
 
   const onChange = useCallback(
-    (value: ManipulateType | "all") => {
+    (value: ManipulateType) => {
       setDuration(value);
-      if (value === "all") {
-        updateSearchParams({
-          [startDateKey]: dateRange?.start_date,
-          [endDateKey]: dateRange?.end_date,
-        });
-        return;
-      }
       updateSearchParams({
         [startDateKey]: dayjs().subtract(1, value).format(DATE_PARAM_FORMAT),
         [endDateKey]: dayjs().format(DATE_PARAM_FORMAT),
       });
     },
-    [dateRange, endDateKey, startDateKey, setDuration, updateSearchParams]
+    [endDateKey, startDateKey, setDuration, updateSearchParams]
   );
 
   useLayoutEffect(() => {
@@ -88,7 +77,6 @@ function useDurationWithParams() {
     endDate,
     onChange,
     value: duration,
-    loading: isLoading,
   };
 }
 
@@ -103,8 +91,7 @@ function PopoverContent({ startDate, endDate }: IPopoverContentProps) {
 }
 
 export default function SelectDurationWithParams() {
-  const { onChange, startDate, endDate, value, loading } =
-    useDurationWithParams();
+  const { onChange, startDate, endDate, value } = useDurationWithParams();
   const [visible, setVisible] = useState(false);
   const { token } = useToken();
   return (
@@ -123,7 +110,6 @@ export default function SelectDurationWithParams() {
         value={value}
         onChange={onChange}
         options={DURATION}
-        loading={loading}
       />
     </Popover>
   );
