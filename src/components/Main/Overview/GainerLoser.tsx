@@ -177,6 +177,7 @@ export default function GainerLoser({ type }: IGainerLoserProps) {
         onChange={onChange}
         rowClassName="h-[4.375rem]"
         className="h-[28.375rem]"
+        scroll={{ y: "24rem" }}
         pagination={{
           ...pagination,
           total: data?.count,
