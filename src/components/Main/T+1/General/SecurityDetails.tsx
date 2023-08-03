@@ -23,7 +23,7 @@ export default function SecurityDetails(props: ISecuritySearchProps) {
     const value = props?.[key];
     switch (key) {
       case "previous_close":
-        return formatPrice(value, currency);
+        return formatPrice(value);
       case "currency":
         return <CurrencyTag currency={currency as TCurrency} />;
       default:

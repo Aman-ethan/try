@@ -11,9 +11,7 @@ export default function InputPrice({
   return (
     <InputNumber
       key={currency}
-      formatter={(value) =>
-        currency && value ? formatPrice(value, currency) : ""
-      }
+      formatter={(value) => (currency && value ? formatPrice(value) : "")}
       parser={(value) => (value ? value.replace(/[^0-9.]/g, "") : "")}
       {...props}
     />
