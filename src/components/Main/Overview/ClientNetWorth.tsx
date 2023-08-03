@@ -162,7 +162,7 @@ export default function ClientNetWorth() {
         columns={Columns}
         dataSource={data?.overview}
         rowKey="client_id"
-        className="table-reset h-[22rem]"
+        className="table-reset h-[22rem] overflow-y-auto"
         scroll={{ y: "16rem" }}
         pagination={{ pageSize: data?.overview.length }}
       />
