@@ -14,12 +14,7 @@ export default function Table({
       }}
       locale={{
         emptyText: (
-          <div
-            style={{
-              height: `calc(${props.scroll?.y} - 4rem)`,
-            }}
-            className="flex items-center justify-center"
-          >
+          <div className="flex items-center justify-center h-[calc(100vh-25rem)]">
             {props.loading ? null : <Empty />}
           </div>
         ),
