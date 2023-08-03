@@ -100,7 +100,7 @@ export default function SelectDurationWithParams() {
   return (
     <Popover
       open={visible || value === "year" ? false : undefined}
-      className="p-2"
+      className="p-2 min-w-full"
       content={<PopoverContent startDate={startDate} endDate={endDate} />}
       color={token.blue6}
     >
@@ -110,7 +110,6 @@ export default function SelectDurationWithParams() {
         allowClear={false}
         showSearch={false}
         size="middle"
-        className="w-28 pr-0"
         value={value}
         onChange={onChange}
         options={DURATION}

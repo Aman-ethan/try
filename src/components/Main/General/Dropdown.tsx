@@ -14,7 +14,7 @@ export default function Dropdown({ children, menu, ...props }: DropdownProps) {
     >
       <Button type="text" className="-ml-2 flex items-center space-x-2 px-2">
         <Title level={5}>{children}</Title>
-        <CaretDownFilled className="text-sm mt-1" />
+        <CaretDownFilled className="mt-1 text-sm" />
       </Button>
     </AntdDropdown>
   );

@@ -212,8 +212,8 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
   };
 
   return (
-    <div className="flex flex-col flex-1">
-      <div className="flex-1 flex" ref={chartRef} />
+    <div className="flex flex-1 flex-col">
+      <div className="flex flex-1" ref={chartRef} />
       <div className="flex items-center overflow-x-auto py-4">
         <div className="flex gap-x-4">
           {(chartScale?.domain as string[])?.map((domain, index) => {
@@ -225,7 +225,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
               <Tag
                 key={domain}
                 className={clsx(
-                  "flex items-center text-sm cursor-pointer rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5",
+                  "flex cursor-pointer items-center rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5 text-sm",
                   isExcluded ? "opacity-50" : ""
                 )}
                 onClick={handleDomainChange(domain)}

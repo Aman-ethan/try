@@ -30,7 +30,7 @@ export default function Analytics() {
       >
         {selectedClient?.label || "Client"}
       </Dropdown>
-      <div className="flex flex-col min-h-[38.125rem] lap:flex-row lap:items-start lap:justify-center">
+      <div className="flex min-h-[38.125rem] flex-col lap:flex-row lap:items-start lap:justify-center">
         {allocation?.map(({ title, data }) => (
           <Allocation data={data} title={title} />
         ))}

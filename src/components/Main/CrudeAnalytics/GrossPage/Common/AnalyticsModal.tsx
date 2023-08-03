@@ -9,7 +9,7 @@ import { useTransactionServerQuery } from "@/hooks/useQuery";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import CurrencyTag from "@/components/Main/General/CurrencyTag";
 import { formatQuantity } from "@/lib/format";
-import Table from "@/components/Main/Table";
+import ScrollableTable from "@/components/Main/Table/ScrollableTable";
 
 interface IAnalyticsModalProps {
   isModalOpen: boolean;
@@ -193,13 +193,14 @@ export default function AnalyticsModal({
             onChange={handleSelectChange} // Assign the handler to the Select's onChange event
           />
         </div>
-        <Table
+        <ScrollableTable
           columns={columns.map(addFilters)}
           dataSource={tableData}
           pagination={{
             ...pagination,
             total: analyticsData?.count,
           }}
+          scroll={{ y: "16rem" }}
           loading={isLoading}
           onChange={onChange}
         />

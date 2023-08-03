@@ -13,7 +13,7 @@ export default function ClientHeader() {
       title: "Investor Profile",
     },
     {
-      title: breadItems,
+      title: breadItems.split("_").join(" "),
     },
   ];
 

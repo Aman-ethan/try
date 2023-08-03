@@ -190,7 +190,7 @@ export default function Transaction() {
           placeholder="Search Security, Description"
         />
       </div>
-      <div className="rounded-lg shadow-large bg-neutral-1 p-6">
+      <div className="shadow-large rounded-lg bg-neutral-1 p-6">
         <Statement urlKey="/statement/trade/" columns={columns} />
       </div>
     </div>

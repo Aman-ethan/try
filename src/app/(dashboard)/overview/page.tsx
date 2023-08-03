@@ -19,17 +19,17 @@ export default function Home() {
         <div className="flex-1 rounded-lg shadow-large bg-white p-6 lap:flex-1 lap:max-w-[32rem]">
           <ClientNetWorth />
         </div>
-        <div className="flex-1 overflow-x-auto rounded-lg shadow-large bg-white p-6 pb-0">
+        <div className="shadow-large flex-1 overflow-x-auto rounded-lg bg-white p-6 pb-0">
           <AssetNetWorth />
         </div>
       </div>
-      <div className="rounded-lg shadow-large bg-neutral-1 p-6">
+      <div className="shadow-large rounded-lg bg-neutral-1 p-6">
         <Analytics />
       </div>
-      <div className="space-y-6 rounded-lg shadow-large bg-white p-6">
+      <div className="shadow-large space-y-6 rounded-lg bg-white p-6">
         <div className="tab:item-center flex flex-col space-y-4 mob:w-auto tab:flex-row tab:justify-between tab:space-y-0">
           <Title level={4}>Gainer/Loser</Title>
-          <div className="w-[16.75rem]">
+          <div className="tab:w-[16.75rem]">
             <Segmented
               disabled
               defaultValue="table_view"

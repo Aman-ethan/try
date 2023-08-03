@@ -158,7 +158,7 @@ export default function GainerLoser({ type }: IGainerLoserProps) {
 
   return (
     <div className="flex-1 space-y-6 lap:basis-1/2">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <Title level={5} className="capitalize">
           {type}
         </Title>

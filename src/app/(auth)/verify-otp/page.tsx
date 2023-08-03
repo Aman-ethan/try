@@ -5,7 +5,7 @@ import PhoneNumber from "@/components/Auth/General/PhoneNumber";
 
 export default function VerifyOTPPage() {
   return (
-    <div className="space-y-12">
+    <div className="h-auto space-y-12">
       <div className="space-y-4">
         <Title>OTP Verification</Title>
         <Paragraph>

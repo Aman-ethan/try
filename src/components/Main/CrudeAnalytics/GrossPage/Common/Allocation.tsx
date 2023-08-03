@@ -74,7 +74,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
               title: {
                 dataIndex: "title",
                 render: (dom, entity) => (
-                  <div className="flex items-center justify-center gap-x-4">
+                  <div className="flex items-center justify-center gap-x-2">
                     <div
                       style={{
                         backgroundColor: colorMap[entity.type],
@@ -82,7 +82,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
                         height: "10px",
                       }}
                     />
-                    {entity.type}
+                    <p className="break-words text-left">{entity.type}</p>
                   </div>
                 ),
               },

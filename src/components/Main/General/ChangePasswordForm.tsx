@@ -55,38 +55,40 @@ export default function ChangePasswordForm() {
       disabled={isMutating}
       size="large"
       layout="vertical"
-      className="space-y-8"
+      className="flex h-[calc(100vh-15.5rem)] flex-col justify-between space-y-8 mob:justify-start"
     >
-      <Form.Item
-        label="Old Password"
-        name="old_password"
-        rules={FormRules.old_password}
-      >
-        <Input.Password />
-      </Form.Item>
+      <div className="flex flex-col">
+        <Form.Item
+          label="Old Password"
+          name="old_password"
+          rules={FormRules.old_password}
+        >
+          <Input.Password />
+        </Form.Item>
+        <Form.Item
+          label="New Password"
+          name="new_password"
+          rules={FormRules.new_password}
+          help={helpText}
+        >
+          <Input.Password status={helpText ? "warning" : undefined} />
+        </Form.Item>
+        <Form.Item
+          label="Confirm New Password"
+          name="confirm_new_password"
+          dependencies={["new_password"]}
+          hasFeedback
+          rules={FormRules.confirm_password}
+        >
+          <Input.Password />
+        </Form.Item>
+      </div>
 
-      <Form.Item
-        label="New Password"
-        name="new_password"
-        rules={FormRules.new_password}
-        help={helpText}
-      >
-        <Input.Password status={helpText ? "warning" : undefined} />
-      </Form.Item>
-      <Form.Item
-        label="Confirm New Password"
-        name="confirm_new_password"
-        dependencies={["new_password"]}
-        hasFeedback
-        rules={FormRules.confirm_password}
-      >
-        <Input.Password />
-      </Form.Item>
-      <div className="flex gap-x-4 gap-y-4 mob:flex-col tab:flex-row lap:justify-end">
+      <div className="flex flex-col gap-x-4 gap-y-4 mob:flex-row tab:flex-row lap:justify-end">
         <Button
           onClick={router.back}
           disabled={isMutating}
-          className="px-7 mob:order-last tab:order-last lap:order-none"
+          className="px-6 mob:order-last tab:order-last lap:order-none"
         >
           Cancel
         </Button>
@@ -94,7 +96,7 @@ export default function ChangePasswordForm() {
           type="primary"
           htmlType="submit"
           loading={isMutating}
-          className="px-7"
+          className="px-6"
         >
           Submit
         </Button>

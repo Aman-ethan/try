@@ -6,7 +6,7 @@ import { lazy, useState } from "react";
 import useResize from "@/hooks/useResize";
 import { TTabType } from "@/interfaces/Main";
 import Drawer from "../../General/Drawer";
-import { ResetButton, SubmitButton } from "../../General/DrawerFormButton";
+import DrawerFormFooter from "../../General/DrawerFormFooter";
 
 interface IClientDetailsDrawerProps {
   type: TTabType;
@@ -71,12 +71,7 @@ export default function ClientDetailsDrawer({
           {edit ? "" : `Add ${type.replace("_", " ")}`}
         </Button>
       }
-      footer={
-        <>
-          <ResetButton>Clear All</ResetButton>
-          <SubmitButton>Submit</SubmitButton>
-        </>
-      }
+      footer={<DrawerFormFooter />}
     >
       <DetailsForm id={id} type={type} onClose={() => setIsDrawerOpen(false)} />
     </Drawer>

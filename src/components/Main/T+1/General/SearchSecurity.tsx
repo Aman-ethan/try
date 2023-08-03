@@ -278,7 +278,7 @@ const SecurityOptions = [
 export default function SearchSecurity() {
   const form = Form.useFormInstance();
   return (
-    <div className="w-full space-y-6 rounded-lg p-4 text-base shadow-large">
+    <div className="shadow-large w-full space-y-6 rounded-lg p-4 text-base">
       <Row justify="space-between" align="middle">
         <Title level={5}>Search New Security</Title>
         <Button

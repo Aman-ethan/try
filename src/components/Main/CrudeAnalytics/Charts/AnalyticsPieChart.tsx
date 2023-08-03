@@ -30,9 +30,11 @@ export default function AnalyticsPieChart({
       ...defaultPieChartConfig.statistic,
       content: {
         ...defaultPieChartConfig.statistic?.content,
-        customHtml: (container, _view, _datum, _pieDataPoints) => {
+        customHtml: (container, _view, datum, _pieDataPoints) => {
           const { width } = container.getBoundingClientRect();
-          const text = formatCompactNumber(totalValue);
+          const text = datum
+            ? formatCompactNumber(datum.value)
+            : formatCompactNumber(totalValue);
           return renderTextInsideContainer(width, text, { fontSize: 14 });
         },
       },

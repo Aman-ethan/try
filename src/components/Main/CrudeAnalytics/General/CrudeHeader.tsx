@@ -62,7 +62,10 @@ export default function CrudeHeader() {
     });
   });
 
-  const selectClassName = clsx(showFilter ? "block" : "hidden", "tab:flex");
+  const selectClassName = clsx(
+    showFilter ? "block" : "hidden",
+    "tab:flex-1 tab:flex"
+  );
 
   return (
     <div className="space-y-6">
@@ -116,8 +119,8 @@ export default function CrudeHeader() {
           </Row>
         </Row>
       ) : (
-        <div className="flex max-w-lg flex-col">
-          <div className="flex max-w-xl flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0">
+        <div className="flex w-full lap:max-w-lg flex-col">
+          <div className="flex flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0">
             <SelectClient
               placeholder="All Clients"
               className={selectClassName}

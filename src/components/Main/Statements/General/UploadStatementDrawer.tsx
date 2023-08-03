@@ -30,7 +30,7 @@ export default function UploadStatementDrawer() {
   return (
     <Drawer
       button={
-        <Button type="primary" size="large" className="w-1/2 tab:w-auto">
+        <Button type="primary" size="large" className="flex-1 tab:w-auto">
           Add a statement
         </Button>
       }

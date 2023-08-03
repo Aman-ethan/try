@@ -13,7 +13,7 @@ export function SubmitButton({ children }: FormButtonProps) {
       type="primary"
       form={formId}
       size="large"
-      className="px-7"
+      className="align-center px-7"
       htmlType="submit"
       loading={isMutating}
     >

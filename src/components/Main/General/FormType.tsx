@@ -13,7 +13,7 @@ const UploadTypeOptions: CheckboxOptionType[] = [
 
 const optionStyle: CSSProperties = {
   borderRadius: "0.375rem",
-  padding: "0 2.5rem",
+  padding: "0 1.5rem",
   border: 0,
 };
 

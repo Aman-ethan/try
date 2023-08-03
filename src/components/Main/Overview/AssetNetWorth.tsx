@@ -14,7 +14,7 @@ export default function AssetNetWorth() {
     useClientDropdown<IAssetNetWorth>({ urlKey, searchParamKey });
 
   return (
-    <div className="space-y-6 flex flex-col h-full">
+    <div className="flex h-full flex-col space-y-6">
       <Dropdown
         className="self-start"
         disabled={loading || !selectedClient?.value}
@@ -27,7 +27,7 @@ export default function AssetNetWorth() {
         {selectedClient?.label || "Client"}
       </Dropdown>
       {!(loading || data?.data) ? (
-        <div className="flex-1 flex flex-col">
+        <div className="flex flex-1 flex-col">
           <Empty className="my-auto -translate-y-6" />
         </div>
       ) : (

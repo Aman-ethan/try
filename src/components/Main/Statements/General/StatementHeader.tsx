@@ -29,11 +29,15 @@ export default function StatementFilter() {
           <Button
             size="large"
             icon={<FilterOutlined />}
-            className="flex w-1/2 tab:hidden"
+            className="flex items-center justify-center order-last tab:hidden"
             onClick={() => setShowFilter(!showFilter)}
-          >
-            Filters
-          </Button>
+          />
+
+          <div className="tab:hidden">
+            {layoutSegment === "position" ? null : (
+              <DownloadStatement title="CSV" />
+            )}
+          </div>
         </div>
       </div>
       <div className="flex justify-between">
@@ -47,7 +51,9 @@ export default function StatementFilter() {
             className={primarySelectClasses}
           />
         </div>
-        {layoutSegment === "position" ? null : <DownloadStatement />}
+        <div className="hidden tab:block">
+          {layoutSegment === "position" ? null : <DownloadStatement />}
+        </div>
       </div>
     </div>
   );

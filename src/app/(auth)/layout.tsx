@@ -23,7 +23,7 @@ export default function AuthRootLayout({ children }: { children: ReactNode }) {
                 <AuthIllustration />
               </div>
             </Sider>
-            <Content className="max-h-screen space-y-12 overflow-y-scroll bg-neutral-1 px-8 pt-16 tab:px-24">
+            <Content className="max-h-screen space-y-12 bg-neutral-1 px-8 pt-16 tab:px-24">
               <Link href="/login">
                 <Logo />
               </Link>

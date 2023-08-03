@@ -25,7 +25,11 @@ const BankStatementHeaders: Headers = [
   { label: "Type of Statement", key: "statement_type" },
 ];
 
-export default function DownloadStatement() {
+interface IDownloadStatementProps {
+  title?: string;
+}
+
+export default function DownloadStatement({ title }: IDownloadStatementProps) {
   const layoutSegment = useSelectedLayoutSegment() as keyof typeof URLs;
 
   const { urlWithParams } = useStatement({
@@ -60,7 +64,7 @@ export default function DownloadStatement() {
           target="_self"
         />
       ) : null}
-      Download as CSV
+      {title || "Download as CSV"}
     </Button>
   );
 }

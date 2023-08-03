@@ -1,11 +1,9 @@
 "use client";
 
-import { useLayoutEffect } from "react";
 import { Skeleton } from "antd";
 import useSearchParams from "@/hooks/useSearchParams";
 import { IPieData } from "@/constants/pieChartConfig";
 import { useAnalyticsServerQuery } from "@/hooks/useQuery";
-import revalidate from "@/lib/revalidate";
 import Allocation from "./Common/Allocation";
 
 const URLS = {
@@ -37,20 +35,11 @@ const useGrossAllocations = () => {
   return {
     data: data as IData[],
     isLoading,
-    client_id,
-    custodian_id,
-    start_date,
-    end_date,
   };
 };
 
 export default function GrossAllocations() {
-  const { data, isLoading, client_id, custodian_id, start_date, end_date } =
-    useGrossAllocations();
-
-  useLayoutEffect(() => {
-    revalidate(URLS.get, false);
-  }, [client_id, custodian_id, start_date, end_date]);
+  const { data, isLoading } = useGrossAllocations();
 
   if (isLoading) {
     return <Skeleton />;
