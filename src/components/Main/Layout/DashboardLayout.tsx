@@ -22,6 +22,8 @@ import Link from "next/link";
 import { usePathname, useSelectedLayoutSegments } from "next/navigation";
 import { ReactNode, useLayoutEffect, useState } from "react";
 import clsx from "clsx";
+import en from "dayjs/locale/en";
+import dayjs from "dayjs";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useAuth from "@/hooks/useAuth";
 import ROUTE from "@/constants/route";
@@ -30,6 +32,8 @@ import { TCurrency } from "@/interfaces/Main";
 import CurrencyTag from "../General/CurrencyTag";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 import SelectDurationWithParams from "../Input/SelectDurationWithParams";
+
+dayjs.locale(en);
 
 interface ILayoutProps {
   children: ReactNode;
