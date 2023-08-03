@@ -125,9 +125,10 @@ const Columns: TableColumnsType<ITradeStatement> = [
     title: "Cost Price",
     key: "cost-price",
     dataIndex: "cost_price",
-    render: (price, record) => formatPrice(price, record.currency),
+    render: formatPrice,
     sorter: true,
     width: 135,
+    align: "right",
   },
   {
     title: "Quantity",
@@ -136,6 +137,7 @@ const Columns: TableColumnsType<ITradeStatement> = [
     render: formatQuantity,
     sorter: true,
     width: 125,
+    align: "right",
   },
   {
     title: "Trade Date",
