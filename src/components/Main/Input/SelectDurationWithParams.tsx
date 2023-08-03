@@ -3,7 +3,7 @@ import { useSessionStorage } from "@mantine/hooks";
 import { Popover } from "antd";
 import dayjs, { ManipulateType, QUnitType } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegments } from "next/navigation";
 import { useCallback, useLayoutEffect, useState } from "react";
 import { useToken } from "@/lib/antd";
 import { SearchParams } from "@/interfaces/Main";
@@ -32,29 +32,28 @@ const DURATION: IDuration[] = [
   { label: "Yearly", value: "y" },
 ];
 
-function getDateKeys(layoutSegment: string | null): SearchParams[] {
-  switch (layoutSegment) {
-    case "transaction":
-    case "t+1":
-    case "statements":
+function getDateKeys(layoutSegments: string[] | null): SearchParams[] {
+  switch (true) {
+    case layoutSegments?.includes("transaction"):
+    case layoutSegments?.includes("statements"):
       return ["statement_date__gte", "statement_date__lte"];
-    case "position-search":
-    case "client-information":
-      return [];
-    default:
+    case layoutSegments?.includes("overview"):
+    case layoutSegments?.includes("analytics"):
       return ["start_date", "end_date"];
+    default:
+      return [];
   }
 }
 
 function useDurationWithParams() {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
-  const layoutSegment = useSelectedLayoutSegment();
+  const layoutSegments = useSelectedLayoutSegments();
   const [duration, setDuration] = useSessionStorage({
     key: "duration",
     defaultValue: "year" as TDurationValue,
   });
 
-  const [startDateKey, endDateKey] = getDateKeys(layoutSegment);
+  const [startDateKey, endDateKey] = getDateKeys(layoutSegments);
   const startDate = getSearchParams(startDateKey);
   const endDate = getSearchParams(endDateKey);
 
