@@ -7,9 +7,10 @@ import DetailsSummary from "./DetailsSummary";
 import PositionListItems from "./PositionListItems";
 import SelectClient from "../Input/SelectClientWithParams";
 import SelectCustodian from "../Input/SelectCustodianWithParams";
+import MonthPicker from "./Input/MonthPicker";
 
 const containerClasses =
-  "flex flex-col tab:flex-row tab:items-center tab:space-x-4";
+  "flex flex-col tab:justify-between tab:flex-row tab:items-center tab:space-x-4";
 const innerContainerClasses =
   "flex flex-1 flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0";
 const filterButtonClasses = "w-full order-first mb-4 self-start tab:hidden";
@@ -19,7 +20,7 @@ export default function PositionList() {
 
   const primarySelectClasses = clsx(
     showFilter ? "block" : "hidden",
-    "w-full tab:flex lap:w-1/4"
+    "w-full tab:flex lap:max-w-[20rem]"
   );
 
   return (
@@ -44,6 +45,7 @@ export default function PositionList() {
         >
           Filters
         </Button>
+        <MonthPicker disabled />
       </div>
       <DetailsSummary />
       <PositionListItems />

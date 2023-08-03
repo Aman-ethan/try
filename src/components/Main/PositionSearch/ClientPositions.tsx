@@ -1,17 +1,16 @@
 import { ProCard, ProList } from "@ant-design/pro-components";
-import { Col, DatePicker, Empty, Row } from "antd";
-import dayjs, { Dayjs } from "dayjs";
+import { Col, Empty, Row } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import Title from "@/components/Typography/Title";
-import { DATE_PARAM_FORMAT } from "@/constants/format";
 import { BalanceSheetUrl } from "@/constants/strings";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
+import useSearchParams from "@/hooks/useSearchParams";
 import { IMonthPicker, IPositionNetWorth } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatCompactNumber } from "@/lib/format";
-import useSearchParams from "@/hooks/useSearchParams";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
 import CurrencyTag from "../General/CurrencyTag";
+import MonthPicker from "./Input/MonthPicker";
 
 export interface IClientDataProps {
   clients?: IPositionNetWorth[];
@@ -23,19 +22,20 @@ export default function ClientPositions({
   loading,
 }: IClientDataProps) {
   const { push, prefetch } = useRouter();
-  const { get: getSearchParams, updateSearchParams } = useSearchParams();
-
-  const selectedDate = getSearchParams("report_date");
+  const { get: getSearchParams } = useSearchParams();
 
   const { data } = useTransactionServerQuery<IMonthPicker>(
     `/statement/position/date/`
   );
 
+  const currentValue =
+    getSearchParams("report_date") || data?.end_date || undefined;
+
   function onItemClicked(record: IPositionNetWorth) {
     push(
       `${BalanceSheetUrl}/${buildURLSearchParams({
         client: record?.client_id,
-        report_date: selectedDate,
+        report_date: currentValue,
       })}`
     );
   }
@@ -48,23 +48,7 @@ export default function ClientPositions({
     <ProList
       locale={{ emptyText: <Empty /> }}
       loading={loading}
-      toolBarRender={() => [
-        <DatePicker.MonthPicker
-          value={dayjs(selectedDate || data?.end_date || undefined)}
-          size="large"
-          format="MMM YYYY"
-          disabledDate={(current: Dayjs) =>
-            dayjs(current).isAfter(data?.end_date) ||
-            dayjs(current).isBefore(data?.start_date)
-          }
-          onChange={(value: Dayjs | null) => {
-            updateSearchParams({
-              report_date: value?.endOf("month").format(DATE_PARAM_FORMAT),
-            });
-          }}
-          allowClear
-        />,
-      ]}
+      toolBarRender={() => [<MonthPicker value={currentValue} />]}
       dataSource={clients}
       grid={{
         gutter: 16,
