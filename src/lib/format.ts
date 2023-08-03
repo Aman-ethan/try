@@ -67,7 +67,6 @@ export function formatCompactNumber(num?: number | string) {
 
   return formattedNumber
     .replace(/(\d+\.\d{2})\d*([A-Z|a-z])*/g, "$1$2")
-
     .replace("k", " K")
     .replace("G", " B")
     .replace("M", " M");
