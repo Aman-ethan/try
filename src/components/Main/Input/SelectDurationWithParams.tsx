@@ -105,8 +105,8 @@ export default function SelectDurationWithParams() {
     >
       <Select
         onDropdownVisibleChange={setVisible}
+        allowClear={false}
         showSearch={false}
-        onClear={() => onChange("year")}
         size="middle"
         className="w-28 pr-0"
         value={value}
