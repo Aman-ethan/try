@@ -1,5 +1,6 @@
 import { format } from "d3";
 import dayjs from "dayjs";
+import en from "dayjs/locale/en";
 
 type NumberFormatType = "price" | "quantity";
 
@@ -38,7 +39,7 @@ export function formatQuantity(quantity: number | string) {
 }
 
 export function formatTableDate(date: Date) {
-  return dayjs(date).format("D MMM YYYY");
+  return dayjs(date).locale(en).format("D MMM YYYY");
 }
 
 const f = format("~s");
