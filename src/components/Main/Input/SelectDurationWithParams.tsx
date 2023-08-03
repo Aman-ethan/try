@@ -78,6 +78,7 @@ function useDurationWithParams() {
     endDate,
     onChange,
     value: duration,
+    disabled: !startDateKey && !endDateKey,
   };
 }
 
@@ -92,7 +93,8 @@ function PopoverContent({ startDate, endDate }: IPopoverContentProps) {
 }
 
 export default function SelectDurationWithParams() {
-  const { onChange, startDate, endDate, value } = useDurationWithParams();
+  const { onChange, startDate, endDate, value, disabled } =
+    useDurationWithParams();
   const [visible, setVisible] = useState(false);
   const { token } = useToken();
   return (
@@ -104,6 +106,7 @@ export default function SelectDurationWithParams() {
     >
       <Select
         onDropdownVisibleChange={setVisible}
+        disabled={disabled}
         allowClear={false}
         showSearch={false}
         size="middle"
