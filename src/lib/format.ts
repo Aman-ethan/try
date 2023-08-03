@@ -48,16 +48,12 @@ export function formatTableDate(date: Date) {
   return dayjs(date).locale(en).format("D MMM YYYY");
 }
 
-const f = format("~s");
+const f = format(".2~s");
 
 export function formatCompactNumber(num?: number | string) {
   if (Number.isNaN(Number(num))) return "";
 
-  // Convert num to a string with two decimal places
-  const formattedNumString = typeof num === "number" ? num.toFixed(2) : "";
-
-  // Convert the formatted string back to a number before calling f
-  const formattedNumber = f(Number(formattedNumString));
+  const formattedNumber = f(Number(num));
 
   return formattedNumber
     .replace("k", " K")

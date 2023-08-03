@@ -5,6 +5,7 @@ import { Button, Input } from "antd";
 import clsx from "clsx";
 import { capitalize } from "lodash";
 import { useState } from "react";
+import { ColumnsType } from "antd/es/table";
 import Title from "@/components/Typography/Title";
 import useSearchParams from "@/hooks/useSearchParams";
 import { TCurrency } from "@/interfaces/Main";
@@ -14,7 +15,7 @@ import SelectClientWithParams from "../Input/SelectClientWithParams";
 import SelectCustodianWithParams from "../Input/SelectCustodianWithParams";
 import Statement from "../Statements/Table";
 
-const columns = [
+const columns: ColumnsType = [
   {
     title: "Client Name",
     key: "client_name",
@@ -76,9 +77,10 @@ const columns = [
     title: "Average Price",
     key: "average_price",
     dataIndex: "average_price",
-    render: (value: number, record: any) => formatPrice(value, record.currency),
+    render: formatPrice,
     width: 140,
     sorter: true,
+    align: "right",
   },
   {
     title: "Currency",
@@ -90,7 +92,7 @@ const columns = [
   {
     title: "Transaction Date",
     key: "transaction-date",
-    dataIndex: "settlement_date",
+    dataIndex: "trade_date",
     render: formatTableDate,
     sorter: true,
     width: 155,
@@ -107,25 +109,28 @@ const columns = [
     title: "Debit",
     key: "debit",
     dataIndex: "debit",
-    render: (value: number, record: any) => formatPrice(value, record.currency),
+    render: formatPrice,
     sorter: true,
     width: 145,
+    align: "right",
   },
   {
     title: "Credit",
     key: "credit",
     dataIndex: "credit",
-    render: (value: number, record: any) => formatPrice(value, record.currency),
+    render: formatPrice,
     sorter: true,
     width: 145,
+    align: "right",
   },
   {
     title: "Settlement Amount",
     key: "settlement_amount",
-    dataIndex: "settlement_amount",
-    render: (value: number, record: any) => formatPrice(value, record.currency),
+    dataIndex: ["meta", "settlement_amount"],
+    render: formatPrice,
     sorter: true,
     width: 170,
+    align: "right",
   },
   {
     title: "Quantity",
@@ -134,14 +139,16 @@ const columns = [
     render: formatQuantity,
     sorter: true,
     width: 100,
+    align: "right",
   },
   {
     title: "Unrealized P/L",
     key: "unrealized-pl",
     dataIndex: "unrealized_pl",
-    render: (value: number, record: any) => formatPrice(value, record.currency),
+    render: formatPrice,
     sorter: true,
     width: 135,
+    align: "right",
   },
 ];
 

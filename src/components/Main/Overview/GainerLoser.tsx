@@ -89,6 +89,7 @@ const Columns: TableColumnsType = [
     key: "total-pl",
     width: "26%",
     render: formatCompactNumber,
+    align: "right",
   },
 ];
 
