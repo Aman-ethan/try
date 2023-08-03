@@ -25,8 +25,8 @@ export default function PositionListItems() {
   const SortOptionsMap: Record<string, string> = {
     "Largest Position First": "-market_value",
     "Smallest Position First": "market_value",
-    "Most Profitable Positions First": "-unrealised_pnl",
-    "Most Loss Making First": "unrealised_pnl",
+    "Most Profitable Positions First": "-unrealised_pl",
+    "Most Loss Making First": "unrealised_pl",
   };
 
   const Options = Object.keys(SortOptionsMap).map((option) => ({
