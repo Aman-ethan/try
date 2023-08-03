@@ -7,7 +7,6 @@ import {
 } from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
 import { MenuItemClassName } from "@/constants/strings";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
 
 interface IMoreMenuProps {
   items: MenuProps["items"];
