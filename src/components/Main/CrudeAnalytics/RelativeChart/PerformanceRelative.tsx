@@ -1,5 +1,5 @@
 import * as Plot from "@observablehq/plot";
-import { Spin, message, Tag } from "antd";
+import { Spin, message, Tag, Empty } from "antd";
 import clsx from "clsx";
 import { format } from "d3";
 import {
@@ -281,6 +281,11 @@ export default function PerformanceChart({
         </div>
       </div>
       <div style={{ width: "100%" }}>
+        {data?.length === 0 && (
+          <div className="flex h-full items-center justify-center">
+            <Empty description="No data" />
+          </div>
+        )}
         <div ref={chartRef} />
       </div>
     </>
