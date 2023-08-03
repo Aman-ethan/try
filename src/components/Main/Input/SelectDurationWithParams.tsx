@@ -71,10 +71,8 @@ function useDurationWithParams() {
   );
 
   useLayoutEffect(() => {
-    if (!startDate) {
-      onChange(duration as ManipulateType);
-    }
-  }, [duration, onChange, startDate]);
+    onChange(duration as ManipulateType);
+  }, [duration, onChange]);
 
   return {
     startDate,
@@ -108,7 +106,7 @@ export default function SelectDurationWithParams() {
       <Select
         onDropdownVisibleChange={setVisible}
         showSearch={false}
-        allowClear={false}
+        onClear={() => onChange("year")}
         size="middle"
         className="w-28 pr-0"
         value={value}
