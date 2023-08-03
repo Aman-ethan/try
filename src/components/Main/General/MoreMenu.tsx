@@ -1,9 +1,13 @@
 import { MoreOutlined } from "@ant-design/icons";
 import { Button, Dropdown, MenuProps, message } from "antd";
 import clsx from "clsx";
-import { useTransactionServerDeleteMutation } from "@/hooks/useMutation";
+import {
+  useTransactionServerDeleteMutation,
+  useTransactionServerMutation,
+} from "@/hooks/useMutation";
 import revalidate from "@/lib/revalidate";
 import { MenuItemClassName } from "@/constants/strings";
+import { useTransactionServerQuery } from "@/hooks/useQuery";
 
 interface IMoreMenuProps {
   items: MenuProps["items"];
@@ -39,11 +43,29 @@ export default function MoreMenu({ items }: IMoreMenuProps) {
   );
 }
 
+interface IS3Url {
+  s3_url: string;
+}
+
 export function DownloadItem({ url }: IDownloadItemProps) {
+  const { trigger } = useTransactionServerMutation<IS3Url, IS3Url>(
+    "/statement/bank/download_url/",
+    {
+      onSuccess(data) {
+        window.open(data?.s3_url, "_current");
+      },
+    }
+  );
   return (
-    <a href={url} download>
+    <button
+      className={MenuItemClassName}
+      type="button"
+      onClick={() => {
+        trigger({ s3_url: url });
+      }}
+    >
       Download
-    </a>
+    </button>
   );
 }
 
