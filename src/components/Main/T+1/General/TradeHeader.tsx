@@ -1,7 +1,7 @@
 "use client";
 
 import { FilterOutlined } from "@ant-design/icons";
-import { Breadcrumb, Button, Row } from "antd";
+import { Button, Row } from "antd";
 import clsx from "clsx";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useState } from "react";
@@ -10,11 +10,11 @@ import SelectClientWithParams from "../../Input/SelectClientWithParams";
 import SelectCustodianWithParams from "../../Input/SelectCustodianWithParams";
 import AddTradeDrawer from "./AddTradeDrawer";
 
-const BreadcrumbItems = [
-  {
-    title: "T+1",
-  },
-];
+// const BreadcrumbItems = [
+//   {
+//     title: "T+1",
+//   },
+// ];
 
 export default function TradeHeader() {
   const selectedLayoutSegment = useSelectedLayoutSegment();
@@ -36,16 +36,18 @@ export default function TradeHeader() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb
+      {/* <Breadcrumb
         className="capitalize"
         items={BreadcrumbItems.concat([
           {
             title,
           },
         ])}
-      />
+      /> */}
       <Row justify="space-between" align="middle">
-        <Title className="capitalize">{title}</Title>
+        <Title className="capitalize">
+          {title === "Transaction" ? "Trade" : title}
+        </Title>
         <div className="hidden tab:block">
           <AddTradeDrawer />
         </div>
