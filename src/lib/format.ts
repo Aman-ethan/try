@@ -14,7 +14,7 @@ const numberFormatOptions: Record<NumberFormatType, Intl.NumberFormatOptions> =
     },
     quantity: {
       // maximumFractionDigits: 20,
-      maximumFractionDigits: 2,
+      maximumFractionDigits: 10,
     },
   };
 
@@ -35,6 +35,16 @@ function formatNumber(
 //     currency,
 //   });
 // }
+
+export function formatPriceWithSymbol(
+  price: number | string,
+  currency: string
+) {
+  return formatNumber("price", price, {
+    style: "currency",
+    currency,
+  });
+}
 
 export function formatPrice(price: number | string) {
   return formatNumber("price", price);
