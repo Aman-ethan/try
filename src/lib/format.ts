@@ -7,12 +7,14 @@ type NumberFormatType = "price" | "quantity";
 const numberFormatOptions: Record<NumberFormatType, Intl.NumberFormatOptions> =
   {
     price: {
-      style: "currency",
+      // style: "currency",
       minimumFractionDigits: 0,
-      maximumFractionDigits: 4,
+      // maximumFractionDigits: 4,
+      maximumFractionDigits: 2,
     },
     quantity: {
-      maximumFractionDigits: 20,
+      // maximumFractionDigits: 20,
+      maximumFractionDigits: 2,
     },
   };
 
@@ -28,10 +30,14 @@ function formatNumber(
   }).format(String(value) as unknown as number);
 }
 
-export function formatPrice(price: number | string, currency: string) {
-  return formatNumber("price", price, {
-    currency,
-  });
+// export function formatPrice(price: number | string, currency: string) {
+//   return formatNumber("price", price, {
+//     currency,
+//   });
+// }
+
+export function formatPrice(price: number | string) {
+  return formatNumber("price", price);
 }
 
 export function formatQuantity(quantity: number | string) {

@@ -5,6 +5,7 @@ import { formatPrice, formatQuantity } from "@/lib/format";
 import { TCurrency } from "@/interfaces/Main";
 import TradeTable from ".";
 import HashTag from "../../General/HashTag";
+import CurrencyTag from "../../General/CurrencyTag";
 
 interface IActivePosition {
   id: string;
@@ -64,6 +65,14 @@ const Columns: TableColumnsType<IActivePosition> = [
     dataIndex: "quantity",
     sorter: true,
     render: formatQuantity,
+    width: 100,
+    align: "right",
+  },
+  {
+    title: "Currency",
+    key: "currency",
+    dataIndex: "currency",
+    render: (currency) => <CurrencyTag currency={currency} />,
     width: 125,
   },
   {
@@ -71,24 +80,27 @@ const Columns: TableColumnsType<IActivePosition> = [
     key: "average_price",
     dataIndex: "average_price",
     sorter: true,
-    render: (price, record) => formatPrice(price, record.currency),
+    render: formatPrice,
     width: 140,
+    align: "right",
   },
   {
     title: "MTM Price",
     key: "mtm_price",
     dataIndex: "mtm_price",
     sorter: true,
-    render: (price, record) => formatPrice(price, record.currency),
+    render: formatPrice,
     width: 115,
+    align: "right",
   },
   {
     title: "Unrealized P/L",
     key: "unrealised_pl",
     dataIndex: "unrealised_pl",
     sorter: true,
-    render: (pl, record) => formatPrice(pl, record.currency),
+    render: formatPrice,
     width: 175,
+    align: "right",
   },
   {
     title: "Tags",
