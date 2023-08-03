@@ -5,13 +5,13 @@ import { formatCompactNumber, formatPercentage } from "@/lib/format";
 import Title from "@/components/Typography/Title";
 
 interface ISummaryCardProps {
-  type: string;
+  type: "net_worth" | "leverage";
   value: number;
 }
 
 export default function SummaryCard({ type, value }: ISummaryCardProps) {
   const formattedValue =
-    type === "Leverage" ? formatPercentage(value) : formatCompactNumber(value);
+    type === "leverage" ? formatPercentage(value) : formatCompactNumber(value);
   return (
     <Card
       bordered
@@ -23,7 +23,9 @@ export default function SummaryCard({ type, value }: ISummaryCardProps) {
       <Title level={4} className="font-medium">
         {formattedValue}
       </Title>
-      <p className="tab:text-md text-sm">{type}</p>
+      <p className="tab:text-md text-sm capitalize">
+        {type.split("_").join(" ")}
+      </p>
     </Card>
   );
 }

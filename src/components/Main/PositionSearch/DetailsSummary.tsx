@@ -60,8 +60,8 @@ export default function DetailsSummary() {
             percentage={liabilityPercentage}
           />
           <div className="flex space-x-4">
-            <SummaryCard type="Net Worth" value={netWorth} />
-            <SummaryCard type="Leverage" value={leverage} />
+            <SummaryCard type="net_worth" value={netWorth} />
+            <SummaryCard type="leverage" value={leverage} />
           </div>
         </Col>
       </Row>

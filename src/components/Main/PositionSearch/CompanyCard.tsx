@@ -29,7 +29,7 @@ export default function CompanyCard({
   return (
     <Card onClick={onClick} loading={loading} className="pointer">
       <div className="mb-6 flex space-x-8">
-        <Title>{companyData?.client_name}</Title>
+        <Title className="capitalize">{companyData?.client_name}</Title>
         <CurrencyTag currency={companyData?.currency} />
       </div>
       <Row gutter={16}>
