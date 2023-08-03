@@ -1,7 +1,7 @@
 "use client";
 
 import { InputNumberProps } from "antd";
-import { formatPrice } from "@/lib/format";
+import { formatPriceWithSymbol } from "@/lib/format";
 import InputNumber from "./InputNumber";
 
 export default function InputPrice({
@@ -11,7 +11,9 @@ export default function InputPrice({
   return (
     <InputNumber
       key={currency}
-      formatter={(value) => (currency && value ? formatPrice(value) : "")}
+      formatter={(value) =>
+        currency && value ? formatPriceWithSymbol(value, currency) : ""
+      }
       parser={(value) => (value ? value.replace(/[^0-9.]/g, "") : "")}
       {...props}
     />
