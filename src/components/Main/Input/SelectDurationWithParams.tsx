@@ -105,6 +105,7 @@ export default function SelectDurationWithParams() {
       color={token.blue6}
     >
       <Select
+        className="pr-0 tab:w-24 lap:w-28"
         onDropdownVisibleChange={setVisible}
         disabled={disabled}
         allowClear={false}
