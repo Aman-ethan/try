@@ -1,5 +1,8 @@
 import { format } from "d3";
 import dayjs from "dayjs";
+import en from "dayjs/locale/en";
+
+dayjs.locale(en);
 
 type NumberFormatType = "price" | "quantity";
 
