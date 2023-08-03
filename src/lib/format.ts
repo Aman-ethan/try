@@ -58,7 +58,7 @@ export function formatTableDate(date: Date) {
   return dayjs(date).locale(en).format("D MMM YYYY");
 }
 
-const f = format(".2~s");
+const f = format(".10~s");
 
 export function formatCompactNumber(num?: number | string) {
   if (Number.isNaN(Number(num))) return "";
@@ -66,6 +66,8 @@ export function formatCompactNumber(num?: number | string) {
   const formattedNumber = f(Number(num));
 
   return formattedNumber
+    .replace(/(\d+\.\d{2})\d*([A-Z|a-z])/, "$1$2")
+
     .replace("k", " K")
     .replace("G", " B")
     .replace("M", " M");
