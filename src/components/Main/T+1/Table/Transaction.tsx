@@ -10,6 +10,7 @@ import TradeTable from ".";
 import HashTag from "../../General/HashTag";
 import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
 import EditTradeDrawer from "../General/EditTradeDrawer";
+import CurrencyTag from "../../General/CurrencyTag";
 
 interface IActionProps {
   id: string;
@@ -111,10 +112,17 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     width: 125,
   },
   {
+    title: "Currency",
+    key: "currency",
+    dataIndex: "currency",
+    render: (currency) => <CurrencyTag currency={currency} />,
+    width: 120,
+  },
+  {
     title: "Cost Price",
     key: "cost_price",
     dataIndex: "cost_price",
-    render: (price, record) => formatPrice(price, record.currency),
+    render: formatPrice,
     align: "right",
     width: 135,
   },
@@ -122,7 +130,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     title: "MTM Price",
     key: "mtm_price",
     dataIndex: "mtm_price",
-    render: (price, record) => formatPrice(price, record.currency),
+    render: formatPrice,
     width: 135,
     align: "right",
   },
@@ -130,7 +138,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     title: "Realized P/L",
     key: "realised_pl",
     dataIndex: "realised_pl",
-    render: (pl, record) => formatPrice(pl, record.currency),
+    render: formatPrice,
     width: 135,
     align: "right",
   },

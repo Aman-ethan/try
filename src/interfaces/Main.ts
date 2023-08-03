@@ -136,7 +136,7 @@ export interface IBlotterTransactionStatement {
   cost_price: number;
   mtm_price: number;
   realised_pl: number;
-  currency: string;
+  currency: TCurrency;
   goal: string;
   meta: { tags: string[] };
 }
