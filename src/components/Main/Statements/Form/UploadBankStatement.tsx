@@ -63,6 +63,7 @@ export default function UploadBankStatement() {
 
   const { data, isLoading, mutate } =
     useTransactionServerQuery<IUploadUrlResponse>(`${URLs.get}upload_url/`, {
+      revalidateOnFocus: false,
       refreshInterval: 3600 * 1000,
     });
 
