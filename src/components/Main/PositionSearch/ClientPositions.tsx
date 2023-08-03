@@ -25,7 +25,7 @@ export default function ClientPositions({
   const { push, prefetch } = useRouter();
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
 
-  const selectedDate = getSearchParams("date");
+  const selectedDate = getSearchParams("report_date");
 
   const { data } = useTransactionServerQuery<IMonthPicker>(
     `/statement/position/date/`
@@ -59,7 +59,7 @@ export default function ClientPositions({
           }
           onChange={(value: Dayjs | null) => {
             updateSearchParams({
-              date: value?.endOf("month").format(DATE_PARAM_FORMAT),
+              report_date: value?.endOf("month").format(DATE_PARAM_FORMAT),
             });
           }}
           allowClear

@@ -12,7 +12,7 @@ export default function Positions() {
   const { data, isLoading } =
     useTransactionServerQuery<IPositionSearchResponse>(
       `/statement/position/networth_cards/${buildURLSearchParams({
-        date: getSearchParams("date"),
+        report_date: getSearchParams("report_date"),
       })}`
     );
 

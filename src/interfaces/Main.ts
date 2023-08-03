@@ -233,7 +233,6 @@ type TCommonSearchPrams =
   | "ordering"
   | "client"
   | "client_id"
-  | "date"
   | "report_date";
 
 type TAuthSearchParams =
