@@ -50,7 +50,7 @@ export default function ClientPositions({
       loading={loading}
       toolBarRender={() => [
         <DatePicker.MonthPicker
-          value={selectedDate ? dayjs(selectedDate) : undefined}
+          value={selectedDate ? dayjs(selectedDate) : dayjs(data?.end_date)}
           size="large"
           format="MMM YYYY"
           disabledDate={(current: Dayjs) =>
