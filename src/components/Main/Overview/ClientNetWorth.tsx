@@ -163,7 +163,7 @@ export default function ClientNetWorth() {
         dataSource={data?.overview}
         rowKey="client_id"
         className="table-reset h-[22rem]"
-        scroll={{ y: "18.5rem" }}
+        scroll={{ y: "16rem" }}
         pagination={{ pageSize: data?.overview.length }}
       />
     </div>
