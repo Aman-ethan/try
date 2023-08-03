@@ -81,9 +81,10 @@ export default function TradeTable<T>({
       />
       <ScrollableTable
         rowKey="id"
-        rowClassName="h-[5rem]"
-        className="min-h-[calc(100vh-22rem)]"
         columns={columns.map(addFilters)}
+        rowClassName="h-20"
+        className="min-h-[calc(100vh-22rem)]"
+        scroll={{ y: "calc(100vh - 27rem)" }}
         rowSelection={rowSelection}
         onRow={onRow}
         dataSource={data?.results}

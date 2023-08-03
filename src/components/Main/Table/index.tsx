@@ -3,6 +3,7 @@ import { Table as AntdTable, Empty, TableProps } from "antd";
 export default function Table({
   pagination,
   size = "middle",
+  scroll,
   ...props
 }: TableProps<any>) {
   return (
@@ -14,10 +15,18 @@ export default function Table({
       }}
       locale={{
         emptyText: (
-          <div className="flex items-center justify-center h-[calc(100vh-25rem)]">
+          <div
+            style={{
+              height: `calc(${scroll?.y} - 1rem)`,
+            }}
+            className="flex items-center justify-center"
+          >
             {props.loading ? null : <Empty />}
           </div>
         ),
+      }}
+      scroll={{
+        x: scroll?.x,
       }}
       size={size}
       {...props}
