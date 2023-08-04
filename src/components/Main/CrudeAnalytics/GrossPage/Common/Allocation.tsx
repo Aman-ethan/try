@@ -4,11 +4,7 @@ import { useState } from "react";
 import { Empty } from "antd";
 import { ProList } from "@ant-design/pro-components";
 import * as d3 from "d3";
-import {
-  IPercentageData,
-  IPieData,
-  mapDataToPieChartData,
-} from "@/constants/pieChartConfig";
+import { IPieData, processDataForPieChart } from "@/constants/pieChartConfig";
 import AnalyticsPieChart from "../../Charts/AnalyticsPieChart";
 import AnalyticsModal from "./AnalyticsModal";
 
@@ -18,15 +14,7 @@ interface IAllocationProps {
 }
 
 export default function Allocation({ title, data = [] }: IAllocationProps) {
-  const totalValue =
-    data?.reduce((accumulator, currentObject) => {
-      return accumulator + currentObject.value;
-    }, 0) || 0;
-
-  const percentageData: IPercentageData[] = data.map((type) => ({
-    ...type,
-    percentage: parseFloat(((type.value / totalValue) * 100).toFixed(2)),
-  }));
+  const { grossValue: totalValue, pieChartData } = processDataForPieChart(data);
 
   const z = d3
     .scaleOrdinal(d3.schemeCategory10)
@@ -37,7 +25,6 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
     colorMap[d] = z(d);
   });
 
-  const proListData = mapDataToPieChartData(percentageData);
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedType, setSelectedType] = useState("");
   const handleSegmentClick = (type: string) => {
@@ -60,16 +47,15 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
           category={pieChartCategory}
         />
         <AnalyticsPieChart
-          data={percentageData}
+          data={pieChartData}
           totalValue={totalValue}
           handleSegmentClick={handleSegmentClick}
           colorMap={colorMap}
         />
-        {proListData.length !== 0 ? (
+        {pieChartData.length !== 0 ? (
           <ProList
-            // data source will be replaced with dynamic data from pie chart
             rowClassName="p-2"
-            dataSource={proListData}
+            dataSource={pieChartData}
             metas={{
               title: {
                 dataIndex: "title",

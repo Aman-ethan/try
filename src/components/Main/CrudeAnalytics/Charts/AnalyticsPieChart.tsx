@@ -1,7 +1,5 @@
 import { Pie, PieConfig } from "@ant-design/plots";
 import defaultPieChartConfig, {
-  mapDataToPieChartData,
-  IPieData,
   renderTextInsideContainer,
   IPercentageData,
 } from "@/constants/pieChartConfig";
@@ -20,11 +18,9 @@ export default function AnalyticsPieChart({
   handleSegmentClick,
   colorMap,
 }: IPieProps) {
-  const pieChartData: IPieData[] = mapDataToPieChartData(data);
-
   const pieChartConfig: PieConfig = {
     ...defaultPieChartConfig,
-    data: pieChartData,
+    data,
     color: (datum) => colorMap[datum.type], // add this line
     statistic: {
       ...defaultPieChartConfig.statistic,

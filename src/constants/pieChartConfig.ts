@@ -51,16 +51,36 @@ export function renderTextInsideContainer(
   };">${text}</div>`;
 }
 
-export function mapDataToPieChartData(
-  data: IPercentageData[]
-): IPercentageData[] {
-  return data
-    .map((item: any) => ({
-      type: item.type,
-      value: Math.abs(parseInt(item.value || `0`, 10)),
-      percentage: Math.abs(parseFloat(item.percentage || `0`)),
-    }))
+type TProcessedData = {
+  grossValue: number;
+  pieChartData: IPercentageData[];
+};
+
+export function processDataForPieChart(data: IPieData[]): TProcessedData {
+  // Calculate the gross value
+  const grossValue = data.reduce((acc, item) => acc + item.value, 0);
+
+  // Calculate the absolute value of each item and sort them by percentage
+  const pieChartData = data
+    .map((item) => {
+      const absoluteValue = Math.abs(item.value);
+      const percentage = parseFloat(
+        ((absoluteValue / grossValue) * 100).toFixed(2)
+      );
+
+      return {
+        ...item,
+        value: absoluteValue,
+        percentage,
+      };
+    })
     .sort((a, b) => b.percentage - a.percentage);
+
+  // Return the processed data
+  return {
+    grossValue,
+    pieChartData,
+  };
 }
 
 const defaultPieChartConfig: PieConfig = {
