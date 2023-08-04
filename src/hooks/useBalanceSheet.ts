@@ -31,7 +31,7 @@ export default function useBalanceSheet({ data }: IBalanceSheetDataProps) {
 
   const leverage = Math.abs(totalLiability / totalAsset) || 0;
 
-  const netWorth = totalAsset - totalLiability;
+  const netWorth = totalAsset - Math.abs(totalLiability);
 
   return {
     totalAsset,
