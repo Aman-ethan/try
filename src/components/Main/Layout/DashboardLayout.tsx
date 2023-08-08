@@ -132,7 +132,6 @@ export default function DashboardLayout({ children }: ILayoutProps) {
       <div>
         <Drawer
           placement="left"
-          // closable={false}
           closeIcon={
             <span
               style={{
@@ -157,7 +156,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         collapsed={collapsed}
         onCollapse={() => setCollapsed(true)}
         collapsible
-        className="fixed hidden h-screen border-r-2 bg-neutral-1 tab:block"
+        className="fixed hidden h-screen border-r border-red-400 bg-neutral-1 tab:block"
         width={240}
       >
         <div className="px-6 pb-6 pt-4">

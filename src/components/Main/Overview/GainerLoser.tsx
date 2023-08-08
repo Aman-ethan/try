@@ -12,6 +12,7 @@ import useTable from "@/hooks/useTable";
 import Title from "@/components/Typography/Title";
 import Paragraph from "@/components/Typography/Paragraph";
 import Table from "../Table";
+import ClampedText from "@/components/Typography/ClampedText";
 
 dayjs.extend(isBetween);
 
@@ -82,6 +83,7 @@ const Columns: TableColumnsType = [
     dataIndex: "security_description",
     key: "security",
     width: "50%",
+    render: (description) => <ClampedText text={description} />,
   },
   {
     title: "Total PL",
