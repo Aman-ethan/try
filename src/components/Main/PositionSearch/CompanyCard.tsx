@@ -34,14 +34,14 @@ export default function CompanyCard({
         </Title>
         <CurrencyTag currency={companyData?.currency} />
       </div>
-      <Row gutter={16}>
-        <Col sm={12} md={8} lg={8} className="space-y-2">
+      <Row gutter={16} className="flex flex-wrap items-center justify-between">
+        <Col sm={12} md={8} lg={8} className="mb-2  space-y-2 tab:mb-0">
           <Title className="font-medium" level={6}>
             Net Worth
           </Title>
           <Title level={1}>{formatCompactNumber(companyData?.networth)}</Title>
         </Col>
-        <Col sm={12} md={8} lg={8} className="space-y-2">
+        <Col sm={12} md={8} lg={8} className="mb-2  space-y-2 tab:mb-0">
           <Title className="font-medium" level={6}>
             Assets
           </Title>
@@ -49,7 +49,7 @@ export default function CompanyCard({
             {formatCompactNumber(companyData?.assets)}
           </Title>
         </Col>
-        <Col sm={12} md={8} lg={8} className="space-y-2 mt-4 tab:mt-0">
+        <Col sm={12} md={8} lg={8} className="mb-2 space-y-2 tab:mb-0">
           <Title className="font-medium" level={6}>
             Liabilities
           </Title>

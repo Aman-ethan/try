@@ -38,8 +38,8 @@ export default function ClientDetailsView() {
     setBreadItems(type);
   }, [setBreadItems, type]);
   return (
-    <div className="space-y-6 w-full">
-      <div className=" w-full flex flex-col tab:flex-row tab:justify-between">
+    <div className="w-full space-y-6">
+      <div className=" flex w-full flex-col tab:flex-row tab:justify-between">
         <Radio.Group
           options={DetailOptions}
           value={type}
@@ -48,7 +48,7 @@ export default function ClientDetailsView() {
           buttonStyle="outline"
           size="large"
         />
-        <div className="self-end mt-4 tab:mt-0">
+        <div className="mt-4 self-end tab:mt-0">
           <ClientDetailsDrawer type={type} />
         </div>
       </div>

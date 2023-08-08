@@ -8,7 +8,7 @@ import useTable, { useTableFilter } from "@/hooks/useTable";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import CurrencyTag from "@/components/Main/General/CurrencyTag";
-import { formatQuantity } from "@/lib/format";
+import { formatPrice, formatQuantity } from "@/lib/format";
 import ScrollableTable from "@/components/Main/Table/ScrollableTable";
 
 interface IAnalyticsModalProps {
@@ -72,11 +72,13 @@ const columns: ColumnType<TPositionColumn>[] = [
     title: "ISIN",
     dataIndex: "isin",
     key: "isin",
+    width: 140,
   },
   {
     title: "Description",
     dataIndex: "description",
     key: "description",
+    width: 220,
   },
   {
     title: "Quantity",
@@ -85,6 +87,7 @@ const columns: ColumnType<TPositionColumn>[] = [
     align: "right",
     sorter: true,
     render: formatQuantity,
+    width: 125,
   },
   {
     title: "Currency",
@@ -92,33 +95,42 @@ const columns: ColumnType<TPositionColumn>[] = [
     key: "currency__in",
     align: "center",
     render: (currency) => <CurrencyTag currency={currency} />,
+    width: 130,
   },
   {
     title: "Average Price",
     dataIndex: "average_price",
     key: "average_price",
     align: "right",
+    render: formatPrice,
     sorter: true,
+    width: 135,
   },
   {
     title: "MTM Price",
     dataIndex: "mtm_price",
     key: "mtm_price",
     align: "right",
+    render: formatPrice,
     sorter: true,
+    width: 135,
   },
   {
     title: "Market Value",
     dataIndex: "market_value",
     key: "market_value",
     align: "right",
+    render: formatPrice,
     sorter: true,
+    width: 135,
   },
   {
     title: "Unrealized P&L",
     dataIndex: "unrealizedPL",
     key: "unrealizedPL",
     align: "right",
+    render: formatPrice,
+    width: 135,
   },
 ];
 

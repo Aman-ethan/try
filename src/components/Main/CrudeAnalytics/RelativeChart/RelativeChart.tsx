@@ -34,7 +34,7 @@ export default function RelativeChart() {
   return (
     <div className="space-y-6 rounded-lg bg-neutral-1 p-6">
       <div className="flex items-center justify-between">
-        <div className="space-x-4 w-full tab:w-1/2 lap:w-1/3">
+        <div className="w-full space-x-4 tab:w-1/2 lap:w-1/3">
           <Segmented
             options={options}
             value={value}

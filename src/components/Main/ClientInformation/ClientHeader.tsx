@@ -20,7 +20,7 @@ export default function ClientHeader() {
   return (
     <div className="space-y-6">
       <Breadcrumb className="capitalize" items={items} />
-      <div className="flex flex-col tab:flex-row gap-4 items-start tab:items-center tab:justify-between">
+      <div className="flex flex-col items-start gap-4 tab:flex-row tab:items-center tab:justify-between">
         <Title>Investor Profile</Title>
         <AddClient />
       </div>

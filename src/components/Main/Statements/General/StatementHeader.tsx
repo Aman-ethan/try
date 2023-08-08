@@ -29,7 +29,7 @@ export default function StatementFilter() {
           <Button
             size="large"
             icon={<FilterOutlined />}
-            className="flex items-center justify-center order-last tab:hidden"
+            className="order-last flex items-center justify-center tab:hidden"
             onClick={() => setShowFilter(!showFilter)}
           />
 

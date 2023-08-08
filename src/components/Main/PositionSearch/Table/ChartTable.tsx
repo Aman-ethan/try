@@ -107,7 +107,7 @@ export default function ChartTable({
         }}
       />
       <div className="flex justify-between border-t-2 py-4">
-        <Title className="text-sm tab:text-md lap:text-lg basis-1/2">
+        <Title className="tab:text-md basis-1/2 text-sm lap:text-lg">
           {TotalText}
         </Title>
         <Title level={4} className={textClass}>

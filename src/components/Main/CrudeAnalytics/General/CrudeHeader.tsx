@@ -119,7 +119,7 @@ export default function CrudeHeader() {
           </Row>
         </Row>
       ) : (
-        <div className="flex w-full lap:max-w-lg flex-col">
+        <div className="flex w-full flex-col lap:max-w-lg">
           <div className="flex flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0">
             <SelectClient
               placeholder="All Clients"

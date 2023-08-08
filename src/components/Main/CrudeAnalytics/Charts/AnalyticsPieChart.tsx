@@ -21,7 +21,7 @@ export default function AnalyticsPieChart({
   const pieChartConfig: PieConfig = {
     ...defaultPieChartConfig,
     data,
-    color: (datum) => colorMap[datum.type], // add this line
+    color: (datum) => colorMap[datum.type],
     statistic: {
       ...defaultPieChartConfig.statistic,
       content: {

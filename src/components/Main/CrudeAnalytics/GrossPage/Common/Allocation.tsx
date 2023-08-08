@@ -68,7 +68,9 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
                         height: "10px",
                       }}
                     />
-                    <p className="break-words text-left">{entity.type}</p>
+                    <p className="break-words text-left font-normal">
+                      {entity.type}
+                    </p>
                   </div>
                 ),
               },
@@ -76,7 +78,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
                 render: (_: any, record: any) => [<p>{record.percentage}%</p>],
               },
             }}
-            className="w-full tab:w-auto tab:flex-1 lap:w-full max-h-52 overflow-y-scroll"
+            className="max-h-52 w-full overflow-y-scroll tab:w-auto tab:flex-1 lap:w-full"
           />
         ) : (
           <Empty />

@@ -260,7 +260,7 @@ export default function PerformanceChart({
                   <Tag
                     key={domain}
                     className={clsx(
-                      "flex items-center text-sm cursor-pointer rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5",
+                      "flex cursor-pointer items-center rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5 text-sm",
                       isExcluded ? "opacity-50" : ""
                     )}
                     onClick={handleDomainChange(domain)}
