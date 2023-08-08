@@ -63,7 +63,7 @@ export default function ClientPositions({
       metas={{
         content: {
           render: (text: React.ReactNode, record: IPositionNetWorth) => (
-            <ProCard.Group direction="column">
+            <ProCard.Group direction="column" className="mt-4">
               <ProCard onClick={() => onItemClicked(record)}>
                 <div className="mb-8 flex justify-between">
                   <Title level={4}>{record?.client_name}</Title>

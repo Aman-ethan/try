@@ -64,7 +64,7 @@ export default function ChartTable({
 
   const textClass = clsx(
     progressType === "success" ? "text-summary-profit" : "text-summary-loss",
-    "text-md basis-1/4 text-center"
+    "text-base tab:text-xl basis-1/4 text-center"
   );
 
   const renderRow = ({
@@ -110,10 +110,10 @@ export default function ChartTable({
         <Title className="tab:text-md basis-1/2 text-sm lap:text-lg">
           {TotalText}
         </Title>
-        <Title level={4} className={textClass}>
+        <Title level={5} className={textClass}>
           {formatCompactNumber(total)}
         </Title>
-        <Title level={4} className={textClass}>
+        <Title level={5} className={textClass}>
           {formatPercentage(percentage)}%
         </Title>
       </div>

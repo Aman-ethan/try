@@ -35,28 +35,28 @@ export default function PositionListItems() {
   }));
 
   const listItemsClasses =
-    "mb-4 flex flex-col space-y-4 tab:flex-row tab:justify-between tab:items-center tab:space-y-0 lap:flex-col lap:items-stretch lap:space-y-4";
-  const filterButtonClasses = "w-full mb-4 self-start tab:hidden";
+    "mb-4 flex flex-col space-y-6 tab:flex-row tab:justify-between tab:items-center tab:space-y-0 lap:flex-col lap:items-stretch lap:space-y-4";
+  const filterButtonClasses = "tab:hidden";
 
   const primarySelectClasses = clsx(
     showFilter ? "block" : "hidden",
-    "flex-1 tab:flex"
+    "w-full tab:flex"
   );
   return (
     <>
       <div className="flex flex-col space-y-4 tab:flex-row tab:space-x-4 tab:space-y-0">
-        <SearchPositionSecurities
-          placeholder="Search security name or id"
-          className="w-full tab:w-1/3"
-        />
-        <Button
-          size="large"
-          icon={<FilterOutlined />}
-          className={filterButtonClasses}
-          onClick={() => setShowFilter(!showFilter)}
-        >
-          Filters
-        </Button>
+        <div className="w-full tab:w-1/3 space-x-2 flex items-center space-between">
+          <SearchPositionSecurities
+            placeholder="Search security name or id"
+            className="w-full"
+          />
+          <Button
+            size="large"
+            icon={<FilterOutlined />}
+            className={filterButtonClasses}
+            onClick={() => setShowFilter(!showFilter)}
+          />
+        </div>
         <div className="flex flex-1 flex-col items-center space-y-4 tab:flex-row tab:space-x-4 tab:space-y-0">
           <SelectRelationshipNumber
             disabled={!clientId}

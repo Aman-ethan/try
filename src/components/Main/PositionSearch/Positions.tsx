@@ -17,7 +17,7 @@ export default function Positions() {
     );
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <CompanyCard companyData={data?.company_card} loading={isLoading} />
       <ClientPositions clients={data?.client_cards} loading={isLoading} />
     </div>

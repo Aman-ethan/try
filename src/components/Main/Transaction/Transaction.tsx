@@ -161,10 +161,10 @@ export default function Transaction() {
   );
 
   return (
-    <div className="flex flex-col gap-y-8">
+    <div className="flex flex-col gap-y-4">
       <Title>Transaction</Title>
       <div className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-4 tab:gap-y-0">
-        <div className="flex flex-row gap-x-4 tab:w-full">
+        <div className="order-last flex flex-col gap-y-4 gap-x-4 tab:flex-row tab:order-first tab:w-full">
           <SelectClientWithParams
             placeholder="All Clients"
             className={primarySelectClasses}
@@ -172,12 +172,6 @@ export default function Transaction() {
           <SelectCustodianWithParams
             placeholder="All Custodian"
             className={primarySelectClasses}
-          />
-          <Button
-            size="large"
-            icon={<FilterOutlined />}
-            className="flex items-center justify-center tab:hidden"
-            onClick={() => setShowFilter(!showFilter)}
           />
         </div>
         <Input.Search
@@ -188,9 +182,18 @@ export default function Transaction() {
           }}
           size="large"
           placeholder="Search Security, Description"
+          className="order-first tab:order-last"
         />
+        <Button
+          size="large"
+          icon={<FilterOutlined />}
+          className="flex items-center justify-center tab:hidden"
+          onClick={() => setShowFilter(!showFilter)}
+        >
+          Filters
+        </Button>
       </div>
-      <div className="shadow-large rounded-lg bg-neutral-1 p-6">
+      <div className="shadow-large rounded-lg bg-neutral-1 mt-6 p-6">
         <Statement urlKey="/statement/trade/" columns={columns} />
       </div>
     </div>

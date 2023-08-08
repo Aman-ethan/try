@@ -13,7 +13,7 @@ const containerClasses =
   "flex flex-col tab:justify-between tab:flex-row tab:items-center tab:space-x-4";
 const innerContainerClasses =
   "flex flex-1 flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0";
-const filterButtonClasses = "w-full order-first mb-4 self-start tab:hidden";
+const filterButtonClasses = "tab:hidden";
 
 export default function PositionList() {
   const [showFilter, setShowFilter] = useState(false);
@@ -24,8 +24,16 @@ export default function PositionList() {
   );
 
   return (
-    <>
-      <Title className="text-2xl tab:text-3xl">Balance Sheet</Title>
+    <div className="space-y-6">
+      <div className="flex items-center space-between">
+        <Title className="flex-1 text-2xl tab:text-3xl">Balance Sheet</Title>
+        <Button
+          size="large"
+          icon={<FilterOutlined />}
+          className={filterButtonClasses}
+          onClick={() => setShowFilter(!showFilter)}
+        />
+      </div>
       <div className={containerClasses}>
         <div className={innerContainerClasses}>
           <SelectClient
@@ -37,18 +45,10 @@ export default function PositionList() {
             className={primarySelectClasses}
           />
         </div>
-        <Button
-          size="large"
-          icon={<FilterOutlined />}
-          className={filterButtonClasses}
-          onClick={() => setShowFilter(!showFilter)}
-        >
-          Filters
-        </Button>
         <MonthPicker disabled />
       </div>
       <DetailsSummary />
       <PositionListItems />
-    </>
+    </div>
   );
 }

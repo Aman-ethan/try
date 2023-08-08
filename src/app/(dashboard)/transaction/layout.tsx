@@ -15,7 +15,7 @@ export default function TransactionLayout({
       <Breadcrumb
         items={[
           {
-            title: "Consolitdation",
+            title: "Consolidation",
           },
           {
             title: "Transaction",

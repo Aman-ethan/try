@@ -27,9 +27,9 @@ export default function CompanyCard({
   }, [prefetch]);
 
   return (
-    <Card onClick={onClick} loading={loading} className="pointer">
+    <Card onClick={onClick} loading={loading} className="pointer p-4">
       <div className="mb-6 flex space-x-8">
-        <Title className="capitalize" level={3}>
+        <Title className="capitalize" level={4}>
           {companyData?.client_name}
         </Title>
         <CurrencyTag currency={companyData?.currency} />
