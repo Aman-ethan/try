@@ -9,6 +9,7 @@ import {
   IPieData,
   processDataForPieChart,
 } from "@/constants/pieChartConfig";
+import { OrdinalRange } from "@/constants/strings";
 import AnalyticsPieChart from "../../Charts/AnalyticsPieChart";
 import AnalyticsModal, { TCategory } from "./AnalyticsModal";
 
@@ -21,7 +22,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
   const { grossValue: totalValue, pieChartData } = processDataForPieChart(data);
 
   const z = d3
-    .scaleOrdinal(d3.schemeCategory10)
+    .scaleOrdinal(OrdinalRange)
     .domain(data?.map((d: IPieData) => d.type));
 
   const colorMap: { [key: string]: string } = {};
@@ -43,7 +44,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
   return (
     <div className="flex-1 space-y-4 text-center">
       <h2 className="text-xl font-medium capitalize tab:text-2xl">
-        {pieChartCategory}
+        {pieChartCategory.split("_").join(" ")}
       </h2>
       <div className="flex flex-col items-center tab:flex-row  lap:flex-col">
         <AnalyticsModal

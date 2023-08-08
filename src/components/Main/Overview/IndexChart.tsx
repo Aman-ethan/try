@@ -15,6 +15,7 @@ import {
   uniqBy,
 } from "lodash";
 import { IAssetNetWorth } from "@/interfaces/Main";
+import { OrdinalRange } from "@/constants/strings";
 
 type TData = IAssetNetWorth["data"][0];
 
@@ -27,8 +28,6 @@ interface IFillMissingDataParams {
   data: Record<string, TData[]>;
   xticks: string[];
 }
-
-type TScaleRecord = string[] | undefined;
 
 function fillMissingData({ data, xticks }: IFillMissingDataParams) {
   return reduce(
@@ -60,7 +59,6 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const [normalizeIndex, setNormalizeIndex] = useState(0);
   const [excludedDomain, setExcludedDomain] = useState<string[]>([]);
-  const [chartScale, setChartScale] = useState<Plot.Scale>();
 
   const [filledData, filledGroupedData, domains] = useMemo(() => {
     setNormalizeIndex(0);
@@ -89,7 +87,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
     );
 
     const _groupedData = groupBy(absoluteData, "z");
-    const _domains = Object.keys(_groupedData);
+    const _domains = Object.keys(_groupedData).sort();
 
     excludedDomain.forEach((domain) => {
       delete _groupedData[domain];
@@ -152,8 +150,8 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
         grid: true,
       },
       color: {
-        domain: chartScale?.domain,
-        range: chartScale?.range,
+        domain: domains,
+        range: OrdinalRange,
       },
       marks: [
         Plot.ruleY([1]),
@@ -173,14 +171,10 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
       }
     };
 
-    if (!chartScale) {
-      setChartScale(chart.scale("color"));
-    }
-
     chartRef.current?.append(chart);
 
     return () => chart.remove();
-  }, [normalizeIndex, filledData, filledGroupedData, chartScale]);
+  }, [normalizeIndex, filledData, filledGroupedData, domains]);
 
   if (loading)
     return (
@@ -216,11 +210,9 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
       <div className="flex flex-1" ref={chartRef} />
       <div className="flex items-center overflow-x-auto scrollbar-hidden py-4">
         <div className="flex gap-x-4">
-          {(chartScale?.domain as string[])?.map((domain, index) => {
+          {domains.map((domain, index) => {
             const isExcluded = excludedDomain?.includes(domain);
-            const backgroundColor = (chartScale?.range as TScaleRecord)?.[
-              index
-            ];
+            const backgroundColor = OrdinalRange[index];
             return (
               <Tag
                 key={domain}

@@ -17,3 +17,16 @@ export const PageCardClassName = "";
 
 export const TableScrollDifference = "5.375rem";
 export const DEFAULT_TABLE_ROW = 10;
+
+export const OrdinalRange = [
+  "#85A5FF",
+  "#B7EB8F",
+  "#D3ADF7",
+  "#5CDBD3",
+  "#69C0FF",
+  "#FFADD2",
+  "#FFC069",
+  "#FFF566",
+  "#FF9C6E",
+  "#D3F261",
+];
