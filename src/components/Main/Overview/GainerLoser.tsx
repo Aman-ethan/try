@@ -5,14 +5,18 @@ import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
-import { IDateRange, IUseTableParams, SearchParams } from "@/interfaces/Main";
+import {
+  IDateRange,
+  IUseTableParams,
+  SearchParams,
+  TGainerLoser,
+} from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatCompactNumber } from "@/lib/format";
 import useTable from "@/hooks/useTable";
 import Title from "@/components/Typography/Title";
-import Paragraph from "@/components/Typography/Paragraph";
-import Table from "../Table";
 import ClampedText from "@/components/Typography/ClampedText";
+import Table from "../Table";
 
 dayjs.extend(isBetween);
 
@@ -64,8 +68,6 @@ export interface ICombinedGainerLoser {
     total_loss: number;
   };
 }
-
-type TGainerLoser = "gainer" | "loser";
 
 interface IGainerLoserProps extends IUseTableParams {
   type: TGainerLoser;
@@ -164,21 +166,22 @@ export default function GainerLoser({ type }: IGainerLoserProps) {
         <Title level={5} className="capitalize">
           {type}
         </Title>
-        <Paragraph className="flex items-center gap-x-1.5 text-neutral-13/80">
+        <div className="flex items-center gap-x-1.5 text-neutral-13/80 text-sm">
           {isGainer ? "Top Gain:" : "Top Loss:"}
           <Title level={5}>
             {formatCompactNumber(
               isGainer ? data?.total_gain : data?.total_loss
             )}
           </Title>
-        </Paragraph>
+        </div>
       </div>
       <Table
         loading={isLoading}
         columns={Columns}
         dataSource={data?.results}
         onChange={onChange}
-        rowClassName="h-[4.375rem]"
+        rowKey="id"
+        rowClassName="h-[4.3125rem]"
         className="h-[28.375rem]"
         scroll={{ y: "24rem" }}
         pagination={{

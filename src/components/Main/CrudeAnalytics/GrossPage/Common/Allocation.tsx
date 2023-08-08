@@ -4,9 +4,13 @@ import { useState } from "react";
 import { Empty } from "antd";
 import { ProList } from "@ant-design/pro-components";
 import * as d3 from "d3";
-import { IPieData, processDataForPieChart } from "@/constants/pieChartConfig";
+import {
+  IPercentageData,
+  IPieData,
+  processDataForPieChart,
+} from "@/constants/pieChartConfig";
 import AnalyticsPieChart from "../../Charts/AnalyticsPieChart";
-import AnalyticsModal from "./AnalyticsModal";
+import AnalyticsModal, { TCategory } from "./AnalyticsModal";
 
 interface IAllocationProps {
   title: string;
@@ -18,7 +22,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
 
   const z = d3
     .scaleOrdinal(d3.schemeCategory10)
-    .domain(data?.map((d: any) => d.type));
+    .domain(data?.map((d: IPieData) => d.type));
 
   const colorMap: { [key: string]: string } = {};
   z.domain().forEach((d) => {
@@ -32,7 +36,10 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
     setModalVisible(true);
   };
   const handleModalClose = () => setModalVisible(false);
-  const pieChartCategory = title.replace("Gross Allocation by ", "");
+  const pieChartCategory = title
+    .replace("Gross Allocation by ", "")
+    .replace(" ", "_") as TCategory;
+
   return (
     <div className="flex-1 space-y-4 text-center">
       <h2 className="text-xl font-medium capitalize tab:text-2xl">
@@ -59,13 +66,12 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
             metas={{
               title: {
                 dataIndex: "title",
-                render: (dom, entity) => (
+                render: (_dom, entity) => (
                   <div className="flex items-center justify-center gap-x-2">
                     <div
+                      className="w-2.5 h-2.5"
                       style={{
                         backgroundColor: colorMap[entity.type],
-                        width: "10px",
-                        height: "10px",
                       }}
                     />
                     <p className="break-words text-left font-normal">
@@ -75,7 +81,9 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
                 ),
               },
               extra: {
-                render: (_: any, record: any) => [<p>{record.percentage}%</p>],
+                render: (_: unknown, record: IPercentageData) => [
+                  <p key={record.type}>{record.percentage}%</p>,
+                ],
               },
             }}
             className="max-h-52 w-full overflow-y-scroll tab:w-auto tab:flex-1 lap:w-full"

@@ -32,7 +32,7 @@ export default function Analytics() {
       </Dropdown>
       <div className="flex min-h-[38.125rem] flex-col lap:flex-row lap:items-start lap:justify-center">
         {allocation?.map(({ title, data }) => (
-          <Allocation data={data} title={title} />
+          <Allocation key={title} data={data} title={title} />
         ))}
       </div>
     </div>

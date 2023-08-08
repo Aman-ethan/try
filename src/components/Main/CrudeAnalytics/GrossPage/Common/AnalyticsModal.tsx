@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Modal } from "antd";
 import Title from "antd/lib/typography/Title";
 import { ColumnType } from "antd/es/table";
+import { DefaultOptionType } from "rc-select/lib/Select";
 import Select from "@/components/Input/Select";
 import { IPieData, IPositionsResponse } from "@/interfaces/Main";
 import useTable, { useTableFilter } from "@/hooks/useTable";
@@ -11,17 +12,14 @@ import CurrencyTag from "@/components/Main/General/CurrencyTag";
 import { formatPrice, formatQuantity } from "@/lib/format";
 import ScrollableTable from "@/components/Main/Table/ScrollableTable";
 
+export type TCategory = "asset_class" | "region" | "industry";
+
 interface IAnalyticsModalProps {
   isModalOpen: boolean;
   handleModalClose: () => void;
   data: IPieData[];
   selectedType: string;
-  category: string;
-}
-
-interface ISelectOption {
-  label: string;
-  value: number;
+  category: TCategory;
 }
 
 type TPositionColumn = {
@@ -35,7 +33,7 @@ type TPositionColumn = {
   unrealizedPL: number;
 };
 
-function useAnalytics(category: string, value: string) {
+function useAnalytics(category: TCategory, value: string) {
   const {
     onChange,
     pagination,
@@ -46,7 +44,7 @@ function useAnalytics(category: string, value: string) {
     currency__in,
   } = useTable();
   const params: Record<string, string | undefined> = {
-    asset_class: category === "asset class" ? value : undefined,
+    asset_class: category === "asset_class" ? value : undefined,
     security__country_name: category === "region" ? value : undefined,
     security__sub_industry: category === "industry" ? value : undefined,
     client,
@@ -141,19 +139,19 @@ export default function AnalyticsModal({
   selectedType,
   category,
 }: IAnalyticsModalProps) {
-  const [selectOptions, setSelectOptions] = useState<ISelectOption[]>([]);
+  const [selectOptions, setSelectOptions] = useState<DefaultOptionType[]>([]);
   const [selectedOption, setSelectedOption] = useState<
-    ISelectOption | undefined
+    DefaultOptionType | undefined
   >();
   const { addFilters } = useTableFilter();
 
   const { analyticsData, isLoading, pagination, onChange } = useAnalytics(
     category,
-    selectedOption ? selectedOption.label : ""
+    selectedOption ? (selectedOption.label as string) : ""
   );
 
   useEffect(() => {
-    const newSelectOptions: ISelectOption[] = data.map((d) => ({
+    const newSelectOptions: DefaultOptionType[] = data.map((d) => ({
       label: d.type,
       value: d.value,
     }));
@@ -167,8 +165,11 @@ export default function AnalyticsModal({
     setSelectedOption(newSelectedOption);
   }, [data, selectedType]);
 
-  const handleSelectChange = (value: number, option: any) => {
-    setSelectedOption(option);
+  const handleSelectChange = (
+    _value: unknown,
+    option: DefaultOptionType | DefaultOptionType[]
+  ) => {
+    setSelectedOption(option as DefaultOptionType);
   };
 
   const tableData = analyticsData?.results?.map((item) => {

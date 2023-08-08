@@ -228,6 +228,8 @@ export interface IClient {
   daily_change: number;
 }
 
+export type TGainerLoser = "gainer" | "loser";
+
 type TCommonSearchPrams =
   | "page"
   | "ordering"

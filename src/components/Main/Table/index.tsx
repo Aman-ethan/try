@@ -1,6 +1,8 @@
 import { Table as AntdTable, Empty, TableProps } from "antd";
+import clsx from "clsx";
 
 export default function Table({
+  className,
   pagination,
   size = "middle",
   scroll,
@@ -29,6 +31,7 @@ export default function Table({
         x: scroll?.x,
       }}
       size={size}
+      className={clsx("scrollbar-hidden", className)}
       {...props}
     />
   );

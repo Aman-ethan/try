@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { FilterOutlined } from "@ant-design/icons";
 import clsx from "clsx";
+import { Button } from "antd";
 import SelectClient from "@/components/Main/Input/SelectClientWithParams";
-// import SelectCustodian from "@/components/Main/Input/SelectCustodianWithParams";
-import { Button } from "@/lib/antd";
 
 export default function GainerLoserFilter() {
   const [showFilter, setShowFilter] = useState(false);
@@ -19,13 +18,7 @@ export default function GainerLoserFilter() {
         <SelectClient
           placeholder="All Client"
           className={primarySelectClasses}
-          // searchParamKey="client_id"
         />
-        {/* <SelectCustodian
-          placeholder="All Custodian"
-          className={primarySelectClasses}
-          // searchParamKey="custodian_id"
-        /> */}
       </div>
       <Button
         size="large"

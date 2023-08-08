@@ -10,6 +10,7 @@ import Title from "@/components/Typography/Title";
 import useSearchParams from "@/hooks/useSearchParams";
 import { TCurrency } from "@/interfaces/Main";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
+import ClampedText from "@/components/Typography/ClampedText";
 import CurrencyTag from "../General/CurrencyTag";
 import SelectClientWithParams from "../Input/SelectClientWithParams";
 import SelectCustodianWithParams from "../Input/SelectCustodianWithParams";
@@ -66,12 +67,14 @@ const columns: ColumnsType = [
     key: "description",
     dataIndex: "description",
     width: 275,
+    render: (description) => <ClampedText text={description} />,
   },
   {
     title: "Narration",
     key: "narration",
     dataIndex: "narration",
     width: 275,
+    render: (narration) => <ClampedText text={narration} />,
   },
   {
     title: "Average Price",

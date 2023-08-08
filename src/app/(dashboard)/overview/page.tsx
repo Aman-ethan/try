@@ -5,6 +5,7 @@ import ClientNetWorth from "@/components/Main/Overview/ClientNetWorth";
 import GainerLoser from "@/components/Main/Overview/GainerLoser";
 import GainerLoserFilter from "@/components/Main/Overview/GainerLoserFilter";
 import Title from "@/components/Typography/Title";
+import { TGainerLoser } from "@/interfaces/Main";
 
 const GainerLoserViewOptions = [
   { label: "Table View", value: "table_view" },
@@ -39,8 +40,9 @@ export default function Home() {
         </div>
         <GainerLoserFilter />
         <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-10">
-          <GainerLoser type="gainer" />
-          <GainerLoser type="loser" />
+          {(["gainer", "loser"] as TGainerLoser[]).map((type) => (
+            <GainerLoser type={type} />
+          ))}
         </div>
       </div>
     </div>

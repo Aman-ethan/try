@@ -5,6 +5,7 @@ import { capitalize } from "lodash";
 import { ActionColumn } from "@/constants/table";
 import { TCurrency } from "@/interfaces/Main";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
+import ClampedText from "@/components/Typography/ClampedText";
 import Statement from ".";
 import CurrencyTag from "../../General/CurrencyTag";
 import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
@@ -113,6 +114,7 @@ const Columns: TableColumnsType<ITradeStatement> = [
     key: "description",
     dataIndex: "description",
     width: 220,
+    render: (description) => <ClampedText text={description} />,
   },
   {
     title: "Currency",

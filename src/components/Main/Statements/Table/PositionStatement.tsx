@@ -3,6 +3,7 @@
 import { TableColumnsType } from "antd";
 import { ActionColumn } from "@/constants/table";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
+import ClampedText from "@/components/Typography/ClampedText";
 import Statement from ".";
 import CurrencyTag from "../../General/CurrencyTag";
 import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
@@ -89,6 +90,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     key: "description",
     dataIndex: "description",
     width: 230,
+    render: (description) => <ClampedText text={description} />,
   },
   {
     title: "Currency",
