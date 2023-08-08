@@ -37,6 +37,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
     setModalVisible(true);
   };
   const handleModalClose = () => setModalVisible(false);
+
   const pieChartCategory = title
     .replace("Gross Allocation by ", "")
     .replace(" ", "_") as TCategory;

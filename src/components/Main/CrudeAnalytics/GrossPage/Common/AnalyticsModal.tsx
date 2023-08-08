@@ -197,7 +197,7 @@ export default function AnalyticsModal({
       <div className="flex flex-col space-y-4">
         <div className="flex flex-row items-center space-x-8">
           <Title className="capitalize" level={4}>
-            {category}
+            {category.split("_").join(" ")}
           </Title>
           <Select
             className="w-1/3"

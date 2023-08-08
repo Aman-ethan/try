@@ -46,7 +46,7 @@ export function renderTextInsideContainer(
 
   // Return a div containing the text with the adjusted style.
   // The font-size is scaled and the line-height is set to 1 if the scale is less than 1; otherwise, it's set to 'inherit'.
-  return `<div style="${textStyleStr};font-size:${scale}em;line-height:${
+  return `<div class="text-xl text-neutral-13/80 font-medium" style="${textStyleStr};font-size:${scale}em;line-height:${
     scale < 1 ? 1 : "inherit"
   };">${text}</div>`;
 }
@@ -99,6 +99,10 @@ const defaultPieChartConfig: PieConfig = {
     style: {
       textAlign: "center",
       fontSize: 14,
+      fontWeight: 400,
+      fontFamily: "Roboto",
+      fill: "rgba(0, 0, 0)",
+      opacity: 0.85,
     },
   },
   interactions: [
@@ -113,14 +117,20 @@ const defaultPieChartConfig: PieConfig = {
     },
   ],
   statistic: {
+    title: {
+      style: {
+        fontSize: "14px",
+        fontWeight: 400,
+        fontFamily: "Roboto",
+        lineHeight: "22px",
+      },
+    },
     content: {
       style: {
         whiteSpace: "pre-wrap",
         overflow: "hidden",
         textOverflow: "ellipsis",
-        marginTop: "10px",
       },
-      content: "",
     },
   },
 };

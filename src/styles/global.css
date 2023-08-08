@@ -4,6 +4,7 @@
 
 * {
   font-family: var(--font-roboto);
+  @apply antialiased;
 }
 
 h1,

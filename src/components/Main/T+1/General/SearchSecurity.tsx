@@ -291,7 +291,7 @@ export default function SearchSecurity() {
       </Row>
       <Form.Item name="security_type" initialValue="PUBLIC">
         <Radio.Group
-          className="flex"
+          className="flex text-center"
           optionType="button"
           size="middle"
           options={SecurityOptions}
