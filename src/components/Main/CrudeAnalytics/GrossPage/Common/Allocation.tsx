@@ -46,7 +46,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
       <h2 className="text-xl font-medium capitalize tab:text-2xl">
         {pieChartCategory.split("_").join(" ")}
       </h2>
-      <div className="flex flex-col items-center tab:flex-row  lap:flex-col">
+      <div className="flex flex-col items-center tab:flex-row lap:flex-col">
         <AnalyticsModal
           isModalOpen={isModalVisible}
           handleModalClose={handleModalClose}
@@ -62,8 +62,9 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
         />
         {pieChartData.length !== 0 ? (
           <ProList
+            className="w-full tab:w-auto tab:flex-1 lap:w-full desk:px-9"
             rowClassName="p-2"
-            dataSource={pieChartData}
+            dataSource={pieChartData.slice(0, 4)}
             metas={{
               title: {
                 dataIndex: "title",
@@ -87,7 +88,6 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
                 ],
               },
             }}
-            className="max-h-52 w-full overflow-y-scroll tab:w-auto tab:flex-1 lap:w-full"
           />
         ) : (
           <Empty />

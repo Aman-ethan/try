@@ -44,7 +44,5 @@ export default function AnalyticsPieChart({
     animation: false,
   };
 
-  return (
-    <Pie {...pieChartConfig} style={{ width: "300px", maxHeight: "300px" }} />
-  );
+  return <Pie {...pieChartConfig} />;
 }

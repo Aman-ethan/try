@@ -85,6 +85,7 @@ export function processDataForPieChart(data: IPieData[]): TProcessedData {
 
 const defaultPieChartConfig: PieConfig = {
   legend: false,
+  className: "w-72 max-h-72",
   appendPadding: 10,
   data: [],
   angleField: "percentage",
