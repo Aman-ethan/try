@@ -41,7 +41,7 @@ export default function Home() {
         <GainerLoserFilter />
         <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-10">
           {(["gainer", "loser"] as TGainerLoser[]).map((type) => (
-            <GainerLoser type={type} />
+            <GainerLoser key={type} type={type} />
           ))}
         </div>
       </div>

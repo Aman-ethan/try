@@ -180,7 +180,7 @@ export default function GainerLoser({ type }: IGainerLoserProps) {
         columns={Columns}
         dataSource={data?.results}
         onChange={onChange}
-        rowKey="id"
+        rowKey="profit_loss"
         rowClassName="h-[4.3125rem]"
         className="h-[28.375rem]"
         scroll={{ y: "24rem" }}
