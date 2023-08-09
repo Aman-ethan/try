@@ -161,7 +161,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         collapsed={collapsed}
         onCollapse={() => setCollapsed(true)}
         collapsible
-        className="fixed hidden h-screen border-t-0 border-solid border-r border-neutral-5 bg-neutral-1 tab:block"
+        className="fixed hidden border-t-0 border-solid border-r border-neutral-5 bg-neutral-1 tab:block"
         width={240}
         collapsedWidth={60}
       >
@@ -173,7 +173,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
           defaultOpenKeys={openKey}
           items={ROUTE}
           mode="inline"
-          className="border-none"
+          className="scrollbar-hidden overflow-y-auto h-[calc(100vh-4.75rem)]"
         />
       </Layout.Sider>
 

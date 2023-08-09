@@ -120,7 +120,7 @@ export default function TradeStatementForm({
         >
           <Input placeholder="Enter description" />
         </Form.Item>
-        <Form.Item label="Currency" name="currency" className="w-1/2 pl-4">
+        <Form.Item label="Currency" name="currency" className="flex-1 min-w-0">
           <SelectCurrency placeholder="Select currency" />
         </Form.Item>
       </div>
