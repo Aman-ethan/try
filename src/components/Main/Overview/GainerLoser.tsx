@@ -16,6 +16,7 @@ import { formatCompactNumber } from "@/lib/format";
 import useTable from "@/hooks/useTable";
 import Title from "@/components/Typography/Title";
 import ClampedText from "@/components/Typography/ClampedText";
+import { GainerLoserSearchParamKeys } from "@/constants/searchParams";
 import Table from "../Table";
 
 dayjs.extend(isBetween);
@@ -97,13 +98,6 @@ const Columns: TableColumnsType = [
   },
 ];
 
-const _searchParamKeys = [
-  "client",
-  "custodian_id",
-  "reporting_currency",
-  "page_size",
-];
-
 const searchParamKeys: Record<TGainerLoser, Record<"page", SearchParams>> = {
   gainer: {
     page: "page_gainer",
@@ -130,7 +124,7 @@ function useGainerLoser({ type }: IGainerLoserProps) {
   const { data, isLoading } = useTransactionServerQuery<IGainer>(
     dateRange
       ? `${URLs[type]}${buildURLSearchParams(
-          _searchParamKeys.reduce(
+          GainerLoserSearchParamKeys.reduce(
             (acc, key) => ({
               ...acc,
               [key]: getSearchParams(key as SearchParams),
@@ -144,6 +138,7 @@ function useGainerLoser({ type }: IGainerLoserProps) {
                 : dateRange.start_date,
               end_date: dateRange.end_date,
               page: getSearchParams(searchParamKeys?.[type].page),
+              page_size: PAGE_SIZE.toString(),
             }
           )
         )}`
@@ -161,7 +156,7 @@ export default function GainerLoser({ type }: IGainerLoserProps) {
   const { data, isLoading } = useGainerLoser({ type });
   const { pagination, onChange } = useTable({
     searchParamKeys: searchParamKeys[type],
-    page_size: PAGE_SIZE,
+    pageSize: PAGE_SIZE,
   });
 
   return (

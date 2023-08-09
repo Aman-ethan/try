@@ -23,4 +23,14 @@ const BlotterSearchParamKeys: SearchParams[] = [
   "page_size",
 ];
 
-export { StatementSearchParamKeys, BlotterSearchParamKeys };
+const GainerLoserSearchParamKeys: SearchParams[] = [
+  "client",
+  "custodian_id",
+  "reporting_currency__in",
+];
+
+export {
+  StatementSearchParamKeys,
+  BlotterSearchParamKeys,
+  GainerLoserSearchParamKeys,
+};

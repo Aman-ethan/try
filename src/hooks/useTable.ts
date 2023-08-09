@@ -37,6 +37,7 @@ export default function useTable(props?: IUseTableParams) {
   const custodian = getSearchParams("custodian");
   const ordering = getSearchParams("ordering");
   const currency__in = getSearchParams("currency__in");
+  const pageSize = props?.pageSize || DEFAULT_PAGE_SIZE;
 
   function onChange<T>(
     pagination: TablePaginationConfig,
@@ -50,14 +51,13 @@ export default function useTable(props?: IUseTableParams) {
       ...filters,
       [pageKey]: String(pagination.current),
       ordering: order ? _ordering : undefined,
-      page_size: String(pagination.pageSize),
     });
   }
 
   const pagination: TablePaginationConfig = {
     position: ["bottomRight"],
     current: Number(page) || 1,
-    pageSize: props?.page_size || DEFAULT_PAGE_SIZE,
+    pageSize,
   };
 
   return {

@@ -294,7 +294,7 @@ export interface IUseTableParams {
     client?: SearchParams;
     page?: SearchParams;
   };
-  page_size?: number;
+  pageSize?: number;
 }
 
 export type TTabType = "goals" | "estate" | "bank_account";
