@@ -28,8 +28,8 @@ export default function Home() {
         <div className="shadow-large flex-1 overflow-x-auto rounded-lg bg-white p-6">
           <Analytics />
         </div>
-        <div className="shadow-large space-y-6 rounded-lg bg-white p-6">
-          <div className="flex flex-col space-y-4 tab:flex-row tab:item-center tab:justify-between tab:space-y-0">
+        <div className="shadow-large space-y-4 rounded-lg bg-white p-6">
+          <div className="flex flex-col gap-y-4 tab:flex-row tab:items-center tab:justify-between tab:gap-y-0">
             <Title level={4}>Gainer/Loser</Title>
             <div className="tab:w-[16.75rem]">
               <Segmented
@@ -39,13 +39,16 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className="flex max-w-lg flex-col space-y-4 tab:flex-row tab:space-x-4 tab:space-y-0 ">
-            <SelectClient placeholder="All Client" className="tab:w-1/2" />
-          </div>
-          <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-10">
-            {(["gainer", "loser"] as TGainerLoser[]).map((type) => (
-              <GainerLoser key={type} type={type} />
-            ))}
+          <div className="space-y-8">
+            <SelectClient
+              placeholder="All Client"
+              className="w-full max-w-xs"
+            />
+            <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-10">
+              {(["gainer", "loser"] as TGainerLoser[]).map((type) => (
+                <GainerLoser key={type} type={type} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

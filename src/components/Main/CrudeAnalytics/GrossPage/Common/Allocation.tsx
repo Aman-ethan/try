@@ -10,6 +10,7 @@ import {
   processDataForPieChart,
 } from "@/constants/pieChartConfig";
 import { OrdinalRange } from "@/constants/strings";
+import Title from "@/components/Typography/Title";
 import AnalyticsPieChart from "../../Charts/AnalyticsPieChart";
 import AnalyticsModal, { TCategory } from "./AnalyticsModal";
 
@@ -44,9 +45,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
 
   return (
     <div className="flex-1 space-y-4 text-center">
-      <h2 className="text-xl font-medium capitalize tab:text-2xl">
-        {pieChartCategory.split("_").join(" ")}
-      </h2>
+      <Title level={3}>{pieChartCategory.split("_").join(" ")}</Title>
       <div className="flex flex-col items-center tab:flex-row lap:flex-col space-y-4">
         <AnalyticsModal
           isOverlayVisible={isOverlayVisible}

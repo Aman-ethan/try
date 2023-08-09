@@ -13,7 +13,7 @@ export default function Segmented({
     // @ts-expect-error
     <AntdSegmented
       className={clsx(
-        "w-auto border border-neutral-4 bg-neutral-2 p-1",
+        "w-auto rounded-md border-solid border-2 border-neutral-4 bg-neutral-2 p-1 text-base space-x-2",
         className
       )}
       block={block}

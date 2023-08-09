@@ -16,7 +16,11 @@ export default function Title({
     case 2:
       return <h2 className={clsx("text-3xl", mergedClassName)}>{children}</h2>;
     case 3:
-      return <h3 className={clsx("text-2xl", mergedClassName)}>{children}</h3>;
+      return (
+        <h3 className={clsx("text-xl tab:text-2xl", mergedClassName)}>
+          {children}
+        </h3>
+      );
     case 4:
       return <h4 className={clsx("text-xl", mergedClassName)}>{children}</h4>;
     case 5:
