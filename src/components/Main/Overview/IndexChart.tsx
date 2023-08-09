@@ -29,6 +29,8 @@ interface IFillMissingDataParams {
   xticks: string[];
 }
 
+const AXIS_OFFSET = 0.05;
+
 function fillMissingData({ data, xticks }: IFillMissingDataParams) {
   return reduce(
     data,
@@ -146,7 +148,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
             f(y - 1)
         )(format("+.0%")),
         label: null,
-        domain: [1 / maxDomain, maxDomain],
+        domain: [1 / (maxDomain + AXIS_OFFSET), maxDomain + AXIS_OFFSET],
         grid: true,
       },
       color: {
