@@ -10,8 +10,8 @@ import InputQuantity from "../../Input/InputQuantity";
 import SelectAsset from "../../Input/SelectAsset";
 import SelectClient from "../../Input/SelectClient";
 import SelectCurrency from "../../Input/SelectCurrency";
-import SelectCustodian from "../../Input/SelectCustodian";
 import SelectRelationshipNumber from "../../Input/SelectRelationshipNumber";
+import CreateCustodian from "../../ClientInformation/CreateCustodian";
 
 export default function PositionStatementForm({
   form,
@@ -61,7 +61,7 @@ export default function PositionStatementForm({
           name="custodian"
           className="flex-1 min-w-0"
         >
-          <SelectCustodian placeholder="Select custodian" />
+          <CreateCustodian placeholder="Select custodian" />
         </Form.Item>
         <Form.Item
           label="Account Number"

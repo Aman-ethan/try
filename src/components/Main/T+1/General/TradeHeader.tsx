@@ -10,12 +10,6 @@ import SelectClientWithParams from "../../Input/SelectClientWithParams";
 import SelectCustodianWithParams from "../../Input/SelectCustodianWithParams";
 import AddTradeDrawer from "./AddTradeDrawer";
 
-// const BreadcrumbItems = [
-//   {
-//     title: "T+1",
-//   },
-// ];
-
 export default function TradeHeader() {
   const selectedLayoutSegment = useSelectedLayoutSegment();
   const title = selectedLayoutSegment?.split("-").join(" ") || "";
@@ -36,18 +30,8 @@ export default function TradeHeader() {
 
   return (
     <div className="space-y-6">
-      {/* <Breadcrumb
-        className="capitalize"
-        items={BreadcrumbItems.concat([
-          {
-            title,
-          },
-        ])}
-      /> */}
       <Row justify="space-between" align="middle">
-        <Title className="capitalize">
-          {title === "Transaction" ? "Trade" : title}
-        </Title>
+        <Title>{title === "transaction" ? "Trades" : title}</Title>
         <div className="hidden tab:block">
           <AddTradeDrawer />
         </div>

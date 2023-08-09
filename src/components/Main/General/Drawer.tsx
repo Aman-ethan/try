@@ -44,8 +44,11 @@ export default function Drawer({
         placement={MOBILE_BREAK_POINT ? "bottom" : "right"} // Use bottom placement for mobile screens, right for others
         onClose={handleClose}
         push={false}
+        bodyStyle={{
+          padding: "2rem",
+        }}
       >
-        <Row justify="space-between" className="mb-4">
+        <Row justify="space-between" className="pb-6" align="middle">
           <Title level={4}>{title}</Title>
           <Button
             onClick={handleClose}
@@ -54,7 +57,7 @@ export default function Drawer({
           />
         </Row>
         <div className="mb-20">{children}</div>
-        <div className="bg-white bottom-0 right-0 left-0 flex flex-col-reverse justify-end gap-x-4 gap-y-4 p-4 tab:flex-row lap:absolute">
+        <div className="bg-white bottom-0 right-0 left-0 flex flex-col-reverse justify-end gap-x-4 gap-y-4 p-4 tab:flex-row tab:px-6 tab:pb-8 tab:pt-4 lap:px-8 lap:absolute">
           {closeButton ? (
             <Button
               size="large"

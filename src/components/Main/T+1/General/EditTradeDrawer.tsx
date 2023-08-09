@@ -7,6 +7,7 @@ import TradeForm from "../Form/Trade";
 interface IEditTradeDrawerProps {
   id?: string;
   button: ReactElement;
+  onClose?: () => void;
 }
 
 const urls = {
@@ -25,14 +26,18 @@ const message = {
   error: "Error editing trade",
 };
 
-export default function EditTradeDrawer({ id, button }: IEditTradeDrawerProps) {
+export default function EditTradeDrawer({
+  id,
+  button,
+  onClose,
+}: IEditTradeDrawerProps) {
   return (
     <EditFormDrawer
       id={id}
       urls={urls}
       formComponent={TradeForm}
       message={message}
-      drawerProps={{ button, ...drawerProps }}
+      drawerProps={{ button, onClose, ...drawerProps }}
     />
   );
 }

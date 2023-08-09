@@ -161,7 +161,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         collapsed={collapsed}
         onCollapse={() => setCollapsed(true)}
         collapsible
-        className="fixed hidden h-screen border-solid border-r border-neutral-5 bg-neutral-1 tab:block"
+        className="fixed hidden h-screen border-t-0 border-solid border-r border-neutral-5 bg-neutral-1 tab:block"
         width={240}
         collapsedWidth={60}
       >

@@ -73,7 +73,7 @@ const ROUTE = [
         key: "/t+1/transaction",
         label: (
           <Link href={`/t+1/transaction?page_size=${DEFAULT_PAGE_SIZE}`}>
-            Trade
+            Trades
           </Link>
         ),
       },

@@ -10,10 +10,10 @@ import getFileValueFromEvent from "@/lib/getFileValueFromEvent";
 import revalidate from "@/lib/revalidate";
 import { DatePicker } from "../../Input/DatePicker";
 import SelectClient from "../../Input/SelectClient";
-import SelectCustodian from "../../Input/SelectCustodian";
 import SelectRelationshipNumber from "../../Input/SelectRelationshipNumber";
 import Upload from "../../Input/Upload";
 import SelectStatementType from "../Input/SelectStatementType";
+import CreateCustodian from "../../ClientInformation/CreateCustodian";
 
 interface IUploadBankStatementResponse {
   url: string;
@@ -146,7 +146,7 @@ export default function UploadBankStatement() {
           className="flex-1 min-w-0"
           rules={FormRules.custodian}
         >
-          <SelectCustodian
+          <CreateCustodian
             params={{ clientId }}
             placeholder="Choose the custodian"
             disabled={isMutating}

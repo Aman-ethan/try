@@ -51,11 +51,15 @@ export default function TradeTable<T>({
       key: "id" as keyof T,
     });
 
+  const handleClose = () => {
+    setSelectedRowKey(undefined);
+  };
+
   return (
     <>
       <ViewDrawer<T>
         open={!!selectedRowKey}
-        onClose={() => setSelectedRowKey(undefined)}
+        onClose={handleClose}
         title={edit ? "Trade View" : "Active Position View"}
         columns={columns}
         urlKey={`${urlKey + selectedRowKey}/`}
@@ -63,8 +67,9 @@ export default function TradeTable<T>({
           edit ? (
             <EditTradeDrawer
               id={selectedRowKey}
+              onClose={handleClose}
               button={
-                <Button type="primary" size="large" className="px-7">
+                <Button type="primary" size="large">
                   Edit Trade
                 </Button>
               }

@@ -1,8 +1,4 @@
-import {
-  CloseOutlined,
-  MinusCircleOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { CloseOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, FormRule, Input, Radio, Row, message } from "antd";
 import Title from "@/components/Typography/Title";
 import { useTransactionServerLazyQuery } from "@/hooks/useQuery";
@@ -198,39 +194,46 @@ function PrivateSecurityForm() {
         <Form.List name="extra">
           {(fields, { add, remove }) => (
             <>
-              <div>
-                <Button
-                  shape="circle"
-                  className="shadow-large"
-                  icon={<PlusOutlined className="text-sm" />}
-                  onClick={add}
-                />
-              </div>
-              <div className="w-full space-y-6">
+              <Button
+                size="middle"
+                shape="circle"
+                className="shadow-large"
+                icon={<PlusOutlined className="text-sm" />}
+                onClick={add}
+              />
+              <div className="w-full space-y-4 pt-4">
                 {fields.map(({ key, name, ...restField }) => (
-                  <div key={key} className="flex gap-x-6">
-                    <Form.Item
-                      {...restField}
-                      name={[name, "key"]}
-                      label="Key"
-                      className="flex-1"
-                      rules={PrivateSecurityRules.key}
-                    >
-                      <Input placeholder="Enter Key" />
+                  <div key={key} className="flex flex-1 gap-x-2 items-center">
+                    <div className="flex flex-1 gap-x-6">
+                      <Form.Item
+                        {...restField}
+                        name={[name, "key"]}
+                        label="Key"
+                        className="flex-1"
+                        rules={PrivateSecurityRules.key}
+                      >
+                        <Input placeholder="Enter Key" />
+                      </Form.Item>
+                      <Form.Item
+                        {...restField}
+                        name={[name, "value"]}
+                        label="Value"
+                        className="flex-1"
+                        rules={PrivateSecurityRules.value}
+                      >
+                        <Input placeholder="Enter Value" />
+                      </Form.Item>
+                    </div>
+                    <Form.Item label="&nbsp;">
+                      <Button
+                        size="small"
+                        shape="circle"
+                        danger
+                        onClick={() => remove(name)}
+                      >
+                        <MinusOutlined className="text-sm" />
+                      </Button>
                     </Form.Item>
-                    <Form.Item
-                      {...restField}
-                      name={[name, "value"]}
-                      label="Value"
-                      className="flex-1"
-                      rules={PrivateSecurityRules.value}
-                    >
-                      <Input placeholder="Enter Value" />
-                    </Form.Item>
-                    <MinusCircleOutlined
-                      className="text-2xl font-light text-red-500"
-                      onClick={() => remove(name)}
-                    />
                   </div>
                 ))}
               </div>

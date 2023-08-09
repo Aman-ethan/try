@@ -10,9 +10,9 @@ import InputQuantity from "../../Input/InputQuantity";
 import SelectAssetClass from "../../Input/SelectAsset";
 import SelectClient from "../../Input/SelectClient";
 import SelectCurrency from "../../Input/SelectCurrency";
-import SelectCustodian from "../../Input/SelectCustodian";
 import TradeAction from "../../Input/TradeAction";
 import SelectRelationshipNumber from "../../Input/SelectRelationshipNumber";
+import CreateCustodian from "../../ClientInformation/CreateCustodian";
 
 export default function TradeStatementForm({
   form,
@@ -53,7 +53,7 @@ export default function TradeStatementForm({
           name="custodian"
           className="flex-1 min-w-0"
         >
-          <SelectCustodian
+          <CreateCustodian
             params={{ clientId }}
             reset={() => {
               form.resetFields(["custodian"]);
