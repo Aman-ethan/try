@@ -1,5 +1,5 @@
+import Title from "@/components/Typography/Title";
 import { ILayoutProps } from "@/interfaces/Main";
-import { Title } from "@/lib/antd";
 
 export default function ChangePasswordLayout({ children }: ILayoutProps) {
   return (
