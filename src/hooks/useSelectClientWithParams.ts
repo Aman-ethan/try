@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { SearchParams } from "@/interfaces/Main";
+import { resetPage } from "@/constants/searchParams";
 import useDependentSelect from "./useDependentSelect";
 import useSearchParams from "./useSearchParams";
 import useSelectClient from "./useSelectClient";
@@ -36,6 +37,7 @@ export default function useSelectClientWithParams(
     (value: string) => {
       updateSearchParams({
         [searchParamKey]: value,
+        ...resetPage,
       });
     },
     [searchParamKey, updateSearchParams]

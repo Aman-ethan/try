@@ -25,12 +25,20 @@ const BlotterSearchParamKeys: SearchParams[] = [
 
 const GainerLoserSearchParamKeys: SearchParams[] = [
   "client",
-  "custodian_id",
   "reporting_currency__in",
 ];
+
+const resetPage = ["page", "page_gainer", "page_loser"].reduce(
+  (acc, key) => ({
+    ...acc,
+    [key]: undefined,
+  }),
+  {}
+);
 
 export {
   StatementSearchParamKeys,
   BlotterSearchParamKeys,
   GainerLoserSearchParamKeys,
+  resetPage,
 };

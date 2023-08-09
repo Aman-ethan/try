@@ -1,4 +1,5 @@
 import { SearchParams } from "@/interfaces/Main";
+import { resetPage } from "@/constants/searchParams";
 import useDependentSelect from "./useDependentSelect";
 import useSearchParams from "./useSearchParams";
 import useSelectCustodian from "./useSelectCustodian";
@@ -34,6 +35,7 @@ export default function useSelectCustodianWithParams(
   function onChange(value: string) {
     updateSearchParams({
       [searchParamKey]: value,
+      ...resetPage,
     });
   }
 
