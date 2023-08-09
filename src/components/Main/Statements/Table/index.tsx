@@ -13,8 +13,8 @@ export default function Statement<T>({
   return (
     <ScrollableTable
       rowClassName="h-20"
-      className="min-h-[calc(100vh-20rem)]"
-      scroll={{ y: "calc(100vh - 25rem)" }}
+      className="h-[36rem]"
+      scroll={{ y: "30rem" }}
       dataSource={data?.results}
       loading={isLoading}
       columns={columns?.map(addFilters)}

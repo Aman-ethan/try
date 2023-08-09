@@ -19,7 +19,7 @@ export default function Table({
         emptyText: (
           <div
             style={{
-              height: `calc(${scroll?.y} - 1rem)`,
+              height: scroll?.y,
             }}
             className="flex items-center justify-center"
           >

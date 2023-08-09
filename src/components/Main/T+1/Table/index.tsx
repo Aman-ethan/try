@@ -76,8 +76,8 @@ export default function TradeTable<T>({
         rowKey="id"
         columns={columns.map(addFilters)}
         rowClassName="h-20"
-        className="min-h-[calc(100vh-22rem)]"
-        scroll={{ y: "calc(100vh - 27rem)" }}
+        className="h-[36rem]"
+        scroll={{ y: "30rem" }}
         rowSelection={rowSelection}
         onRow={onRow}
         dataSource={data?.results}

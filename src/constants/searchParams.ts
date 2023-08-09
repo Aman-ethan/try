@@ -1,4 +1,6 @@
-const StatementSearchParamKeys = [
+import { SearchParams } from "@/interfaces/Main";
+
+const StatementSearchParamKeys: SearchParams[] = [
   "asset_class__in",
   "currency__in",
   "custodian__in",
@@ -12,7 +14,7 @@ const StatementSearchParamKeys = [
   "page_size",
 ];
 
-const BlotterSearchParamKeys = [
+const BlotterSearchParamKeys: SearchParams[] = [
   "asset_class__in",
   "security__in",
   "trade_action__in",
