@@ -92,6 +92,11 @@ const defaultPieChartConfig: PieConfig = {
   colorField: "type",
   radius: 1,
   innerRadius: 0.6,
+  tooltip: {
+    formatter: (datum) => {
+      return { name: datum.type, value: `${datum.percentage} %` };
+    },
+  },
   label: {
     type: "inner",
     offset: "-50%",
@@ -111,9 +116,6 @@ const defaultPieChartConfig: PieConfig = {
     },
     {
       type: "element-active",
-    },
-    {
-      type: "pie-statistic-active",
     },
   ],
   statistic: {

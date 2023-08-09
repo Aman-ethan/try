@@ -148,7 +148,7 @@ export default function ClientNetWorth() {
     },
   ];
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 tab:space-y-6">
       <div className="flex items-center justify-between">
         <Title level={4}>Net Worth</Title>
         <Title level={3}>

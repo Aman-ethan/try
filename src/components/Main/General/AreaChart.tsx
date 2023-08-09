@@ -1,4 +1,5 @@
 import { Area, AreaConfig } from "@ant-design/charts";
+import { formatPrice } from "@/lib/format";
 
 type TDataItem = {
   date: string;
@@ -19,6 +20,12 @@ function AreaChart({ data, xField, yField, seriesField }: IAreaChartProps) {
     xField: xField || "date",
     yField: yField || "value",
     seriesField: seriesField || "asset_class",
+    tooltip: {
+      formatter: (datum) => ({
+        name: `${datum.asset_class}`,
+        value: formatPrice(datum.value),
+      }),
+    },
   };
 
   return <Area {...config} />;

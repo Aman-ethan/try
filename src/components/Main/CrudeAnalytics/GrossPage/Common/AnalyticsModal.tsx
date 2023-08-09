@@ -1,22 +1,23 @@
 import { useState, useEffect } from "react";
-import { Modal } from "antd";
+import { Drawer as AntDrawer, Modal } from "antd";
 import Title from "antd/lib/typography/Title";
 import { ColumnType } from "antd/es/table";
 import { DefaultOptionType } from "rc-select/lib/Select";
+import { useMediaQuery } from "@mantine/hooks";
 import Select from "@/components/Input/Select";
-import { IPieData, IPositionsResponse } from "@/interfaces/Main";
+import CurrencyTag from "@/components/Main/General/CurrencyTag";
+import ScrollableTable from "@/components/Main/Table/ScrollableTable";
 import useTable, { useTableFilter } from "@/hooks/useTable";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
+import { IPieData, IPositionsResponse } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import CurrencyTag from "@/components/Main/General/CurrencyTag";
 import { formatPrice, formatQuantity } from "@/lib/format";
-import ScrollableTable from "@/components/Main/Table/ScrollableTable";
 
 export type TCategory = "asset_class" | "region" | "industry";
 
 interface IAnalyticsModalProps {
-  isModalOpen: boolean;
-  handleModalClose: () => void;
+  isOverlayVisible: boolean;
+  handleIsOverlayClose: () => void;
   data: IPieData[];
   selectedType: string;
   category: TCategory;
@@ -32,6 +33,7 @@ type TPositionColumn = {
   market_value: number;
   unrealizedPL: number;
 };
+const TABLE_ROW_NUM = 5;
 
 function useAnalytics(category: TCategory, value: string) {
   const {
@@ -52,6 +54,7 @@ function useAnalytics(category: TCategory, value: string) {
     page,
     ordering,
     currency__in,
+    page_size: TABLE_ROW_NUM.toString(),
   };
   const { data: analyticsData, isLoading } =
     useTransactionServerQuery<IPositionsResponse>(
@@ -133,8 +136,8 @@ const columns: ColumnType<TPositionColumn>[] = [
 ];
 
 export default function AnalyticsModal({
-  isModalOpen,
-  handleModalClose,
+  isOverlayVisible,
+  handleIsOverlayClose,
   data = [],
   selectedType,
   category,
@@ -184,40 +187,56 @@ export default function AnalyticsModal({
       unrealizedPL: item.unrealised_pl,
     };
   });
-
+  const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 768px)");
+  const content = (
+    <div className="flex flex-col space-y-6">
+      <div className="flex flex-col space-y-4 tab:space-y-0 tab:flex-row tab:items-center tab:space-x-8">
+        <Title className="capitalize" level={4}>
+          {category.split("_").join(" ")}
+        </Title>
+        <Select
+          className="tab:w-1/3"
+          options={selectOptions}
+          value={selectedOption} // Use the value property of the selectedOption state
+          onChange={handleSelectChange} // Assign the handler to the Select's onChange event
+        />
+      </div>
+      <ScrollableTable
+        columns={columns.map(addFilters)}
+        dataSource={tableData}
+        pagination={{
+          ...pagination,
+          total: analyticsData?.count,
+          position: MOBILE_BREAK_POINT ? ["bottomCenter"] : ["bottomRight"],
+        }}
+        scroll={{ y: "16rem" }}
+        loading={isLoading}
+        onChange={onChange}
+      />
+    </div>
+  );
+  if (MOBILE_BREAK_POINT) {
+    return (
+      <AntDrawer
+        placement="bottom"
+        open={isOverlayVisible}
+        height="80%"
+        onClose={handleIsOverlayClose}
+      >
+        {content}
+      </AntDrawer>
+    );
+  }
   return (
     <Modal
-      open={isModalOpen}
+      open={isOverlayVisible}
       centered
       footer={null}
       width={1000}
       className="space-y-8"
-      onCancel={handleModalClose}
+      onCancel={handleIsOverlayClose}
     >
-      <div className="flex flex-col space-y-4">
-        <div className="flex flex-row items-center space-x-8">
-          <Title className="capitalize" level={4}>
-            {category.split("_").join(" ")}
-          </Title>
-          <Select
-            className="w-1/3"
-            options={selectOptions}
-            value={selectedOption} // Use the value property of the selectedOption state
-            onChange={handleSelectChange} // Assign the handler to the Select's onChange event
-          />
-        </div>
-        <ScrollableTable
-          columns={columns.map(addFilters)}
-          dataSource={tableData}
-          pagination={{
-            ...pagination,
-            total: analyticsData?.count,
-          }}
-          scroll={{ y: "16rem" }}
-          loading={isLoading}
-          onChange={onChange}
-        />
-      </div>
+      {content}
     </Modal>
   );
 }

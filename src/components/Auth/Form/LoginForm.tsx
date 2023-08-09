@@ -57,7 +57,13 @@ export default function LoginForm() {
           <Input.Password placeholder="Enter Password" />
         </Form.Item>
       </div>
-      <Button htmlType="submit" type="primary" block loading={isMutating}>
+      <Button
+        htmlType="submit"
+        type="primary"
+        block
+        loading={isMutating}
+        className="mt-8 tab:mt-10"
+      >
         Login
       </Button>
     </Form>

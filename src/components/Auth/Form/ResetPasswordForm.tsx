@@ -33,22 +33,30 @@ export default function ResetPasswordForm() {
       labelCol={{ className: "font-medium" }}
       requiredMark={false}
     >
-      <Form.Item
-        name="new_password"
-        label="New Password"
-        help={helpText}
-        rules={FormRules.new_password}
+      <div className="space-y-6">
+        <Form.Item
+          name="new_password"
+          label="New Password"
+          help={helpText}
+          rules={FormRules.new_password}
+        >
+          <Input.Password
+            status={helpText ? "warning" : undefined}
+            placeholder="••••••••"
+            autoFocus
+          />
+        </Form.Item>
+        <Form.Item label="Password Strength">
+          <Progress steps={4} showInfo={false} {...progressProps} />
+        </Form.Item>
+      </div>
+      <Button
+        htmlType="submit"
+        type="primary"
+        loading={isMutating}
+        block
+        className="mt-8 tab:mt-10"
       >
-        <Input.Password
-          status={helpText ? "warning" : undefined}
-          placeholder="••••••••"
-          autoFocus
-        />
-      </Form.Item>
-      <Form.Item label="Password Strength">
-        <Progress steps={4} showInfo={false} {...progressProps} />
-      </Form.Item>
-      <Button htmlType="submit" type="primary" loading={isMutating} block>
         Change Password
       </Button>
     </Form>

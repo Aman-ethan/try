@@ -94,7 +94,7 @@ function UserProfile({
         <div className="hidden w-auto text-sm font-medium capitalize text-neutral-13 lap:block lap:min-w-[4rem]">
           {name || username}
         </div>
-        <CaretDownFilled />
+        <CaretDownFilled className="hidden tab:block" />
       </div>
     </Dropdown>
   );
@@ -132,6 +132,8 @@ export default function DashboardLayout({ children }: ILayoutProps) {
       <div>
         <Drawer
           placement="left"
+          // closable={false}
+          width={330}
           closeIcon={
             <span
               style={{

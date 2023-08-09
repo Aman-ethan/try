@@ -134,35 +134,42 @@ export default function SignupForm() {
             <Input type="text" placeholder="Founder" />
           </Form.Item>
         </div>
-        <div className="space-y-6 tab:flex tab:flex-row tab:space-x-4 tab:space-y-0">
-          <Form.Item
-            label="When can we contact you?"
-            name="time"
-            htmlFor="time"
-            className="flex-1"
-          >
-            <TimePicker
-              id="time"
-              format="HH:mm A"
-              placeholder="10:00 AM"
-              use12Hours
-              className="w-full"
-            />
-          </Form.Item>
-          <Form.Item
-            label="&nbsp;"
-            name="timezone"
-            className="w-auto tab:w-1/2"
-          >
-            <Select placeholder="Select timezone" options={timezoneOptions} />
-          </Form.Item>
+        <div className="flex flex-col space-y-2">
+          <span className="font-medium">When can we contact you?</span>
+          <div className="flex gap-x-4">
+            <Form.Item
+              name="time"
+              htmlFor="time"
+              className="flex-[0.5] tab:flex-1"
+            >
+              <TimePicker
+                id="time"
+                format="HH:mm A"
+                placeholder="10:00 AM"
+                use12Hours
+                className="w-full"
+              />
+            </Form.Item>
+            <Form.Item name="timezone" className="flex-1">
+              <Select
+                placeholder="Select timezone"
+                options={timezoneOptions}
+                className="w-full"
+              />
+            </Form.Item>
+          </div>
         </div>
         <Form.Item
           label="Where did you hear about us?"
           htmlFor="media"
           name="media"
         >
-          <Select id="media" placeholder="Google" options={referralOptions} />
+          <Select
+            id="media"
+            placeholder="Google"
+            options={referralOptions}
+            className="w-full"
+          />
         </Form.Item>
         {media === "Other" && (
           <Form.Item noStyle label="State Here" name="source">
@@ -189,7 +196,13 @@ export default function SignupForm() {
           </Checkbox>
         </Form.Item>
       </div>
-      <Button htmlType="submit" type="primary" block loading={isMutating}>
+      <Button
+        htmlType="submit"
+        type="primary"
+        block
+        loading={isMutating}
+        className="mt-8 tab:mt-10"
+      >
         Create Account
       </Button>
     </Form>

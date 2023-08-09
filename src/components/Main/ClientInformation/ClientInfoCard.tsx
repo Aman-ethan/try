@@ -41,7 +41,7 @@ export default function ClientInfoCard() {
   if (options?.length === 0) return <ClientEmpty />;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 lap:space-y-8">
       <Row>
         <Col className="w-full tab:w-1/2 lap:w-1/3">
           <SelectClientWithParams
@@ -53,7 +53,7 @@ export default function ClientInfoCard() {
         </Col>
       </Row>
       <Row>
-        <Card className="w-full rounded-lg p-4">
+        <Card className="w-full rounded-lg p-4 tab:p-6 lap:p-8">
           {isLoading ? (
             <Skeleton />
           ) : (

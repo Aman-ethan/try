@@ -1,3 +1,5 @@
+"use client";
+
 import { SelectProps } from "antd";
 import useSelectClientWithParams from "@/hooks/useSelectClientWithParams";
 import { SearchParams } from "@/interfaces/Main";

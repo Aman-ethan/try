@@ -65,7 +65,7 @@ export default function FinanceResult() {
 
   return (
     <div className="space-y-6 rounded-lg bg-neutral-1 p-6">
-      <div className="flex flex-col gap-10 lap:flex-row">
+      <div className="flex flex-col gap-y-6 tab:gap-0 tab:gap-y-8 lap:flex-row">
         <FinanceChart title="Net Worth" data={netWorthData?.data} />
         <FinanceChart title="P/L History" data={data?.data} />
       </div>

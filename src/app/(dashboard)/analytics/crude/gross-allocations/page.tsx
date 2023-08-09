@@ -3,7 +3,7 @@ import GrossAllocations from "@/components/Main/CrudeAnalytics/GrossPage/GrossAl
 
 export default function CrudeAnalyticsPage() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 lap:space-y-8">
       <GrossAllocations />
       <FinanceResult />
     </div>

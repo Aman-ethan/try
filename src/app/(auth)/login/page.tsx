@@ -6,7 +6,7 @@ import LoginForm from "@/components/Auth/Form/LoginForm";
 export default function LoginPage() {
   return (
     <div className="flex h-[calc(100vh-10rem)] flex-col space-y-4">
-      <div className="space-y-12">
+      <div className="space-y-8 tab:space-y-12">
         <div className="space-y-4">
           <Title>Login</Title>
           <Paragraph>

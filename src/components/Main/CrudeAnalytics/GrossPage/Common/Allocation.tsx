@@ -30,13 +30,13 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
     colorMap[d] = z(d);
   });
 
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isOverlayVisible, setIsOverlayVisible] = useState(false);
   const [selectedType, setSelectedType] = useState("");
   const handleSegmentClick = (type: string) => {
     setSelectedType(type);
-    setModalVisible(true);
+    setIsOverlayVisible(true);
   };
-  const handleModalClose = () => setModalVisible(false);
+  const handleIsOverlayClose = () => setIsOverlayVisible(false);
 
   const pieChartCategory = title
     .replace("Gross Allocation by ", "")
@@ -47,10 +47,10 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
       <h2 className="text-xl font-medium capitalize tab:text-2xl">
         {pieChartCategory.split("_").join(" ")}
       </h2>
-      <div className="flex flex-col items-center tab:flex-row lap:flex-col">
+      <div className="flex flex-col items-center tab:flex-row lap:flex-col space-y-4">
         <AnalyticsModal
-          isModalOpen={isModalVisible}
-          handleModalClose={handleModalClose}
+          isOverlayVisible={isOverlayVisible}
+          handleIsOverlayClose={handleIsOverlayClose}
           data={data}
           selectedType={selectedType}
           category={pieChartCategory}
