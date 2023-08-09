@@ -37,7 +37,7 @@ export default function useSelectClientWithParams(
     (value: string) => {
       updateSearchParams({
         [searchParamKey]: value,
-        ...resetPage,
+        ...(searchParamKey === "client" ? resetPage : undefined),
       });
     },
     [searchParamKey, updateSearchParams]

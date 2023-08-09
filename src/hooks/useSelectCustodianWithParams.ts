@@ -35,7 +35,7 @@ export default function useSelectCustodianWithParams(
   function onChange(value: string) {
     updateSearchParams({
       [searchParamKey]: value,
-      ...resetPage,
+      ...(searchParamKey === "custodian" ? resetPage : undefined),
     });
   }
 
