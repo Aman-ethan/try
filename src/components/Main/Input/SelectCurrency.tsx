@@ -1,4 +1,5 @@
-import { Image, SelectProps } from "antd";
+import { SelectProps } from "antd";
+import Image from "next/image";
 import { flags } from "@/constants/flags";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { ICurrency, TCurrency } from "@/interfaces/Main";
@@ -13,7 +14,7 @@ export default function SelectCurrency(props: SelectProps) {
     return {
       label: (
         <div className="space-x-2">
-          <Image width={16} src={flag} />
+          <Image alt="flag" width={16} height={12} src={flag} />
           <span className="capitalize">{name}</span>
         </div>
       ),
