@@ -39,7 +39,7 @@ export default function TradeStatementForm({
       size="large"
     >
       <div className={formWrapper}>
-        <Form.Item label="Client" name="client" className="flex-1">
+        <Form.Item label="Client" name="client" className="flex-1 min-w-0">
           <SelectClient
             params={{ custodianId }}
             reset={() => {
@@ -48,7 +48,11 @@ export default function TradeStatementForm({
             placeholder="Select the client"
           />
         </Form.Item>
-        <Form.Item label="Custodian" name="custodian" className="flex-1">
+        <Form.Item
+          label="Custodian"
+          name="custodian"
+          className="flex-1 min-w-0"
+        >
           <SelectCustodian
             params={{ clientId }}
             reset={() => {
@@ -62,7 +66,7 @@ export default function TradeStatementForm({
         <Form.Item
           label="Account Number"
           name="relationship_number"
-          className="flex-1"
+          className="flex-1 min-w-0"
         >
           <SelectRelationshipNumber
             params={{ clientId, custodianId }}
@@ -75,7 +79,7 @@ export default function TradeStatementForm({
         <Form.Item
           label="Statement Date"
           name="statement_date"
-          className="flex-1"
+          className="flex-1 min-w-0"
         >
           <DatePicker placeholder="Select date" />
         </Form.Item>
@@ -84,24 +88,36 @@ export default function TradeStatementForm({
         <Form.Item
           label="Reference Number"
           name="reference_number"
-          className="flex-1"
+          className="flex-1 min-w-0"
         >
           <Input placeholder="Enter reference number" />
         </Form.Item>
-        <Form.Item label="Security ID" name="isin" className="flex-1">
+        <Form.Item label="Security ID" name="isin" className="flex-1 min-w-0">
           <Input placeholder="Enter security ID" />
         </Form.Item>
       </div>
       <div className={formWrapper}>
-        <Form.Item label="Asset Class" name="asset_class" className="flex-1">
+        <Form.Item
+          label="Asset Class"
+          name="asset_class"
+          className="flex-1 min-w-0"
+        >
           <SelectAssetClass placeholder="Select asset class" />
         </Form.Item>
-        <Form.Item label="Trade Action" name="trade_action" className="flex-1">
+        <Form.Item
+          label="Trade Action"
+          name="trade_action"
+          className="flex-1 min-w-0"
+        >
           <TradeAction />
         </Form.Item>
       </div>
       <div className={formWrapper}>
-        <Form.Item label="Description" name="description" className="flex-1">
+        <Form.Item
+          label="Description"
+          name="description"
+          className="flex-1 min-w-0"
+        >
           <Input placeholder="Enter description" />
         </Form.Item>
         <Form.Item label="Currency" name="currency" className="w-1/2 pl-4">
@@ -109,21 +125,29 @@ export default function TradeStatementForm({
         </Form.Item>
       </div>
       <div className={formWrapper}>
-        <Form.Item label="Cost Price" name="cost_price" className="flex-1">
+        <Form.Item
+          label="Cost Price"
+          name="cost_price"
+          className="flex-1 min-w-0"
+        >
           <InputPrice currency={currency} placeholder="Enter cost price" />
         </Form.Item>
-        <Form.Item label="Quantity" name="quantity" className="flex-1">
+        <Form.Item label="Quantity" name="quantity" className="flex-1 min-w-0">
           <InputQuantity placeholder="Enter the quantity" />
         </Form.Item>
       </div>
       <div className={formWrapper}>
-        <Form.Item label="Trade Date" name="trade_date" className="flex-1">
+        <Form.Item
+          label="Trade Date"
+          name="trade_date"
+          className="flex-1 min-w-0"
+        >
           <DatePicker placeholder="Select trade date" />
         </Form.Item>
         <Form.Item
           label="Settlement Date"
           name="settlement_date"
-          className="flex-1"
+          className="flex-1 min-w-0"
         >
           <DatePicker placeholder="Select settlement date" />
         </Form.Item>

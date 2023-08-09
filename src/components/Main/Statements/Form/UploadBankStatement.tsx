@@ -125,7 +125,7 @@ export default function UploadBankStatement() {
         <Form.Item
           label="Statement Type"
           name="statement_type"
-          className="flex-1"
+          className="flex-1 min-w-0"
           rules={FormRules.statement_type}
         >
           <SelectStatementType placeholder="Select statement type" />
@@ -133,7 +133,7 @@ export default function UploadBankStatement() {
         <Form.Item
           label="Date"
           name="statement_date"
-          className="flex-1"
+          className="flex-1 min-w-0"
           rules={FormRules.statement_date}
         >
           <DatePicker placeholder="Select date" />
@@ -143,7 +143,7 @@ export default function UploadBankStatement() {
         <Form.Item
           label="Custodian"
           name="custodian"
-          className="flex-1"
+          className="flex-1 min-w-0"
           rules={FormRules.custodian}
         >
           <SelectCustodian
@@ -158,7 +158,7 @@ export default function UploadBankStatement() {
         <Form.Item
           label="Account Number"
           name="relationship_number"
-          className="flex-1"
+          className="flex-1 min-w-0"
           rules={FormRules.relationship_number}
         >
           <SelectRelationshipNumber

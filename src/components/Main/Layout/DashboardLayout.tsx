@@ -127,12 +127,15 @@ export default function DashboardLayout({ children }: ILayoutProps) {
     setOpen(false);
   };
 
+  const collapsedLayoutClassName = collapsed
+    ? "ml-0 tab:ml-[3.75rem]"
+    : "ml-60";
+
   return (
     <Layout suppressHydrationWarning hasSider>
       <div>
         <Drawer
           placement="left"
-          // closable={false}
           width={330}
           closeIcon={
             <span
@@ -158,10 +161,11 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         collapsed={collapsed}
         onCollapse={() => setCollapsed(true)}
         collapsible
-        className="fixed hidden h-screen border-r border-red-400 bg-neutral-1 tab:block"
+        className="fixed hidden h-screen border-solid border-r border-neutral-5 bg-neutral-1 tab:block"
         width={240}
+        collapsedWidth={60}
       >
-        <div className="px-6 pb-6 pt-4">
+        <div className={clsx("pb-6 pt-4", collapsed ? "px-3" : "px-6")}>
           {collapsed ? <CollapsedLogo /> : <Logo />}
         </div>
         <Menu
@@ -173,11 +177,11 @@ export default function DashboardLayout({ children }: ILayoutProps) {
         />
       </Layout.Sider>
 
-      <Layout className={collapsed ? "ml-0 tab:ml-20" : "ml-60"}>
+      <Layout className={collapsedLayoutClassName}>
         <Layout.Header
           className={clsx(
             "fixed inset-0 z-10 flex justify-between bg-neutral-1 px-3 tab:px-4 lap:px-5",
-            collapsed ? "ml-0 tab:ml-20" : "ml-60"
+            collapsedLayoutClassName
           )}
         >
           <Row

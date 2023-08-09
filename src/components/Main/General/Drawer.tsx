@@ -4,6 +4,8 @@ import { Drawer as AntdDrawer, Button, Row } from "antd";
 import { KeyboardEvent, MouseEvent, cloneElement, useState } from "react";
 import { IDrawerProps } from "@/interfaces/Main";
 import FormProvider from "@/context/FormProvider";
+import Title from "@/components/Typography/Title";
+import { DrawerButtonClassName } from "./DrawerFormButton";
 
 export default function Drawer({
   button,
@@ -41,9 +43,10 @@ export default function Drawer({
         height="100vh"
         placement={MOBILE_BREAK_POINT ? "bottom" : "right"} // Use bottom placement for mobile screens, right for others
         onClose={handleClose}
+        push={false}
       >
         <Row justify="space-between" className="mb-4">
-          <h4 className="text-xl font-medium">{title}</h4>
+          <Title level={4}>{title}</Title>
           <Button
             onClick={handleClose}
             type="text"
@@ -53,7 +56,11 @@ export default function Drawer({
         <div className="mb-20">{children}</div>
         <div className="bg-white bottom-0 right-0 left-0 flex flex-col-reverse justify-end gap-x-4 gap-y-4 p-4 tab:flex-row lap:absolute">
           {closeButton ? (
-            <Button size="large" className="px-7" onClick={handleClose}>
+            <Button
+              size="large"
+              onClick={handleClose}
+              className={DrawerButtonClassName}
+            >
               {closeButton}
             </Button>
           ) : null}

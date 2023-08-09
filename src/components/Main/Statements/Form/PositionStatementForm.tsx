@@ -32,33 +32,41 @@ export default function PositionStatementForm({
       className="space-y-6"
     >
       <div className={formWrapper}>
-        <Form.Item label="Client" name="client" className="flex-1">
+        <Form.Item label="Client" name="client" className="flex-1 min-w-0">
           <SelectClient placeholder="Select client" />
         </Form.Item>
         <Form.Item
           label="Statement Date"
           name="statement_date"
-          className="flex-1"
+          className="flex-1 min-w-0"
         >
           <DatePicker />
         </Form.Item>
       </div>
       <div className={formWrapper}>
-        <Form.Item label="Asset Class" name="asset_class" className="flex-1">
+        <Form.Item
+          label="Asset Class"
+          name="asset_class"
+          className="flex-1 min-w-0"
+        >
           <SelectAsset placeholder="Select asset class" />
         </Form.Item>
-        <Form.Item label="ISIN" name="isin" className="flex-1">
+        <Form.Item label="ISIN" name="isin" className="flex-1 min-w-0">
           <Input placeholder="Enter ISIN" />
         </Form.Item>
       </div>
       <div className={formWrapper}>
-        <Form.Item label="Custodian" name="custodian" className="flex-1">
+        <Form.Item
+          label="Custodian"
+          name="custodian"
+          className="flex-1 min-w-0"
+        >
           <SelectCustodian placeholder="Select custodian" />
         </Form.Item>
         <Form.Item
           label="Account Number"
           name="relationship_number"
-          className="flex-1"
+          className="flex-1 min-w-0"
         >
           <SelectRelationshipNumber placeholder="Select account number" />
         </Form.Item>
@@ -67,22 +75,34 @@ export default function PositionStatementForm({
         <Input placeholder="Enter description" />
       </Form.Item>
       <div className={formWrapper}>
-        <Form.Item label="Original Currency" name="currency" className="flex-1">
+        <Form.Item
+          label="Original Currency"
+          name="currency"
+          className="flex-1 min-w-0"
+        >
           <SelectCurrency placeholder="Select original currency" />
         </Form.Item>
-        <Form.Item label="Quantity" name="quantity" className="flex-1">
+        <Form.Item label="Quantity" name="quantity" className="flex-1 min-w-0">
           <InputQuantity className="w-full" placeholder="Enter the quantity" />
         </Form.Item>
       </div>
       <div className={formWrapper}>
-        <Form.Item label="Cost Price" name="cost_price" className="flex-1">
+        <Form.Item
+          label="Cost Price"
+          name="cost_price"
+          className="flex-1 min-w-0"
+        >
           <InputPrice
             currency={currency}
             className="w-full"
             placeholder="Enter cost price"
           />
         </Form.Item>
-        <Form.Item label="MTM Price" name="mtm_price" className="flex-1">
+        <Form.Item
+          label="MTM Price"
+          name="mtm_price"
+          className="flex-1 min-w-0"
+        >
           <InputPrice
             currency={currency}
             className="w-full"
