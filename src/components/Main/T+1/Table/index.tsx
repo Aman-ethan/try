@@ -3,6 +3,7 @@ import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useTable, { useSelectRow, useTableFilter } from "@/hooks/useTable";
 import { IPaginatedResponse, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import { BlotterSearchParamKeys } from "@/constants/searchParams";
 import ViewDrawer from "../../General/ViewDrawer";
 import ScrollableTable from "../../Table/ScrollableTable";
 import EditTradeDrawer from "../General/EditTradeDrawer";
@@ -12,15 +13,6 @@ interface ITradeTableProps<T> {
   urlKey: string;
   edit?: boolean;
 }
-
-const searchParamKeys = [
-  "asset_class__in",
-  "security__in",
-  "trade_action__in",
-  "statement_date__gte",
-  "statement_date__lte",
-  "page_size",
-];
 
 export default function TradeTable<T>({
   columns,
@@ -45,7 +37,7 @@ export default function TradeTable<T>({
         custodian,
         ordering,
         page,
-        ...searchParamKeys.reduce(
+        ...BlotterSearchParamKeys.reduce(
           (acc, key) => ({
             ...acc,
             [key]: getSearchParams(key as SearchParams),

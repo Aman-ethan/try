@@ -1,6 +1,6 @@
 import { IPaginatedResponse, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { StatementSearchParamsKey } from "@/constants/searchParams";
+import { StatementSearchParamKeys } from "@/constants/searchParams";
 import { useTransactionServerQuery } from "./useQuery";
 import useTable from "./useTable";
 
@@ -26,7 +26,7 @@ export default function useStatement<T>({ urlKey }: IUseStatementParams) {
       custodian,
       page,
       ordering,
-      ...StatementSearchParamsKey.reduce(
+      ...StatementSearchParamKeys.reduce(
         (acc, key) => ({
           ...acc,
           [key]: getSearchParams(key as SearchParams),

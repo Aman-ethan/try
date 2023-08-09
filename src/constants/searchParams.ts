@@ -1,4 +1,4 @@
-const StatementSearchParamsKey = [
+const StatementSearchParamKeys = [
   "asset_class__in",
   "currency__in",
   "custodian__in",
@@ -12,6 +12,13 @@ const StatementSearchParamsKey = [
   "page_size",
 ];
 
-const BlotterSearchParamsKey = [""];
+const BlotterSearchParamKeys = [
+  "asset_class__in",
+  "security__in",
+  "trade_action__in",
+  "statement_date__gte",
+  "statement_date__lte",
+  "page_size",
+];
 
-export { StatementSearchParamsKey, BlotterSearchParamsKey };
+export { StatementSearchParamKeys, BlotterSearchParamKeys };
