@@ -18,7 +18,7 @@ export default function Home() {
       <Title level={2}>Overview</Title>
       <div className="flex flex-col gap-y-6 lap:gap-y-8">
         <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-8">
-          <div className="flex-1 rounded-lg shadow-large bg-white p-6 lap:flex-1 lap:max-w-[32rem]">
+          <div className="flex-1 rounded-lg shadow-large bg-white p-6 lap:flex-none lap:w-[45%]">
             <ClientNetWorth />
           </div>
           <div className="shadow-large flex-1 overflow-x-auto rounded-lg bg-white p-6 pb-0">

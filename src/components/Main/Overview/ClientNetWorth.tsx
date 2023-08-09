@@ -102,7 +102,13 @@ function Setting({ selectedColumns, setSelectedColumns }: ISettingProps) {
       }}
       placement="bottomRight"
     >
-      <Button type="text" icon={<SettingOutlined />} />
+      <Button
+        shape="circle"
+        type="text"
+        size="small"
+        className="translate-x-1.5 translate-y-3"
+        icon={<SettingOutlined className="text-xl text-neutral-10" />}
+      />
     </Dropdown>
   );
 }
@@ -127,26 +133,11 @@ export default function ClientNetWorth() {
         ? {
             ...column,
             align: "left",
-            width: 100,
+            width: 109,
           }
-        : { ...column, width: 97 }
+        : { ...column, width: 102 }
     );
 
-  const Columns: TableColumnsType<IClient> = [
-    ...filteredColumns,
-    {
-      title: (
-        <Setting
-          selectedColumns={selectedColumns}
-          setSelectedColumns={setSelectedColumns}
-        />
-      ),
-      align: "right",
-      key: "setting",
-      fixed: "right",
-      width: 40,
-    },
-  ];
   return (
     <div className="space-y-4 tab:space-y-6">
       <div className="flex items-center justify-between">
@@ -157,15 +148,22 @@ export default function ClientNetWorth() {
           )}
         </Title>
       </div>
-      <ScrollableTable
-        loading={isLoading}
-        columns={Columns}
-        dataSource={data?.overview}
-        rowKey="client_id"
-        className="table-reset h-[22rem] overflow-y-auto"
-        scroll={{ y: "16rem" }}
-        pagination={{ pageSize: data?.overview.length }}
-      />
+      <div className="flex">
+        <ScrollableTable
+          sticky
+          loading={isLoading}
+          columns={filteredColumns}
+          dataSource={data?.overview}
+          rowKey="client_id"
+          className="table-reset h-[22rem] overflow-y-auto"
+          scroll={{ y: "16rem" }}
+          pagination={{ pageSize: data?.overview.length }}
+        />
+        <Setting
+          selectedColumns={selectedColumns}
+          setSelectedColumns={setSelectedColumns}
+        />
+      </div>
     </div>
   );
 }
