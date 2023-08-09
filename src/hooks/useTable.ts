@@ -7,7 +7,7 @@ import {
 import { useLayoutEffect, useState } from "react";
 import { StatementOptions, TradeActionOptions } from "@/constants/options";
 import { ICurrency, IUseTableParams, SearchParams } from "@/interfaces/Main";
-import { DEFAULT_TABLE_ROW } from "@/constants/strings";
+import { DEFAULT_PAGE_SIZE } from "@/constants/table";
 import { useTransactionServerQuery } from "./useQuery";
 import useSearchParams from "./useSearchParams";
 import useCustodian from "./useCustodian";
@@ -56,7 +56,7 @@ export default function useTable(props?: IUseTableParams) {
   const pagination: TablePaginationConfig = {
     position: ["bottomRight"],
     current: Number(page) || 1,
-    pageSize: props?.page_size || DEFAULT_TABLE_ROW,
+    pageSize: props?.page_size || DEFAULT_PAGE_SIZE,
   };
 
   return {

@@ -9,4 +9,4 @@ export const ActionColumn = {
   align: "center" as "center",
 };
 
-export const StatusColumn = {};
+export const DEFAULT_PAGE_SIZE = 6;

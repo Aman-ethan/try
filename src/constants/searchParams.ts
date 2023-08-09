@@ -9,6 +9,7 @@ const StatementSearchParamsKey = [
   "transaction_type__in",
   "trade_action__in",
   "search",
+  "page_size",
 ];
 
 const BlotterSearchParamsKey = [""];

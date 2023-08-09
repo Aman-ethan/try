@@ -16,7 +16,6 @@ export const formWrapper =
 export const PageCardClassName = "";
 
 export const TableScrollDifference = "5.375rem";
-export const DEFAULT_TABLE_ROW = 10;
 
 export const OrdinalRange = [
   "#85A5FF",

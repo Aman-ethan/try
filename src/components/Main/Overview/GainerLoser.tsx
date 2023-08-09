@@ -97,7 +97,12 @@ const Columns: TableColumnsType = [
   },
 ];
 
-const _searchParamKeys = ["client", "custodian_id", "reporting_currency"];
+const _searchParamKeys = [
+  "client",
+  "custodian_id",
+  "reporting_currency",
+  "page_size",
+];
 
 const searchParamKeys: Record<TGainerLoser, Record<"page", SearchParams>> = {
   gainer: {
@@ -113,7 +118,7 @@ const URLs = {
   loser: "/position/history/top_loser/",
 };
 
-const TABLE_ROW_NUM = 5;
+const PAGE_SIZE = 5;
 
 function useGainerLoser({ type }: IGainerLoserProps) {
   const { get: getSearchParams } = useSearchParams();
@@ -139,7 +144,6 @@ function useGainerLoser({ type }: IGainerLoserProps) {
                 : dateRange.start_date,
               end_date: dateRange.end_date,
               page: getSearchParams(searchParamKeys?.[type].page),
-              page_size: TABLE_ROW_NUM.toString(),
             }
           )
         )}`
@@ -157,7 +161,7 @@ export default function GainerLoser({ type }: IGainerLoserProps) {
   const { data, isLoading } = useGainerLoser({ type });
   const { pagination, onChange } = useTable({
     searchParamKeys: searchParamKeys[type],
-    page_size: TABLE_ROW_NUM,
+    page_size: PAGE_SIZE,
   });
 
   return (
@@ -187,7 +191,6 @@ export default function GainerLoser({ type }: IGainerLoserProps) {
         pagination={{
           ...pagination,
           total: data?.count,
-          pageSize: TABLE_ROW_NUM,
         }}
       />
     </div>
