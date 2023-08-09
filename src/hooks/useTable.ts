@@ -50,6 +50,7 @@ export default function useTable(props?: IUseTableParams) {
       ...filters,
       [pageKey]: String(pagination.current),
       ordering: order ? _ordering : undefined,
+      page_size: String(pagination.pageSize),
     });
   }
 

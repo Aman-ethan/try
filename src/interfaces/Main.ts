@@ -232,6 +232,7 @@ export type TGainerLoser = "gainer" | "loser";
 
 type TCommonSearchPrams =
   | "page"
+  | "page_size"
   | "ordering"
   | "client"
   | "client_id"

@@ -7,6 +7,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
+import { DEFAULT_PAGE_SIZE } from "./table";
 
 const ROUTE = [
   {
@@ -45,7 +46,11 @@ const ROUTE = [
       },
       {
         key: "/transaction",
-        label: <Link href="/transaction">Transaction</Link>,
+        label: (
+          <Link href={`/transaction?page_size=${DEFAULT_PAGE_SIZE}`}>
+            Transaction
+          </Link>
+        ),
       },
       {
         disabled: true,
@@ -66,11 +71,19 @@ const ROUTE = [
     children: [
       {
         key: "/t+1/transaction",
-        label: <Link href="/t+1/transaction">Trade</Link>,
+        label: (
+          <Link href={`/t+1/transaction?page_size=${DEFAULT_PAGE_SIZE}`}>
+            Trade
+          </Link>
+        ),
       },
       {
         key: "/t+1/active-positions",
-        label: <Link href="/t+1/active-positions">Active Positions</Link>,
+        label: (
+          <Link href={`/t+1/active-positions?page_size=${DEFAULT_PAGE_SIZE}`}>
+            Active Positions
+          </Link>
+        ),
       },
     ],
   },
@@ -82,7 +95,9 @@ const ROUTE = [
       {
         key: "/statements/bank",
         label: (
-          <Link href="/statements/bank?ordering=-statement_date">
+          <Link
+            href={`/statements/bank?ordering=-statement_date&page_size=${DEFAULT_PAGE_SIZE}`}
+          >
             Bank Statement
           </Link>
         ),
@@ -90,7 +105,9 @@ const ROUTE = [
       {
         key: "/statements/trade",
         label: (
-          <Link href="/statements/trade?ordering=-statement_date">
+          <Link
+            href={`/statements/trade?ordering=-statement_date&page_size=${DEFAULT_PAGE_SIZE}`}
+          >
             Trade Statement
           </Link>
         ),
@@ -98,7 +115,9 @@ const ROUTE = [
       {
         key: "/statements/position",
         label: (
-          <Link href="/statements/position?ordering=-statement_date">
+          <Link
+            href={`/statements/position?ordering=-statement_date&page_size=${DEFAULT_PAGE_SIZE}`}
+          >
             Position Statement
           </Link>
         ),

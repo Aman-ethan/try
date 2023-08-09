@@ -19,6 +19,7 @@ const searchParamKeys = [
   "trade_action__in",
   "statement_date__gte",
   "statement_date__lte",
+  "page_size",
 ];
 
 export default function TradeTable<T>({
