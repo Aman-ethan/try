@@ -150,7 +150,7 @@ export default function ClientNetWorth() {
           )}
         </Title>
       </div>
-      <div ref={containerRef} className="flex flex-1">
+      <div ref={containerRef} className="flex flex-1 min-h-[20.5rem]">
         <ScrollableTable
           sticky
           loading={isLoading}
@@ -158,7 +158,7 @@ export default function ClientNetWorth() {
           dataSource={data?.overview}
           rowKey="client_id"
           className="table-reset overflow-y-auto"
-          style={{ height: containerRect.height }}
+          style={{ height: containerRect?.height }}
           scroll={{ y: containerRect.height }}
           pagination={{ pageSize: data?.overview.length }}
         />
