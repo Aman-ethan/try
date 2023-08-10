@@ -3,6 +3,7 @@
 import { SettingOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Dropdown, MenuProps, TableColumnsType } from "antd";
 import { Dispatch, SetStateAction, useState } from "react";
+import { useResizeObserver } from "@mantine/hooks";
 import Title from "@/components/Typography/Title";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { IClient } from "@/interfaces/Main";
@@ -125,6 +126,7 @@ export default function ClientNetWorth() {
   const [selectedColumns, setSelectedColumns] = useState<string[]>(
     defaultSelectedColumns
   );
+  const [containerRef, containerRect] = useResizeObserver();
 
   const filteredColumns: TableColumnsType<IClient> = columns
     .filter((column) => selectedColumns.includes(column.key as string))
@@ -139,7 +141,7 @@ export default function ClientNetWorth() {
     );
 
   return (
-    <div className="space-y-4 tab:space-y-6">
+    <div className="space-y-4 tab:space-y-6 h-full flex flex-col">
       <div className="flex items-center justify-between">
         <Title level={4}>Net Worth</Title>
         <Title level={3}>
@@ -148,15 +150,16 @@ export default function ClientNetWorth() {
           )}
         </Title>
       </div>
-      <div className="flex">
+      <div ref={containerRef} className="flex flex-1">
         <ScrollableTable
           sticky
           loading={isLoading}
           columns={filteredColumns}
           dataSource={data?.overview}
           rowKey="client_id"
-          className="table-reset h-[22rem] overflow-y-auto"
-          scroll={{ y: "16rem" }}
+          className="table-reset overflow-y-auto"
+          style={{ height: containerRect.height }}
+          scroll={{ y: containerRect.height }}
           pagination={{ pageSize: data?.overview.length }}
         />
         <Setting

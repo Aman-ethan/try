@@ -32,9 +32,6 @@ dependencies:
   '@types/lodash':
     specifier: ^4.14.196
     version: 4.14.196
-  '@uidotdev/usehooks':
-    specifier: ^2.0.1
-    version: 2.0.1(react-dom@18.2.0)(react@18.2.0)
   '@zxcvbn-ts/core':
     specifier: ^3.0.3
     version: 3.0.3
@@ -3717,17 +3714,6 @@ packages:
       '@typescript-eslint/types': 6.3.0
       eslint-visitor-keys: 3.4.2
     dev: true
-
-  /@uidotdev/usehooks@2.0.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-rJXxE3Y8g9utRbOS9Pj9tIvrnOdaakHIhLbMxBlErV8HydnGD0DveD82aLBfVTh1hBp5IXqpeHpMrPE9WIT7vQ==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-    dependencies:
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /@umijs/route-utils@4.0.1:
     resolution: {integrity: sha512-+1ixf1BTOLuH+ORb4x8vYMPeIt38n9q0fJDwhv9nSxrV46mxbLF0nmELIo9CKQB2gHfuC4+hww6xejJ6VYnBHQ==}

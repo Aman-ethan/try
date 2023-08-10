@@ -133,9 +133,9 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
       }
     );
     const chart = Plot.plot({
-      height: 330,
       style: {
-        overflow: "visible",
+        width: "100%",
+        height: "100%",
       },
       x: {
         type: "utc",
