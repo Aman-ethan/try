@@ -30,7 +30,7 @@ export default function Analytics() {
       >
         {selectedClient?.label || "Client"}
       </Dropdown>
-      <div className="flex min-h-[31.75rem] flex-col gap-y-8 lap:flex-row lap:justify-between">
+      <div className="flex min-h-[31.75rem] flex-col gap-y-8 lap:flex-row lap:justify-between desk:justify-center">
         {allocation?.map(({ title, data }) => (
           <Allocation key={title} data={data} title={title} />
         ))}

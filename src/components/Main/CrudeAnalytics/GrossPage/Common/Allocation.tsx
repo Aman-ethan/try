@@ -44,7 +44,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
     .replace(" ", "_") as TCategory;
 
   return (
-    <div className="space-y-8 text-center">
+    <div className="space-y-8 text-center desk:flex-1">
       <Title level={3}>{pieChartCategory.split("_").join(" ")}</Title>
       <div className="flex flex-col items-center tab:flex-row lap:flex-col gap-y-6">
         <AnalyticsModal
