@@ -14,12 +14,11 @@ export default function DetailsSummary() {
   const { get: getSearchParams } = useSearchParams();
 
   const clientId = getSearchParams("client");
-  const selectedDate = getSearchParams("report_date");
 
   const { data, isLoading } = useAnalyticsServerGetQuery<IBalanceSheetOverview>(
     (clientId ? `/networth/${clientId}/` : `/networth/`) +
       buildURLSearchParams({
-        report_date: selectedDate,
+        report_date: getSearchParams("report_date"),
       }),
     {
       keepPreviousData: false,

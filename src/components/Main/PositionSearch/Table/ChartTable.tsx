@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { TableColumnsType } from "antd";
 import clsx from "clsx";
 import React from "react";
@@ -75,7 +74,7 @@ export default function ChartTable({
       <tr {...props} className="relative last:border-t-2">
         {children}
         <ProgressBar
-          // @ts-ignore
+          // eslint-disable-next-line react/prop-types
           percent={Math.round(Number(props["data-row-key"]))}
           className={clsx(
             "absolute bottom-1 left-0 right-0 top-1 z-0",

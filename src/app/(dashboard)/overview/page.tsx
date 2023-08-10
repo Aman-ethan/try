@@ -25,7 +25,7 @@ export default function Home() {
             <AssetNetWorth />
           </div>
         </div>
-        <div className="shadow-large flex-1 overflow-x-auto rounded-lg bg-white p-6">
+        <div className="shadow-large flex-1 overflow-x-auto rounded-lg bg-white pt-6 px-12 pb-10">
           <Analytics />
         </div>
         <div className="shadow-large space-y-4 rounded-lg bg-white p-6">

@@ -180,7 +180,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
       <Layout className={collapsedLayoutClassName}>
         <Layout.Header
           className={clsx(
-            "fixed inset-0 z-10 flex justify-between bg-neutral-1 px-3 tab:px-4 lap:px-5",
+            "fixed inset-0 z-20 flex justify-between bg-neutral-1 px-3 tab:px-4 lap:px-5",
             collapsedLayoutClassName
           )}
         >

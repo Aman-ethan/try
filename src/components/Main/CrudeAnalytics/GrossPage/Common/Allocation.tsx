@@ -44,9 +44,9 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
     .replace(" ", "_") as TCategory;
 
   return (
-    <div className="flex-1 space-y-4 text-center">
+    <div className="space-y-8 text-center">
       <Title level={3}>{pieChartCategory.split("_").join(" ")}</Title>
-      <div className="flex flex-col items-center tab:flex-row lap:flex-col space-y-4">
+      <div className="flex flex-col items-center tab:flex-row lap:flex-col gap-y-6">
         <AnalyticsModal
           isOverlayVisible={isOverlayVisible}
           handleIsOverlayClose={handleIsOverlayClose}
@@ -62,7 +62,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
         />
         {pieChartData.length !== 0 ? (
           <ProList
-            className="w-full tab:w-auto tab:flex-1 lap:w-full desk:px-9"
+            className="w-full tab:w-auto tab:flex-1 lap:w-full"
             rowClassName="p-2"
             dataSource={pieChartData.slice(0, 4)}
             metas={{

@@ -19,14 +19,14 @@ export default function ListItem() {
   } = usePositions();
 
   const { data, isLoading } = useTransactionServerQuery<IPositionsResponse>(
-    `/position/history/${buildURLSearchParams({
+    `/statement/position/${buildURLSearchParams({
       client,
       custodian,
       relationship_number: relationshipNumber,
       search,
       asset_class: assetClass,
       ordering,
-      report_date,
+      statement_date: report_date,
     })}`
   );
 
