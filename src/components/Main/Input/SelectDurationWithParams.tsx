@@ -1,10 +1,10 @@
+import React, { useCallback, useLayoutEffect, useState } from "react";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { useSessionStorage } from "@mantine/hooks";
+import { useMediaQuery, useSessionStorage } from "@mantine/hooks";
 import { Popover } from "antd";
 import dayjs, { ManipulateType, QUnitType } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import { useSelectedLayoutSegments } from "next/navigation";
-import { useCallback, useLayoutEffect, useState } from "react";
 import { useToken } from "@/lib/antd";
 import { SearchParams } from "@/interfaces/Main";
 import useSearchParams from "@/hooks/useSearchParams";
@@ -91,12 +91,56 @@ function PopoverContent({ startDate, endDate }: IPopoverContentProps) {
     </div>
   );
 }
+function renderDropdown(
+  menu: React.ReactElement,
+  start_date: string | undefined,
+  end_date: string | undefined,
+  color: string | undefined
+) {
+  return (
+    <div className="w-[12rem]">
+      <div
+        className="flex justify-between text-black mb-2 p-2 rounded-md"
+        style={{ backgroundColor: color }}
+      >
+        <p className="text-xs">
+          {dayjs(start_date).format(DATE_DISPLAY_FORMAT)}
+        </p>
+        <ArrowRightOutlined />
+        <p className="text-xs">{dayjs(end_date).format(DATE_DISPLAY_FORMAT)}</p>
+      </div>
+      {menu}
+    </div>
+  );
+}
 
 export default function SelectDurationWithParams() {
   const { onChange, startDate, endDate, value, disabled } =
     useDurationWithParams();
   const [visible, setVisible] = useState(false);
   const { token } = useToken();
+  const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 768px)");
+  const content = (
+    <Select
+      className="w-full pr-0 tab:w-24 lap:w-28"
+      onDropdownVisibleChange={setVisible}
+      disabled={disabled}
+      allowClear={false}
+      showSearch={false}
+      size="middle"
+      value={value}
+      onChange={onChange}
+      popupMatchSelectWidth={false}
+      dropdownRender={(menu) =>
+        renderDropdown(menu, startDate, endDate, token.colorPrimaryBg)
+      }
+      options={DURATION}
+    />
+  );
+
+  if (MOBILE_BREAK_POINT) {
+    return <div className="min-w-full">{content}</div>;
+  }
   return (
     <Popover
       open={visible || value === "year" ? false : undefined}
@@ -104,17 +148,7 @@ export default function SelectDurationWithParams() {
       content={<PopoverContent startDate={startDate} endDate={endDate} />}
       color={token.blue6}
     >
-      <Select
-        className="pr-0 tab:w-24 lap:w-28"
-        onDropdownVisibleChange={setVisible}
-        disabled={disabled}
-        allowClear={false}
-        showSearch={false}
-        size="middle"
-        value={value}
-        onChange={onChange}
-        options={DURATION}
-      />
+      {content}
     </Popover>
   );
 }
