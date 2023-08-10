@@ -64,7 +64,7 @@ module.exports = {
         mob: "375px", // Mobile devices
         tab: "640px", // Tablet devices
         lap: "1024px", // Laptop devices
-        desk: "1440px", // Desktop devices
+        desk: "1536px", // Desktop devices
       },
     },
   },
