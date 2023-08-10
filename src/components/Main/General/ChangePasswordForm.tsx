@@ -57,7 +57,7 @@ export default function ChangePasswordForm() {
       layout="vertical"
       className="flex h-[calc(100vh-15.5rem)] flex-col justify-between gap-y-10 mob:justify-start"
     >
-      <div className="flex flex-col gap-y-8">
+      <div className="flex flex-col gap-y-6">
         <Form.Item
           label="Old Password"
           name="old_password"
