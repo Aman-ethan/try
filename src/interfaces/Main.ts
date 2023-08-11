@@ -168,6 +168,7 @@ export interface IPositionsData {
   security: string;
   relationship_number: string;
   market_value: number;
+  description: string;
 }
 
 export interface IPositionsResponse {

@@ -1,9 +1,8 @@
 import Segmented from "@/components/Main/General/Segmented";
 import SelectClient from "@/components/Main/Input/SelectClientWithParams";
 import Analytics from "@/components/Main/Overview/Analytics";
-import AssetNetWorth from "@/components/Main/Overview/AssetNetWorth";
-import ClientNetWorth from "@/components/Main/Overview/ClientNetWorth";
 import GainerLoser from "@/components/Main/Overview/GainerLoser";
+import NetWorth from "@/components/Main/Overview/NetWorth";
 import Title from "@/components/Typography/Title";
 import { TGainerLoser } from "@/interfaces/Main";
 
@@ -17,14 +16,7 @@ export default function Home() {
     <div className="space-y-6 lap:space-y-8">
       <Title level={2}>Overview</Title>
       <div className="flex flex-col gap-y-6 lap:gap-y-8">
-        <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-8">
-          <div className="flex-1 rounded-lg shadow-large bg-white p-6 lap:max-desk:flex-none lap:max-desk:w-min">
-            <ClientNetWorth />
-          </div>
-          <div className="shadow-large flex-1 overflow-x-auto rounded-lg bg-white p-6 pb-0">
-            <AssetNetWorth />
-          </div>
-        </div>
+        <NetWorth />
         <div className="shadow-large flex-1 overflow-x-auto rounded-lg bg-white py-6 px-12">
           <Analytics />
         </div>

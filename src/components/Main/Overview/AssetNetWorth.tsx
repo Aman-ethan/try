@@ -9,12 +9,16 @@ import IndexChart from "./IndexChart";
 const urlKey = "/relative-performance/networth/";
 const searchParamKey = "asset_client";
 
-export default function AssetNetWorth() {
+export default function AssetNetWorth({ height }: { height: number }) {
   const { loading, onChange, options, selectedClient, data } =
     useClientDropdown<IAssetNetWorth>({ urlKey, searchParamKey });
-
   return (
-    <div className="flex flex-col gap-y-4 tab:gap-y-6 min-h-[23rem] h-full">
+    <div
+      className="space-y-4 tab:space-y-6"
+      style={{
+        height,
+      }}
+    >
       <Dropdown
         className="self-start"
         disabled={loading || !selectedClient?.value}
@@ -27,7 +31,7 @@ export default function AssetNetWorth() {
         {selectedClient?.label || "Client"}
       </Dropdown>
       {!(loading || data?.data) ? (
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-col">
           <Empty className="my-auto -translate-y-6" />
         </div>
       ) : (
