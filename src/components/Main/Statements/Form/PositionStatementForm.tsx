@@ -32,13 +32,13 @@ export default function PositionStatementForm({
       className="space-y-6"
     >
       <div className={formWrapper}>
-        <Form.Item label="Client" name="client" className="flex-1 min-w-0">
+        <Form.Item label="Client" name="client" className="min-w-0 flex-1">
           <SelectClient placeholder="Select client" />
         </Form.Item>
         <Form.Item
           label="Statement Date"
           name="statement_date"
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <DatePicker />
         </Form.Item>
@@ -47,11 +47,11 @@ export default function PositionStatementForm({
         <Form.Item
           label="Asset Class"
           name="asset_class"
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <SelectAsset placeholder="Select asset class" />
         </Form.Item>
-        <Form.Item label="ISIN" name="isin" className="flex-1 min-w-0">
+        <Form.Item label="ISIN" name="isin" className="min-w-0 flex-1">
           <Input placeholder="Enter ISIN" />
         </Form.Item>
       </div>
@@ -59,14 +59,14 @@ export default function PositionStatementForm({
         <Form.Item
           label="Custodian"
           name="custodian"
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <CreateCustodian placeholder="Select custodian" />
         </Form.Item>
         <Form.Item
           label="Account Number"
           name="relationship_number"
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <SelectRelationshipNumber placeholder="Select account number" />
         </Form.Item>
@@ -78,11 +78,11 @@ export default function PositionStatementForm({
         <Form.Item
           label="Original Currency"
           name="currency"
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <SelectCurrency placeholder="Select original currency" />
         </Form.Item>
-        <Form.Item label="Quantity" name="quantity" className="flex-1 min-w-0">
+        <Form.Item label="Quantity" name="quantity" className="min-w-0 flex-1">
           <InputQuantity className="w-full" placeholder="Enter the quantity" />
         </Form.Item>
       </div>
@@ -90,7 +90,7 @@ export default function PositionStatementForm({
         <Form.Item
           label="Cost Price"
           name="cost_price"
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <InputPrice
             currency={currency}
@@ -101,7 +101,7 @@ export default function PositionStatementForm({
         <Form.Item
           label="MTM Price"
           name="mtm_price"
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <InputPrice
             currency={currency}

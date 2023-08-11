@@ -50,7 +50,7 @@ export default function ForgotPasswordForm() {
         htmlType="submit"
         type="primary"
         loading={isMutating}
-        className="px-10 mt-8 tab:mt-10"
+        className="mt-8 px-10 tab:mt-10"
         block
       >
         Submit

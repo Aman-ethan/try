@@ -165,7 +165,7 @@ export default function GainerLoser({ type }: IGainerLoserProps) {
         <Title level={5} className="capitalize">
           {type}
         </Title>
-        <div className="flex items-center gap-x-1.5 text-neutral-13/80 text-sm">
+        <div className="flex items-center gap-x-1.5 text-sm text-neutral-13/80">
           {isGainer ? "Top Gain:" : "Top Loss:"}
           <Title level={5}>
             {formatCompactNumber(

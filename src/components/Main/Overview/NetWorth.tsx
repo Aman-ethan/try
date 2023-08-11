@@ -11,7 +11,7 @@ export default function NetWorth() {
   const tableHeight = assetNetWorthHeight - 80;
   return (
     <div className="flex flex-col gap-y-4 lap:flex-row lap:gap-x-8">
-      <div className="flex-1 rounded-lg shadow-large bg-white p-6 lap:max-desk:flex-none lap:max-desk:w-min">
+      <div className="shadow-large flex-1 rounded-lg bg-white p-6 lap:max-desk:w-min lap:max-desk:flex-none">
         <ClientNetWorth tableHeight={tableHeight} />
       </div>
       <div

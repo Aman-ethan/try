@@ -100,7 +100,7 @@ function renderDropdown(
   return (
     <div className="w-[12rem]">
       <div
-        className="flex justify-between text-black mb-2 p-2 rounded-md"
+        className="mb-2 flex justify-between rounded-md p-2 text-black"
         style={{ backgroundColor: color }}
       >
         <p className="text-xs">

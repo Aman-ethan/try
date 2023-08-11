@@ -132,7 +132,7 @@ export default function VerifyOTPForm() {
           </Form.Item>
         ))}
       </Row>
-      <div className="space-y-6 mt-8 tab:mt-10">
+      <div className="mt-8 space-y-6 tab:mt-10">
         <Button block type="primary" htmlType="submit" loading={isMutating}>
           Verify & Proceed
         </Button>

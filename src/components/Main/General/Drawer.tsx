@@ -57,7 +57,7 @@ export default function Drawer({
           />
         </Row>
         <div className="mb-20">{children}</div>
-        <div className="bg-white bottom-0 right-0 left-0 flex flex-col-reverse justify-end gap-x-4 gap-y-4 p-4 tab:flex-row tab:px-6 tab:pb-8 tab:pt-4 lap:px-8 lap:absolute">
+        <div className="bottom-0 left-0 right-0 flex flex-col-reverse justify-end gap-x-4 gap-y-4 bg-white p-4 tab:flex-row tab:px-6 tab:pb-8 tab:pt-4 lap:absolute lap:px-8">
           {closeButton ? (
             <Button
               size="large"

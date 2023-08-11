@@ -190,7 +190,7 @@ export default function AnalyticsModal({
   const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 768px)");
   const content = (
     <div className="flex flex-col space-y-6">
-      <div className="flex flex-col space-y-4 tab:space-y-0 tab:flex-row tab:items-center tab:space-x-8">
+      <div className="flex flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-8 tab:space-y-0">
         <Title className="capitalize" level={4}>
           {category.split("_").join(" ")}
         </Title>

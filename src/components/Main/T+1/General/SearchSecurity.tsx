@@ -203,7 +203,7 @@ function PrivateSecurityForm() {
               />
               <div className="w-full space-y-4 pt-4">
                 {fields.map(({ key, name, ...restField }) => (
-                  <div key={key} className="flex flex-1 gap-x-2 items-center">
+                  <div key={key} className="flex flex-1 items-center gap-x-2">
                     <div className="flex flex-1 gap-x-6">
                       <Form.Item
                         {...restField}

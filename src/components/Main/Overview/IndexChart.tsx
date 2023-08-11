@@ -210,7 +210,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
   return (
     <div className="flex flex-1 flex-col">
       <div className="flex flex-1" ref={chartRef} />
-      <div className="flex items-center overflow-x-auto scrollbar-hidden py-4">
+      <div className="scrollbar-hidden flex items-center overflow-x-auto py-4">
         <div className="flex gap-x-4">
           {domains.map((domain, index) => {
             const isExcluded = excludedDomain?.includes(domain);

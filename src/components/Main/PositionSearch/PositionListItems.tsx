@@ -45,7 +45,7 @@ export default function PositionListItems() {
   return (
     <>
       <div className="flex flex-col space-y-4 tab:flex-row tab:space-x-4 tab:space-y-0">
-        <div className="w-full tab:w-1/3 space-x-2 flex items-center space-between">
+        <div className="space-between flex w-full items-center space-x-2 tab:w-1/3">
           <SearchPositionSecurities
             placeholder="Search security name or id"
             className="w-full"

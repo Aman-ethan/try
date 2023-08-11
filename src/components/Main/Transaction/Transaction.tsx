@@ -167,7 +167,7 @@ export default function Transaction() {
     <div className="flex flex-col gap-y-4">
       <Title>Transaction</Title>
       <div className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-4 tab:gap-y-0">
-        <div className="order-last flex flex-col gap-y-4 gap-x-4 tab:flex-row tab:order-first tab:w-full">
+        <div className="order-last flex flex-col gap-x-4 gap-y-4 tab:order-first tab:w-full tab:flex-row">
           <SelectClientWithParams
             placeholder="All Clients"
             className={primarySelectClasses}
@@ -196,7 +196,7 @@ export default function Transaction() {
           Filters
         </Button>
       </div>
-      <div className="shadow-large rounded-lg bg-neutral-1 mt-6 p-6">
+      <div className="shadow-large mt-6 rounded-lg bg-neutral-1 p-6">
         <Statement urlKey="/statement/trade/" columns={columns} />
       </div>
     </div>

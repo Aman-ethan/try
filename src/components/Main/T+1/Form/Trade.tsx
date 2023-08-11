@@ -137,7 +137,7 @@ export default function TradeForm({
         label="Client"
         name="client"
         rules={FormRules.client}
-        className="w-1/2 pr-4"
+        className="lap:w-1/2 lap:pr-4"
       >
         <SelectClient
           params={{
@@ -146,6 +146,7 @@ export default function TradeForm({
           reset={resetField("client")}
           disabled={isMutating}
           placeholder="Select the client"
+          className="w-full"
         />
       </Form.Item>
       <Row className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-8 tab:gap-y-0">
@@ -153,26 +154,28 @@ export default function TradeForm({
           label="Custodian"
           name="custodian"
           rules={FormRules.custodian}
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <CreateCustodian
             params={{ clientId }}
             reset={resetField("custodian")}
             disabled={isMutating}
             placeholder="Select the custodian"
+            className="w-full"
           />
         </Form.Item>
         <Form.Item
           label="Account Number"
           name="relationship_number"
           rules={FormRules.relationship_number}
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <SelectRelationshipNumber
             params={{ clientId, custodianId }}
             reset={resetField("relationship_number")}
             disabled={isMutating}
             placeholder="Enter the account number"
+            className="w-full"
           />
         </Form.Item>
       </Row>
@@ -180,13 +183,14 @@ export default function TradeForm({
         <Form.Item
           label="Security"
           name="security"
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
           rules={FormRules.security}
         >
           <SelectSecurity
             extraOptions={extraOption ? [extraOption] : undefined}
             placeholder="Enter the security"
             onClear={onSecurityClear}
+            className="w-full"
           />
         </Form.Item>
         <Form.Item label="&nbsp;" name="search_security">
@@ -215,17 +219,17 @@ export default function TradeForm({
         <Form.Item
           label="Security ID"
           name="security"
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <Input placeholder="Security ID" disabled />
         </Form.Item>
-        <Form.Item label="Currency" name="currency" className="flex-1 min-w-0">
+        <Form.Item label="Currency" name="currency" className="min-w-0 flex-1">
           <SelectCurrency placeholder="Currency" disabled />
         </Form.Item>
         <Form.Item
           label="Asset Type"
           name="asset_class"
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <SelectAsset placeholder="Asset Type" disabled />
         </Form.Item>
@@ -234,7 +238,7 @@ export default function TradeForm({
         label="Trade Action"
         name="trade_action"
         rules={FormRules.trade_action}
-        className="flex-1 min-w-0"
+        className="min-w-0 flex-1"
       >
         <TradeAction />
       </Form.Item>
@@ -243,14 +247,14 @@ export default function TradeForm({
           label="Trade Date"
           name="trade_date"
           rules={FormRules.trade_date}
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <DatePicker placeholder="Select trade date" />
         </Form.Item>
         <Form.Item
           label="Settlement Date"
           name="settlement_date"
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
           rules={FormRules.settlement_date}
         >
           <DatePicker placeholder="Select settlement date" />
@@ -261,7 +265,7 @@ export default function TradeForm({
           label="Quantity"
           name="quantity"
           rules={FormRules.quantity}
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <InputQuantity
             className="w-full"
@@ -272,7 +276,7 @@ export default function TradeForm({
           label="Price"
           name="cost_price"
           rules={FormRules.cost_price}
-          className="flex-1 min-w-0"
+          className="min-w-0 flex-1"
         >
           <InputPrice
             currency={currency}
@@ -282,19 +286,19 @@ export default function TradeForm({
         </Form.Item>
       </Row>
       <Row className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-8 tab:gap-y-0">
-        <Form.Item
-          label="Goal"
-          name="goal"
-          className="flex-1 min-w-0 flex-shrink-0"
-        >
+        <Form.Item label="Goal" name="goal" className="min-w-0 flex-1">
           <SelectGoal disabled={isMutating} placeholder="Select the goal" />
         </Form.Item>
         <Form.Item
           label="Tags"
           name={["meta", "tags"]}
-          className="flex-1 min-w-0 flex-shrink-0"
+          className="min-w-0 flex-1"
         >
-          <SelectTag disabled={isMutating} placeholder="Enter the tags" />
+          <SelectTag
+            disabled={isMutating}
+            placeholder="Enter the tags"
+            className="w-full"
+          />
         </Form.Item>
       </Row>
     </Form>
