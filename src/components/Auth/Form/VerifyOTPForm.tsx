@@ -121,6 +121,8 @@ export default function VerifyOTPForm() {
             getValueFromEvent={getValueFromEvent}
           >
             <Input
+              inputMode="numeric"
+              pattern="[0-9]"
               ref={getRef(index)}
               autoFocus={index === 0}
               onKeyDown={onKeyDown}
