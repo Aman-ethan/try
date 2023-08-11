@@ -30,13 +30,13 @@ export default function ListDetails({ record }: IListProps) {
             <span className="font-semibold">{record?.isin}</span>
           </div>
         </div>
-        <div>{record?.security_name}</div>
+        <div>{record?.description}</div>
         <div className="font-semibold">
           <UserOutlined />
           {record?.client_name}
         </div>
       </div>
-      <div className="flex basis-1/3 flex-col space-y-4 bg-neutral-2 p-6">
+      <div className="flex basis-1/2 flex-col space-y-4 bg-neutral-2 p-6">
         <div className="flex flex-col space-y-2 tab:flex-row tab:justify-between tab:space-y-0">
           <div className="flex basis-1/2 space-x-4">
             <span className="flex-1 text-neutral-9">Quantity</span>
