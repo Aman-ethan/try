@@ -66,6 +66,7 @@ export default function useTable(props?: IUseTableParams) {
     custodian,
     onChange,
     getSearchParams,
+    updateSearchParams,
     page,
     ordering,
     currency__in,

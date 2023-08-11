@@ -18,7 +18,6 @@ export default function PositionListItems() {
   const {
     client: clientId,
     custodian: custodianId,
-    onChange,
     onSegmentChange,
   } = usePositions();
 
@@ -80,7 +79,7 @@ export default function PositionListItems() {
             placeholder="Choose sort option"
             className="flex w-auto lap:hidden"
             options={Options}
-            onChange={onChange}
+            onChange={onSegmentChange}
           />
           <Segmented
             block

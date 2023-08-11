@@ -11,30 +11,29 @@ export default function ListItem() {
   const {
     client,
     custodian,
+    page,
+    pagination,
     relationshipNumber,
     search,
     assetClass,
     ordering,
     report_date,
+    onPaginationChange,
   } = usePositions();
 
   const { data, isLoading } = useTransactionServerQuery<IPositionsResponse>(
     `/statement/position/${buildURLSearchParams({
       client,
       custodian,
-      relationship_number: relationshipNumber,
+      page,
       search,
-      asset_class: assetClass,
       ordering,
+      relationship_number: relationshipNumber,
+      asset_class: assetClass,
       statement_date: report_date,
+      page_size: pagination.pageSize?.toString(),
     })}`
   );
-
-  const paginationConfig = {
-    pageSize: 5,
-    showTotal: (total: number, range: [number, number]) =>
-      `Displaying ${range[0]}-${range[1]} of ${total} items`,
-  };
 
   return (
     <ProList
@@ -43,10 +42,17 @@ export default function ListItem() {
       loading={isLoading}
       rowKey="id"
       dataSource={data?.results}
-      pagination={paginationConfig}
+      pagination={{
+        current: pagination.current,
+        pageSize: pagination.pageSize,
+        total: data?.count,
+        showSizeChanger: false,
+        showTotal: () => null,
+        onChange: onPaginationChange,
+      }}
       metas={{
         content: {
-          render: (text: React.ReactNode, record: IPositionsData) => {
+          render: (_: React.ReactNode, record: IPositionsData) => {
             return <ListDetails record={record} />;
           },
         },

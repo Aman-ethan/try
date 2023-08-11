@@ -1,35 +1,50 @@
 import { SegmentedValue } from "antd/es/segmented";
-import useSearchParams from "./useSearchParams";
+import useTable from "./useTable";
+
+const PAGE_SIZE = 4;
 
 export default function usePositions() {
-  const { get: getSearchParams, updateSearchParams } = useSearchParams();
+  const {
+    client,
+    custodian,
+    ordering,
+    page,
+    pagination,
+    getSearchParams,
+    updateSearchParams,
+  } = useTable({
+    pageSize: PAGE_SIZE,
+  });
 
-  const client = getSearchParams("client");
-  const custodian = getSearchParams("custodian");
-  const relationshipNumber = getSearchParams("relationship_number");
   const search = getSearchParams("search");
   const assetClass = getSearchParams("asset_class");
-  const ordering = getSearchParams("ordering");
   const report_date = getSearchParams("report_date");
+  const relationshipNumber = getSearchParams("relationship_number");
 
   function onSegmentChange(value: SegmentedValue) {
-    updateSearchParams({ ordering: value });
+    updateSearchParams({
+      ordering: value,
+    });
   }
 
-  function onChange(value: string) {
-    updateSearchParams({ ordering: value });
+  function onPaginationChange(current: number) {
+    updateSearchParams({
+      page: current,
+    });
   }
 
   return {
     client,
     custodian,
+    page,
+    pagination,
     relationshipNumber,
     search,
     assetClass,
     ordering,
     report_date,
     onSegmentChange,
-    onChange,
+    onPaginationChange,
     getSearchParams,
   };
 }
