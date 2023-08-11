@@ -67,7 +67,7 @@ export default function PositionListItems() {
             placeholder="Select Asset Class"
             className={primarySelectClasses}
             onChange={(value: string) =>
-              updateSearchParams({ asset_class: value })
+              updateSearchParams({ asset_class: value, page: undefined })
             }
           />
         </div>

@@ -27,7 +27,7 @@ export default function useBankAccounts(params?: TBankAccountParams) {
     }));
 
   function onChange(value: string) {
-    updateSearchParams({ relationship_number: value });
+    updateSearchParams({ relationship_number: value, page: undefined });
   }
 
   return {
