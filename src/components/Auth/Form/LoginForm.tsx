@@ -51,7 +51,12 @@ export default function LoginForm() {
     >
       <div className="space-y-6">
         <Form.Item label="Username" name="username" rules={FormRules.username}>
-          <Input type="text" placeholder="Enter Username" autoFocus />
+          <Input
+            type="text"
+            placeholder="Enter Username"
+            autoFocus
+            autoCapitalize="off"
+          />
         </Form.Item>
         <Form.Item label="Password" name="password" rules={FormRules.password}>
           <Input.Password placeholder="Enter Password" />
