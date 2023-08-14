@@ -226,7 +226,7 @@ export default function BankAccountForms({
           </Button>
         </Row>
         {showRelationshipManager && (
-          <Row className="grid grid-cols-1 gap-6 tab:gap-x-8 tab:gap-y-6 tab:grid-cols-2">
+          <Row className="grid grid-cols-1 gap-6 tab:grid-cols-2 tab:gap-x-8 tab:gap-y-6">
             {Object.entries(ManagerFormMap).map(([key, label]) => (
               <Form.Item key={key} label={label} name={key} className="flex-1">
                 <Input placeholder={`Enter the ${label}`} name={key} />

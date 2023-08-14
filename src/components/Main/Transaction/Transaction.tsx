@@ -167,7 +167,7 @@ export default function Transaction() {
     <div className="flex flex-col gap-y-4">
       <Title>Transaction</Title>
       <div className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-4 tab:gap-y-0">
-        <div className="order-last flex flex-col gap-y-2 gap-x-4 tab:flex-row tab:order-first tab:w-full">
+        <div className="order-last flex flex-col gap-x-4 gap-y-2 tab:order-first tab:w-full tab:flex-row">
           <SelectClientWithParams
             placeholder="All Clients"
             className={primarySelectClasses}

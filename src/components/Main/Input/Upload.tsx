@@ -24,9 +24,9 @@ export default function Upload({
       <Row align="middle" className="flex-col gap-y-4 py-7">
         <UploadIcon />
         <div className="space-y-2">
-          <p className="font-medium text-neutral-13/80 flex justify-center">
+          <p className="flex justify-center font-medium text-neutral-13/80">
             <span className="hidden lap:flex">Drag & drop files or</span>
-            <span className="text-primary-7 flex lap:pl-1">
+            <span className="flex text-primary-7 lap:pl-1">
               Browse
               <span className="pl-1 lap:hidden"> Files</span>
             </span>

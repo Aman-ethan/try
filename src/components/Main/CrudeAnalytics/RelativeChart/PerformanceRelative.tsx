@@ -257,7 +257,7 @@ export default function PerformanceChart({
         ) : (
           <AssetSelect handleOptionChange={handleOptionChange} />
         )}
-        <div className="flex w-full max-w-lg items-center py-4 tab:py-6 tab:min-w-full">
+        <div className="flex w-full max-w-lg items-center py-4 tab:min-w-full tab:py-6">
           <div className={innerClass}>
             {assets?.map((domain, index) => {
               const isExcluded = excludedDomain?.includes(domain);

@@ -47,10 +47,10 @@ export default function Drawer({
         title={
           <div className="px-4 pt-4 tab:px-6 tab:pt-6 lap:px-8 lap:pt-8">
             <div className="flex justify-center tab:hidden">
-              <Divider className="w-1/4 min-w-0 m-0 mb-4 rounded-2xl border-t-4 border-solid border-gray-300" />
+              <Divider className="m-0 mb-4 w-1/4 min-w-0 rounded-2xl border-t-4 border-solid border-gray-300" />
             </div>
             <Row justify="space-between" align="middle">
-              <Title level={4} className="text-base tab:text-xl font-medium">
+              <Title level={4} className="text-base font-medium tab:text-xl">
                 {title}
               </Title>
               <Button
@@ -63,7 +63,7 @@ export default function Drawer({
         }
         headerStyle={{ borderBottom: "none", padding: "0" }}
         footer={
-          <div className="bg-white bottom-0 right-0 left-0 flex flex-col-reverse justify-end gap-x-4 gap-y-4 p-4 tab:flex-row tab:px-6 tab:pb-8 tab:pt-4 lap:px-8 lap:absolute">
+          <div className="bottom-0 left-0 right-0 flex flex-col-reverse justify-end gap-x-4 gap-y-4 bg-white p-4 tab:flex-row tab:px-6 tab:pb-8 tab:pt-4 lap:absolute lap:px-8">
             {closeButton ? (
               <Button
                 size="large"

@@ -143,7 +143,11 @@ export default function SelectDurationWithParams() {
     return (
       <div className="flex w-full flex-row items-center">
         <div className="w-1/2 pr-2">
-          <DatePicker size="middle" className="w-full bg-primary" />
+          <DatePicker
+            size="middle"
+            className="max-w-[8rem]"
+            style={{ backgroundColor: token.colorPrimaryBg }}
+          />
         </div>
         <div className="w-1/2 pl-2">{content}</div>
       </div>
@@ -152,7 +156,11 @@ export default function SelectDurationWithParams() {
   return (
     <div className="flex items-center gap-x-2 desk:gap-x-3">
       <div>
-        <DatePicker size="middle" className="max-w-[8rem] bg-primary" />
+        <DatePicker
+          size="middle"
+          className="max-w-[8rem]"
+          style={{ backgroundColor: token.colorPrimaryBg }}
+        />
       </div>
       <Divider type="vertical" className="text-neutral-13/5" />
       <div>
