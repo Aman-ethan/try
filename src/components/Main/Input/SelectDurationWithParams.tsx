@@ -1,7 +1,7 @@
 import React, { useCallback, useLayoutEffect, useState } from "react";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { useMediaQuery, useSessionStorage } from "@mantine/hooks";
-import { Popover } from "antd";
+import { Divider, Popover } from "antd";
 import dayjs, { ManipulateType, QUnitType } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import { useSelectedLayoutSegments } from "next/navigation";
@@ -10,6 +10,7 @@ import { SearchParams } from "@/interfaces/Main";
 import useSearchParams from "@/hooks/useSearchParams";
 import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/constants/format";
 import Select from "@/components/Input/Select";
+import { DatePicker } from "./DatePicker";
 
 dayjs.extend(quarterOfYear);
 
@@ -119,7 +120,7 @@ export default function SelectDurationWithParams() {
     useDurationWithParams();
   const [visible, setVisible] = useState(false);
   const { token } = useToken();
-  const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 768px)");
+  const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 639px)");
   const content = (
     <Select
       className="w-full pr-0 tab:w-24 lap:w-28"
@@ -139,16 +140,31 @@ export default function SelectDurationWithParams() {
   );
 
   if (MOBILE_BREAK_POINT) {
-    return <div className="min-w-full">{content}</div>;
+    return (
+      <div className="flex w-full flex-row items-center">
+        <div className="w-1/2 pr-2">
+          <DatePicker size="middle" className="w-full bg-primary" />
+        </div>
+        <div className="w-1/2 pl-2">{content}</div>
+      </div>
+    );
   }
   return (
-    <Popover
-      open={visible || value === "year" ? false : undefined}
-      className="min-w-full p-2"
-      content={<PopoverContent startDate={startDate} endDate={endDate} />}
-      color={token.blue6}
-    >
-      {content}
-    </Popover>
+    <div className="flex items-center gap-x-2 desk:gap-x-3">
+      <div>
+        <DatePicker size="middle" className="max-w-[8rem] bg-primary" />
+      </div>
+      <Divider type="vertical" className="text-neutral-13/5" />
+      <div>
+        <Popover
+          open={visible || value === "year" ? false : undefined}
+          className="min-w-full"
+          content={<PopoverContent startDate={startDate} endDate={endDate} />}
+          color={token.blue6}
+        >
+          {content}
+        </Popover>
+      </div>
+    </div>
   );
 }

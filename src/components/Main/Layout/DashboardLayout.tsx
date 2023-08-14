@@ -105,7 +105,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
   const { data } = useTransactionServerQuery<IUser>("/users/me/");
   const pathname = usePathname();
   const layoutSegments = useSelectedLayoutSegments();
-  const SIDEBAR_BREAK_POINT = useMediaQuery("(max-width: 1024px)");
+  const SIDEBAR_BREAK_POINT = useMediaQuery("(max-width: 1280px)");
 
   const { name, username, reporting_currency } = data || {};
   const openKey = layoutSegments.length > 1 ? [layoutSegments[0]] : undefined;
@@ -126,7 +126,6 @@ export default function DashboardLayout({ children }: ILayoutProps) {
   const onClose = () => {
     setOpen(false);
   };
-
   const collapsedLayoutClassName = collapsed
     ? "ml-0 tab:ml-[3.75rem]"
     : "ml-60";
@@ -180,15 +179,15 @@ export default function DashboardLayout({ children }: ILayoutProps) {
       <Layout className={collapsedLayoutClassName}>
         <Layout.Header
           className={clsx(
-            "fixed inset-0 z-20 flex justify-between bg-neutral-1 px-3 tab:px-4 lap:px-5",
+            "fixed inset-0 z-20 flex justify-between bg-neutral-1 px-2 tab:px-3 desk:px-5",
             collapsedLayoutClassName
           )}
         >
           <Row
-            className="flex-1 flex-nowrap items-center justify-between gap-x-2 pr-0.5 tab:pr-3 lap:gap-x-6"
+            className="flex-1 flex-nowrap items-center justify-between pr-1 tab:justify-start tab:pr-3"
             align="middle"
           >
-            <div className="flex flex-row items-center tab:gap-3 lap:gap-4">
+            <div className="flex flex-row items-center gap-x-2 desk:gap-x-3">
               <Button
                 onClick={() => setCollapsed((prev) => !prev)}
                 type="text"
@@ -207,18 +206,18 @@ export default function DashboardLayout({ children }: ILayoutProps) {
                 <Logo />
               </div>
               <Input.Search
-                className="hidden w-auto tab:block lap:w-[22rem]"
+                className="hidden w-auto lap:block lap:min-w-[15rem] desk:min-w-[20rem]"
                 size="middle"
                 placeholder="Search for Position, Market Data..."
                 disabled
               />
             </div>
-            <div className="flex justify-center">
-              <SearchOutlined className="text-xl tab:hidden" />
+            <div className="ml-2 flex justify-center">
+              <SearchOutlined className="text-xl lap:hidden" />
             </div>
           </Row>
           <Row
-            className="flex flex-row items-center pl-0 tab:gap-x-1 lap:gap-x-4 lap:pl-3"
+            className="mr-2 flex flex-row items-center gap-x-2 desk:gap-x-3"
             align="middle"
           >
             <div className="hidden tab:block">
@@ -237,6 +236,7 @@ export default function DashboardLayout({ children }: ILayoutProps) {
             <UserProfile name={name} username={username} />
           </Row>
         </Layout.Header>
+
         <Layout.Content className="mt-16">
           <div className="min-h-screen bg-neutral-3 p-4 tab:p-6 lap:px-12 lap:py-6">
             {children}
