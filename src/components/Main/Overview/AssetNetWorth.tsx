@@ -1,18 +1,14 @@
 "use client";
 
 import { Empty } from "antd";
-import useClientDropdown from "@/hooks/useClientDropdown";
 import { IAssetNetWorth } from "@/interfaces/Main";
-import Dropdown from "../General/Dropdown";
+import ClientDropdownCard from "./ClientDropdownCard";
 import IndexChart from "./IndexChart";
 
 const urlKey = "/relative-performance/networth/";
 const searchParamKey = "asset_client";
 
 export default function AssetNetWorth({ height }: { height: number }) {
-  const { loading, onChange, options, selectedClient, data } =
-    useClientDropdown<IAssetNetWorth>({ urlKey, searchParamKey });
-
   return (
     <div
       className="space-y-4 tab:space-y-6"
@@ -20,29 +16,20 @@ export default function AssetNetWorth({ height }: { height: number }) {
         height,
       }}
     >
-      <Dropdown
-        className="self-start"
-        disabled={loading || !selectedClient?.value}
-        menu={{
-          className: "max-h-96 overflow-y-auto scrollbar-hidden",
-          onClick: ({ key }) => onChange(key),
-          items: options,
-          selectedKeys: [selectedClient?.key as string],
-        }}
+      <ClientDropdownCard<IAssetNetWorth>
+        searchParamKey={searchParamKey}
+        urlKey={urlKey}
       >
-        {selectedClient?.label || "Client"}
-      </Dropdown>
-      {!(loading || data?.data) ? (
-        <div className="flex flex-col">
-          <Empty className="my-auto -translate-y-6" />
-        </div>
-      ) : (
-        <IndexChart
-          key={selectedClient?.key}
-          data={data?.data}
-          loading={loading}
-        />
-      )}
+        {(data, loading) =>
+          !(loading || data?.data) ? (
+            <div className="flex flex-col">
+              <Empty className="my-auto -translate-y-6" />
+            </div>
+          ) : (
+            <IndexChart data={data?.data} loading={loading} />
+          )
+        }
+      </ClientDropdownCard>
     </div>
   );
 }
