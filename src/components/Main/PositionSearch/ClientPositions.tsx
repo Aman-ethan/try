@@ -4,11 +4,10 @@ import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import Title from "@/components/Typography/Title";
 import { BalanceSheetUrl } from "@/constants/strings";
-import useSearchParams from "@/hooks/useSearchParams";
-import { IMonthPicker, IPositionNetWorth } from "@/interfaces/Main";
+import useReportDate from "@/hooks/useReportDate";
+import { IPositionNetWorth } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatCompactNumber } from "@/lib/format";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
 import CurrencyTag from "../General/CurrencyTag";
 import MonthPicker from "./Input/MonthPicker";
 
@@ -22,20 +21,15 @@ export default function ClientPositions({
   loading,
 }: IClientDataProps) {
   const { push, prefetch } = useRouter();
-  const { get: getSearchParams } = useSearchParams();
 
-  const { data } = useTransactionServerQuery<IMonthPicker>(
-    `/statement/position/date/`
-  );
-
-  const currentValue =
-    getSearchParams("report_date") || data?.end_date || undefined;
+  const reportDate = useReportDate();
 
   function onItemClicked(record: IPositionNetWorth) {
     push(
       `${BalanceSheetUrl}/${buildURLSearchParams({
         client: record?.client_id,
-        report_date: currentValue,
+        report_date: reportDate,
+        ordering: "-market_value",
       })}`
     );
   }
@@ -48,7 +42,7 @@ export default function ClientPositions({
     <ProList
       locale={{ emptyText: <Empty /> }}
       loading={loading}
-      toolBarRender={() => [<MonthPicker value={currentValue} />]}
+      toolBarRender={() => [<MonthPicker value={reportDate} />]}
       dataSource={clients}
       grid={{
         gutter: 16,

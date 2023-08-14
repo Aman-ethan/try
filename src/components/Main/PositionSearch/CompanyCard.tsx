@@ -5,6 +5,8 @@ import Title from "@/components/Typography/Title";
 import { BalanceSheetUrl } from "@/constants/strings";
 import { IPositionNetWorth } from "@/interfaces/Main";
 import { formatCompactNumber } from "@/lib/format";
+import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import useReportDate from "@/hooks/useReportDate";
 import CurrencyTag from "../General/CurrencyTag";
 
 interface ICompanyCardProps {
@@ -17,9 +19,15 @@ export default function CompanyCard({
   loading,
 }: ICompanyCardProps) {
   const { push, prefetch } = useRouter();
+  const reportDate = useReportDate();
 
   const onClick = () => {
-    push(`${BalanceSheetUrl}/`);
+    push(
+      `${BalanceSheetUrl}/${buildURLSearchParams({
+        ordering: "-market_value",
+        report_date: reportDate,
+      })}`
+    );
   };
 
   useEffect(() => {

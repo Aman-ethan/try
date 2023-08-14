@@ -24,6 +24,7 @@ export default function usePositions() {
   function onSegmentChange(value: SegmentedValue) {
     updateSearchParams({
       ordering: value,
+      page: undefined,
     });
   }
 
