@@ -12,6 +12,7 @@ const searchParamKey = "asset_client";
 export default function AssetNetWorth({ height }: { height: number }) {
   const { loading, onChange, options, selectedClient, data } =
     useClientDropdown<IAssetNetWorth>({ urlKey, searchParamKey });
+
   return (
     <div
       className="space-y-4 tab:space-y-6"
@@ -23,9 +24,10 @@ export default function AssetNetWorth({ height }: { height: number }) {
         className="self-start"
         disabled={loading || !selectedClient?.value}
         menu={{
+          className: "max-h-96 overflow-y-auto scrollbar-hidden",
           onClick: ({ key }) => onChange(key),
           items: options,
-          defaultSelectedKeys: [selectedClient?.key as string],
+          selectedKeys: [selectedClient?.key as string],
         }}
       >
         {selectedClient?.label || "Client"}

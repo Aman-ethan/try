@@ -1,6 +1,6 @@
 import React, { useCallback, useLayoutEffect, useState } from "react";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { useMediaQuery, useSessionStorage } from "@mantine/hooks";
+import { useMediaQuery } from "@mantine/hooks";
 import { Divider, Popover } from "antd";
 import dayjs, { ManipulateType, QUnitType } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
@@ -10,6 +10,7 @@ import { SearchParams } from "@/interfaces/Main";
 import useSearchParams from "@/hooks/useSearchParams";
 import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/constants/format";
 import Select from "@/components/Input/Select";
+import useDateRange from "@/hooks/useDateRange";
 import { DatePicker } from "./DatePicker";
 
 dayjs.extend(quarterOfYear);
@@ -47,16 +48,11 @@ function getDateKeys(layoutSegments: string[] | null): SearchParams[] {
 }
 
 function useDurationWithParams() {
-  const { get: getSearchParams, updateSearchParams } = useSearchParams();
+  const { updateSearchParams } = useSearchParams();
   const layoutSegments = useSelectedLayoutSegments();
-  const [duration, setDuration] = useSessionStorage({
-    key: "duration",
-    defaultValue: "year" as TDurationValue,
-  });
+  const { startDate, endDate, duration, setDuration } = useDateRange();
 
   const [startDateKey, endDateKey] = getDateKeys(layoutSegments);
-  const startDate = getSearchParams(startDateKey);
-  const endDate = getSearchParams(endDateKey);
 
   const onChange = useCallback(
     (value: ManipulateType) => {

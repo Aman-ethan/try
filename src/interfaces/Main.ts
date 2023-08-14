@@ -1,5 +1,6 @@
 import { DrawerProps, FormInstance } from "antd";
 import { ReactElement, ReactNode } from "react";
+import { ManipulateType, QUnitType } from "dayjs";
 import { flags } from "@/constants/flags";
 
 export interface ILayoutProps {
@@ -202,6 +203,7 @@ export interface IBalanceSheetChart {
 export interface IBalanceSheetOverview {
   asset: IBalanceSheetChart[];
   liability: IBalanceSheetChart[];
+  reporting_currency: TCurrency;
 }
 
 export interface IMonthPicker {
@@ -210,6 +212,8 @@ export interface IMonthPicker {
 }
 
 export type TProgressType = "success" | "failure";
+
+export type TDurationValue = ManipulateType | QUnitType;
 
 export interface ICurrency {
   code?: string;
