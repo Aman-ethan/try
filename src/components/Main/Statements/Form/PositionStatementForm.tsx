@@ -68,7 +68,10 @@ export default function PositionStatementForm({
           name="relationship_number"
           className="min-w-0 flex-1"
         >
-          <SelectRelationshipNumber placeholder="Select account number" />
+          <SelectRelationshipNumber
+            placeholder="Select account number"
+            className="w-full"
+          />
         </Form.Item>
       </div>
       <Form.Item label="Description" name="description">

@@ -51,8 +51,8 @@ function BulkUpload({ sampleLink }: IUploadClientProps) {
     <>
       <div className="space-y-2">
         <Row className="gap-x-2">
-          <InfoCircleFilled className="text-primary" />
-          <p className="font-medium text-neutral-13/80">
+          <p className="font-medium text-neutral-13/80 flex">
+            <InfoCircleFilled className="text-primary mr-1" />
             Please provide a file similar to the provided sample.
           </p>
         </Row>
@@ -94,7 +94,7 @@ function BulkUpload({ sampleLink }: IUploadClientProps) {
 export default function ClientUpload() {
   const { uploadType } = useFormType();
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 tab:space-y-8">
       <FormType />
       <div className="space-y-6">
         {uploadType === "bulk" ? (

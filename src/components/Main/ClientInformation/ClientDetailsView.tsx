@@ -11,7 +11,7 @@ import Goals from "./Goals";
 
 function View({ type }: { type: TTabType }) {
   switch (type) {
-    case "goals":
+    case "goal":
       return <Goals />;
     case "estate":
       return <Estates />;
@@ -23,14 +23,14 @@ function View({ type }: { type: TTabType }) {
 }
 
 const DetailOptions: CheckboxOptionType[] = [
-  { label: "Goals", value: "goals" },
+  { label: "Goals", value: "goal" },
   { label: "Estates", value: "estate" },
   { label: "Bank Accounts", value: "bank_account" },
 ];
 
 export default function ClientDetailsView() {
   const { setBreadItems } = useClientBreadCrumb();
-  const [type, setType] = useState<TTabType>("goals");
+  const [type, setType] = useState<TTabType>("goal");
   const handleTypeChange = (e: RadioChangeEvent) => {
     setType(e.target.value);
   };

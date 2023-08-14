@@ -46,7 +46,7 @@ export default function GrossAllocations() {
   }
 
   return (
-    <div className="flex flex-col space-y-8 rounded-lg bg-neutral-1 p-6 lap:flex-row lap:justify-between lap:space-y-0">
+    <div className="flex flex-col rounded-lg bg-neutral-1 p-4 tab:p-6 lap:flex-row lap:items-start lap:justify-center">
       {data?.map((item: IData) => (
         <Allocation key={item.title} title={item.title} data={item.data} />
       ))}

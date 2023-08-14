@@ -1,6 +1,6 @@
 "use client";
 
-import { Breadcrumb, Button, Dropdown, MenuProps, Row } from "antd";
+import { Button, Dropdown, MenuProps, Row } from "antd";
 import Link from "next/link";
 import { useSelectedLayoutSegments } from "next/navigation";
 import { CaretDownFilled, FilterOutlined } from "@ant-design/icons";
@@ -69,7 +69,7 @@ export default function CrudeHeader() {
 
   return (
     <div className="space-y-6">
-      <Breadcrumb className="capitalize" items={items} />
+      {/* <Breadcrumb className="capitalize" items={items} /> */}
       <Row justify="space-between" align="middle">
         {isPositions ? (
           <Title className="capitalize">{title}</Title>
@@ -106,6 +106,12 @@ export default function CrudeHeader() {
             </Row>
           </Row>
         )}
+        <Button
+          size="large"
+          icon={<FilterOutlined />}
+          className="block tab:hidden"
+          onClick={() => setShowFilter(!showFilter)}
+        />
       </Row>
       {isPositions ? (
         <Row className="max-w-xl gap-x-6">
@@ -120,7 +126,7 @@ export default function CrudeHeader() {
         </Row>
       ) : (
         <div className="flex w-full flex-col lap:max-w-lg">
-          <div className="flex flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0">
+          <div className="flex flex-col space-y-2 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0">
             <SelectClient
               placeholder="All Clients"
               className={selectClassName}
@@ -130,14 +136,6 @@ export default function CrudeHeader() {
               className={selectClassName}
             />
           </div>
-          <Button
-            size="large"
-            icon={<FilterOutlined />}
-            className="order-first mb-4 block tab:hidden"
-            onClick={() => setShowFilter(!showFilter)}
-          >
-            Filters
-          </Button>
         </div>
       )}
     </div>

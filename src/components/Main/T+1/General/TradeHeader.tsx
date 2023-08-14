@@ -20,7 +20,7 @@ export default function TradeHeader() {
   const outerContainerClasses =
     "flex flex-1 flex-col space-y-4 lap:flex-row lap:items-center lap:space-x-4 lap:space-y-0";
   const innerContainerClasses =
-    "flex flex-1 flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0";
+    "flex flex-1 flex-col space-y-2 tab:flex-row tab:items-center tab:space-x-4 tab:space-y-0";
   const filterButtonClasses = "flex-1 order-first mb-4 lap:hidden tab:hidden";
 
   const primarySelectClasses = clsx(

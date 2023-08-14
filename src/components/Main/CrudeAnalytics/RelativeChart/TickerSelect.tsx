@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Select, Spin } from "antd";
+import { Spin } from "antd";
 import { debounce } from "lodash";
 import { useAnalyticsServerGetQuery } from "@/hooks/useQuery";
 
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
+import Select from "@/components/Input/Select";
 
 const URLS = {
   get: `/security/search/`,

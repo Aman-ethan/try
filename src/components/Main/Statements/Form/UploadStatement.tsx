@@ -53,8 +53,8 @@ function BulkUpload() {
     <>
       <div className="space-y-2">
         <Row className="gap-x-2">
-          <InfoCircleFilled className="text-primary" />
-          <p className="font-medium text-neutral-13/80">
+          <p className="font-medium text-neutral-13/80 flex">
+            <InfoCircleFilled className="text-primary pr-1" />
             Please provide a statement similar to the provided sample.
           </p>
         </Row>
@@ -86,6 +86,7 @@ function BulkUpload() {
             }}
             disabled={isMutating}
             placeholder="Select the client"
+            className="w-full"
           />
         </Form.Item>
         <Form.Item name="file" valuePropName="fileList" rules={FormRules.file}>
@@ -107,7 +108,7 @@ function BulkUpload() {
 export default function UploadStatement() {
   const { uploadType } = useFormType();
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 tab:space-y-8">
       <FormType />
       <div className="space-y-6">
         {uploadType === "bulk" ? <BulkUpload /> : <ManualEntry />}

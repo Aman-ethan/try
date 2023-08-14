@@ -137,7 +137,7 @@ export default function TradeForm({
         label="Client"
         name="client"
         rules={FormRules.client}
-        className="lap:w-1/2 lap:pr-4"
+        className="w-full tab:w-1/2 tab:pr-4"
       >
         <SelectClient
           params={{

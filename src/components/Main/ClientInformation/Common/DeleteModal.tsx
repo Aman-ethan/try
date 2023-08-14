@@ -8,7 +8,7 @@ import { useTransactionServerDeleteMutation } from "@/hooks/useMutation";
 import { TTabType } from "@/interfaces/Main";
 
 const DeleteHeader = {
-  goals: "Goal",
+  goal: "Goal",
   bank_account: "Bank Account",
   estate: "Estate",
 };

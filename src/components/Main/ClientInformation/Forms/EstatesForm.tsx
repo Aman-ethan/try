@@ -79,7 +79,11 @@ function EstateFormInputs({ type, label }: IEstateFormInputsProps) {
     case "type":
       return (
         <Form.Item label={label} name={type} className="flex-1">
-          <Select options={Relationship} placeholder="Select a Type" />
+          <Select
+            options={Relationship}
+            placeholder="Select a Type"
+            className="w-full"
+          />
         </Form.Item>
       );
     default:
@@ -175,7 +179,7 @@ export default function EstatesForm({ onClose, id }: IEstatesForm) {
       form={form}
       initialValues={formatInitialValues(data)}
     >
-      <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
+      <Row className="grid grid-cols-1 gap-6 tab:gap-x-8 tab:gap-y-6 tab:grid-cols-2">
         {Object.entries(EstateFormMap).map(([key, label]) => (
           <EstateFormInputs label={label} type={key as TEstateKey} />
         ))}

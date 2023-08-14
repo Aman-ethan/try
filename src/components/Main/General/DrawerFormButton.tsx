@@ -6,7 +6,7 @@ interface FormButtonProps {
   children: ReactNode;
 }
 
-export const DrawerButtonClassName = "w-[6.5rem]";
+export const DrawerButtonClassName = "w-full  tab:w-[6.5rem]";
 
 export function SubmitButton({ children }: FormButtonProps) {
   const { formId, isMutating } = useFormState();

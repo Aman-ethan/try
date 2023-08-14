@@ -53,7 +53,10 @@ export default function ClientInfoCard() {
         </Col>
       </Row>
       <Row>
-        <Card className="w-full rounded-lg p-4 tab:p-6 lap:p-8">
+        <Card
+          className="w-full rounded-lg p-4 tab:p-6 lap:p-10"
+          bodyStyle={{ padding: "0" }}
+        >
           {isLoading ? (
             <Skeleton />
           ) : (

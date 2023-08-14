@@ -256,7 +256,7 @@ export default function GoalsForm({ id, onClose }: GoalsFormProps) {
       initialValues={data}
       requiredMark={false}
     >
-      <Row className="grid grid-cols-1 gap-4 tab:grid-cols-2">
+      <Row className="grid grid-cols-1 gap-6 tab:gap-x-8 tab:gap-y-6 tab:grid-cols-2">
         {Object.entries(GoalFormMap).map(([key, label]) => (
           <GoalFormInputs
             key={key}

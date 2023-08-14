@@ -88,8 +88,8 @@ export default function Goals() {
           bordered
           extra={[
             <div className="flex">
-              <ClientDetailsDrawer edit type="goals" id={item?.id} />
-              <DeleteModal type="goals" id={item?.id} />
+              <ClientDetailsDrawer edit type="goal" id={item?.id} />
+              <DeleteModal type="goal" id={item?.id} />
             </div>,
           ]}
           headStyle={{ gap: "0.5rem" }}

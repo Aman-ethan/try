@@ -46,6 +46,7 @@ export default function TradeStatementForm({
               form.resetFields(["client"]);
             }}
             placeholder="Select the client"
+            className="w-full"
           />
         </Form.Item>
         <Form.Item
@@ -59,6 +60,7 @@ export default function TradeStatementForm({
               form.resetFields(["custodian"]);
             }}
             placeholder="Select the custodian"
+            className="w-full"
           />
         </Form.Item>
       </div>
@@ -74,6 +76,7 @@ export default function TradeStatementForm({
               form.resetFields(["relationship_number"]);
             }}
             placeholder="Select account number"
+            className="w-full"
           />
         </Form.Item>
         <Form.Item

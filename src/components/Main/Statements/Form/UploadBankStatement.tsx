@@ -107,8 +107,8 @@ export default function UploadBankStatement() {
       <div className={formWrapper}>
         <Form.Item
           label="Client"
+          className="w-full tab:w-1/2 tab:pr-4"
           name="client"
-          className="w-1/2 pr-4"
           rules={FormRules.client}
         >
           <SelectClient
@@ -118,6 +118,7 @@ export default function UploadBankStatement() {
             reset={() => {
               form.resetFields(["client"]);
             }}
+            className="w-full"
           />
         </Form.Item>
       </div>
@@ -128,7 +129,10 @@ export default function UploadBankStatement() {
           className="min-w-0 flex-1"
           rules={FormRules.statement_type}
         >
-          <SelectStatementType placeholder="Select statement type" />
+          <SelectStatementType
+            placeholder="Select statement type"
+            className="w-full"
+          />
         </Form.Item>
         <Form.Item
           label="Date"
@@ -153,6 +157,7 @@ export default function UploadBankStatement() {
             reset={() => {
               form.resetFields(["custodian"]);
             }}
+            className="w-full"
           />
         </Form.Item>
         <Form.Item
@@ -171,6 +176,7 @@ export default function UploadBankStatement() {
               form.resetFields(["relationship_number"]);
             }}
             placeholder="Enter the account number"
+            className="w-full"
           />
         </Form.Item>
       </div>

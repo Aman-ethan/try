@@ -16,6 +16,8 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import { SegmentedValue } from "antd/es/segmented";
+import { useMediaQuery } from "@mantine/hooks";
+import { OrdinalRange } from "@/constants/strings";
 import { IAssetNetWorth } from "@/interfaces/Main";
 import TickerSelect from "./TickerSelect";
 import AssetSelect from "./AssetSelect";
@@ -104,7 +106,7 @@ export default function PerformanceChart({
 
     const _groupedData = groupBy(absoluteData, "z");
 
-    const _assets = Object.keys(_groupedData);
+    const _assets = Object.keys(_groupedData).sort();
 
     if (_assets.length >= MAX_SELECTIONS) {
       setTicker(_assets.slice(0, MAX_SELECTIONS));
@@ -172,8 +174,8 @@ export default function PerformanceChart({
         grid: true,
       },
       color: {
-        domain: chartScaleRef.current?.domain,
-        range: chartScaleRef.current?.range,
+        domain: assets,
+        range: OrdinalRange,
       },
       marks: [
         Plot.ruleY([1]),
@@ -199,7 +201,14 @@ export default function PerformanceChart({
     chartRef.current?.append(chart);
 
     return () => chart.remove();
-  }, [normalizeIndex, filledData, filledGroupedData]);
+  }, [normalizeIndex, filledData, filledGroupedData, assets]);
+
+  const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 400px)");
+
+  const innerClass = clsx(
+    "grid gap-4 tab:flex tab:gap-x-4 tab:flex-wrap tab:w-full",
+    MOBILE_BREAK_POINT ? "grid-cols-1" : "grid-cols-2"
+  );
 
   if (loading)
     return (
@@ -248,15 +257,15 @@ export default function PerformanceChart({
         ) : (
           <AssetSelect handleOptionChange={handleOptionChange} />
         )}
-        <div className="flex w-full max-w-lg items-center py-6">
-          <div className="flex gap-x-4">
+        <div className="flex w-full max-w-lg items-center py-4 tab:py-6 tab:min-w-full">
+          <div className={innerClass}>
             {assets?.map((domain, index) => {
               const isExcluded = excludedDomain?.includes(domain);
               const backgroundColor = (
                 chartScaleRef.current?.range as TScaleRecord
               )?.[index];
               return (
-                <>
+                <div className="flex">
                   <Tag
                     key={domain}
                     className={clsx(
@@ -274,7 +283,7 @@ export default function PerformanceChart({
                     <div className="whitespace-nowrap">{domain}</div>
                   </Tag>
                   <CloseCircleOutlined onClick={() => handleTagClose(domain)} />
-                </>
+                </div>
               );
             })}
           </div>

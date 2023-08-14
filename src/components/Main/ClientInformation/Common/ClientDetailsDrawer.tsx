@@ -26,7 +26,7 @@ const BankAccountsForm = lazy(() => import("../Forms/BankAccountsForm"));
 
 function DetailsForm({ id, type, onClose }: IDetailsFormProps) {
   switch (type) {
-    case "goals":
+    case "goal":
       return <GoalsForm id={id} onClose={onClose} />;
     case "estate":
       return <EstatesForm id={id} onClose={onClose} />;
