@@ -38,7 +38,7 @@ export default function DetailsSummary() {
     <Card>
       <div className="mb-4 flex justify-between">
         <h2 className="text-xl font-medium tab:text-2xl">Overview</h2>
-        <CurrencyTag currency="sgd" />
+        <CurrencyTag currency={data?.reporting_currency} />
       </div>
       <Row className="flex flex-col lap:flex-row lap:justify-between lap:space-x-8">
         <Col className="flex-1">

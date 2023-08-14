@@ -5,19 +5,19 @@ import Link from "next/link";
 
 import PositionList from "@/components/Main/PositionSearch/PositionList";
 
+const BreadcrumbItems = [
+  {
+    title: <Link href="/position-search">Position Search</Link>,
+  },
+  {
+    title: "Balance Sheet",
+  },
+];
+
 export default function PositionListPage() {
   return (
     <>
-      <Breadcrumb
-        items={[
-          {
-            title: <Link href="/position-search">Position Search</Link>,
-          },
-          {
-            title: "Balance Sheet",
-          },
-        ]}
-      />
+      <Breadcrumb items={BreadcrumbItems} />
       <PositionList />;
     </>
   );
