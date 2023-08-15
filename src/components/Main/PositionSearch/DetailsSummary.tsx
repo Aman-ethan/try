@@ -40,7 +40,7 @@ export default function DetailsSummary() {
         <h2 className="text-xl font-medium tab:text-2xl">Overview</h2>
         <CurrencyTag currency={data?.reporting_currency} />
       </div>
-      <Row className="flex flex-col lap:flex-row lap:justify-between lap:space-x-8">
+      <Row className="flex flex-col lap:flex-row lap:justify-between lap:space-x-6">
         <Col className="flex-1">
           <ChartTable
             loading={isLoading}

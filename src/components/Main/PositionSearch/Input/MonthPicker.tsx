@@ -18,7 +18,7 @@ export default function MonthPicker({ disabled, value }: IMonthPickerProps) {
   const selectedDate = getSearchParams("report_date");
   return (
     <DatePicker.MonthPicker
-      className="max-w-[16rem] flex-1"
+      className="h-[2.625rem] w-full flex-1 p-4 tab:w-[16rem]"
       value={dayjs(value || selectedDate)}
       disabled={disabled}
       size="large"

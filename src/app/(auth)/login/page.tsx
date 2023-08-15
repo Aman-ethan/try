@@ -16,7 +16,7 @@ export default function LoginPage() {
         </div>
         <LoginForm />
       </div>
-      <div className="flex flex-grow flex-col justify-between space-y-4 pb-8 tab:justify-start tab:pb-0">
+      <div className="flex flex-grow flex-col justify-between space-y-4 tab:justify-start tab:pb-0">
         <Link
           href="/forgot-password"
           className="inline-block hover:underline focus:underline"

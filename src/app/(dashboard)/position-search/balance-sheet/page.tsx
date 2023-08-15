@@ -16,9 +16,9 @@ const BreadcrumbItems = [
 
 export default function PositionListPage() {
   return (
-    <>
+    <div className="space-y-6">
       <Breadcrumb items={BreadcrumbItems} />
       <PositionList />;
-    </>
+    </div>
   );
 }

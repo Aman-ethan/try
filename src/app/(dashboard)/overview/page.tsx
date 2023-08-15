@@ -5,6 +5,7 @@ import GainerLoser from "@/components/Main/Overview/GainerLoser";
 import NetWorth from "@/components/Main/Overview/NetWorth";
 import Title from "@/components/Typography/Title";
 import { TGainerLoser } from "@/interfaces/Main";
+import { HeaderClassName } from "@/constants/strings";
 
 const GainerLoserViewOptions = [
   { label: "Table View", value: "table_view" },
@@ -14,7 +15,7 @@ const GainerLoserViewOptions = [
 export default function Home() {
   return (
     <div className="space-y-6 lap:space-y-8">
-      <Title level={2}>Overview</Title>
+      <Title className={HeaderClassName}>Overview</Title>
       <div className="flex flex-col gap-y-6 lap:gap-y-8">
         <NetWorth />
         <div className="shadow-large flex-1 overflow-x-auto rounded-lg bg-white px-12 py-6">

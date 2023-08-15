@@ -17,23 +17,38 @@ export default function StatementFilter() {
 
   const primarySelectClasses = clsx(
     showFilter ? "block" : "hidden",
-    "flex-1 tab:flex"
+    "tab:flex tab:w-1/2"
   );
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col space-y-4 tab:flex-row tab:items-center tab:justify-between tab:space-y-0">
-        <Title className="capitalize">{layoutSegment} Statement</Title>
-        <div className="flex w-full flex-row space-x-4 tab:w-auto">
-          <UploadStatementDrawer />
-          <Button
-            size="large"
-            icon={<FilterOutlined />}
-            className="order-last flex items-center justify-center tab:hidden"
-            onClick={() => setShowFilter(!showFilter)}
-          />
+        <div className="flex justify-between">
+          <Title className="capitalize">{layoutSegment} Statement</Title>
+          <div className="mob:block tab:hidden lap:hidden">
+            {layoutSegment === "position" ? null : (
+              <DownloadStatement title="CSV" />
+            )}
+          </div>
+        </div>
 
-          <div className="tab:hidden">
+        <div className="flex w-full flex-row space-x-4 tab:w-auto">
+          <div className="flex mob:w-1/2">
+            <UploadStatementDrawer />
+          </div>
+
+          <div className="flex mob:max-w-lg">
+            <Button
+              size="large"
+              icon={<FilterOutlined />}
+              className="order-last tab:hidden "
+              onClick={() => setShowFilter(!showFilter)}
+            >
+              Filters
+            </Button>
+          </div>
+
+          <div className="hidden tab:block lap:hidden">
             {layoutSegment === "position" ? null : (
               <DownloadStatement title="CSV" />
             )}
@@ -51,7 +66,7 @@ export default function StatementFilter() {
             className={primarySelectClasses}
           />
         </div>
-        <div className="hidden tab:block">
+        <div className="hidden lap:block">
           {layoutSegment === "position" ? null : <DownloadStatement />}
         </div>
       </div>

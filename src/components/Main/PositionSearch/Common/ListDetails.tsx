@@ -14,24 +14,24 @@ interface IListProps {
 
 export default function ListDetails({ record }: IListProps) {
   return (
-    <div className="flex w-full flex-col space-y-4 lap:flex-row lap:justify-between lap:space-y-0">
+    <div className="flex w-full flex-col space-3 px-4 py-3 lap:flex-row lap:justify-between lap:space-y-0">
       <div className="basis-1/2 space-y-4">
-        <div className="flex flex-col space-y-2 tab:flex-row tab:space-x-4 tab:space-y-0">
+        <div className="flex flex-col items-start justify-start space-y-2 tab:flex-row tab:items-center tab:justify-between tab:space-x-4 tab:space-y-0">
           <div className="space-x-2">
             <PieChartOutlined />
-            <span className="font-semibold">{record?.asset_class}</span>
+            <span className="font-medium">{record?.asset_class}</span>
           </div>
           <div className="space-x-2">
             <BankOutlined />
-            <span className="font-semibold">{record?.custodian_name}</span>
+            <span className="font-medium">{record?.custodian_name}</span>
           </div>
           <div className="space-x-2">
             <TagOutlined />
-            <span className="font-semibold">{record?.isin}</span>
+            <span className="font-medium">{record?.isin}</span>
           </div>
         </div>
         <div>{record?.description}</div>
-        <div className="font-semibold">
+        <div className="font-medium">
           <UserOutlined />
           {record?.client_name}
         </div>

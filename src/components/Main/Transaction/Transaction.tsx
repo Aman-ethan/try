@@ -11,6 +11,7 @@ import useSearchParams from "@/hooks/useSearchParams";
 import { TCurrency } from "@/interfaces/Main";
 import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
 import ClampedText from "@/components/Typography/ClampedText";
+import { HeaderClassName } from "@/constants/strings";
 import CurrencyTag from "../General/CurrencyTag";
 import SelectClientWithParams from "../Input/SelectClientWithParams";
 import SelectCustodianWithParams from "../Input/SelectCustodianWithParams";
@@ -164,8 +165,8 @@ export default function Transaction() {
   );
 
   return (
-    <div className="flex flex-col gap-y-4">
-      <Title>Transaction</Title>
+    <div className="flex flex-col gap-y-6">
+      <Title className={HeaderClassName}>Transaction</Title>
       <div className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-4 tab:gap-y-0">
         <div className="order-last flex flex-col gap-x-4 gap-y-2 tab:order-first tab:w-full tab:flex-row">
           <SelectClientWithParams

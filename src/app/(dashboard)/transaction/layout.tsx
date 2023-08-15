@@ -1,4 +1,3 @@
-import { Breadcrumb } from "antd";
 import { ReactNode } from "react";
 
 interface ITransactionLayoutProps {
@@ -11,18 +10,6 @@ export default function TransactionLayout({
   children,
 }: ITransactionLayoutProps) {
   return (
-    <div className="space-y-4 tab:space-y-6 lap:space-y-8">
-      <Breadcrumb
-        items={[
-          {
-            title: "Consolidation",
-          },
-          {
-            title: "Transaction",
-          },
-        ]}
-      />
-      {children}
-    </div>
+    <div className="space-y-4 tab:space-y-6 lap:space-y-8">{children}</div>
   );
 }

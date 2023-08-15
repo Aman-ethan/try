@@ -43,7 +43,7 @@ export default function PositionListItems() {
   );
   return (
     <>
-      <div className="flex flex-col space-y-4 tab:flex-row tab:space-x-4 tab:space-y-0">
+      <div className="flex flex-col space-y-4 tab:flex-row tab:justify-between tab:space-x-4 tab:space-y-0">
         <div className="space-between flex w-full items-center space-x-2 tab:w-1/3">
           <SearchPositionSecurities
             placeholder="Search security name or id"
@@ -74,13 +74,21 @@ export default function PositionListItems() {
       </div>
       <Card>
         <div className={listItemsClasses}>
-          <h2 className="text-xl font-medium">Positions</h2>
-          <Select
-            placeholder="Choose sort option"
-            className="flex w-auto lap:hidden"
-            options={Options}
-            onChange={onSegmentChange}
-          />
+          <div className="flex w-full flex-col justify-between gap-y-4 tab:flex-row">
+            <div>
+              <h2 className="w-1/3 text-xl font-medium">Positions</h2>
+            </div>
+            <div className="flex items-center justify-start gap-x-4 tab:mr-[65px] lap:hidden">
+              <p className="w-auto tab:min-w-[3rem]">Sort by</p>
+              <Select
+                placeholder="Choose sort option"
+                className="w-2/3 tab:min-w-full lap:hidden "
+                options={Options}
+                onChange={onSegmentChange}
+                size="large"
+              />
+            </div>
+          </div>
           <Segmented
             block
             options={Options}

@@ -57,10 +57,12 @@ export default function ClientPositions({
       metas={{
         content: {
           render: (text: React.ReactNode, record: IPositionNetWorth) => (
-            <ProCard.Group direction="column" className="mt-4">
+            <ProCard.Group direction="column">
               <ProCard onClick={() => onItemClicked(record)}>
                 <div className="mb-8 flex justify-between">
-                  <Title level={4}>{record?.client_name}</Title>
+                  <Title level={3} className="font-bold">
+                    {record?.client_name}
+                  </Title>
                   <CurrencyTag currency={record?.currency} />
                 </div>
                 <Row
@@ -69,19 +71,25 @@ export default function ClientPositions({
                   className="flex flex-wrap items-center"
                 >
                   <Col sm={12} md={8} lg={8} className="mb-2 tab:mb-0">
-                    <Title level={6}>Net Worth</Title>
+                    <Title level={6} className="font-regular">
+                      Net Worth
+                    </Title>
                     <Title level={4}>
                       {formatCompactNumber(record?.networth)}
                     </Title>
                   </Col>
                   <Col sm={12} md={8} lg={8} className="mb-2 tab:mb-0">
-                    <Title level={6}>Assets</Title>
+                    <Title level={6} className="font-regular">
+                      Assets
+                    </Title>
                     <Title level={4} className="text-summary-profit">
                       {formatCompactNumber(record?.assets)}
                     </Title>
                   </Col>
                   <Col sm={12} md={8} lg={8} className="mb-2 tab:mb-0">
-                    <Title level={6}>Liabilities</Title>
+                    <Title level={6} className="font-regular">
+                      Liabilities
+                    </Title>
                     <Title level={4} className="text-summary-loss">
                       {formatCompactNumber(record?.liabilities)}
                     </Title>

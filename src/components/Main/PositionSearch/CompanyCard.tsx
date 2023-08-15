@@ -35,33 +35,41 @@ export default function CompanyCard({
   }, [prefetch]);
 
   return (
-    <Card onClick={onClick} loading={loading} className="pointer p-4">
+    <Card onClick={onClick} loading={loading} className="cursor-pointer p-6">
       <div className="mb-6 flex space-x-8">
-        <Title className="capitalize" level={4}>
+        <Title className="capitalize" level={3}>
           {companyData?.client_name}
         </Title>
         <CurrencyTag currency={companyData?.currency} />
       </div>
       <Row gutter={16} className="flex flex-wrap items-center justify-between">
         <Col sm={12} md={8} lg={8} className="mb-2 space-y-2 tab:mb-0">
-          <Title className="font-medium" level={6}>
+          <Title className="font-normal" level={6}>
             Net Worth
           </Title>
-          <Title level={1}>{formatCompactNumber(companyData?.networth)}</Title>
+          <Title level={1} className="text-[2.375rem] font-normal">
+            {formatCompactNumber(companyData?.networth)}
+          </Title>
         </Col>
         <Col sm={12} md={8} lg={8} className="mb-2 space-y-2 tab:mb-0">
-          <Title className="font-medium" level={6}>
+          <Title className="font-normal" level={6}>
             Assets
           </Title>
-          <Title level={1} className="text-summary-profit">
+          <Title
+            level={1}
+            className="text-[2.375rem] font-normal text-summary-profit"
+          >
             {formatCompactNumber(companyData?.assets)}
           </Title>
         </Col>
         <Col sm={12} md={8} lg={8} className="mb-2 space-y-2 tab:mb-0">
-          <Title className="font-medium" level={6}>
+          <Title className="font-normal" level={6}>
             Liabilities
           </Title>
-          <Title level={1} className="text-summary-loss">
+          <Title
+            level={1}
+            className="text-[2.375rem] font-normal text-summary-loss"
+          >
             {formatCompactNumber(companyData?.liabilities)}
           </Title>
         </Col>
