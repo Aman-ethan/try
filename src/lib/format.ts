@@ -58,15 +58,16 @@ export function formatTableDate(date: Date) {
   return dayjs(date).locale(en).format("D MMM YYYY");
 }
 
-const f = format(".10~s");
+const f = format(".5~s");
 
 export function formatCompactNumber(num?: number | string) {
-  if (Number.isNaN(Number(num))) return "";
+  const number = Number(num);
+  if (Number.isNaN(number)) return "";
 
-  const formattedNumber = f(Number(num));
+  const formattedNumber = Math.abs(number) > 1 ? f(number) : number.toString();
 
   return formattedNumber
-    .replace(/(\d+\.\d{2})\d*([A-Z|a-z])*/g, "$1$2")
+    .replace(/(-*\d*\.*\d{0,2})\d*([A-Z|a-z]*)/g, "$1$2")
     .replace("k", " K")
     .replace("G", " B")
     .replace("M", " M");
