@@ -31,23 +31,20 @@ export default function StatementFilter() {
             )}
           </div>
         </div>
-
         <div className="flex w-full flex-row space-x-4 tab:w-auto">
-          <div className="flex mob:w-1/2">
+          <div className="flex mob:w-1/2 tab:w-auto">
             <UploadStatementDrawer />
           </div>
-
-          <div className="flex mob:max-w-lg">
+          <div className="flex mob:max-w-lg tab:hidden">
             <Button
               size="large"
               icon={<FilterOutlined />}
-              className="order-last tab:hidden "
+              className="order-last"
               onClick={() => setShowFilter(!showFilter)}
             >
               Filters
             </Button>
           </div>
-
           <div className="hidden tab:block lap:hidden">
             {layoutSegment === "position" ? null : (
               <DownloadStatement title="CSV" />
