@@ -1,27 +1,27 @@
 "use client";
 
-import { Button, Dropdown, MenuProps, Row } from "antd";
-import Link from "next/link";
-import { useSelectedLayoutSegments } from "next/navigation";
 import { CaretDownFilled, FilterOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { Button, Dropdown, MenuProps, Row } from "antd";
 import clsx from "clsx";
+import Link from "next/link";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { useState } from "react";
 import Title from "@/components/Typography/Title";
+import Select from "../../../Input/Select";
 import SelectClient from "../../Input/SelectClientWithParams";
 import SelectCustodian from "../../Input/SelectCustodianWithParams";
-import Select from "../../../Input/Select";
 
 const CrudeRoutes: MenuProps["items"] = [
   {
     key: "gross-allocations",
     label: (
-      <Link href="/analytics/crude/gross-allocations">Gross Allocations</Link>
+      <Link href="/analytics/preset/gross-allocations">Gross Allocations</Link>
     ),
   },
   {
     key: "relative-performance",
     label: (
-      <Link href="/analytics/crude/relative-performance">
+      <Link href="/analytics/preset/relative-performance">
         Relative Performance
       </Link>
     ),
@@ -41,26 +41,10 @@ const options = [
 
 export default function CrudeHeader() {
   const [showFilter, setShowFilter] = useState(false);
-  const selectedLayoutSegment = useSelectedLayoutSegments();
-  const title = selectedLayoutSegment[selectedLayoutSegment.length - 1]
-    ?.split("-")
-    .join(" ");
-  const [dropdownWidth, setDropdownWidth] = useState<undefined | number>(
-    undefined
-  );
+  const selectedLayoutSegment = useSelectedLayoutSegment();
+  const title = selectedLayoutSegment?.split("-").join(" ");
+
   const isPositions = title === "positions";
-
-  const items = [
-    {
-      title: "Analytics",
-    },
-  ];
-
-  selectedLayoutSegment.forEach((segment) => {
-    items.push({
-      title: segment.split("-").join(" "),
-    });
-  });
 
   const selectClassName = clsx(
     showFilter ? "block" : "hidden",
@@ -69,42 +53,24 @@ export default function CrudeHeader() {
 
   return (
     <div className="space-y-6">
-      {/* <Breadcrumb className="capitalize" items={items} /> */}
       <Row justify="space-between" align="middle">
         {isPositions ? (
           <Title className="capitalize">{title}</Title>
         ) : (
-          <Row justify="space-between" align="middle">
-            <Row
-              ref={(el) => {
-                setDropdownWidth(el?.getBoundingClientRect().width);
-              }}
-              align="middle"
-              className="space-x-2"
-            >
-              <Title level={2} className="capitalize">
-                {title}
-              </Title>
-              <Dropdown
-                menu={{
-                  items: CrudeRoutes,
-                  selectable: true,
-                  defaultSelectedKeys: [selectedLayoutSegment[0] as string],
-                  style: {
-                    width: dropdownWidth,
-                  },
-                }}
-                placement="bottomRight"
-                trigger={["click"]}
-              >
-                <Button
-                  type="text"
-                  shape="circle"
-                  icon={<CaretDownFilled className="mt-0.5 text-xl" />}
-                />
-              </Dropdown>
-            </Row>
-          </Row>
+          <Dropdown
+            menu={{
+              items: CrudeRoutes,
+              selectable: true,
+              selectedKeys: [selectedLayoutSegment as string],
+            }}
+            trigger={["click"]}
+            className="space-x-3 -ml-4"
+          >
+            <Button type="text" size="large" className="flex items-center">
+              <Title level={2}>{title}</Title>
+              <CaretDownFilled className="mt-2 text-xl" />
+            </Button>
+          </Dropdown>
         )}
         <Button
           size="large"

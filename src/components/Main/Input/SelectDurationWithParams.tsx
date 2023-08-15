@@ -37,7 +37,8 @@ const DURATION: IDuration[] = [
 function getDateKeys(layoutSegments: string[] | null): SearchParams[] {
   switch (true) {
     case layoutSegments?.includes("transaction"):
-    case layoutSegments?.includes("statements"):
+    case layoutSegments?.includes("trades"):
+    case layoutSegments?.includes("vaultZ"):
       return ["statement_date__gte", "statement_date__lte"];
     case layoutSegments?.includes("overview"):
     case layoutSegments?.includes("analytics"):

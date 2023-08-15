@@ -30,12 +30,6 @@ function formatNumber(
   }).format(String(value) as unknown as number);
 }
 
-// export function formatPrice(price: number | string, currency: string) {
-//   return formatNumber("price", price, {
-//     currency,
-//   });
-// }
-
 export function formatPriceWithSymbol(
   price: number | string,
   currency: string

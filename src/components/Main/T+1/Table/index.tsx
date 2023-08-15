@@ -66,6 +66,7 @@ export default function TradeTable<T>({
         footer={
           edit ? (
             <EditTradeDrawer
+              key={selectedRowKey}
               id={selectedRowKey}
               onClose={handleClose}
               button={

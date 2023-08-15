@@ -1,5 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import { DatePicker } from "antd";
+import clsx from "clsx";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import { IMonthPicker } from "@/interfaces/Main";
@@ -8,9 +9,14 @@ import { DATE_PARAM_FORMAT } from "@/constants/format";
 interface IMonthPickerProps {
   value?: string;
   disabled?: boolean;
+  className?: string;
 }
 
-export default function MonthPicker({ disabled, value }: IMonthPickerProps) {
+export default function MonthPicker({
+  className,
+  disabled,
+  value,
+}: IMonthPickerProps) {
   const { get: getSearchParams, updateSearchParams } = useSearchParams();
   const { data } = useTransactionServerQuery<IMonthPicker>(
     `/statement/position/date/`
@@ -18,7 +24,10 @@ export default function MonthPicker({ disabled, value }: IMonthPickerProps) {
   const selectedDate = getSearchParams("report_date");
   return (
     <DatePicker.MonthPicker
-      className="h-[2.625rem] w-full flex-1 p-4 tab:w-[16rem]"
+      className={clsx(
+        "h-[2.625rem] w-full flex-1 tab:max-w-[14rem] lap:max-w-[16rem]",
+        className
+      )}
       value={dayjs(value || selectedDate)}
       disabled={disabled}
       size="large"

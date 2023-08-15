@@ -1,30 +1,17 @@
 "use client";
 
 import { Menu } from "antd";
-import { usePathname, useSelectedLayoutSegments } from "next/navigation";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
-import { TCurrency } from "@/interfaces/Main";
 import ROUTE from "@/constants/route";
+import useSidebar from "@/hooks/useSidebar";
 import CurrencyTag from "../Main/General/CurrencyTag";
 import SelectDurationWithParams from "../Main/Input/SelectDurationWithParams";
-
-interface IUser {
-  name: string;
-  username: string;
-  reporting_currency: TCurrency | null;
-}
 
 interface ILayoutProps {
   onClose: () => void;
 }
 
 export default function Sidebar({ onClose }: ILayoutProps) {
-  const pathname = usePathname();
-  const layoutSegments = useSelectedLayoutSegments();
-  const openKey = layoutSegments.length > 1 ? [layoutSegments[0]] : undefined;
-  const selectedKeys = pathname ? [pathname] : undefined;
-  const { data } = useTransactionServerQuery<IUser>("/users/me/");
-  const { reporting_currency } = data || {};
+  const { openKey, reporting_currency, selectedKeys } = useSidebar();
 
   return (
     <div className="flex flex-col justify-start gap-y-4">

@@ -24,17 +24,15 @@ import {
   Row,
 } from "antd";
 import Link from "next/link";
-import { usePathname, useSelectedLayoutSegments } from "next/navigation";
-
 import clsx from "clsx";
 import en from "dayjs/locale/en";
 import dayjs from "dayjs";
-import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useAuth from "@/hooks/useAuth";
 import ROUTE from "@/constants/route";
 import Logo from "@/components/Icon/Logo";
-import { TCurrency } from "@/interfaces/Main";
+import { IUser } from "@/interfaces/Main";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import useSidebar from "@/hooks/useSidebar";
 import CurrencyTag from "../General/CurrencyTag";
 import CollapsedLogo from "../Icon/CollapsedLogo";
 import SelectDurationWithParams from "../Input/SelectDurationWithParams";
@@ -43,12 +41,6 @@ dayjs.locale(en);
 
 interface ILayoutProps {
   children: ReactNode;
-}
-
-interface IUser {
-  name: string;
-  username: string;
-  reporting_currency: TCurrency | null;
 }
 
 const iconClassName = "text-neutral-11";
@@ -102,14 +94,10 @@ function UserProfile({
 
 export default function DashboardLayout({ children }: ILayoutProps) {
   const [collapsed, setCollapsed] = useState(false);
-  const { data } = useTransactionServerQuery<IUser>("/users/me/");
-  const pathname = usePathname();
-  const layoutSegments = useSelectedLayoutSegments();
-  const SIDEBAR_BREAK_POINT = useMediaQuery("(max-width: 1280px)");
+  const { name, openKey, reporting_currency, selectedKeys, username } =
+    useSidebar();
 
-  const { name, username, reporting_currency } = data || {};
-  const openKey = layoutSegments.length > 1 ? [layoutSegments[0]] : undefined;
-  const selectedKeys = pathname ? [pathname] : undefined;
+  const SIDEBAR_BREAK_POINT = useMediaQuery("(max-width: 1280px)");
 
   useLayoutEffect(() => {
     if (SIDEBAR_BREAK_POINT) {

@@ -31,7 +31,7 @@ export default function TradeHeader() {
   return (
     <div className="space-y-6">
       <Row justify="space-between" align="middle">
-        <Title>{title === "transaction" ? "Trades" : title}</Title>
+        <Title>{title}</Title>
         <div className="hidden tab:block">
           <AddTradeDrawer />
         </div>

@@ -7,7 +7,7 @@ import PositionList from "@/components/Main/PositionSearch/PositionList";
 
 const BreadcrumbItems = [
   {
-    title: <Link href="/position-search">Position Search</Link>,
+    title: <Link href="/consolidation/position-search">Position Search</Link>,
   },
   {
     title: "Balance Sheet",

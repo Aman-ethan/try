@@ -13,6 +13,12 @@ export interface ITemplateProps {
 
 export type TCurrency = keyof typeof flags;
 
+export interface IUser {
+  name: string;
+  username: string;
+  reporting_currency: TCurrency | null;
+}
+
 export interface ICustodian {
   id: string;
   name: string;

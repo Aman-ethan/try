@@ -21,9 +21,9 @@ const ROUTE = [
     icon: <LineChartOutlined />,
     children: [
       {
-        key: "/analytics/crude/gross-allocations",
+        key: "/analytics/preset",
         label: (
-          <Link href="/analytics/crude/gross-allocations">
+          <Link href="/analytics/preset/gross-allocations">
             Preset Analytics
           </Link>
         ),
@@ -41,25 +41,27 @@ const ROUTE = [
     icon: <ContainerOutlined />,
     children: [
       {
-        key: "/position-search",
-        label: <Link href="/position-search">Balance Sheet</Link>,
+        key: "/consolidation/position-search",
+        label: <Link href="/consolidation/position-search">Balance Sheet</Link>,
       },
       {
-        key: "/transaction",
+        key: "/consolidation/transaction",
         label: (
-          <Link href={`/transaction?page_size=${DEFAULT_PAGE_SIZE}`}>
+          <Link
+            href={`/consolidation/transaction?page_size=${DEFAULT_PAGE_SIZE}`}
+          >
             Transaction
           </Link>
         ),
       },
       {
         disabled: true,
-        key: "/profit-and-loss",
+        key: "/consolidation/profit-and-loss",
         label: "Profit & Loss",
       },
       {
         disabled: true,
-        key: "/cash-flow",
+        key: "/consolidation/cash-flow",
         label: "Cash Flow",
       },
     ],
@@ -70,9 +72,9 @@ const ROUTE = [
     icon: <LineChartOutlined />,
     children: [
       {
-        key: "/t+1/transaction",
+        key: "/t+1/trades",
         label: (
-          <Link href={`/t+1/transaction?page_size=${DEFAULT_PAGE_SIZE}`}>
+          <Link href={`/t+1/trades?page_size=${DEFAULT_PAGE_SIZE}`}>
             Trades
           </Link>
         ),
@@ -88,35 +90,35 @@ const ROUTE = [
     ],
   },
   {
-    key: "statements",
+    key: "vaultZ",
     label: "Document VaultZ",
     icon: <ProfileOutlined />,
     children: [
       {
-        key: "/statements/bank",
+        key: "/vaultZ/bank",
         label: (
           <Link
-            href={`/statements/bank?ordering=-statement_date&page_size=${DEFAULT_PAGE_SIZE}`}
+            href={`/vaultZ/bank?ordering=-statement_date&page_size=${DEFAULT_PAGE_SIZE}`}
           >
             Bank Statement
           </Link>
         ),
       },
       {
-        key: "/statements/trade",
+        key: "/vaultZ/trade",
         label: (
           <Link
-            href={`/statements/trade?ordering=-statement_date&page_size=${DEFAULT_PAGE_SIZE}`}
+            href={`/vaultZ/trade?ordering=-statement_date&page_size=${DEFAULT_PAGE_SIZE}`}
           >
             Trade Statement
           </Link>
         ),
       },
       {
-        key: "/statements/position",
+        key: "/vaultZ/position",
         label: (
           <Link
-            href={`/statements/position?ordering=-statement_date&page_size=${DEFAULT_PAGE_SIZE}`}
+            href={`/vaultZ/position?ordering=-statement_date&page_size=${DEFAULT_PAGE_SIZE}`}
           >
             Position Statement
           </Link>
@@ -125,8 +127,8 @@ const ROUTE = [
     ],
   },
   {
-    key: "/client-information",
-    label: <Link href="/client-information">Investor Profile</Link>,
+    key: "/investor-profile",
+    label: <Link href="/investor-profile">Investor Profile</Link>,
     icon: <UserOutlined />,
   },
   {
