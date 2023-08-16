@@ -35,9 +35,12 @@ type TPositionColumn = {
   unrealizedPL: number;
 };
 
-const searchParamKeys: Record<"page", SearchParams> = { page: "page_modal" };
+const searchParamKeys: Record<"page" | "client", SearchParams> = {
+  page: "page_modal",
+  client: "gross_allocation_client",
+};
 
-function useAnalytics(category: TCategory, value: string) {
+function useAnalytics(category: TCategory, value?: string) {
   const {
     onChange,
     pagination,
@@ -156,7 +159,7 @@ export default function AnalyticsModal({
   const { analyticsData, isLoading, pagination, onChange, updateSearchParams } =
     useAnalytics(
       category,
-      selectedOption ? (selectedOption.label as string) : ""
+      selectedOption ? (selectedOption.label as string) : undefined
     );
 
   useEffect(() => {
