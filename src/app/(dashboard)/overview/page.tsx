@@ -18,7 +18,7 @@ export default function Home() {
       <Title className={HeaderClassName}>Overview</Title>
       <div className="flex flex-col gap-y-6 lap:gap-y-8">
         <NetWorth />
-        <div className="shadow-large flex-1 overflow-x-auto rounded-lg bg-white px-12 py-6">
+        <div className="shadow-large flex-1 rounded-lg bg-white px-12 py-6">
           <Analytics />
         </div>
         <div className="shadow-large space-y-4 rounded-lg bg-white p-6">

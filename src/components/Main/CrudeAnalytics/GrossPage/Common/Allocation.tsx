@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Empty } from "antd";
+import { Empty, Tooltip } from "antd";
 import { ProList } from "@ant-design/pro-components";
 import * as d3 from "d3";
+import { DownOutlined, UpOutlined } from "@ant-design/icons";
+import clsx from "clsx";
 import {
   IPercentageData,
   IPieData,
@@ -17,6 +19,69 @@ import AnalyticsModal, { TCategory } from "./AnalyticsModal";
 interface IAllocationProps {
   title: string;
   data?: IPieData[];
+}
+
+interface IPieChartLegendProps {
+  data: IPercentageData[];
+  colorMap: { [key: string]: string };
+}
+
+function PieChartLegend({ data, colorMap }: IPieChartLegendProps) {
+  const [showAllLegend, setShowAllLegend] = useState(false);
+  return data.length !== 0 ? (
+    <ProList
+      className={clsx(
+        "w-full tab:w-auto tab:flex-1 lap:w-full max-h-56 overflow-y-visible legend",
+        showAllLegend ? "shadow-legend" : ""
+      )}
+      rowClassName="p-2"
+      dataSource={showAllLegend ? data : data.slice(0, 4)}
+      metas={{
+        title: {
+          dataIndex: "title",
+          render: (_dom, entity) => (
+            <div className="flex items-center justify-center gap-x-2">
+              <div
+                className="h-2.5 w-2.5"
+                style={{
+                  backgroundColor: colorMap[entity.type],
+                }}
+              />
+              <Tooltip
+                title={entity.type}
+                className="line-clamp-1 text-left font-normal"
+              >
+                {entity.type}
+              </Tooltip>
+            </div>
+          ),
+        },
+        extra: {
+          render: (_: unknown, record: IPercentageData) => [
+            <p key={record.type}>{record.percentage}%</p>,
+          ],
+        },
+      }}
+      footer={
+        data.length > 4 && (
+          <button
+            type="button"
+            className="flex items-center gap-x-2 text-neutral-10 cursor-pointer"
+            onClick={() => setShowAllLegend((prev) => !prev)}
+          >
+            Show {showAllLegend ? "less" : "all"}
+            {showAllLegend ? (
+              <UpOutlined className="text-xs" />
+            ) : (
+              <DownOutlined className="text-xs" />
+            )}
+          </button>
+        )
+      }
+    />
+  ) : (
+    <Empty />
+  );
 }
 
 export default function Allocation({ title, data = [] }: IAllocationProps) {
@@ -46,7 +111,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
   return (
     <div className="space-y-8 text-center desk:flex-1">
       <Title level={3}>{pieChartCategory.split("_").join(" ")}</Title>
-      <div className="flex flex-col items-center gap-y-6 tab:flex-row lap:flex-col">
+      <div className="flex flex-col items-center gap-y-2 tab:flex-row lap:flex-col">
         <AnalyticsModal
           isOverlayVisible={isOverlayVisible}
           handleIsOverlayClose={handleIsOverlayClose}
@@ -60,38 +125,7 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
           handleSegmentClick={handleSegmentClick}
           colorMap={colorMap}
         />
-        {pieChartData.length !== 0 ? (
-          <ProList
-            className="w-full tab:w-auto tab:flex-1 lap:w-full"
-            rowClassName="p-2"
-            dataSource={pieChartData.slice(0, 4)}
-            metas={{
-              title: {
-                dataIndex: "title",
-                render: (_dom, entity) => (
-                  <div className="flex items-center justify-center gap-x-2">
-                    <div
-                      className="h-2.5 w-2.5"
-                      style={{
-                        backgroundColor: colorMap[entity.type],
-                      }}
-                    />
-                    <p className="break-words text-left font-normal">
-                      {entity.type}
-                    </p>
-                  </div>
-                ),
-              },
-              extra: {
-                render: (_: unknown, record: IPercentageData) => [
-                  <p key={record.type}>{record.percentage}%</p>,
-                ],
-              },
-            }}
-          />
-        ) : (
-          <Empty />
-        )}
+        <PieChartLegend data={pieChartData} colorMap={colorMap} />
       </div>
     </div>
   );

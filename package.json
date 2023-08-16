@@ -18,7 +18,7 @@
     "@ant-design/plots": "^1.2.5",
     "@ant-design/pro-components": "^2.6.12",
     "@mantine/hooks": "^6.0.19",
-    "@observablehq/plot": "^0.6.9",
+    "@observablehq/plot": "^0.6.10",
     "@types/geojson": "^7946.0.10",
     "@types/lodash": "^4.14.197",
     "@zxcvbn-ts/core": "^3.0.3",
@@ -31,7 +31,7 @@
     "dayjs": "^1.11.9",
     "isBetween": "link:dayjs/plugin/isBetween",
     "lodash": "^4.17.21",
-    "next": "13.4.12",
+    "next": "^13.4.16",
     "quarterOfYear": "link:dayjs/plugin/quarterOfYear",
     "rc-select": "^14.7.4",
     "react": "18.2.0",
@@ -42,7 +42,7 @@
     "utc": "link:dayjs/plugin/utc"
   },
   "devDependencies": {
-    "@svgr/webpack": "^8.0.1",
+    "@svgr/webpack": "^8.1.0",
     "@types/color-hash": "^1.0.2",
     "@types/d3": "^7.4.0",
     "@types/node": "20.4.0",
