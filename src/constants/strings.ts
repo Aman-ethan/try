@@ -3,7 +3,7 @@ export const TransactionServerUrl =
 export const AuthServerUrl = process.env.NEXT_PUBLIC_AUTH_SERVER_URL!;
 export const AnalyticsServerUrl = process.env.NEXT_PUBLIC_ANALYTICS_SERVER_URL!;
 
-export const LandingPage = "/client-information";
+export const LandingPage = "/investor-profile";
 export const BalanceSheetUrl = "/consolidation/position-search/balance-sheet";
 
 export const AccessTokenKey = "access_token";

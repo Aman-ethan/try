@@ -18,7 +18,7 @@ p {
 }
 
 .shadow-legend .ant-pro-card {
-  @apply shadow-large;
+  @apply shadow-large z-10;
 }
 
 .legend .ant-pro-card-body {
