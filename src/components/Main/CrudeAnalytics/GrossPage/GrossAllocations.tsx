@@ -25,12 +25,15 @@ const useGrossAllocations = () => {
   const start_date = getSearchParams("start_date");
   const end_date = getSearchParams("end_date");
 
-  const { data, isLoading } = useAnalyticsServerQuery<IData[]>(URLS.get, {
-    start_date,
-    end_date,
-    client_id,
-    custodian_id,
-  });
+  const { data, isLoading } = useAnalyticsServerQuery<IData[]>(
+    start_date && end_date ? URLS.get : null,
+    {
+      start_date,
+      end_date,
+      client_id,
+      custodian_id,
+    }
+  );
 
   return {
     data: data as IData[],

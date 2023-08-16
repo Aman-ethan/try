@@ -31,7 +31,7 @@ const useFinanceChart = () => {
   const end_date = getSearchParams("end_date");
 
   const { data, isLoading } = useAnalyticsServerQuery<TData>(
-    URLS.ProfitAndLoss,
+    start_date && end_date ? URLS.ProfitAndLoss : null,
     {
       start_date,
       end_date,
@@ -41,12 +41,15 @@ const useFinanceChart = () => {
   );
 
   const { data: netWorthData, isLoading: netWorthLoading } =
-    useAnalyticsServerQuery<TData>(URLS.netWorth, {
-      start_date,
-      end_date,
-      client_id,
-      custodian_id,
-    });
+    useAnalyticsServerQuery<TData>(
+      start_date && end_date ? URLS.netWorth : null,
+      {
+        start_date,
+        end_date,
+        client_id,
+        custodian_id,
+      }
+    );
 
   return {
     data: data as TData,
