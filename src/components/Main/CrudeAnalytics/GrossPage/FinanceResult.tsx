@@ -3,6 +3,7 @@
 import { Skeleton } from "antd";
 import useSearchParams from "@/hooks/useSearchParams";
 import { useAnalyticsServerQuery } from "@/hooks/useQuery";
+import useDateRange from "@/hooks/useDateRange";
 import FinanceChart from "./Common/FinanceChart";
 
 const URLS = {
@@ -27,29 +28,25 @@ const useFinanceChart = () => {
   const { get: getSearchParams } = useSearchParams();
   const client_id = getSearchParams("client");
   const custodian_id = getSearchParams("custodian");
-  const start_date = getSearchParams("start_date");
-  const end_date = getSearchParams("end_date");
+  const { startDate, endDate } = useDateRange();
 
   const { data, isLoading } = useAnalyticsServerQuery<TData>(
-    start_date && end_date ? URLS.ProfitAndLoss : null,
+    URLS.ProfitAndLoss,
     {
-      start_date,
-      end_date,
+      start_date: startDate,
+      end_date: endDate,
       client_id,
       custodian_id,
     }
   );
 
   const { data: netWorthData, isLoading: netWorthLoading } =
-    useAnalyticsServerQuery<TData>(
-      start_date && end_date ? URLS.netWorth : null,
-      {
-        start_date,
-        end_date,
-        client_id,
-        custodian_id,
-      }
-    );
+    useAnalyticsServerQuery<TData>(URLS.netWorth, {
+      start_date: startDate,
+      end_date: endDate,
+      client_id,
+      custodian_id,
+    });
 
   return {
     data: data as TData,

@@ -3,6 +3,7 @@ import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { StatementSearchParamKeys } from "@/constants/searchParams";
 import { useTransactionServerQuery } from "./useQuery";
 import useTable from "./useTable";
+import useDateRange from "./useDateRange";
 
 interface IUseStatementParams {
   urlKey: string;
@@ -19,6 +20,8 @@ export default function useStatement<T>({ urlKey }: IUseStatementParams) {
     custodian,
   } = useTable();
 
+  const { startDate, endDate } = useDateRange();
+
   const urlWithParams =
     urlKey +
     buildURLSearchParams({
@@ -26,6 +29,8 @@ export default function useStatement<T>({ urlKey }: IUseStatementParams) {
       custodian,
       page,
       ordering,
+      statement_date__gte: startDate,
+      statement_date__lte: endDate,
       ...StatementSearchParamKeys.reduce(
         (acc, key) => ({
           ...acc,

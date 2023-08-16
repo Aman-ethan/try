@@ -4,6 +4,7 @@ import useTable, { useSelectRow, useTableFilter } from "@/hooks/useTable";
 import { IPaginatedResponse, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { BlotterSearchParamKeys } from "@/constants/searchParams";
+import useDateRange from "@/hooks/useDateRange";
 import ViewDrawer from "../../General/ViewDrawer";
 import ScrollableTable from "../../Table/ScrollableTable";
 import EditTradeDrawer from "../General/EditTradeDrawer";
@@ -30,6 +31,8 @@ export default function TradeTable<T>({
   } = useTable();
   const { addFilters } = useTableFilter();
 
+  const { startDate, endDate } = useDateRange();
+
   const { data, isLoading } = useTransactionServerQuery<IPaginatedResponse<T>>(
     urlKey +
       buildURLSearchParams({
@@ -37,6 +40,8 @@ export default function TradeTable<T>({
         custodian,
         ordering,
         page,
+        statement_date__gte: startDate,
+        statement_date__lte: endDate,
         ...BlotterSearchParamKeys.reduce(
           (acc, key) => ({
             ...acc,

@@ -4,6 +4,7 @@ import { Skeleton } from "antd";
 import useSearchParams from "@/hooks/useSearchParams";
 import { IPieData } from "@/constants/pieChartConfig";
 import { useAnalyticsServerQuery } from "@/hooks/useQuery";
+import useDateRange from "@/hooks/useDateRange";
 import Allocation from "./Common/Allocation";
 
 const URLS = {
@@ -22,18 +23,15 @@ const useGrossAllocations = () => {
   const { get: getSearchParams } = useSearchParams();
   const client_id = getSearchParams("client");
   const custodian_id = getSearchParams("custodian");
-  const start_date = getSearchParams("start_date");
-  const end_date = getSearchParams("end_date");
 
-  const { data, isLoading } = useAnalyticsServerQuery<IData[]>(
-    start_date && end_date ? URLS.get : null,
-    {
-      start_date,
-      end_date,
-      client_id,
-      custodian_id,
-    }
-  );
+  const { startDate, endDate } = useDateRange();
+
+  const { data, isLoading } = useAnalyticsServerQuery<IData[]>(URLS.get, {
+    start_date: startDate,
+    end_date: endDate,
+    client_id,
+    custodian_id,
+  });
 
   return {
     data: data as IData[],
