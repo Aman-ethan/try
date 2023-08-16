@@ -14,10 +14,15 @@ export default function Analytics() {
         searchParamKey={searchParamKey}
         urlKey={urlKey}
       >
-        {(allocation) => (
+        {(allocation, _, selectedClientId) => (
           <div className="flex min-h-[31.75rem] flex-col gap-y-8 lap:flex-row lap:justify-between">
             {allocation?.map(({ title, data }) => (
-              <Allocation key={title} data={data} title={title} />
+              <Allocation
+                key={title}
+                data={data}
+                title={title}
+                selectedClientId={selectedClientId}
+              />
             ))}
           </div>
         )}

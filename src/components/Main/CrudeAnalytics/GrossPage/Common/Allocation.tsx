@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Empty } from "antd";
 import { ProList } from "@ant-design/pro-components";
 import * as d3 from "d3";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import clsx from "clsx";
+import { usePathname } from "next/navigation";
 import {
   IPercentageData,
   IPieData,
@@ -14,12 +15,14 @@ import {
 import { OrdinalRange } from "@/constants/strings";
 import Title from "@/components/Typography/Title";
 import ClampedText from "@/components/Typography/ClampedText";
+import useSearchParams from "@/hooks/useSearchParams";
 import AnalyticsPieChart from "../../Charts/AnalyticsPieChart";
 import AnalyticsModal, { TCategory } from "./AnalyticsModal";
 
 interface IAllocationProps {
   title: string;
   data?: IPieData[];
+  selectedClientId?: string;
 }
 
 interface IPieChartLegendProps {
@@ -80,7 +83,31 @@ function PieChartLegend({ data, colorMap }: IPieChartLegendProps) {
   );
 }
 
-export default function Allocation({ title, data = [] }: IAllocationProps) {
+export default function Allocation({
+  title,
+  data = [],
+  selectedClientId,
+}: IAllocationProps) {
+  const { get: getSearchParams, updateSearchParams } = useSearchParams();
+  const [selectedType, setSelectedType] = useState("");
+
+  const isOverview = usePathname().includes("overview");
+  const isClientSelected = !!getSearchParams("gross_allocation_client");
+
+  useLayoutEffect(() => {
+    if (isOverview && !isClientSelected && selectedType) {
+      updateSearchParams({
+        gross_allocation_client: selectedClientId,
+      });
+    }
+  }, [
+    updateSearchParams,
+    isOverview,
+    selectedClientId,
+    selectedType,
+    isClientSelected,
+  ]);
+
   const { grossValue: totalValue, pieChartData } = processDataForPieChart(data);
 
   const z = d3
@@ -91,8 +118,6 @@ export default function Allocation({ title, data = [] }: IAllocationProps) {
   z.domain().forEach((d) => {
     colorMap[d] = z(d);
   });
-
-  const [selectedType, setSelectedType] = useState("");
 
   const handleSegmentClick = (type: string) => {
     setSelectedType(type);

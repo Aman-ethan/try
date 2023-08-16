@@ -3,6 +3,7 @@ import { Drawer as AntDrawer, Modal } from "antd";
 import { ColumnType } from "antd/es/table";
 import { DefaultOptionType } from "rc-select/lib/Select";
 import { useMediaQuery } from "@mantine/hooks";
+import { usePathname } from "next/navigation";
 import Select from "@/components/Input/Select";
 import CurrencyTag from "@/components/Main/General/CurrencyTag";
 import ScrollableTable from "@/components/Main/Table/ScrollableTable";
@@ -44,6 +45,10 @@ const searchParamKeys: IUseTableParams["searchParamKeys"] = {
 };
 
 function useAnalytics(category: TCategory, value?: string) {
+  const isOverview = usePathname().includes("overview");
+  if (!isOverview) {
+    delete searchParamKeys?.client;
+  }
   const {
     onChange,
     pagination,

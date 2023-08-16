@@ -6,7 +6,11 @@ import Dropdown from "../General/Dropdown";
 interface IClientDropdownCardProps<T> {
   urlKey: string;
   searchParamKey: SearchParams;
-  children: (_data: T | undefined, _loading: boolean) => ReactNode;
+  children: (
+    _data: T | undefined,
+    _loading: boolean,
+    _selectedClientId?: string
+  ) => ReactNode;
 }
 
 export default function ClientDropdownCard<T>({
@@ -33,7 +37,7 @@ export default function ClientDropdownCard<T>({
       >
         {selectedClient?.label || "Client"}
       </Dropdown>
-      {children(data, loading)}
+      {children(data, loading, selectedClient?.value)}
     </>
   );
 }
