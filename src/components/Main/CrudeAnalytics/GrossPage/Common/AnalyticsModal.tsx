@@ -21,8 +21,7 @@ import ClampedText from "@/components/Typography/ClampedText";
 export type TCategory = "asset_class" | "region" | "industry";
 
 interface IAnalyticsModalProps {
-  isOverlayVisible: boolean;
-  handleIsOverlayClose: () => void;
+  onClose: () => void;
   data: IPieData[];
   selectedType: string;
   category: TCategory;
@@ -68,7 +67,7 @@ function useAnalytics(category: TCategory, value?: string) {
   };
   const { data: analyticsData, isLoading } =
     useTransactionServerQuery<IPositionsResponse>(
-      `/position/history/${buildURLSearchParams(params)}`
+      value ? `/position/history/${buildURLSearchParams(params)}` : null
     );
   return {
     analyticsData,
@@ -148,9 +147,8 @@ const columns: ColumnType<TPositionColumn>[] = [
 ];
 
 export default function AnalyticsModal({
-  isOverlayVisible,
-  handleIsOverlayClose,
   data = [],
+  onClose,
   selectedType,
   category,
 }: IAnalyticsModalProps) {
@@ -159,12 +157,10 @@ export default function AnalyticsModal({
     DefaultOptionType | undefined
   >();
   const { addFilters } = useTableFilter();
+  const isOverlayVisible = !!selectedType;
 
   const { analyticsData, isLoading, pagination, onChange, updateSearchParams } =
-    useAnalytics(
-      category,
-      selectedOption ? (selectedOption.label as string) : undefined
-    );
+    useAnalytics(category, selectedOption?.label as string);
 
   useEffect(() => {
     if (!selectedType) return;
@@ -198,8 +194,9 @@ export default function AnalyticsModal({
     resetPage();
   };
 
-  const onClose = () => {
-    handleIsOverlayClose();
+  const handleClose = () => {
+    setSelectedOption(undefined);
+    onClose();
     resetPage();
   };
 
@@ -250,7 +247,7 @@ export default function AnalyticsModal({
         placement="bottom"
         open={isOverlayVisible}
         height="80%"
-        onClose={onClose}
+        onClose={handleClose}
       >
         {content}
       </AntDrawer>
@@ -263,7 +260,7 @@ export default function AnalyticsModal({
       footer={null}
       width={1000}
       className="space-y-8"
-      onCancel={onClose}
+      onCancel={handleClose}
     >
       {content}
     </Modal>
