@@ -33,7 +33,7 @@ export default function useTable(props?: IUseTableParams) {
   const pageKey = props?.searchParamKeys?.page || defaultSearchParamsKeys.page;
 
   const client = getSearchParams(clientKey);
-  const page = getSearchParams(pageKey);
+  const page = getSearchParams(pageKey) || "1";
   const custodian = getSearchParams("custodian");
   const ordering = getSearchParams("ordering");
   const currency__in = getSearchParams("currency__in");
@@ -56,7 +56,7 @@ export default function useTable(props?: IUseTableParams) {
 
   const pagination: TablePaginationConfig = {
     position: ["bottomRight"],
-    current: Number(page) || 1,
+    current: Number(page),
     pageSize,
   };
 

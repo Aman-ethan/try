@@ -8,7 +8,7 @@ import CurrencyTag from "@/components/Main/General/CurrencyTag";
 import ScrollableTable from "@/components/Main/Table/ScrollableTable";
 import useTable, { useTableFilter } from "@/hooks/useTable";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import { IPieData, IPositionsResponse } from "@/interfaces/Main";
+import { IPieData, IPositionsResponse, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatPrice, formatQuantity } from "@/lib/format";
 import Title from "@/components/Typography/Title";
@@ -34,7 +34,8 @@ type TPositionColumn = {
   market_value: number;
   unrealizedPL: number;
 };
-const TABLE_ROW_NUM = 5;
+
+const searchParamKeys: Record<"page", SearchParams> = { page: "page_modal" };
 
 function useAnalytics(category: TCategory, value: string) {
   const {
@@ -45,7 +46,8 @@ function useAnalytics(category: TCategory, value: string) {
     client,
     custodian,
     currency__in,
-  } = useTable();
+    updateSearchParams,
+  } = useTable({ searchParamKeys });
   const params: Record<string, string | undefined> = {
     asset_class: category === "asset_class" ? value : undefined,
     security__country_name: category === "region" ? value : undefined,
@@ -55,7 +57,7 @@ function useAnalytics(category: TCategory, value: string) {
     page,
     ordering,
     currency__in,
-    page_size: TABLE_ROW_NUM.toString(),
+    page_size: pagination.pageSize?.toString(),
   };
   const { data: analyticsData, isLoading } =
     useTransactionServerQuery<IPositionsResponse>(
@@ -66,6 +68,7 @@ function useAnalytics(category: TCategory, value: string) {
     isLoading,
     pagination,
     onChange,
+    updateSearchParams,
   };
 }
 
@@ -150,10 +153,11 @@ export default function AnalyticsModal({
   >();
   const { addFilters } = useTableFilter();
 
-  const { analyticsData, isLoading, pagination, onChange } = useAnalytics(
-    category,
-    selectedOption ? (selectedOption.label as string) : ""
-  );
+  const { analyticsData, isLoading, pagination, onChange, updateSearchParams } =
+    useAnalytics(
+      category,
+      selectedOption ? (selectedOption.label as string) : ""
+    );
 
   useEffect(() => {
     if (!selectedType) return;
@@ -174,11 +178,21 @@ export default function AnalyticsModal({
     setSelectedOption(newSelectedOption);
   }, [data, selectedType]);
 
+  const resetPage = () => {
+    updateSearchParams({ [searchParamKeys.page]: undefined });
+  };
+
   const handleSelectChange = (
     _: unknown,
     option: DefaultOptionType | DefaultOptionType[]
   ) => {
     setSelectedOption(option as DefaultOptionType);
+    resetPage();
+  };
+
+  const onClose = () => {
+    handleIsOverlayClose();
+    resetPage();
   };
 
   const tableData = analyticsData?.results?.map((item) => {
@@ -228,7 +242,7 @@ export default function AnalyticsModal({
         placement="bottom"
         open={isOverlayVisible}
         height="80%"
-        onClose={handleIsOverlayClose}
+        onClose={onClose}
       >
         {content}
       </AntDrawer>
@@ -241,7 +255,7 @@ export default function AnalyticsModal({
       footer={null}
       width={1000}
       className="space-y-8"
-      onCancel={handleIsOverlayClose}
+      onCancel={onClose}
     >
       {content}
     </Modal>

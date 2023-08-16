@@ -247,7 +247,8 @@ type TCommonSearchPrams =
   | "ordering"
   | "client"
   | "client_id"
-  | "report_date";
+  | "report_date"
+  | "page_modal";
 
 type TAuthSearchParams =
   | "username"
