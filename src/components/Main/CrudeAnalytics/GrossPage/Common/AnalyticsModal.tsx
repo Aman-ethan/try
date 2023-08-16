@@ -8,7 +8,11 @@ import CurrencyTag from "@/components/Main/General/CurrencyTag";
 import ScrollableTable from "@/components/Main/Table/ScrollableTable";
 import useTable, { useTableFilter } from "@/hooks/useTable";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
-import { IPieData, IPositionsResponse, SearchParams } from "@/interfaces/Main";
+import {
+  IPieData,
+  IPositionsResponse,
+  IUseTableParams,
+} from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatPrice, formatQuantity } from "@/lib/format";
 import Title from "@/components/Typography/Title";
@@ -35,7 +39,7 @@ type TPositionColumn = {
   unrealizedPL: number;
 };
 
-const searchParamKeys: Record<"page" | "client", SearchParams> = {
+const searchParamKeys: IUseTableParams["searchParamKeys"] = {
   page: "page_modal",
   client: "gross_allocation_client",
 };
@@ -182,6 +186,7 @@ export default function AnalyticsModal({
   }, [data, selectedType]);
 
   const resetPage = () => {
+    if (!searchParamKeys?.page) return;
     updateSearchParams({ [searchParamKeys.page]: undefined });
   };
 
