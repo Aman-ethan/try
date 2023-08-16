@@ -9,7 +9,11 @@ interface IClampedTextProps {
 export default function ClampedText({ className, text }: IClampedTextProps) {
   return (
     <Tooltip title={text}>
-      <p className={clsx("initial:line-clamp-2", className)}>{text}</p>
+      <p
+        className={clsx("initial:line-clamp-2 initial:font-normal", className)}
+      >
+        {text}
+      </p>
     </Tooltip>
   );
 }

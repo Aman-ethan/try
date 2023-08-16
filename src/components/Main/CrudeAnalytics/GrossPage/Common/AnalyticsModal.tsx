@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Drawer as AntDrawer, Modal } from "antd";
-import Title from "antd/lib/typography/Title";
 import { ColumnType } from "antd/es/table";
 import { DefaultOptionType } from "rc-select/lib/Select";
 import { useMediaQuery } from "@mantine/hooks";
@@ -12,6 +11,8 @@ import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { IPieData, IPositionsResponse } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import { formatPrice, formatQuantity } from "@/lib/format";
+import Title from "@/components/Typography/Title";
+import ClampedText from "@/components/Typography/ClampedText";
 
 export type TCategory = "asset_class" | "region" | "industry";
 
@@ -80,6 +81,7 @@ const columns: ColumnType<TPositionColumn>[] = [
     dataIndex: "description",
     key: "description",
     width: 220,
+    render: (description) => <ClampedText text={description} />,
   },
   {
     title: "Quantity",
@@ -154,22 +156,26 @@ export default function AnalyticsModal({
   );
 
   useEffect(() => {
-    const newSelectOptions: DefaultOptionType[] = data.map((d) => ({
-      label: d.type,
-      value: d.value,
+    if (!selectedType) return;
+
+    const newSelectOptions: DefaultOptionType[] = [
+      ...new Set(data.map((d) => d.type)),
+    ].map((d) => ({
+      label: d,
+      value: d,
     }));
 
     setSelectOptions(newSelectOptions);
 
     const newSelectedOption = newSelectOptions.find(
-      (option) => option.label === selectedType
+      (option) => option.value === selectedType
     );
 
     setSelectedOption(newSelectedOption);
   }, [data, selectedType]);
 
   const handleSelectChange = (
-    _value: unknown,
+    _: unknown,
     option: DefaultOptionType | DefaultOptionType[]
   ) => {
     setSelectedOption(option as DefaultOptionType);
@@ -177,6 +183,7 @@ export default function AnalyticsModal({
 
   const tableData = analyticsData?.results?.map((item) => {
     return {
+      id: item.id,
       isin: item.isin,
       description: item.security_name,
       quantity: item.quantity,
@@ -191,9 +198,7 @@ export default function AnalyticsModal({
   const content = (
     <div className="flex flex-col space-y-6">
       <div className="flex flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-8 tab:space-y-0">
-        <Title className="capitalize" level={4}>
-          {category.split("_").join(" ")}
-        </Title>
+        <Title level={4}>{category.split("_").join(" ")}</Title>
         <Select
           className="tab:w-1/3"
           options={selectOptions}
@@ -202,6 +207,8 @@ export default function AnalyticsModal({
         />
       </div>
       <ScrollableTable
+        rowKey="id"
+        rowClassName="h-20"
         columns={columns.map(addFilters)}
         dataSource={tableData}
         pagination={{

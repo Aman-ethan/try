@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Empty, Tooltip } from "antd";
+import { Empty } from "antd";
 import { ProList } from "@ant-design/pro-components";
 import * as d3 from "d3";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
@@ -13,6 +13,7 @@ import {
 } from "@/constants/pieChartConfig";
 import { OrdinalRange } from "@/constants/strings";
 import Title from "@/components/Typography/Title";
+import ClampedText from "@/components/Typography/ClampedText";
 import AnalyticsPieChart from "../../Charts/AnalyticsPieChart";
 import AnalyticsModal, { TCategory } from "./AnalyticsModal";
 
@@ -47,12 +48,7 @@ function PieChartLegend({ data, colorMap }: IPieChartLegendProps) {
                   backgroundColor: colorMap[entity.type],
                 }}
               />
-              <Tooltip
-                title={entity.type}
-                className="line-clamp-1 text-left font-normal"
-              >
-                {entity.type}
-              </Tooltip>
+              <ClampedText text={entity.type} className="line-clamp-1" />
             </div>
           ),
         },
