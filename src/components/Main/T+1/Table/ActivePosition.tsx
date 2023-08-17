@@ -1,8 +1,8 @@
 "use client";
 
 import { TableColumnsType } from "antd";
-import { formatPrice, formatQuantity } from "@/lib/format";
 import { TCurrency } from "@/interfaces/Main";
+import TooltipText from "@/components/Typography/ToolTipText";
 import TradeTable from ".";
 import HashTag from "../../General/HashTag";
 import CurrencyTag from "../../General/CurrencyTag";
@@ -64,7 +64,7 @@ const Columns: TableColumnsType<IActivePosition> = [
     key: "quantity",
     dataIndex: "quantity",
     sorter: true,
-    render: formatQuantity,
+    render: (text) => <TooltipText value={text} />,
     width: 100,
     align: "right",
   },
@@ -80,7 +80,7 @@ const Columns: TableColumnsType<IActivePosition> = [
     key: "average_price",
     dataIndex: "average_price",
     sorter: true,
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     width: 140,
     align: "right",
   },
@@ -89,7 +89,7 @@ const Columns: TableColumnsType<IActivePosition> = [
     key: "mtm_price",
     dataIndex: "mtm_price",
     sorter: true,
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     width: 115,
     align: "right",
   },
@@ -98,7 +98,7 @@ const Columns: TableColumnsType<IActivePosition> = [
     key: "unrealised_pl",
     dataIndex: "unrealised_pl",
     sorter: true,
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     width: 175,
     align: "right",
   },

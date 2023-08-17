@@ -11,9 +11,9 @@ import useTable, { useTableFilter } from "@/hooks/useTable";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { IPieData, IPositionsResponse, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { formatPrice, formatQuantity } from "@/lib/format";
-import Title from "@/components/Typography/Title";
 import ClampedText from "@/components/Typography/ClampedText";
+import TooltipText from "@/components/Typography/ToolTipText";
+import Title from "@/components/Typography/Title";
 
 export type TCategory = "asset_class" | "region" | "industry";
 
@@ -55,7 +55,7 @@ function useAnalytics(category: TCategory, value?: string) {
       client: isOverview ? "gross_allocation_client" : undefined,
     },
   });
-  const params: Record<string, string | undefined> = {
+  let params: Record<string, string | undefined> = {
     asset_class: category === "asset_class" ? value : undefined,
     security__country_name: category === "region" ? value : undefined,
     security__sub_industry: category === "industry" ? value : undefined,
@@ -66,6 +66,13 @@ function useAnalytics(category: TCategory, value?: string) {
     currency__in,
     page_size: pagination.pageSize?.toString(),
   };
+  if (category === "region" && value === "Others") {
+    params = {
+      ...params,
+      security__country_name__others: "true",
+    };
+    delete params.security__country_name;
+  }
   const { data: analyticsData, isLoading } =
     useTransactionServerQuery<IPositionsResponse>(
       value ? `/position/history/${buildURLSearchParams(params)}` : null
@@ -99,7 +106,7 @@ const columns: ColumnType<TPositionColumn>[] = [
     key: "quantity",
     align: "right",
     sorter: true,
-    render: formatQuantity,
+    render: (text) => <TooltipText value={text} />,
     width: 125,
   },
   {
@@ -115,7 +122,7 @@ const columns: ColumnType<TPositionColumn>[] = [
     dataIndex: "average_price",
     key: "average_price",
     align: "right",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 135,
   },
@@ -124,7 +131,7 @@ const columns: ColumnType<TPositionColumn>[] = [
     dataIndex: "mtm_price",
     key: "mtm_price",
     align: "right",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 135,
   },
@@ -133,7 +140,7 @@ const columns: ColumnType<TPositionColumn>[] = [
     dataIndex: "market_value",
     key: "market_value",
     align: "right",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 135,
   },
@@ -142,7 +149,7 @@ const columns: ColumnType<TPositionColumn>[] = [
     dataIndex: "unrealizedPL",
     key: "unrealizedPL",
     align: "right",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     width: 135,
   },
 ];

@@ -7,7 +7,7 @@ import { BalanceSheetUrl } from "@/constants/strings";
 import useReportDate from "@/hooks/useReportDate";
 import { IPositionNetWorth } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { formatCompactNumber } from "@/lib/format";
+import TooltipText from "@/components/Typography/ToolTipText";
 import CurrencyTag from "../General/CurrencyTag";
 import MonthPicker from "./Input/MonthPicker";
 
@@ -75,7 +75,7 @@ export default function ClientPositions({
                       Net Worth
                     </Title>
                     <Title level={4}>
-                      {formatCompactNumber(record?.networth)}
+                      <TooltipText value={record?.networth} />
                     </Title>
                   </Col>
                   <Col sm={12} md={8} lg={8} className="mb-2 tab:mb-0">
@@ -83,7 +83,7 @@ export default function ClientPositions({
                       Assets
                     </Title>
                     <Title level={4} className="text-summary-profit">
-                      {formatCompactNumber(record?.assets)}
+                      <TooltipText value={record?.assets} />
                     </Title>
                   </Col>
                   <Col sm={12} md={8} lg={8} className="mb-2 tab:mb-0">
@@ -91,7 +91,7 @@ export default function ClientPositions({
                       Liabilities
                     </Title>
                     <Title level={4} className="text-summary-loss">
-                      {formatCompactNumber(record?.liabilities)}
+                      <TooltipText value={record?.liabilities} />
                     </Title>
                   </Col>
                 </Row>

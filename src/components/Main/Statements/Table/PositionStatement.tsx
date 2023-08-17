@@ -2,8 +2,9 @@
 
 import { TableColumnsType } from "antd";
 import { ActionColumn } from "@/constants/table";
-import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
+import { formatTableDate } from "@/lib/format";
 import ClampedText from "@/components/Typography/ClampedText";
+import TooltipText from "@/components/Typography/ToolTipText";
 import Statement from ".";
 import CurrencyTag from "../../General/CurrencyTag";
 import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
@@ -103,7 +104,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     title: "Quantity",
     key: "quantity",
     dataIndex: "quantity",
-    render: formatQuantity,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 125,
     align: "right",
@@ -112,7 +113,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     title: "Cost Price",
     key: "cost-price",
     dataIndex: "cost_price",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 115,
     align: "right",
@@ -121,7 +122,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     title: "MTM Price",
     key: "mtm-price",
     dataIndex: "mtm_price",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 135,
     align: "right",
@@ -130,7 +131,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     title: "Accrued Interest",
     key: "accrued-interest",
     dataIndex: "accrued_interest",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     width: 135,
     align: "right",
   },
@@ -138,7 +139,7 @@ const Columns: TableColumnsType<IPositionStatement> = [
     title: "Unrealized P/L",
     key: "unrealized-pl",
     dataIndex: "unrealized_pl",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     width: 135,
     align: "right",
   },

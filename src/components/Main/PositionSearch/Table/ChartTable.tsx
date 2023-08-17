@@ -2,8 +2,9 @@ import { TableColumnsType } from "antd";
 import clsx from "clsx";
 import React from "react";
 import { IBalanceSheetChart, TProgressType } from "@/interfaces/Main";
-import { formatCompactNumber, formatPercentage } from "@/lib/format";
+import { formatPercentage } from "@/lib/format";
 import Title from "@/components/Typography/Title";
+import ToolTipText from "@/components/Typography/ToolTipText";
 import Table from "../../Table";
 import ProgressBar from "../Common/ProgressBar";
 
@@ -35,7 +36,7 @@ const Columns: TableColumnsType<IBalanceSheetChart> = [
     title: "Total Value",
     dataIndex: "total_value",
     key: "totalValue",
-    render: formatCompactNumber,
+    render: (text) => <ToolTipText value={text} />,
     className: trClassName,
   },
   {
@@ -110,7 +111,7 @@ export default function ChartTable({
           {TotalText}
         </Title>
         <Title level={5} className={textClass}>
-          {formatCompactNumber(total)}
+          <ToolTipText value={total} />
         </Title>
         <Title level={5} className={textClass}>
           {formatPercentage(percentage)}%

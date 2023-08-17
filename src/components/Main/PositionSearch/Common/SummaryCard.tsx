@@ -1,8 +1,9 @@
 "use client";
 
 import { Card } from "antd";
-import { formatCompactNumber, formatPercentage } from "@/lib/format";
+import { formatPercentage } from "@/lib/format";
 import Title from "@/components/Typography/Title";
+import TooltipText from "@/components/Typography/ToolTipText";
 
 interface ISummaryCardProps {
   type: "net_worth" | "leverage";
@@ -11,7 +12,11 @@ interface ISummaryCardProps {
 
 export default function SummaryCard({ type, value }: ISummaryCardProps) {
   const formattedValue =
-    type === "leverage" ? formatPercentage(value) : formatCompactNumber(value);
+    type === "leverage" ? (
+      formatPercentage(value)
+    ) : (
+      <TooltipText value={value} />
+    );
   return (
     <Card
       bordered

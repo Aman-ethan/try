@@ -9,9 +9,10 @@ import { ColumnsType } from "antd/es/table";
 import Title from "@/components/Typography/Title";
 import useSearchParams from "@/hooks/useSearchParams";
 import { TCurrency } from "@/interfaces/Main";
-import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
+import { formatTableDate } from "@/lib/format";
 import ClampedText from "@/components/Typography/ClampedText";
 import { HeaderClassName } from "@/constants/strings";
+import TooltipText from "@/components/Typography/ToolTipText";
 import CurrencyTag from "../General/CurrencyTag";
 import SelectClientWithParams from "../Input/SelectClientWithParams";
 import SelectCustodianWithParams from "../Input/SelectCustodianWithParams";
@@ -81,7 +82,7 @@ const columns: ColumnsType = [
     title: "Average Price",
     key: "average_price",
     dataIndex: "average_price",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     width: 140,
     sorter: true,
     align: "right",
@@ -113,7 +114,7 @@ const columns: ColumnsType = [
     title: "Debit",
     key: "debit",
     dataIndex: "debit",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 145,
     align: "right",
@@ -122,7 +123,7 @@ const columns: ColumnsType = [
     title: "Credit",
     key: "credit",
     dataIndex: "credit",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 145,
     align: "right",
@@ -131,7 +132,7 @@ const columns: ColumnsType = [
     title: "Settlement Amount",
     key: "settlement_amount",
     dataIndex: ["meta", "settlement_amount"],
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 170,
     align: "right",
@@ -140,7 +141,7 @@ const columns: ColumnsType = [
     title: "Quantity",
     key: "quantity",
     dataIndex: "quantity",
-    render: formatQuantity,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 100,
     align: "right",
@@ -149,7 +150,7 @@ const columns: ColumnsType = [
     title: "Unrealized P/L",
     key: "unrealized-pl",
     dataIndex: "unrealized_pl",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 135,
     align: "right",

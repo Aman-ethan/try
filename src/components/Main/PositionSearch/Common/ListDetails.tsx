@@ -7,7 +7,7 @@ import {
   ShareAltOutlined,
 } from "@ant-design/icons";
 import { IPositionsData } from "@/interfaces/Main";
-import { formatCompactNumber } from "@/lib/format";
+import TooltipText from "@/components/Typography/ToolTipText";
 import CurrencyTag from "../../General/CurrencyTag";
 
 interface IListProps {
@@ -45,7 +45,7 @@ export default function ListDetails({ record }: IListProps) {
               <div className="flex basis-1/2 space-x-4">
                 <span className="flex-1 text-neutral-9">Quantity</span>
                 <span className="flex-1">
-                  {formatCompactNumber(record?.quantity)}
+                  <TooltipText value={record?.quantity} />
                 </span>
               </div>
               <div className="order-first flex basis-1/2 justify-end tab:order-last">
@@ -56,13 +56,13 @@ export default function ListDetails({ record }: IListProps) {
               <div className="flex basis-1/2 space-x-4">
                 <span className="flex-1 text-neutral-9">Average Price</span>
                 <span className="flex-1">
-                  {formatCompactNumber(record?.average_price)}
+                  <TooltipText value={record?.average_price} />
                 </span>
               </div>
               <div className="flex basis-1/2 justify-end space-x-4">
                 <span className="flex-1 text-neutral-9">Market Price</span>
                 <span className="flex-1">
-                  {formatCompactNumber(record?.mtm_price)}
+                  <TooltipText value={record?.market_value} />
                 </span>
               </div>
             </div>
@@ -70,13 +70,13 @@ export default function ListDetails({ record }: IListProps) {
               <div className="flex basis-1/2 space-x-4">
                 <span className="flex-1 text-neutral-9">Unrealized P&L</span>
                 <span className="flex-1">
-                  {formatCompactNumber(record?.unrealised_pl)}
+                  <TooltipText value={record?.unrealised_pl} />
                 </span>
               </div>
               <div className="flex basis-1/2 justify-end space-x-4">
                 <span className="flex-1 text-neutral-9">Market value</span>
                 <span className="flex-1">
-                  {formatCompactNumber(record?.market_value)}
+                  <TooltipText value={record?.market_value} />
                 </span>
               </div>
             </div>

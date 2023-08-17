@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import Title from "@/components/Typography/Title";
 import { BalanceSheetUrl } from "@/constants/strings";
 import { IPositionNetWorth } from "@/interfaces/Main";
-import { formatCompactNumber } from "@/lib/format";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import useReportDate from "@/hooks/useReportDate";
+import TooltipText from "@/components/Typography/ToolTipText";
 import CurrencyTag from "../General/CurrencyTag";
 
 interface ICompanyCardProps {
@@ -48,7 +48,7 @@ export default function CompanyCard({
             Net Worth
           </Title>
           <Title level={1} className="text-[2.375rem] font-normal">
-            {formatCompactNumber(companyData?.networth)}
+            <TooltipText value={companyData?.networth} />
           </Title>
         </Col>
         <Col sm={12} md={8} lg={8} className="mb-2 space-y-2 tab:mb-0">
@@ -59,7 +59,7 @@ export default function CompanyCard({
             level={1}
             className="text-[2.375rem] font-normal text-summary-profit"
           >
-            {formatCompactNumber(companyData?.assets)}
+            <TooltipText value={companyData?.assets} />
           </Title>
         </Col>
         <Col sm={12} md={8} lg={8} className="mb-2 space-y-2 tab:mb-0">
@@ -70,7 +70,7 @@ export default function CompanyCard({
             level={1}
             className="text-[2.375rem] font-normal text-summary-loss"
           >
-            {formatCompactNumber(companyData?.liabilities)}
+            <TooltipText value={companyData?.liabilities} />
           </Title>
         </Col>
       </Row>

@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import Title from "@/components/Typography/Title";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { IClient } from "@/interfaces/Main";
-import { formatCompactNumber } from "@/lib/format";
+import TooltipText from "@/components/Typography/ToolTipText";
 import ScrollableTable from "../Table/ScrollableTable";
 
 interface ISettingProps {
@@ -37,42 +37,42 @@ const columns: TableColumnsType<IClient> = [
     dataIndex: "daily_change",
     key: "daily-pl",
     align: "right",
-    render: formatCompactNumber,
+    render: (text) => <TooltipText value={text} />,
   },
   {
     title: "Total P/L",
     dataIndex: "total_change",
     key: "total-pl",
     align: "right",
-    render: formatCompactNumber,
+    render: (text) => <TooltipText value={text} />,
   },
   {
     title: "Net Worth",
     dataIndex: "networth",
     key: "net-worth",
     align: "right",
-    render: formatCompactNumber,
+    render: (text) => <TooltipText value={text} />,
   },
   {
     title: "MTD",
     dataIndex: "month_change",
     key: "mtd",
     align: "right",
-    render: formatCompactNumber,
+    render: (text) => <TooltipText value={text} />,
   },
   {
     title: "QTD",
     dataIndex: "quarter_change",
     key: "qtd",
     align: "right",
-    render: formatCompactNumber,
+    render: (text) => <TooltipText value={text} />,
   },
   {
     title: "YTD",
     dataIndex: "year_change",
     key: "ytd",
     align: "right",
-    render: formatCompactNumber,
+    render: (text) => <TooltipText value={text} />,
   },
 ];
 
@@ -141,15 +141,13 @@ export default function ClientNetWorth({
           }
         : { ...column, width: 102 }
     );
-
+  const networth = data?.overview.reduce((acc, cur) => acc + cur.networth, 0);
   return (
     <div className="space-y-4 tab:space-y-6">
       <div className="flex items-center justify-between">
         <Title level={4}>Net Worth</Title>
         <Title level={3}>
-          {formatCompactNumber(
-            data?.overview.reduce((acc, cur) => acc + cur.networth, 0)
-          )}
+          <TooltipText value={networth} />
         </Title>
       </div>
       <div className="flex">

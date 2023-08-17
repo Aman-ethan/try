@@ -18,7 +18,7 @@ const numberFormatOptions: Record<NumberFormatType, Intl.NumberFormatOptions> =
     },
   };
 
-function formatNumber(
+export function formatNumber(
   type: NumberFormatType,
   value?: string | number,
   options?: Intl.NumberFormatOptions

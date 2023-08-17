@@ -5,7 +5,8 @@ import { capitalize } from "lodash";
 import { MenuItemClassName } from "@/constants/strings";
 import { ActionColumn } from "@/constants/table";
 import { IBlotterTransactionStatement } from "@/interfaces/Main";
-import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
+import { formatTableDate } from "@/lib/format";
+import TooltipText from "@/components/Typography/ToolTipText";
 import TradeTable from ".";
 import HashTag from "../../General/HashTag";
 import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
@@ -107,7 +108,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     title: "Quantity",
     key: "quantity",
     dataIndex: "quantity",
-    render: formatQuantity,
+    render: (text) => <TooltipText value={text} />,
     align: "right",
     width: 125,
   },
@@ -122,7 +123,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     title: "Cost Price",
     key: "cost_price",
     dataIndex: "cost_price",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     align: "right",
     width: 135,
   },
@@ -130,7 +131,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     title: "MTM Price",
     key: "mtm_price",
     dataIndex: "mtm_price",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     width: 135,
     align: "right",
   },
@@ -138,7 +139,7 @@ const Columns: TableColumnsType<IBlotterTransactionStatement> = [
     title: "Realized P/L",
     key: "realised_pl",
     dataIndex: "realised_pl",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     width: 135,
     align: "right",
   },

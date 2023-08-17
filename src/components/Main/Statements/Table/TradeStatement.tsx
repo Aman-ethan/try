@@ -4,8 +4,9 @@ import { TableColumnsType } from "antd";
 import { capitalize } from "lodash";
 import { ActionColumn } from "@/constants/table";
 import { TCurrency } from "@/interfaces/Main";
-import { formatPrice, formatQuantity, formatTableDate } from "@/lib/format";
+import { formatTableDate } from "@/lib/format";
 import ClampedText from "@/components/Typography/ClampedText";
+import TooltipText from "@/components/Typography/ToolTipText";
 import Statement from ".";
 import CurrencyTag from "../../General/CurrencyTag";
 import MoreMenu, { DeleteItem } from "../../General/MoreMenu";
@@ -127,7 +128,7 @@ const Columns: TableColumnsType<ITradeStatement> = [
     title: "Cost Price",
     key: "cost-price",
     dataIndex: "cost_price",
-    render: formatPrice,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 135,
     align: "right",
@@ -136,7 +137,7 @@ const Columns: TableColumnsType<ITradeStatement> = [
     title: "Quantity",
     key: "quantity",
     dataIndex: "quantity",
-    render: formatQuantity,
+    render: (text) => <TooltipText value={text} />,
     sorter: true,
     width: 125,
     align: "right",

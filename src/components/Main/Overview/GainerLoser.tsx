@@ -12,11 +12,11 @@ import {
   TGainerLoser,
 } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
-import { formatCompactNumber } from "@/lib/format";
 import useTable from "@/hooks/useTable";
 import Title from "@/components/Typography/Title";
 import ClampedText from "@/components/Typography/ClampedText";
 import { GainerLoserSearchParamKeys } from "@/constants/searchParams";
+import TooltipText from "@/components/Typography/ToolTipText";
 import Table from "../Table";
 
 dayjs.extend(isBetween);
@@ -93,7 +93,7 @@ const Columns: TableColumnsType = [
     dataIndex: "profit_loss",
     key: "total-pl",
     width: "26%",
-    render: formatCompactNumber,
+    render: (text) => <TooltipText value={text} />,
     align: "right",
   },
 ];
@@ -168,9 +168,9 @@ export default function GainerLoser({ type }: IGainerLoserProps) {
         <div className="flex items-center gap-x-1.5 text-sm text-neutral-13/80">
           {isGainer ? "Top Gain:" : "Top Loss:"}
           <Title level={5}>
-            {formatCompactNumber(
-              isGainer ? data?.total_gain : data?.total_loss
-            )}
+            <TooltipText
+              value={isGainer ? data?.total_gain : data?.total_loss}
+            />
           </Title>
         </div>
       </div>
