@@ -113,7 +113,7 @@ export default function EstatesForm({ onClose, id }: IEstatesForm) {
   const handleMutationSuccess = () => {
     revalidate(`/estate/`);
     if (id) {
-      revalidate(`/estate/${id}/`, false);
+      revalidate(`/estate/${id}/`);
     }
     onClose();
     onReset();

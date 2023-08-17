@@ -19,7 +19,7 @@ export default function ClientManualEntry() {
   const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
     async onSuccess() {
       refresh();
-      revalidate(URLs.get, false);
+      revalidate(URLs.get);
       message.success("Client added successfully");
       form.resetFields();
     },

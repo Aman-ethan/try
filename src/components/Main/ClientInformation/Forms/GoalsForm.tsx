@@ -78,7 +78,7 @@ function useGoal(id?: string) {
       onSuccess: () => {
         revalidate(`/goals/`);
         if (id) {
-          revalidate(URLs.get.replace("{id}", id), false);
+          revalidate(URLs.get.replace("{id}", id));
         }
         message.success("Goal Updated successfully");
       },

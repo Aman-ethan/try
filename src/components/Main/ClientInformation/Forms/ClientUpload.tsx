@@ -37,7 +37,7 @@ function BulkUpload({ sampleLink }: IUploadClientProps) {
   >(`${urlKey}upload/`, {
     async onSuccess(data) {
       refresh();
-      revalidate(urlKey, false);
+      revalidate(urlKey);
       message.success(data.success);
       form.resetFields();
     },

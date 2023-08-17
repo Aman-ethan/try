@@ -23,7 +23,7 @@ export default function CreateCustodian({
 
   const { trigger, isMutating } = useTransactionServerMutation("/custodian/", {
     onSuccess: () => {
-      revalidate("/custodian/", false);
+      revalidate("/custodian/");
       message.success("Custodian Added successfully");
       setAddCustodian(false);
     },

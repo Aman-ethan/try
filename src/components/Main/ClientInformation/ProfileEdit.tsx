@@ -58,7 +58,7 @@ function useClient() {
     useTransactionServerPutMutation<TClient>(urlKey, {
       onSuccess: () => {
         message.success("Client updated successfully");
-        revalidate(urlKey, false);
+        revalidate(urlKey);
       },
     });
 

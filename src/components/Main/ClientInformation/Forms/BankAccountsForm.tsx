@@ -134,7 +134,7 @@ export default function BankAccountForms({
     form.resetFields();
     revalidate(`/bank_account/`);
     if (id) {
-      revalidate(`/bank_account/${id}/`, false);
+      revalidate(`/bank_account/${id}/`);
     }
   };
 
