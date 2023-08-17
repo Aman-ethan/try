@@ -93,7 +93,7 @@ export default function Estates() {
             className="mt-4"
           >
             {Object.entries(EstateItemsMap).map(([label, key]) => (
-              <Col xs={24} sm={8} md={12} className="flex flex-col">
+              <Col key={key} xs={24} sm={8} md={12} className="flex flex-col">
                 <Typography.Text type="secondary">{label}</Typography.Text>
                 <Typography.Text className="my-1">{item[key]}</Typography.Text>
               </Col>

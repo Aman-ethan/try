@@ -67,7 +67,7 @@ export default function BankAccounts() {
             }}
           >
             {Object.entries(BankAccountItemsMap).map(([label, key]) => (
-              <Col xs={24} sm={8} md={12} className="flex flex-col">
+              <Col key={key} xs={24} sm={8} md={12} className="flex flex-col">
                 <Typography.Text type="secondary">{label}</Typography.Text>
                 <Typography.Text className="mt-1">
                   {key === "currency" ? (
