@@ -134,8 +134,8 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
     );
     const chart = Plot.plot({
       height: 320,
-      width: chartRef.current?.clientWidth,
       style: {
+        width: "100%",
         overflow: "visible",
       },
       x: {
