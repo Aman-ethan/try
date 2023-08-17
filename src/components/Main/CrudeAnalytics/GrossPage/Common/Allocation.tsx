@@ -35,7 +35,7 @@ function PieChartLegend({ data, colorMap }: IPieChartLegendProps) {
   return data.length !== 0 ? (
     <ProList
       className={clsx(
-        "w-full tab:w-auto tab:flex-1 lap:w-full max-h-56 overflow-y-visible legend",
+        "legend max-h-56 w-full overflow-y-visible tab:w-auto tab:flex-1 lap:w-full",
         showAllLegend ? "shadow-legend" : ""
       )}
       rowClassName="p-2"
@@ -65,7 +65,7 @@ function PieChartLegend({ data, colorMap }: IPieChartLegendProps) {
         data.length > 4 && (
           <button
             type="button"
-            className="flex items-center gap-x-2 text-neutral-10 cursor-pointer"
+            className="flex cursor-pointer items-center gap-x-2 text-neutral-10"
             onClick={() => setShowAllLegend((prev) => !prev)}
           >
             Show {showAllLegend ? "less" : "all"}

@@ -18,10 +18,10 @@ export default function Home() {
       <Title className={HeaderClassName}>Overview</Title>
       <div className="flex flex-col gap-y-6 lap:gap-y-8">
         <NetWorth />
-        <div className="shadow-large flex-1 rounded-lg bg-white px-12 py-6">
+        <div className="flex-1 rounded-lg bg-white px-12 py-6 shadow-large">
           <Analytics />
         </div>
-        <div className="shadow-large space-y-4 rounded-lg bg-white p-6">
+        <div className="space-y-4 rounded-lg bg-white p-6 shadow-large">
           <div className="flex flex-col gap-y-4 tab:flex-row tab:items-center tab:justify-between tab:gap-y-0">
             <Title level={4}>Gainer/Loser</Title>
             <div className="tab:w-[16.75rem]">

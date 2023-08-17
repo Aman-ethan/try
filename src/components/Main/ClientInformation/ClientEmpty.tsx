@@ -5,7 +5,7 @@ import AddClient from "./AddClient";
 
 export default function ClientEmpty() {
   return (
-    <div className="shadow-large flex min-h-[calc(100vh-14rem)] flex-col items-center gap-y-10 rounded-lg bg-white px-4 py-12 tab:px-10 tab:py-20">
+    <div className="flex min-h-[calc(100vh-14rem)] flex-col items-center gap-y-10 rounded-lg bg-white px-4 py-12 shadow-large tab:px-10 tab:py-20">
       <Website />
       <div className="max-w-[40rem] space-y-8 text-center">
         <div className="space-y-4">

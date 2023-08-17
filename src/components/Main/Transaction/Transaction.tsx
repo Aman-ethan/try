@@ -168,16 +168,6 @@ export default function Transaction() {
     <div className="flex flex-col gap-y-6">
       <Title className={HeaderClassName}>Transaction</Title>
       <div className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-4 tab:gap-y-0">
-        <div className="order-last flex flex-col gap-x-4 gap-y-2 tab:order-first tab:w-full tab:flex-row">
-          <SelectClientWithParams
-            placeholder="All Clients"
-            className={primarySelectClasses}
-          />
-          <SelectCustodianWithParams
-            placeholder="All Custodian"
-            className={primarySelectClasses}
-          />
-        </div>
         <Input.Search
           onChange={(e) => {
             const search = e.target.value as string;
@@ -186,7 +176,7 @@ export default function Transaction() {
           }}
           size="large"
           placeholder="Search Security, Description"
-          className="order-first tab:order-last"
+          className="order-first"
         />
         <Button
           size="large"
@@ -196,8 +186,18 @@ export default function Transaction() {
         >
           Filters
         </Button>
+        <div className="order-last flex flex-col gap-x-4 gap-y-2 tab:w-full tab:flex-row">
+          <SelectClientWithParams
+            placeholder="All Clients"
+            className={primarySelectClasses}
+          />
+          <SelectCustodianWithParams
+            placeholder="All Custodian"
+            className={primarySelectClasses}
+          />
+        </div>
       </div>
-      <div className="shadow-large mt-6 rounded-lg bg-neutral-1 p-6">
+      <div className="mt-6 rounded-lg bg-neutral-1 p-6 shadow-large">
         <Statement urlKey="/statement/trade/" columns={columns} />
       </div>
     </div>

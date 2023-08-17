@@ -42,9 +42,7 @@ export default function ClientPositions({
     <ProList
       locale={{ emptyText: <Empty /> }}
       loading={loading}
-      toolBarRender={() => [
-        <MonthPicker className="w-64" value={reportDate} />,
-      ]}
+      toolBarRender={() => [<MonthPicker value={reportDate} />]}
       dataSource={clients}
       grid={{
         gutter: 16,
