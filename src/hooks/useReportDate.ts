@@ -14,10 +14,7 @@ export default function useReportDate() {
   );
 
   const currentValue =
-    getSearchParams("report_date") ||
-    reportDate ||
-    data?.end_date ||
-    undefined;
+    getSearchParams("report_date") || reportDate || data?.end_date || undefined;
 
   return currentValue;
 }
