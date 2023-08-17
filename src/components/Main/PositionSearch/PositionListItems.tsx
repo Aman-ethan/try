@@ -74,7 +74,7 @@ export default function PositionListItems() {
       </div>
       <Card>
         <div className={listItemsClasses}>
-          <div className="flex w-full flex-col justify-between gap-y-4 tab:flex-row">
+          <div className="flex w-full flex-col gap-y-4 tab:flex-row tab:justify-between">
             <div>
               <h2 className="w-1/3 text-xl font-medium">Positions</h2>
             </div>
@@ -82,7 +82,7 @@ export default function PositionListItems() {
               <p className="w-auto tab:min-w-[3rem]">Sort by</p>
               <Select
                 placeholder="Choose sort option"
-                className="w-2/3 tab:min-w-full lap:hidden "
+                className="w-2/3 tab:min-w-full lap:hidden"
                 options={Options}
                 onChange={onSegmentChange}
                 size="large"

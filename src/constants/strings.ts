@@ -14,7 +14,7 @@ export const MenuItemClassName =
 export const formWrapper =
   "flex flex-col gap-y-8 tab:flex-row tab:gap-y-0 tab:gap-x-8";
 
-export const HeaderClassName = "text-base mob:text-xl tab:text-3xl";
+export const HeaderClassName = "text-2xl font-medium tab:text-3xl";
 
 export const PageCardClassName = "";
 

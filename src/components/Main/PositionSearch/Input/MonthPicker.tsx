@@ -25,7 +25,7 @@ export default function MonthPicker({ disabled, value }: IMonthPickerProps) {
   });
   return (
     <DatePicker.MonthPicker
-      className="h-[2.625rem] w-full flex-1 p-4 tab:w-64"
+      className="w-full flex-1 tab:w-64"
       value={dayjs(value || selectedValue)}
       disabled={disabled}
       size="large"
