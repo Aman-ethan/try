@@ -44,7 +44,7 @@ function useBankAccount(id?: string) {
   const { data, isLoading } = useTransactionServerQuery<TBankAccount>(
     id ? URLs.get.replace("{id}", id) : null
   );
-  return { id, data, isLoading };
+  return { data, isLoading };
 }
 
 const BankAccountFormMap: Record<keyof TBankAccount, string> = {
@@ -129,27 +129,23 @@ export default function BankAccountForms({
   const { get: getSearchParams } = useSearchParams();
   const clientId = getSearchParams("client_id");
 
-  const handleMutationSuccess = () => {
+  const handleMutationSuccess = (msg: string) => {
+    revalidate(`/bank_account/`);
+    message.success(msg);
     onClose();
     form.resetFields();
-    revalidate(`/bank_account/`);
-    if (id) {
-      revalidate(`/bank_account/${id}/`);
-    }
   };
 
   const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
     onSuccess: () => {
-      message.success("Bank Account Added successfully");
-      handleMutationSuccess();
+      handleMutationSuccess("Bank Account Added successfully");
     },
   });
 
   const { trigger: update, isMutating: isUpdating } =
     useTransactionServerPutMutation(URLs.put.replace("{id}", id!), {
       onSuccess: () => {
-        message.success("Bank Account Updated successfully");
-        handleMutationSuccess();
+        handleMutationSuccess("Bank Account Updated successfully");
       },
     });
 

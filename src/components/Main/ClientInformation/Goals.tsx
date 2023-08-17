@@ -40,7 +40,7 @@ function useGoal() {
   const client_id = getSearchParams("client_id");
   const { data, isLoading, isValidating } = useTransactionServerQuery<
     TGoalsType[]
-  >(`/goals/${buildURLSearchParams({ client_id })}`);
+  >(client_id ? `/goals/${buildURLSearchParams({ client_id })}` : null);
 
   return {
     data,

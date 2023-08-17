@@ -66,21 +66,21 @@ function useGoal(id?: string) {
     id ? URLs.get.replace("{id}", id) : null
   );
 
+  const handleMutationSuccess = (msg: string) => {
+    revalidate(`/goals/`);
+    message.success(msg);
+  };
+
   const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
     onSuccess: () => {
-      revalidate(`/goals/`);
-      message.success("Goal Added successfully");
+      handleMutationSuccess("Goal Added successfully");
     },
   });
 
   const { trigger: update, isMutating: isUpdating } =
     useTransactionServerPutMutation(URLs.put.replace("{id}", id!), {
       onSuccess: () => {
-        revalidate(`/goals/`);
-        if (id) {
-          revalidate(URLs.get.replace("{id}", id));
-        }
-        message.success("Goal Updated successfully");
+        handleMutationSuccess("Goal Updated successfully");
       },
     });
 

@@ -37,14 +37,14 @@ const Relationship = [
 ];
 
 const URLs = {
-  get: "/estate/",
+  get: "/estate/{id}/",
   post: "/estate/",
   put: "/estate/{id}/",
 };
 
 function useEstate(id?: string) {
   const { data, isLoading } = useTransactionServerQuery<TEstate>(
-    id ? `${URLs.get}${id}/` : URLs.get
+    id ? URLs.get.replace("{id}", id) : null
   );
   return { data, isLoading };
 }
@@ -110,26 +110,22 @@ export default function EstatesForm({ onClose, id }: IEstatesForm) {
     form.resetFields();
   };
 
-  const handleMutationSuccess = () => {
+  const handleMutationSuccess = (msg: string) => {
     revalidate(`/estate/`);
-    if (id) {
-      revalidate(`/estate/${id}/`);
-    }
+    message.success(msg);
     onClose();
     onReset();
   };
 
   const { trigger, isMutating } = useTransactionServerMutation(URLs.post, {
     onSuccess: () => {
-      message.success("Estate Added successfully");
-      handleMutationSuccess();
+      handleMutationSuccess("Estate Added successfully");
     },
   });
   const { trigger: update, isMutating: isUpdating } =
     useTransactionServerPutMutation(URLs.put.replace("{id}", id || ""), {
       onSuccess: () => {
-        message.success("Estate Updated successfully");
-        handleMutationSuccess();
+        handleMutationSuccess("Estate Updated successfully");
       },
     });
 

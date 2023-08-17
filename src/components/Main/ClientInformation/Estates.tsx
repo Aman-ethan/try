@@ -31,7 +31,7 @@ function useEstates() {
   const client_id = getSearchParams("client_id");
   const { data, isLoading, isValidating } = useTransactionServerQuery<
     TEstate[]
-  >(`/estate/${buildURLSearchParams({ client_id })}`);
+  >(client_id ? `/estate/${buildURLSearchParams({ client_id })}` : null);
 
   return {
     data,
