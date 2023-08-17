@@ -16,12 +16,12 @@ export default function MonthPicker({ disabled, value }: IMonthPickerProps) {
   const { data } = useTransactionServerQuery<IMonthPicker>(
     `/statement/position/date/`
   );
-  const selectedDate = getSearchParams("report_date");
+
   const [selectedValue, setSelectedValue] = useSessionStorage<
     string | undefined
   >({
     key: "reportDate",
-    defaultValue: selectedDate,
+    defaultValue: getSearchParams("report_date"),
   });
   return (
     <DatePicker.MonthPicker
