@@ -1,5 +1,6 @@
 "use client";
 
+import { useSessionStorage } from "@mantine/hooks";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import { IPositionSearchResponse } from "@/interfaces/Main";
 import useSearchParams from "@/hooks/useSearchParams";
@@ -9,10 +10,13 @@ import ClientPositions from "./ClientPositions";
 
 export default function Positions() {
   const { get: getSearchParams } = useSearchParams();
+  const [reportDate] = useSessionStorage<string>({
+    key: "reportDate",
+  });
   const { data, isLoading } =
     useTransactionServerQuery<IPositionSearchResponse>(
       `/statement/position/networth_cards/${buildURLSearchParams({
-        report_date: getSearchParams("report_date"),
+        report_date: getSearchParams("report_date") || reportDate,
       })}`
     );
 

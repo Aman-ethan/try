@@ -120,7 +120,6 @@ export default function PerformanceChart({
       data: _groupedData,
       xticks,
     });
-
     const _filledData = Object.values(_filledGroupedData).flat();
 
     return [_filledData, _filledGroupedData, _assets];
@@ -154,7 +153,6 @@ export default function PerformanceChart({
       }
     );
     const chart = Plot.plot({
-      // width: 1000,
       width: chartRef.current?.clientWidth,
       style: {
         overflow: "visible",
@@ -166,7 +164,7 @@ export default function PerformanceChart({
       y: {
         type: "log",
         tickFormat: (
-          (f) => (y) =>
+          (f) => (y: number) =>
             f(y - 1)
         )(format("+.0%")),
         label: null,
@@ -181,6 +179,34 @@ export default function PerformanceChart({
         Plot.ruleY([1]),
         Plot.lineY(filledData, options),
         Plot.crosshairX(filledData, { ...options, y: null }),
+        Plot.text(filledData, {
+          ...options,
+          text: (d) => {
+            // Get current line data
+            const currentLineData = filledGroupedData[d.z];
+            // Get last data point of current line
+            const lastDataPointofLine =
+              currentLineData[currentLineData.length - 1];
+            // Get current data point
+            const currentDataPoint = filledGroupedData[d.z]?.[normalizeIndex];
+            // If data point is the last data point of current line
+            if (isEqual(d, lastDataPointofLine)) {
+              // Return the percentage difference between last data point and current data point
+              return `${(
+                ((filledGroupedData[d.z][currentLineData.length - 1].y -
+                  currentDataPoint.y) /
+                  filledGroupedData[d.z][currentLineData.length - 1].y) *
+                100
+              ).toFixed(2)}%`;
+            }
+            // Else return empty string
+            return "";
+          },
+          dy: -8,
+          dx: 10,
+          textAnchor: "middle",
+          fontSize: 12,
+        }),
       ],
     });
 
