@@ -16,9 +16,17 @@ export default function Drawer({
   open,
   closeButton,
   onClose,
+  height = "85vh",
 }: IDrawerProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(open);
   const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 768px)");
+  const innerContainerWrapperClass =
+    height !== "85vh" ? "p-4 tab:p-6 lap:p-8" : "mb-20 p-4 tab:p-6 lap:p-8";
+
+  const footerContainerWrapperClass =
+    height !== "85vh"
+      ? "hidden"
+      : "bottom-0 left-0 right-0 flex flex-col-reverse justify-end gap-x-4 gap-y-4 bg-white p-4 tab:flex-row tab:px-6 tab:pb-8 tab:pt-4 lap:absolute lap:px-8";
 
   const handleClose = (e: MouseEvent | KeyboardEvent) => {
     onClose?.(e);
@@ -40,7 +48,7 @@ export default function Drawer({
         closeIcon={null}
         open={open !== undefined ? open : isDrawerOpen}
         width={width}
-        height="85vh"
+        height={height}
         placement={MOBILE_BREAK_POINT ? "bottom" : "right"} // Use bottom placement for mobile screens, right for others
         onClose={handleClose}
         push={false}
@@ -63,7 +71,7 @@ export default function Drawer({
         }
         headerStyle={{ borderBottom: "none", padding: "0" }}
         footer={
-          <div className="bottom-0 left-0 right-0 flex flex-col-reverse justify-end gap-x-4 gap-y-4 bg-white p-4 tab:flex-row tab:px-6 tab:pb-8 tab:pt-4 lap:absolute lap:px-8">
+          <div className={footerContainerWrapperClass}>
             {closeButton ? (
               <Button
                 size="large"
@@ -79,7 +87,7 @@ export default function Drawer({
         footerStyle={{ padding: "0", borderTop: "none" }}
         bodyStyle={{ padding: "0" }}
       >
-        <div className="mb-20 p-4 tab:p-6 lap:p-8">{children}</div>
+        <div className={innerContainerWrapperClass}>{children}</div>
       </AntdDrawer>
     </FormProvider>
   );

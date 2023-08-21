@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Drawer as AntDrawer, Modal } from "antd";
+import { Modal } from "antd";
 import { ColumnType } from "antd/es/table";
 import { DefaultOptionType } from "rc-select/lib/Select";
 import { useMediaQuery } from "@mantine/hooks";
@@ -14,6 +14,7 @@ import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import ClampedText from "@/components/Typography/ClampedText";
 import TooltipText from "@/components/Typography/ToolTipText";
 import Title from "@/components/Typography/Title";
+import Drawer from "@/components/Main/General/Drawer";
 
 export type TCategory = "asset_class" | "region" | "industry";
 
@@ -250,14 +251,15 @@ export default function AnalyticsModal({
   );
   if (MOBILE_BREAK_POINT) {
     return (
-      <AntDrawer
+      <Drawer
         placement="bottom"
         open={isOverlayVisible}
-        height="80%"
+        height="auto"
         onClose={handleClose}
+        footer={null}
       >
         {content}
-      </AntDrawer>
+      </Drawer>
     );
   }
   return (

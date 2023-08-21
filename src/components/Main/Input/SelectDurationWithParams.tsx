@@ -98,7 +98,7 @@ function renderDropdown(
   return (
     <div className="w-[12rem]">
       <div
-        className="mb-2 flex justify-between rounded-md p-2 text-black"
+        className="mb-2 flex justify-between rounded-md p-2 text-black tab:hidden"
         style={{ backgroundColor: color }}
       >
         <p className="text-xs">
@@ -129,6 +129,7 @@ export default function SelectDurationWithParams() {
       value={value}
       onChange={onChange}
       popupMatchSelectWidth={false}
+      placement={MOBILE_BREAK_POINT ? "bottomRight" : "bottomLeft"}
       dropdownRender={(menu) =>
         renderDropdown(menu, startDate, endDate, token.colorPrimaryBg)
       }
