@@ -42,8 +42,8 @@ export default function ListDetails({ record }: IListProps) {
       </div>
 
       <div className="flex w-full basis-1/2 flex-col items-end space-x-4 space-y-6 lap:flex-row lap:items-center lap:space-y-0">
-        <div className="flex w-full flex-col space-y-4 bg-neutral-2 p-6">
-          <div className="space-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
+        <div className="flex w-full flex-col space-y-2 bg-neutral-2 rounded-md px-3 py-4">
+          <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
             <div className="flex basis-1/2 space-x-4">
               <span className="flex-1 text-neutral-9">Quantity</span>
               <span className="flex-1">
@@ -54,7 +54,7 @@ export default function ListDetails({ record }: IListProps) {
               <CurrencyTag currency={record?.currency} />
             </div>
           </div>
-          <div className="space-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
+          <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
             <div className="flex basis-1/2 space-x-4">
               <span className="flex-1 text-neutral-9">Average Price</span>
               <span className="flex-1">
@@ -68,7 +68,7 @@ export default function ListDetails({ record }: IListProps) {
               </span>
             </div>
           </div>
-          <div className="space-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
+          <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
             <div className="flex basis-1/2 space-x-4">
               <span className="flex-1 text-neutral-9">Unrealized P&L</span>
               <span className="flex-1">

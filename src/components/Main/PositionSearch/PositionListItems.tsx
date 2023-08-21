@@ -76,13 +76,15 @@ export default function PositionListItems() {
         <div className={listItemsClasses}>
           <div className="flex w-full flex-col gap-y-4 tab:flex-row tab:justify-between">
             <div>
-              <h2 className="w-1/3 text-xl font-medium">Positions</h2>
+              <h2 className="w-1/3 text-xl desk:text-2xl font-medium">
+                Positions
+              </h2>
             </div>
             <div className="flex items-center justify-start gap-x-4 tab:mr-[65px] lap:hidden">
-              <p className="w-auto tab:min-w-[3rem]">Sort by</p>
+              <p className="w-2/12 tab:w-1/4">Sort by</p>
               <Select
                 placeholder="Choose sort option"
-                className="w-2/3 tab:min-w-full lap:hidden"
+                className="w-full"
                 options={Options}
                 onChange={onSegmentChange}
                 size="large"
@@ -90,13 +92,14 @@ export default function PositionListItems() {
             </div>
           </div>
           <Segmented
+            size="large"
             block
             options={Options}
             className="hidden lap:block"
             onChange={onSegmentChange}
           />
         </div>
-        <div>
+        <div className="desk:mt-8">
           <ListView />
         </div>
       </Card>

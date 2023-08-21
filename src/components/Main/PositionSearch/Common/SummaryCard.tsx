@@ -21,7 +21,7 @@ export default function SummaryCard({ type, value }: ISummaryCardProps) {
     <Card
       bordered
       bodyStyle={{
-        background: "#F3F2F2",
+        background: "#FAFAFA",
       }}
       className="w-full lap:w-1/3"
     >

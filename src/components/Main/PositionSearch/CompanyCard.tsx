@@ -35,7 +35,7 @@ export default function CompanyCard({
   }, [prefetch]);
 
   return (
-    <Card onClick={onClick} loading={loading} className="cursor-pointer p-6">
+    <Card onClick={onClick} loading={loading} className="cursor-pointer">
       <div className="mb-6 flex space-x-8">
         <Title className="capitalize" level={3}>
           {companyData?.client_name}

@@ -24,7 +24,7 @@ export default function PositionList() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 desk:space-y-8">
       <div className="space-between flex items-center">
         <Title className="flex-1 text-2xl tab:text-3xl">Balance Sheet</Title>
         <Button

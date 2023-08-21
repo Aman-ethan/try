@@ -60,9 +60,7 @@ export default function ClientPositions({
             <ProCard.Group direction="column">
               <ProCard onClick={() => onItemClicked(record)}>
                 <div className="mb-8 flex justify-between">
-                  <Title level={3} className="font-bold">
-                    {record?.client_name}
-                  </Title>
+                  <Title level={3}>{record?.client_name}</Title>
                   <CurrencyTag currency={record?.currency} />
                 </div>
                 <Row

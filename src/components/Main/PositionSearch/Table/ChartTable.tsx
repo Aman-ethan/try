@@ -20,10 +20,10 @@ interface IChartTableProps {
 }
 
 const thClassName =
-  "relative z-10 bg-transparent border-none text-left text-sm tab:text-md lap:text-lg font-light text-neutral-9";
+  "relative z-10 bg-transparent border-none text-left text-sm tab:text-lg font-light text-neutral-9";
 
 const trClassName =
-  "relative z-10 bg-transparent border-none text-left text-sm tab:text-md lap:text-lg font-light";
+  "relative z-10 bg-transparent border-none text-left text-sm tab:text-lg font-light";
 
 const Columns: TableColumnsType<IBalanceSheetChart> = [
   {
@@ -36,7 +36,9 @@ const Columns: TableColumnsType<IBalanceSheetChart> = [
     title: "Total Value",
     dataIndex: "total_value",
     key: "totalValue",
-    render: (text) => <ToolTipText value={text} type="price" />,
+    render: (text: string | number | undefined) => (
+      <ToolTipText value={text} type="price" />
+    ),
     className: trClassName,
   },
   {
@@ -72,7 +74,7 @@ export default function ChartTable({
     ...props
   }: React.HTMLAttributes<HTMLTableRowElement> & RowData) => {
     return (
-      <tr {...props} className="relative last:border-t-2">
+      <tr {...props} className="relative">
         {children}
         <ProgressBar
           // eslint-disable-next-line react/prop-types
@@ -89,7 +91,7 @@ export default function ChartTable({
   };
 
   return (
-    <>
+    <div className="flex-1">
       <Table
         loading={loading}
         dataSource={data}
@@ -106,7 +108,7 @@ export default function ChartTable({
           },
         }}
       />
-      <div className="flex justify-between border-t-2 py-4">
+      <div className="flex justify-between border-t-4 py-4">
         <Title level={5} className="tab:text-md basis-1/2 text-sm lap:text-lg">
           {TotalText}
         </Title>
@@ -117,6 +119,6 @@ export default function ChartTable({
           {formatPercentage(percentage)}%
         </Title>
       </div>
-    </>
+    </div>
   );
 }
