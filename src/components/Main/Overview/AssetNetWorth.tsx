@@ -1,6 +1,5 @@
 "use client";
 
-import { Empty } from "antd";
 import { IAssetNetWorth } from "@/interfaces/Main";
 import ClientDropdownCard from "./ClientDropdownCard";
 import IndexChart from "./IndexChart";
@@ -20,15 +19,13 @@ export default function AssetNetWorth({ height }: { height: number }) {
         searchParamKey={searchParamKey}
         urlKey={urlKey}
       >
-        {(data, loading) =>
-          !(loading || data?.data) ? (
-            <div className="flex flex-col">
-              <Empty className="my-auto -translate-y-6" />
-            </div>
-          ) : (
-            <IndexChart data={data?.data} loading={loading} />
-          )
-        }
+        {(data, loading, selectedClientId) => (
+          <IndexChart
+            key={selectedClientId}
+            data={data?.data}
+            loading={loading}
+          />
+        )}
       </ClientDropdownCard>
     </div>
   );

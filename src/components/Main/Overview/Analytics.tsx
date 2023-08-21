@@ -14,7 +14,7 @@ export default function Analytics() {
         searchParamKey={searchParamKey}
         urlKey={urlKey}
       >
-        {(allocation, _, selectedClientId) => (
+        {(allocation, _loading, selectedClientId) => (
           <div className="flex min-h-[31.75rem] flex-col gap-y-8 lap:flex-row lap:justify-between">
             {allocation?.map(({ title, data }) => (
               <Allocation

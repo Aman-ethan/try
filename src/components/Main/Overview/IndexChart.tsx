@@ -14,22 +14,22 @@ import {
   sortBy,
   uniqBy,
 } from "lodash";
-import { IAssetNetWorth } from "@/interfaces/Main";
+import { IIndexData } from "@/interfaces/Main";
 import { OrdinalRange } from "@/constants/strings";
 
-type TData = IAssetNetWorth["data"][0];
-
 interface IIndexChartProps {
-  data?: TData[];
+  data?: IIndexData[];
   loading?: boolean;
 }
 
 interface IFillMissingDataParams {
-  data: Record<string, TData[]>;
+  data: Record<string, IIndexData[]>;
   xticks: string[];
 }
 
 const AXIS_OFFSET = 0.05;
+const yTickFormat = format("+.0%");
+const f = format("+.2%");
 
 function fillMissingData({ data, xticks }: IFillMissingDataParams) {
   return reduce(
@@ -62,9 +62,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
   const [normalizeIndex, setNormalizeIndex] = useState(0);
   const [excludedDomain, setExcludedDomain] = useState<string[]>([]);
 
-  const [filledData, filledGroupedData, domains] = useMemo(() => {
-    setNormalizeIndex(0);
-
+  const [filledData, filledGroupedData, domains, maxDomain] = useMemo(() => {
     const absoluteData = sortBy(
       data?.map((item) => {
         return {
@@ -102,36 +100,39 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
 
     const _filledData = Object.values(_filledGroupedData).flat();
 
-    return [_filledData, _filledGroupedData, _domains];
-  }, [excludedDomain, data]);
-
-  useEffect(() => {
-    if (filledData.length === 0) return undefined;
-    const maxDomain = max(
+    const _maxDomain = max(
       map(
-        filledGroupedData,
+        _filledGroupedData,
         (item) =>
-          (maxBy(item, "y") as TData).y /
+          (maxBy(item, "y") as IIndexData).y /
           (
             minBy(item, (o) => {
               if (o.y === 0) return Infinity;
               return o.y;
-            }) as TData
+            }) as IIndexData
           ).y
       )
     ) as number;
 
-    const options = Plot.normalizeY(
-      (Y: number[]) => {
-        return Y[normalizeIndex];
-      },
-      {
-        x: "x",
-        y: "y",
-        stroke: "z",
-        strokeWidth: 2,
-      }
-    );
+    return [_filledData, _filledGroupedData, _domains, _maxDomain];
+  }, [excludedDomain, data]);
+
+  useEffect(() => {
+    if (filledData.length === 0) return undefined;
+
+    const normalizeY = (options?: Record<string, unknown>) =>
+      Plot.normalizeY(
+        (Y: number[]) => {
+          return Y[normalizeIndex];
+        },
+        {
+          x: "x",
+          y: "y",
+          z: "z",
+          ...options,
+        }
+      );
+
     const chart = Plot.plot({
       height: 320,
       style: {
@@ -144,10 +145,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
       },
       y: {
         type: "log",
-        tickFormat: (
-          (f) => (y: number) =>
-            f(y - 1)
-        )(format("+.0%")),
+        tickFormat: (y: number) => yTickFormat(y - 1),
         label: null,
         domain: [1 / (maxDomain + AXIS_OFFSET), maxDomain + AXIS_OFFSET],
         grid: true,
@@ -158,36 +156,23 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
       },
       marks: [
         Plot.ruleY([1]),
-        Plot.lineY(filledData, options),
-        Plot.crosshairX(filledData, { ...options, y: null }),
-        Plot.text(filledData, {
-          ...options,
-          text: (d) => {
-            // Get current line data
-            const currentLineData = filledGroupedData[d.z];
-            // Get last data point of current line
-            const lastDataPointofLine =
-              currentLineData[currentLineData.length - 1];
-            // Get current data point
-            const currentDataPoint = filledGroupedData[d.z]?.[normalizeIndex];
-            // If data point is the last data point of current line
-            if (isEqual(d, lastDataPointofLine)) {
-              // Return the percentage difference between last data point and current data point
-              return `${(
-                ((filledGroupedData[d.z][currentLineData.length - 1].y -
-                  currentDataPoint.y) /
-                  filledGroupedData[d.z][currentLineData.length - 1].y) *
-                100
-              ).toFixed(2)}%`;
-            }
-            // Else return empty string
-            return "";
-          },
-          dy: -8,
-          dx: 10,
-          textAnchor: "middle",
-          fontSize: 12,
-        }),
+        Plot.lineY(filledData, normalizeY({ stroke: "z", strokeWidth: 2 })),
+        Plot.crosshairX(filledData, normalizeY({ y: null })),
+        Plot.text(
+          filledData,
+          Plot.selectLast(
+            normalizeY({
+              text: (d: IIndexData) => {
+                const normalizeBy = filledGroupedData[d.z][normalizeIndex].y;
+                const value = d.y / normalizeBy - 1;
+                return f(value);
+              },
+              fill: "z",
+              fontSize: 12,
+              dy: -8,
+            })
+          )
+        ),
       ],
     });
 
@@ -205,19 +190,12 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
     chartRef.current?.append(chart);
 
     return () => chart.remove();
-  }, [normalizeIndex, filledData, filledGroupedData, domains]);
+  }, [normalizeIndex, filledData, filledGroupedData, domains, maxDomain]);
 
-  if (loading)
+  if (loading || data?.length === 0)
     return (
-      <div className="flex h-full items-center justify-center">
-        <Spin />
-      </div>
-    );
-
-  if (!data?.length)
-    return (
-      <div className="flex h-full items-center justify-center">
-        <Empty />
+      <div className="flex h-full items-center justify-center -translate-y-8">
+        {loading ? <Spin /> : <Empty />}
       </div>
     );
 
@@ -237,7 +215,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
   };
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex flex-col">
       <div className="flex flex-1" ref={chartRef} />
       <div className="scrollbar-hidden flex items-center overflow-x-auto py-4">
         <div className="flex gap-x-4">
