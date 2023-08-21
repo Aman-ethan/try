@@ -63,6 +63,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
   const [excludedDomain, setExcludedDomain] = useState<string[]>([]);
 
   const [filledData, filledGroupedData, domains, maxDomain] = useMemo(() => {
+    setNormalizeIndex(0);
     const absoluteData = sortBy(
       data?.map((item) => {
         return {
