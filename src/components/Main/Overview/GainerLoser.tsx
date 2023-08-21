@@ -93,7 +93,7 @@ const Columns: TableColumnsType = [
     dataIndex: "profit_loss",
     key: "total-pl",
     width: "26%",
-    render: (text) => <TooltipText value={text} />,
+    render: (text) => <TooltipText value={text} type="price" />,
     align: "right",
   },
 ];
@@ -170,6 +170,7 @@ export default function GainerLoser({ type }: IGainerLoserProps) {
           <Title level={5}>
             <TooltipText
               value={isGainer ? data?.total_gain : data?.total_loss}
+              type="price"
             />
           </Title>
         </div>

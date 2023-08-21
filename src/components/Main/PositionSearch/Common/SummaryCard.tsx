@@ -15,7 +15,7 @@ export default function SummaryCard({ type, value }: ISummaryCardProps) {
     type === "leverage" ? (
       formatPercentage(value)
     ) : (
-      <TooltipText value={value} />
+      <TooltipText value={value} type="price" />
     );
   return (
     <Card

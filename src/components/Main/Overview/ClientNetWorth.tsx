@@ -37,42 +37,42 @@ const columns: TableColumnsType<IClient> = [
     dataIndex: "daily_change",
     key: "daily-pl",
     align: "right",
-    render: (text) => <TooltipText value={text} />,
+    render: (text) => <TooltipText value={text} type="price" />,
   },
   {
     title: "Total P/L",
     dataIndex: "total_change",
     key: "total-pl",
     align: "right",
-    render: (text) => <TooltipText value={text} />,
+    render: (text) => <TooltipText value={text} type="price" />,
   },
   {
     title: "Net Worth",
     dataIndex: "networth",
     key: "net-worth",
     align: "right",
-    render: (text) => <TooltipText value={text} />,
+    render: (text) => <TooltipText value={text} type="price" />,
   },
   {
     title: "MTD",
     dataIndex: "month_change",
     key: "mtd",
     align: "right",
-    render: (text) => <TooltipText value={text} />,
+    render: (text) => <TooltipText value={text} type="price" />,
   },
   {
     title: "QTD",
     dataIndex: "quarter_change",
     key: "qtd",
     align: "right",
-    render: (text) => <TooltipText value={text} />,
+    render: (text) => <TooltipText value={text} type="price" />,
   },
   {
     title: "YTD",
     dataIndex: "year_change",
     key: "ytd",
     align: "right",
-    render: (text) => <TooltipText value={text} />,
+    render: (text) => <TooltipText value={text} type="price" />,
   },
 ];
 
@@ -147,7 +147,7 @@ export default function ClientNetWorth({
       <div className="flex items-center justify-between">
         <Title level={4}>Net Worth</Title>
         <Title level={3}>
-          <TooltipText value={networth} />
+          <TooltipText value={networth} type="price" />
         </Title>
       </div>
       <div className="flex">

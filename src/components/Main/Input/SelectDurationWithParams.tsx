@@ -2,13 +2,18 @@ import React, { useCallback, useLayoutEffect, useState } from "react";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "@mantine/hooks";
 import { Divider, Popover } from "antd";
-import dayjs, { ManipulateType, QUnitType } from "dayjs";
+import dayjs, { Dayjs, ManipulateType, QUnitType } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import { useSelectedLayoutSegments } from "next/navigation";
+import clsx from "clsx";
 import { useToken } from "@/lib/antd";
 import { SearchParams } from "@/interfaces/Main";
 import useSearchParams from "@/hooks/useSearchParams";
-import { DATE_DISPLAY_FORMAT, DATE_PARAM_FORMAT } from "@/constants/format";
+import {
+  DATE_DISPLAY_FORMAT,
+  DATE_DISPLAY_FORMAT_POPOVER,
+  DATE_PARAM_FORMAT,
+} from "@/constants/format";
 import Select from "@/components/Input/Select";
 import useDateRange from "@/hooks/useDateRange";
 import { DatePicker } from "./DatePicker";
@@ -26,12 +31,17 @@ interface IPopoverContentProps {
   endDate?: string;
 }
 
+interface IPopoverContentDatepickerProps {
+  endDate?: string;
+}
+
 const DURATION: IDuration[] = [
   { label: "All", value: "year" },
   { label: "Weekly", value: "w" },
   { label: "Monthly", value: "M" },
   { label: "Quarterly", value: "Q" },
   { label: "Yearly", value: "y" },
+  { label: "Daily", value: "d" },
 ];
 
 function getDateKeys(layoutSegments: string[] | null): SearchParams[] {
@@ -51,33 +61,75 @@ function getDateKeys(layoutSegments: string[] | null): SearchParams[] {
 function useDurationWithParams() {
   const { updateSearchParams } = useSearchParams();
   const layoutSegments = useSelectedLayoutSegments();
-  const { startDate, endDate, duration, setDuration } = useDateRange();
 
   const [startDateKey, endDateKey] = getDateKeys(layoutSegments);
+  const {
+    startDate,
+    endDate,
+    duration,
+    setDuration,
+    setEndDate,
+    setStartDate,
+  } = useDateRange();
 
-  const onChange = useCallback(
-    (value: ManipulateType) => {
-      setDuration(value);
-      if (startDateKey && endDateKey)
+  const handleDateChange = useCallback(
+    (value: Dayjs | ManipulateType | null) => {
+      if (startDateKey && endDateKey) {
+        let updatedStartDate = startDate;
+        let updatedEndDate = endDate;
+
+        if (!dayjs.isDayjs(value)) {
+          setDuration(value as ManipulateType);
+          updatedStartDate = dayjs(endDate)
+            .subtract(1, value as ManipulateType)
+            .format(DATE_PARAM_FORMAT);
+        } else {
+          updatedEndDate = dayjs(value).format(DATE_PARAM_FORMAT);
+        }
+
         updateSearchParams({
-          [startDateKey]: dayjs().subtract(1, value).format(DATE_PARAM_FORMAT),
-          [endDateKey]: dayjs().format(DATE_PARAM_FORMAT),
+          [startDateKey]: updatedStartDate,
+          [endDateKey]: updatedEndDate,
         });
+        setStartDate(updatedStartDate);
+        setEndDate(updatedEndDate);
+      }
     },
-    [endDateKey, startDateKey, setDuration, updateSearchParams]
+    [
+      endDateKey,
+      startDateKey,
+      setDuration,
+      updateSearchParams,
+      startDate,
+      endDate,
+      setStartDate,
+      setEndDate,
+    ]
   );
 
   useLayoutEffect(() => {
-    onChange(duration as ManipulateType);
-  }, [duration, onChange]);
+    handleDateChange(dayjs.isDayjs(duration) ? dayjs(duration) : duration);
+  }, [duration, handleDateChange]);
 
   return {
     startDate,
     endDate,
-    onChange,
+    handleDateChange,
     value: duration,
     disabled: !startDateKey && !endDateKey,
   };
+}
+
+function PopoverContentForDatePicker({
+  endDate,
+}: IPopoverContentDatepickerProps) {
+  return (
+    <div className="flex gap-x-2 text-white">
+      <p>
+        Showing data until {dayjs(endDate).format(DATE_DISPLAY_FORMAT_POPOVER)}
+      </p>
+    </div>
+  );
 }
 
 function PopoverContent({ startDate, endDate }: IPopoverContentProps) {
@@ -113,7 +165,7 @@ function renderDropdown(
 }
 
 export default function SelectDurationWithParams() {
-  const { onChange, startDate, endDate, value, disabled } =
+  const { handleDateChange, startDate, endDate, value, disabled } =
     useDurationWithParams();
   const [visible, setVisible] = useState(false);
   const { token } = useToken();
@@ -127,7 +179,7 @@ export default function SelectDurationWithParams() {
       showSearch={false}
       size="middle"
       value={value}
-      onChange={onChange}
+      onChange={handleDateChange}
       popupMatchSelectWidth={false}
       placement={MOBILE_BREAK_POINT ? "bottomRight" : "bottomLeft"}
       dropdownRender={(menu) =>
@@ -136,41 +188,52 @@ export default function SelectDurationWithParams() {
       options={DURATION}
     />
   );
-
-  if (MOBILE_BREAK_POINT) {
-    return (
-      <div className="flex w-full flex-row items-center">
-        <div className="w-1/2 pr-2">
+  const datePickerWrapperClasses = clsx(MOBILE_BREAK_POINT ? "w-1/2 pr-2" : "");
+  const parentDivClasses = clsx(
+    "flex",
+    MOBILE_BREAK_POINT
+      ? "w-full flex-row items-center"
+      : "items-center gap-x-2 desk:gap-x-3"
+  );
+  return (
+    <div className={parentDivClasses}>
+      <div className={datePickerWrapperClasses}>
+        <Popover
+          className="min-w-full"
+          content={<PopoverContentForDatePicker endDate={endDate} />}
+          color={token.blue6}
+        >
           <DatePicker
             size="middle"
             className="max-w-[8rem]"
             style={{ backgroundColor: token.colorPrimaryBg }}
+            defaultValue={dayjs(endDate)}
+            onChange={handleDateChange}
+            allowClear={false}
+            format={DATE_DISPLAY_FORMAT}
           />
-        </div>
-        <div className="w-1/2 pl-2">{content}</div>
-      </div>
-    );
-  }
-  return (
-    <div className="flex items-center gap-x-2 desk:gap-x-3">
-      <div>
-        <DatePicker
-          size="middle"
-          className="max-w-[8rem]"
-          style={{ backgroundColor: token.colorPrimaryBg }}
-        />
-      </div>
-      <Divider type="vertical" className="text-neutral-13/5" />
-      <div>
-        <Popover
-          open={visible || value === "year" ? false : undefined}
-          className="min-w-full"
-          content={<PopoverContent startDate={startDate} endDate={endDate} />}
-          color={token.blue6}
-        >
-          {content}
         </Popover>
       </div>
+
+      {MOBILE_BREAK_POINT ? (
+        <div className="w-1/2 pl-2">{content}</div>
+      ) : (
+        <>
+          <Divider type="vertical" className="text-neutral-13/5" />
+          <div>
+            <Popover
+              open={visible || value === "year" ? false : undefined}
+              className="min-w-full"
+              content={
+                <PopoverContent startDate={startDate} endDate={endDate} />
+              }
+              color={token.blue6}
+            >
+              {content}
+            </Popover>
+          </div>
+        </>
+      )}
     </div>
   );
 }

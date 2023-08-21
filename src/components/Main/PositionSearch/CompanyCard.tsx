@@ -48,7 +48,7 @@ export default function CompanyCard({
             Net Worth
           </Title>
           <Title level={1} className="text-[2.375rem] font-normal">
-            <TooltipText value={companyData?.networth} />
+            <TooltipText value={companyData?.networth} type="price" />
           </Title>
         </Col>
         <Col sm={12} md={8} lg={8} className="mb-2 space-y-2 tab:mb-0">
@@ -59,7 +59,7 @@ export default function CompanyCard({
             level={1}
             className="text-[2.375rem] font-normal text-summary-profit"
           >
-            <TooltipText value={companyData?.assets} />
+            <TooltipText value={companyData?.assets} type="price" />
           </Title>
         </Col>
         <Col sm={12} md={8} lg={8} className="mb-2 space-y-2 tab:mb-0">
@@ -70,7 +70,7 @@ export default function CompanyCard({
             level={1}
             className="text-[2.375rem] font-normal text-summary-loss"
           >
-            <TooltipText value={companyData?.liabilities} />
+            <TooltipText value={companyData?.liabilities} type="price" />
           </Title>
         </Col>
       </Row>

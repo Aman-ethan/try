@@ -7,14 +7,21 @@ export default function useDateRange() {
     key: "duration",
     defaultValue: "year" as ManipulateType,
   });
-
-  const startDate = dayjs().subtract(1, duration).format(DATE_PARAM_FORMAT);
-  const endDate = dayjs().format(DATE_PARAM_FORMAT);
+  const [startDate, setStartDate] = useSessionStorage({
+    key: "start_date",
+    defaultValue: dayjs().subtract(1, duration).format(DATE_PARAM_FORMAT),
+  });
+  const [endDate, setEndDate] = useSessionStorage({
+    key: "end_date",
+    defaultValue: dayjs().format(DATE_PARAM_FORMAT),
+  });
 
   return {
     startDate,
     endDate,
     duration,
     setDuration,
+    setStartDate,
+    setEndDate,
   };
 }

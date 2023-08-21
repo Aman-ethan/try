@@ -36,7 +36,7 @@ const Columns: TableColumnsType<IBalanceSheetChart> = [
     title: "Total Value",
     dataIndex: "total_value",
     key: "totalValue",
-    render: (text) => <ToolTipText value={text} />,
+    render: (text) => <ToolTipText value={text} type="price" />,
     className: trClassName,
   },
   {
@@ -111,7 +111,7 @@ export default function ChartTable({
           {TotalText}
         </Title>
         <Title level={5} className={textClass}>
-          <ToolTipText value={total} />
+          <ToolTipText value={total} type="price" />
         </Title>
         <Title level={5} className={textClass}>
           {formatPercentage(percentage)}%
