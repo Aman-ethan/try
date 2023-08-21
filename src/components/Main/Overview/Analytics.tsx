@@ -15,7 +15,7 @@ export default function Analytics() {
         urlKey={urlKey}
       >
         {(allocation, _loading, selectedClientId) => (
-          <div className="flex min-h-[31.75rem] flex-col gap-y-8 lap:flex-row lap:justify-between">
+          <div className="flex min-h-[31.75rem] flex-col gap-8 lap:flex-row lap:justify-between">
             {allocation?.map(({ title, data }) => (
               <Allocation
                 key={title}
