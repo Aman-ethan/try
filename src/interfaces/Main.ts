@@ -176,6 +176,9 @@ export interface IPositionsData {
   relationship_number: string;
   market_value: number;
   description: string;
+  unrealised_pl_reporting: string;
+  market_value_reporting: string;
+  currency_reporting: TCurrency;
 }
 
 export interface IPositionsResponse {

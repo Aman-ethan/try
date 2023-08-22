@@ -40,48 +40,82 @@ export default function ListDetails({ record }: IListProps) {
           {record?.client_name}
         </div>
       </div>
-
-      <div className="flex w-full basis-1/2 flex-col items-end space-x-4 space-y-6 lap:flex-row lap:items-center lap:space-y-0">
-        <div className="flex w-full flex-col space-y-2 bg-neutral-2 rounded-md px-3 py-4">
-          <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
-            <div className="flex basis-1/2 space-x-4">
-              <span className="flex-1 text-neutral-9">Quantity</span>
-              <span className="flex-1">
-                <TooltipText value={record?.quantity} type="quantity" />
-              </span>
+      <div className="flex basis-1/2 flex-col items-end space-x-4 space-y-6 lap:flex-row lap:items-center lap:space-y-0">
+        <div className="flex flex-col basis-[95%]">
+          <div className="flex w-full flex-col space-y-2 bg-neutral-2 rounded-md px-3 py-4">
+            <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
+              <div className="flex basis-1/2 space-x-4">
+                <span className="flex-1 text-neutral-9">Quantity</span>
+                <span className="flex-1">
+                  <TooltipText value={record?.quantity} type="quantity" />
+                </span>
+              </div>
+              <div className="order-first flex basis-1/2 justify-end tab:order-last">
+                <CurrencyTag currency={record?.currency} />
+              </div>
             </div>
-            <div className="order-first flex basis-1/2 justify-end tab:order-last">
-              <CurrencyTag currency={record?.currency} />
+            <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
+              <div className="flex basis-1/2 space-x-4">
+                <span className="flex-1 text-neutral-9">Average Price</span>
+                <span className="flex-1">
+                  <TooltipText value={record?.average_price} type="price" />
+                </span>
+              </div>
+              <div className="flex basis-1/2 justify-end space-x-4">
+                <span className="flex-1 text-neutral-9">Market Price</span>
+                <span className="flex-1">
+                  <TooltipText value={record?.mtm_price} type="price" />
+                </span>
+              </div>
+            </div>
+            <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
+              <div className="flex basis-1/2 space-x-4">
+                <span className="flex-1 text-neutral-9">Unrealized P&L</span>
+                <span className="flex-1">
+                  <TooltipText value={record?.unrealised_pl} type="price" />
+                </span>
+              </div>
+              <div className="flex basis-1/2 justify-end space-x-4">
+                <span className="flex-1 text-neutral-9">Market value</span>
+                <span className="flex-1">
+                  <TooltipText value={record?.market_value} type="price" />
+                </span>
+              </div>
             </div>
           </div>
-          <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
-            <div className="flex basis-1/2 space-x-4">
-              <span className="flex-1 text-neutral-9">Average Price</span>
-              <span className="flex-1">
-                <TooltipText value={record?.average_price} type="price" />
-              </span>
+          {record?.currency !== record?.currency_reporting && (
+            <div className="flex w-full flex-col space-y-2 bg-neutral-2 rounded-md px-3 py-4">
+              <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
+                <div className="flex basis-1/2 space-x-4">
+                  <span className="flex-1 text-neutral-9" />
+                  <span className="flex-1" />
+                </div>
+                <div className="order-first flex basis-1/2 justify-end tab:order-last">
+                  <CurrencyTag currency={record?.currency_reporting} />
+                </div>
+              </div>
+              <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
+                <div className="flex basis-1/2 space-x-4">
+                  <span className="flex-1 text-neutral-9">Unrealised P&L</span>
+                  <span className="flex-1">
+                    <TooltipText
+                      value={record?.unrealised_pl_reporting}
+                      type="price"
+                    />
+                  </span>
+                </div>
+                <div className="flex basis-1/2 justify-end space-x-4">
+                  <span className="flex-1 text-neutral-9">Market Value</span>
+                  <span className="flex-1">
+                    <TooltipText
+                      value={record?.market_value_reporting}
+                      type="price"
+                    />
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="flex basis-1/2 justify-end space-x-4">
-              <span className="flex-1 text-neutral-9">Market Price</span>
-              <span className="flex-1">
-                <TooltipText value={record?.mtm_price} type="price" />
-              </span>
-            </div>
-          </div>
-          <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
-            <div className="flex basis-1/2 space-x-4">
-              <span className="flex-1 text-neutral-9">Unrealized P&L</span>
-              <span className="flex-1">
-                <TooltipText value={record?.unrealised_pl} type="price" />
-              </span>
-            </div>
-            <div className="flex basis-1/2 justify-end space-x-4">
-              <span className="flex-1 text-neutral-9">Market value</span>
-              <span className="flex-1">
-                <TooltipText value={record?.market_value} type="price" />
-              </span>
-            </div>
-          </div>
+          )}
         </div>
         <Button className="flex items-center justify-between space-x-2 px-2 lap:space-x-0">
           <ShareAltOutlined className="pl-2 lap:pl-0" />

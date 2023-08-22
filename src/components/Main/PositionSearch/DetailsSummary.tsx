@@ -12,13 +12,25 @@ import CurrencyTag from "../General/CurrencyTag";
 import SummaryCard from "./Common/SummaryCard";
 import ChartTable from "./Table/ChartTable";
 
+const URLs = {
+  get: "/networth/",
+};
+
 export default function DetailsSummary() {
   const { get: getSearchParams } = useSearchParams();
 
   const clientId = getSearchParams("client");
+  const custodianId = getSearchParams("custodian");
 
+  if (clientId) {
+    URLs.get = `/networth/${clientId}/`;
+  }
+
+  if (clientId && custodianId) {
+    URLs.get += `${custodianId}/`;
+  }
   const { data, isLoading } = useAnalyticsServerGetQuery<IBalanceSheetOverview>(
-    (clientId ? `/networth/${clientId}/` : `/networth/`) +
+    URLs.get +
       buildURLSearchParams({
         report_date: getSearchParams("report_date"),
       }),
