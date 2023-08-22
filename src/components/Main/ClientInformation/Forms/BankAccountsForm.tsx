@@ -193,7 +193,7 @@ export default function BankAccountForms({
       onFinish={handleSubmit}
       layout="vertical"
       size="large"
-      className="space-y-6 pb-20"
+      className="space-y-6"
       disabled={loading}
       requiredMark={false}
     >
@@ -207,7 +207,7 @@ export default function BankAccountForms({
         initialValues={data?.meta?.relationship_manager_info}
         layout="vertical"
         size="large"
-        className="space-y-6 pb-20"
+        className="space-y-6"
       >
         <Row className="gap-x-8">
           <Button

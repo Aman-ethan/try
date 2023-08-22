@@ -4,6 +4,7 @@ import { ColumnType } from "antd/es/table";
 import { DefaultOptionType } from "rc-select/lib/Select";
 import { useMediaQuery } from "@mantine/hooks";
 import { usePathname } from "next/navigation";
+import Title from "antd/es/typography/Title";
 import Select from "@/components/Input/Select";
 import CurrencyTag from "@/components/Main/General/CurrencyTag";
 import ScrollableTable from "@/components/Main/Table/ScrollableTable";
@@ -13,7 +14,6 @@ import { IPieData, IPositionsResponse, SearchParams } from "@/interfaces/Main";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import ClampedText from "@/components/Typography/ClampedText";
 import TooltipText from "@/components/Typography/ToolTipText";
-import Title from "@/components/Typography/Title";
 import Drawer from "@/components/Main/General/Drawer";
 
 export type TCategory = "asset_class" | "region" | "industry";
@@ -225,7 +225,11 @@ export default function AnalyticsModal({
   const content = (
     <div className="flex flex-col space-y-6">
       <div className="flex flex-col space-y-4 tab:flex-row tab:items-center tab:space-x-8 tab:space-y-0">
-        <Title level={4}>{category.split("_").join(" ")}</Title>
+        {MOBILE_BREAK_POINT ? null : (
+          <Title level={4} className="capitalize">
+            {category.split("_").join(" ")}
+          </Title>
+        )}
         <Select
           className="tab:w-1/3"
           options={selectOptions}
@@ -252,11 +256,11 @@ export default function AnalyticsModal({
   if (MOBILE_BREAK_POINT) {
     return (
       <Drawer
+        title={category.split("_").join(" ")}
         placement="bottom"
         open={isOverlayVisible}
-        height="auto"
         onClose={handleClose}
-        footer={null}
+        footerStyle={{ display: "none" }}
       >
         {content}
       </Drawer>

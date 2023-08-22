@@ -53,7 +53,6 @@ export default function ClientDetailsDrawer({
   return (
     <Drawer
       width={720}
-      height={600}
       placement={placement}
       open={isDrawerOpen}
       onClose={() => {

@@ -171,7 +171,7 @@ export default function EstatesForm({ onClose, id }: IEstatesForm) {
       onFinish={handleSubmit}
       layout="vertical"
       size="large"
-      className="space-y-6 pb-20"
+      className="space-y-6"
       form={form}
       initialValues={formatInitialValues(data)}
     >

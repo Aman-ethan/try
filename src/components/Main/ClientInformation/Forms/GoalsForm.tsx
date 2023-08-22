@@ -250,7 +250,7 @@ export default function GoalsForm({ id, onClose }: GoalsFormProps) {
       id={formId}
       layout="vertical"
       size="large"
-      className="space-y-6 pb-20"
+      className="space-y-6"
       onFinish={handleSubmit}
       form={form}
       initialValues={data}
