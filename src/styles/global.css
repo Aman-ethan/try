@@ -49,11 +49,11 @@ th {
   content: unset !important;
 }
 
-.ant-segmented-item-selected {
+.segmented-primary .ant-segmented-item-selected {
   @apply !bg-primary-6 !text-white;
 }
 
-.ant-segmented-thumb {
+.segmented-primary .ant-segmented-thumb {
   @apply !bg-primary-6 !text-white;
 }
 
