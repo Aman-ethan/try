@@ -118,6 +118,7 @@ const searchParamsKeys = [
   "custodian__in",
   "security__in",
   "trade_action__in",
+  "security__name__in",
 ];
 
 export function useTableFilter() {
@@ -134,7 +135,6 @@ export function useTableFilter() {
       (acc, key) => ({ ...acc, [key]: getSearchParams(key as SearchParams) }),
       {} as Record<SearchParams, string>
     );
-
   function addFilters(columns: any) {
     switch (columns.key) {
       case "currency__in":
@@ -185,6 +185,15 @@ export function useTableFilter() {
           })),
           filterSearch: true,
           filteredValue: searchParams.security__in?.split(","),
+        };
+      case "security__name__in":
+        return {
+          ...columns,
+          filterSearch: true,
+          filters: [...new Set(security?.map((item) => item.name))].map(
+            (name) => ({ text: name, value: name })
+          ),
+          filteredValue: searchParams.security__name__in?.split(","),
         };
       case "trade_action__in":
         return {

@@ -17,6 +17,7 @@ const BlotterSearchParamKeys: SearchParams[] = [
   "security__in",
   "trade_action__in",
   "page_size",
+  "security__name__in",
 ];
 
 const GainerLoserSearchParamKeys: SearchParams[] = [

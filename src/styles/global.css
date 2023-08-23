@@ -74,3 +74,7 @@ th {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.ant-table-filter-dropdown {
+  @apply !max-w-sm;
+}

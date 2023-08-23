@@ -3,6 +3,7 @@
 import { TableColumnsType } from "antd";
 import { TCurrency } from "@/interfaces/Main";
 import TooltipText from "@/components/Typography/ToolTipText";
+import ClampedText from "@/components/Typography/ClampedText";
 import TradeTable from ".";
 import HashTag from "../../General/HashTag";
 import CurrencyTag from "../../General/CurrencyTag";
@@ -10,7 +11,10 @@ import CurrencyTag from "../../General/CurrencyTag";
 interface IActivePosition {
   id: string;
   client_name: string;
+  security_name: string;
   security: string;
+  market_value_reporting_currency: number;
+  market_value: number;
   asset_class: string;
   custodian_name: string;
   relationship_number: string;
@@ -39,6 +43,13 @@ const Columns: TableColumnsType<IActivePosition> = [
     key: "security__in",
     dataIndex: "security",
     width: 140,
+  },
+  {
+    title: "Security Name",
+    key: "security__name__in",
+    dataIndex: "security_name",
+    width: 220,
+    render: (security_name) => <ClampedText text={security_name} />,
   },
   {
     title: "Asset Class",
@@ -92,6 +103,22 @@ const Columns: TableColumnsType<IActivePosition> = [
     render: (text) => <TooltipText value={text} type="price" />,
     width: 115,
     align: "right",
+  },
+  {
+    title: "MTM Local CCY",
+    key: "market_value",
+    dataIndex: "market_value",
+    sorter: true,
+    render: (text) => <TooltipText value={text} type="price" />,
+    width: 140,
+  },
+  {
+    title: "MTM RPT CCY",
+    key: "market_value_reporting_currency",
+    dataIndex: "market_value_reporting_currency",
+    sorter: true,
+    render: (text) => <TooltipText value={text} type="price" />,
+    width: 140,
   },
   {
     title: "Unrealized P/L",

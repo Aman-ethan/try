@@ -302,7 +302,8 @@ export type SearchParams =
   | "asset_duration"
   | "security_id"
   | "asset_class"
-  | "gain_loss_duration";
+  | "gain_loss_duration"
+  | "security__name__in";
 
 export interface IUseTableParams {
   searchParamKeys?: {
