@@ -1,8 +1,7 @@
 "use client";
 
 import { CheckboxOptionType, Radio, RadioChangeEvent } from "antd";
-import { useEffect, useState } from "react";
-import { useClientBreadCrumb } from "@/context/ClientContext";
+import { useState } from "react";
 import { TTabType } from "@/interfaces/Main";
 import BankAccounts from "./BankAccounts";
 import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
@@ -29,14 +28,10 @@ const DetailOptions: CheckboxOptionType[] = [
 ];
 
 export default function ClientDetailsView() {
-  const { setBreadItems } = useClientBreadCrumb();
   const [type, setType] = useState<TTabType>("goal");
   const handleTypeChange = (e: RadioChangeEvent) => {
     setType(e.target.value);
   };
-  useEffect(() => {
-    setBreadItems(type);
-  }, [setBreadItems, type]);
   return (
     <div className="-mx-5 justify-between space-y-6">
       <div className="flex w-auto flex-col tab:flex-row tab:justify-between">

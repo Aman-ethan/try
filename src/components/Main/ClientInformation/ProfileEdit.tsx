@@ -9,7 +9,6 @@ import { useTransactionServerQuery } from "@/hooks/useQuery";
 import useSearchParams from "@/hooks/useSearchParams";
 import formatInitialValues from "@/lib/formatInitialValues";
 import formatTriggerValues from "@/lib/formatTriggerValues";
-import { useClientBreadCrumb } from "@/context/ClientContext";
 import revalidate from "@/lib/revalidate";
 import { DatePicker } from "../Input/DatePicker";
 import SelectCurrency from "../Input/SelectCurrency";
@@ -139,11 +138,6 @@ export default function ProfileEdit({
 }: IClientInformationProps) {
   const [form] = Form.useForm();
   const { data, loading, updateClient } = useClient();
-  const { setBreadItems } = useClientBreadCrumb();
-
-  useEffect(() => {
-    setBreadItems("Edit Profile");
-  }, [setBreadItems]);
 
   useEffect(() => {
     if (data) {
