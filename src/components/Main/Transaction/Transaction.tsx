@@ -166,35 +166,37 @@ export default function Transaction() {
   );
 
   return (
-    <div className="flex flex-col gap-y-6">
-      <Title className={HeaderClassName}>Transaction</Title>
-      <div className="flex flex-col gap-y-4 tab:flex-row tab:gap-x-4 tab:gap-y-0">
-        <Input.Search
-          onChange={(e) => {
-            const search = e.target.value as string;
-            if (!search) updateSearchParams({ search: undefined });
-            updateSearchParams({ search });
-          }}
-          size="large"
-          placeholder="Search Security, Description"
-          className="order-first"
-        />
-        <Button
-          size="large"
-          icon={<FilterOutlined />}
-          className="flex items-center justify-center tab:hidden"
-          onClick={() => setShowFilter(!showFilter)}
-        >
-          Filters
-        </Button>
-        <div className="order-last flex flex-col gap-x-4 gap-y-2 tab:w-full tab:flex-row">
-          <SelectClientWithParams
-            placeholder="All Clients"
-            className={primarySelectClasses}
+    <div className="flex flex-col tab:space-y-6 lap:space-y-8">
+      <div className="flex flex-col space-y-2 lap:space-y-6">
+        <div className="w-full flex justify-between">
+          <Title className={HeaderClassName}>Transaction</Title>
+          <Button
+            size="large"
+            icon={<FilterOutlined />}
+            className="flex items-center justify-center tab:hidden"
+            onClick={() => setShowFilter(!showFilter)}
           />
-          <SelectCustodianWithParams
-            placeholder="All Custodian"
-            className={primarySelectClasses}
+        </div>
+        <div className="flex gap-y-4 flex-col lap:gap-x-4 lap:flex-row">
+          <div className="flex flex-col gap-x-4 gap-y-2 w-full tab:flex-row lap:w-2/3">
+            <SelectClientWithParams
+              placeholder="All Clients"
+              className={primarySelectClasses}
+            />
+            <SelectCustodianWithParams
+              placeholder="All Custodian"
+              className={primarySelectClasses}
+            />
+          </div>
+          <Input.Search
+            onChange={(e) => {
+              const search = e.target.value as string;
+              if (!search) updateSearchParams({ search: undefined });
+              updateSearchParams({ search });
+            }}
+            size="large"
+            placeholder="Search Security, Description"
+            className="w-full tab:w-1/2 lap:w-2/3"
           />
         </div>
       </div>

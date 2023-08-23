@@ -205,7 +205,7 @@ export default function SelectDurationWithParams() {
         >
           <DatePicker
             size="middle"
-            className="max-w-[8rem]"
+            className="selected-date max-w-[8rem]"
             style={{ backgroundColor: token.colorPrimaryBg }}
             defaultValue={dayjs(endDate)}
             onChange={handleDateChange}

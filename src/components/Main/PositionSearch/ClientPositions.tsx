@@ -63,15 +63,9 @@ export default function ClientPositions({
                   <Title level={3}>{record?.client_name}</Title>
                   <CurrencyTag currency={record?.currency} />
                 </div>
-                <Row
-                  gutter={16}
-                  justify="space-between"
-                  className="flex flex-wrap items-center"
-                >
-                  <Col sm={12} md={8} lg={8} className="mb-2 tab:mb-0">
-                    <Title level={6} className="font-regular">
-                      Net Worth
-                    </Title>
+                <Row gutter={16}>
+                  <Col sm={12} md={8} lg={8}>
+                    <Title level={6}>Net Worth</Title>
                     <Title level={4}>
                       <TooltipText value={record?.networth} />
                     </Title>
@@ -84,10 +78,8 @@ export default function ClientPositions({
                       <TooltipText value={record?.assets} />
                     </Title>
                   </Col>
-                  <Col sm={12} md={8} lg={8} className="mb-2 tab:mb-0">
-                    <Title level={6} className="font-regular">
-                      Liabilities
-                    </Title>
+                  <Col sm={12} md={8} lg={8}>
+                    <Title level={6}>Liabilities</Title>
                     <Title level={4} className="text-summary-loss">
                       <TooltipText value={record?.liabilities} />
                     </Title>

@@ -6,7 +6,7 @@ import TradeForm from "../Form/Trade";
 
 const drawerProps: IDrawerProps = {
   button: (
-    <Button type="primary" size="large" className="w-40">
+    <Button type="primary" size="large" className="flex-1 tab:w-40">
       Add Trade
     </Button>
   ),
