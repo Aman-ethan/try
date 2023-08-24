@@ -12,7 +12,11 @@ export default function Title({
   const mergedClassName = clsx(titleClassName, className);
   switch (level) {
     case 1:
-      return <h1 className={clsx("text-4xl", mergedClassName)}>{children}</h1>;
+      return (
+        <h1 className={clsx("text-3xl tab:text-4xl", mergedClassName)}>
+          {children}
+        </h1>
+      );
     case 3:
       return (
         <h3 className={clsx("text-xl tab:text-2xl", mergedClassName)}>
@@ -20,11 +24,23 @@ export default function Title({
         </h3>
       );
     case 4:
-      return <h4 className={clsx("text-xl", mergedClassName)}>{children}</h4>;
+      return (
+        <h4 className={clsx("text-base tab:text-xl", mergedClassName)}>
+          {children}
+        </h4>
+      );
     case 5:
-      return <h5 className={clsx("text-base", mergedClassName)}>{children}</h5>;
+      return (
+        <h5 className={clsx("text-sm tab:text-base", mergedClassName)}>
+          {children}
+        </h5>
+      );
     case 6:
-      return <h6 className={clsx("text-sm", mergedClassName)}>{children}</h6>;
+      return (
+        <h6 className={clsx("text-xs tab:text-sm", mergedClassName)}>
+          {children}
+        </h6>
+      );
     default:
       return (
         <h2 className={clsx("text-2xl tab:text-3xl", mergedClassName)}>

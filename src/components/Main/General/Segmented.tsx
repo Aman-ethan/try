@@ -15,7 +15,7 @@ export default function Segmented({
     <AntdSegmented
       className={clsx(
         "w-auto space-x-2 rounded-md border-2 border-solid border-neutral-4 bg-neutral-2 p-1 text-base",
-        primary ? "segmented-primary" : "",
+        primary ? "segmented-primary" : "segmented-default",
         className
       )}
       block={block}

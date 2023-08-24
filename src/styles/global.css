@@ -75,8 +75,8 @@ th {
   scrollbar-width: none;
 }
 
-.selected-date .ant-picker-input input{
-  @apply !text-blue-500; 
+.selected-date .ant-picker-input input {
+  @apply !text-blue-500;
 }
 
 .ant-table-filter-dropdown {
