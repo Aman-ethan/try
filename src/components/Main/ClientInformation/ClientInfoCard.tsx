@@ -62,7 +62,7 @@ export default function ClientInfoCard() {
                   icon={<EditOutlined />}
                 />
               </div>
-              <div className="flex items-center justify-between gap-6">
+              <div className="flex items-center justify-between gap-6 tab:justify-start">
                 <div className="flex items-center gap-1.5">
                   <Avatar
                     className="object-contain"
