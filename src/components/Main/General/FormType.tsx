@@ -13,8 +13,10 @@ const UploadTypeOptions: CheckboxOptionType[] = [
 
 const optionStyle: CSSProperties = {
   borderRadius: "0.375rem",
-  padding: "0 1.5rem",
+  padding: "0 1rem",
   border: 0,
+  textAlign: "center",
+  width: "100%",
 };
 
 export default function FormType() {
@@ -39,7 +41,7 @@ export default function FormType() {
         setUploadType(e.target.value);
       }}
       size="large"
-      className="divider-0 space-x-6"
+      className="divider-0 flex justify-between space-x-6 tab:w-1/2 tab:justify-start"
     />
   );
 }

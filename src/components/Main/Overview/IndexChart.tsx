@@ -195,7 +195,7 @@ export default function IndexChart({ data, loading }: IIndexChartProps) {
 
   if (loading || data?.length === 0)
     return (
-      <div className="flex h-full items-center justify-center -translate-y-8">
+      <div className="flex h-full -translate-y-8 items-center justify-center">
         {loading ? <Spin /> : <Empty />}
       </div>
     );

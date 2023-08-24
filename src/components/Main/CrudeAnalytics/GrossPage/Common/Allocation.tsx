@@ -132,7 +132,7 @@ export default function Allocation({
     .replace(" ", "_") as TCategory;
 
   return (
-    <div className="space-y-4 lap:space-y-8 text-center desk:flex-1">
+    <div className="space-y-4 text-center lap:space-y-8 desk:flex-1">
       <Title level={3}>{pieChartCategory.split("_").join(" ")}</Title>
       <div className="flex flex-col items-center gap-y-2 tab:flex-row lap:flex-col">
         <AnalyticsModal

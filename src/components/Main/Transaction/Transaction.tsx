@@ -156,7 +156,6 @@ const columns: ColumnsType = [
     align: "right",
   },
 ];
-
 export default function Transaction() {
   const [showFilter, setShowFilter] = useState(false);
   const { updateSearchParams } = useSearchParams();
@@ -164,7 +163,6 @@ export default function Transaction() {
     showFilter ? "block" : "hidden",
     "tab:flex tab:w-1/2"
   );
-
   return (
     <div className="flex flex-col tab:space-y-6 lap:space-y-8">
       <div className="flex flex-col space-y-2 lap:space-y-6">

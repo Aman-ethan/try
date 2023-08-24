@@ -76,7 +76,7 @@ export default function PositionListItems() {
         <div className={listItemsClasses}>
           <div className="flex w-full flex-col gap-y-4 tab:flex-row tab:justify-between">
             <div>
-              <h2 className="w-1/3 text-xl desk:text-2xl font-medium">
+              <h2 className="w-1/3 text-xl font-medium desk:text-2xl">
                 Positions
               </h2>
             </div>

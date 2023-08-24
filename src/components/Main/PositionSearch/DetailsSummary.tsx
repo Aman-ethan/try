@@ -54,7 +54,7 @@ export default function DetailsSummary() {
       <div className="mb-4 flex justify-between">
         <Title
           level={MOBILE_BREAK_POINT ? 4 : 3}
-          className="text-xl font-regular tab:text-2xl"
+          className="font-regular text-xl tab:text-2xl"
         >
           Overview
         </Title>
@@ -70,7 +70,7 @@ export default function DetailsSummary() {
             percentage={assetPercentage}
           />
         </Col>
-        <Col className="flex-1 flex flex-col space-between">
+        <Col className="space-between flex flex-1 flex-col">
           <ChartTable
             loading={isLoading}
             data={data?.liability}
