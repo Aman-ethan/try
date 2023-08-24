@@ -22,7 +22,7 @@ export default function RelativeChart() {
     setValue(e);
   };
   const urlKey = value === "ticker" ? tickerUrlKey : networthUrlKey;
-  const { data } = useRelativeChart<IAssetNetWorth>({
+  const { data, loading } = useRelativeChart<IAssetNetWorth>({
     urlKey,
     ticker,
   });
@@ -32,24 +32,21 @@ export default function RelativeChart() {
   }, [value]);
 
   return (
-    <div className="space-y-6 rounded-lg bg-neutral-1 p-6">
-      <div className="flex items-center justify-between">
-        <div className="w-full space-x-4 tab:w-1/2 lap:w-1/3">
-          <Segmented
-            options={options}
-            value={value}
-            onChange={onValueChange}
-            defaultValue={options[0].value}
-            size="large"
-            className="w-[300px]"
-          />
-        </div>
+    <div className="space-y-6 rounded-lg bg-neutral-1 p-4 tab:p-6 tab:space-y-8">
+      <div className="w-72">
+        <Segmented
+          options={options}
+          value={value}
+          onChange={onValueChange}
+          defaultValue={options[0].value}
+        />
       </div>
       <PerformanceChart
         data={data?.data}
         setTicker={setTicker}
         value={value}
         ticker={ticker}
+        loading={loading}
       />
     </div>
   );

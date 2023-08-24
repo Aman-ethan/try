@@ -14,11 +14,9 @@ import {
   uniqBy,
 } from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CloseCircleOutlined } from "@ant-design/icons";
 import { SegmentedValue } from "antd/es/segmented";
-import { useMediaQuery } from "@mantine/hooks";
 import { OrdinalRange } from "@/constants/strings";
-import { IAssetNetWorth } from "@/interfaces/Main";
+import { IAssetNetWorth, IIndexData } from "@/interfaces/Main";
 import TickerSelect from "./TickerSelect";
 import AssetSelect from "./AssetSelect";
 
@@ -37,7 +35,9 @@ interface IFillMissingDataParams {
   xticks: string[];
 }
 
-type TScaleRecord = string[] | undefined;
+const AXIS_OFFSET = 0.05;
+const yTickFormat = format("+.0%");
+const f = format("+.2%");
 
 function fillMissingData({ data, xticks }: IFillMissingDataParams) {
   return reduce(
@@ -76,9 +76,8 @@ export default function PerformanceChart({
   const chartRef = useRef<HTMLDivElement>(null);
   const [normalizeIndex, setNormalizeIndex] = useState(0);
   const [excludedDomain, setExcludedDomain] = useState<string[]>([]);
-  const chartScaleRef = useRef<Plot.Scale>();
 
-  const [filledData, filledGroupedData, assets] = useMemo(() => {
+  const [filledData, filledGroupedData, assets, maxDomain] = useMemo(() => {
     setNormalizeIndex(0);
 
     const absoluteData = sortBy(
@@ -121,37 +120,37 @@ export default function PerformanceChart({
       xticks,
     });
     const _filledData = Object.values(_filledGroupedData).flat();
-
-    return [_filledData, _filledGroupedData, _assets];
-  }, [data, excludedDomain, setTicker]);
-
-  useEffect(() => {
-    if (filledData.length === 0) return undefined;
-    const maxDomain = max(
+    const _maxDomain = max(
       map(
-        filledGroupedData,
+        _filledGroupedData,
         (item) =>
-          (maxBy(item, "y") as TData).y /
+          (maxBy(item, "y") as IIndexData).y /
           (
             minBy(item, (o) => {
               if (o.y === 0) return Infinity;
               return o.y;
-            }) as TData
+            }) as IIndexData
           ).y
       )
     ) as number;
+    return [_filledData, _filledGroupedData, _assets, _maxDomain];
+  }, [data, excludedDomain, setTicker]);
 
-    const options = Plot.normalizeY(
-      (Y: number[]) => {
-        return Y[normalizeIndex];
-      },
-      {
-        x: "x",
-        y: "y",
-        stroke: "z",
-        strokeWidth: 2,
-      }
-    );
+  useEffect(() => {
+    if (filledData.length === 0) return undefined;
+
+    const normalizeY = (options?: Record<string, unknown>) =>
+      Plot.normalizeY(
+        (Y: number[]) => {
+          return Y[normalizeIndex];
+        },
+        {
+          x: "x",
+          y: "y",
+          z: "z",
+          ...options,
+        }
+      );
     const chart = Plot.plot({
       width: chartRef.current?.clientWidth,
       style: {
@@ -163,12 +162,9 @@ export default function PerformanceChart({
       },
       y: {
         type: "log",
-        tickFormat: (
-          (f) => (y: number) =>
-            f(y - 1)
-        )(format("+.0%")),
+        tickFormat: (y: number) => yTickFormat(y - 1),
         label: null,
-        domain: [1 / maxDomain, maxDomain],
+        domain: [1 / (maxDomain + AXIS_OFFSET), maxDomain + AXIS_OFFSET],
         grid: true,
       },
       color: {
@@ -177,36 +173,23 @@ export default function PerformanceChart({
       },
       marks: [
         Plot.ruleY([1]),
-        Plot.lineY(filledData, options),
-        Plot.crosshairX(filledData, { ...options, y: null }),
-        Plot.text(filledData, {
-          ...options,
-          text: (d) => {
-            // Get current line data
-            const currentLineData = filledGroupedData[d.z];
-            // Get last data point of current line
-            const lastDataPointofLine =
-              currentLineData[currentLineData.length - 1];
-            // Get current data point
-            const currentDataPoint = filledGroupedData[d.z]?.[normalizeIndex];
-            // If data point is the last data point of current line
-            if (isEqual(d, lastDataPointofLine)) {
-              // Return the percentage difference between last data point and current data point
-              return `${(
-                ((filledGroupedData[d.z][currentLineData.length - 1].y -
-                  currentDataPoint.y) /
-                  filledGroupedData[d.z][currentLineData.length - 1].y) *
-                100
-              ).toFixed(2)}%`;
-            }
-            // Else return empty string
-            return "";
-          },
-          dy: -8,
-          dx: 10,
-          textAnchor: "middle",
-          fontSize: 12,
-        }),
+        Plot.lineY(filledData, normalizeY({ stroke: "z", strokeWidth: 2 })),
+        Plot.crosshairX(filledData, normalizeY({ y: null })),
+        Plot.text(
+          filledData,
+          Plot.selectLast(
+            normalizeY({
+              text: (d: IIndexData) => {
+                const normalizeBy = filledGroupedData[d.z][normalizeIndex].y;
+                const tempValue = d.y / normalizeBy - 1;
+                return f(tempValue);
+              },
+              fill: "z",
+              fontSize: 12,
+              dy: -8,
+            })
+          )
+        ),
       ],
     });
 
@@ -221,24 +204,14 @@ export default function PerformanceChart({
       }
     };
 
-    if (!chartScaleRef.current) {
-      chartScaleRef.current = chart.scale("color");
-    }
     chartRef.current?.append(chart);
 
     return () => chart.remove();
-  }, [normalizeIndex, filledData, filledGroupedData, assets]);
-
-  const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 400px)");
-
-  const innerClass = clsx(
-    "grid gap-4 tab:flex tab:gap-x-4 tab:flex-wrap tab:w-full",
-    MOBILE_BREAK_POINT ? "grid-cols-1" : "grid-cols-2"
-  );
+  }, [normalizeIndex, filledData, filledGroupedData, assets, maxDomain]);
 
   if (loading)
     return (
-      <div className="flex h-full items-center justify-center">
+      <div className="h-[30.125rem] flex items-center justify-center">
         <Spin />
       </div>
     );
@@ -277,52 +250,40 @@ export default function PerformanceChart({
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-4">
         {value === "ticker" ? (
           <TickerSelect handleOptionChange={handleOptionChange} />
         ) : (
           <AssetSelect handleOptionChange={handleOptionChange} />
         )}
-        <div className="flex w-full max-w-lg items-center py-4 tab:min-w-full tab:py-6">
-          <div className={innerClass}>
-            {assets?.map((domain, index) => {
-              const isExcluded = excludedDomain?.includes(domain);
-              const backgroundColor = (
-                chartScaleRef.current?.range as TScaleRecord
-              )?.[index];
-              return (
-                <div className="flex">
-                  <Tag
-                    key={domain}
-                    className={clsx(
-                      "flex cursor-pointer items-center rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5 text-sm",
-                      isExcluded ? "opacity-50" : ""
-                    )}
-                    onClick={handleDomainChange(domain)}
-                  >
-                    <div
-                      className="mr-2 h-4 w-4"
-                      style={{
-                        backgroundColor,
-                      }}
-                    />
-                    <div className="whitespace-nowrap">{domain}</div>
-                  </Tag>
-                  <CloseCircleOutlined onClick={() => handleTagClose(domain)} />
-                </div>
-              );
-            })}
-          </div>
+        <div className="flex flex-wrap gap-y-2">
+          {assets?.map((domain, index) => {
+            const isExcluded = excludedDomain?.includes(domain);
+            const backgroundColor = OrdinalRange[index];
+            return (
+              <Tag
+                closeIcon
+                className={clsx(
+                  "flex gap-2 cursor-pointer items-center rounded-md border border-neutral-3 bg-neutral-2 px-2 py-0.5 text-sm",
+                  isExcluded ? "opacity-50" : ""
+                )}
+                onClick={handleDomainChange(domain)}
+                onClose={() => handleTagClose(domain)}
+              >
+                <div
+                  className="h-4 w-4"
+                  style={{
+                    backgroundColor,
+                  }}
+                />
+                <div className="whitespace-nowrap">{domain}</div>
+              </Tag>
+            );
+          })}
         </div>
       </div>
-      <div style={{ width: "100%" }}>
-        {data?.length === 0 && (
-          <div className="flex h-full items-center justify-center">
-            <Empty description="No data" />
-          </div>
-        )}
-        <div ref={chartRef} />
-      </div>
+      {data?.length === 0 && <Empty description="No data" />}
+      <div ref={chartRef} />
     </>
   );
 }

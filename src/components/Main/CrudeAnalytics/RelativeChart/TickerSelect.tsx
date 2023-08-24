@@ -40,18 +40,18 @@ export default function TickerSelect({ handleOptionChange }: ITickerSelect) {
   }, 1000);
 
   return (
-    <div className="flex items-center space-x-4">
-      <p className="text-lg font-medium">Ticker</p>
+    <div className="flex items-center gap-4">
+      <p className="w-11 text-base font-medium tab:text-lg">Ticker</p>
       <Select
         labelInValue
-        placeholder="Select Ticker"
+        placeholder="Search Ticker"
         filterOption={false}
         loading={isLoading}
         onSelect={(value) => handleOptionChange(value.value)}
         onSearch={handleSearchChange}
         notFoundContent={isLoading ? <Spin size="small" /> : null}
         options={selectOptions}
-        className="w-[300px]"
+        className="w-60"
         showSearch
         allowClear
       />

@@ -8,13 +8,13 @@ interface IAssetSelect {
 
 export default function AssetSelect({ handleOptionChange }: IAssetSelect) {
   return (
-    <div className="flex items-center space-x-4">
-      <p className="text-lg font-medium">Asset</p>
+    <div className="flex items-center gap-4">
+      <p className="w-11 text-base font-medium tab:text-lg">Asset</p>
       <ClientAssetSelect
         labelInValue
-        placeholder="Select Asset"
+        placeholder="Search Asset"
         onSelect={(value) => handleOptionChange(value.value)}
-        className="w-[300px]"
+        className="w-60"
         showSearch
         allowClear
       />
