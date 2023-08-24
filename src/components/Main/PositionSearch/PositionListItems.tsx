@@ -1,13 +1,15 @@
 "use client";
 
-import { Button, Card, Segmented } from "antd";
+import { Button, Card } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import clsx from "clsx";
+import { useMediaQuery } from "@mantine/hooks";
 import Select from "@/components/Input/Select";
 import usePositions from "@/hooks/usePositions";
 import useSearchParams from "@/hooks/useSearchParams";
 import ListView from "./General/ListView";
+import Segmented from "../General/Segmented";
 import SelectRelationshipNumber from "../Input/SelectRelationshipNumber";
 import SearchPositionSecurities from "../Input/SearchPositionSecurities";
 import ClientAssetSelect from "../Input/ClientAssetSelect";
@@ -41,6 +43,9 @@ export default function PositionListItems() {
     showFilter ? "block" : "hidden",
     "w-full tab:flex"
   );
+
+  const LAPTOP_BREAK_POINT = useMediaQuery("(min-width: 1024px)");
+
   return (
     <>
       <div className="flex flex-col space-y-4 tab:flex-row tab:justify-between tab:space-x-4 tab:space-y-0">
@@ -92,8 +97,8 @@ export default function PositionListItems() {
             </div>
           </div>
           <Segmented
-            size="large"
-            block
+            size={LAPTOP_BREAK_POINT ? "large" : "middle"}
+            primary={false}
             options={Options}
             className="hidden lap:block"
             onChange={onSegmentChange}
