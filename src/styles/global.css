@@ -82,3 +82,7 @@ th {
 .ant-table-filter-dropdown {
   @apply !max-w-sm;
 }
+
+.client-details-radio-group label {
+  @apply !flex-auto;
+}

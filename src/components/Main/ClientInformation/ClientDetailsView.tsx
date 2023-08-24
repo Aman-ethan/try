@@ -24,7 +24,10 @@ function View({ type }: { type: TTabType }) {
 const DetailOptions: CheckboxOptionType[] = [
   { label: "Goals", value: "goal" },
   { label: "Estates", value: "estate" },
-  { label: "Bank Accounts", value: "bank_account" },
+  {
+    label: "Bank Accounts",
+    value: "bank_account",
+  },
 ];
 
 export default function ClientDetailsView() {
@@ -33,8 +36,8 @@ export default function ClientDetailsView() {
     setType(e.target.value);
   };
   return (
-    <div className="-mx-5 justify-between space-y-6">
-      <div className="flex w-auto flex-col tab:flex-row tab:justify-between">
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4 tab:flex-row tab:justify-between">
         <Radio.Group
           options={DetailOptions}
           value={type}
@@ -42,8 +45,9 @@ export default function ClientDetailsView() {
           optionType="button"
           buttonStyle="outline"
           size="large"
+          className="flex client-details-radio-group"
         />
-        <div className="mt-4 self-end tab:mt-0">
+        <div className="self-end">
           <ClientDetailsDrawer type={type} />
         </div>
       </div>

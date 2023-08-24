@@ -107,6 +107,7 @@ export default function Goals() {
             {Object.entries(GoalsItemsMap).map(([label, key]) => (
               <Col
                 key={key}
+                xs={24}
                 sm={24}
                 md={key === "asset_class_preference" ? 24 : 12}
                 className="flex flex-col gap-2"
