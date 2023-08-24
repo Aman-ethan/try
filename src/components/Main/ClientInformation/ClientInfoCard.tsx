@@ -82,7 +82,7 @@ export default function ClientInfoCard() {
                 </p>
               ) : null}
             </div>
-            <Divider className="bg-neutral-6" />
+            <Divider className="bg-neutral-6 border-0 h-px" />
             {editClicked ? (
               <ProfileEdit setEditClicked={setEditClicked} />
             ) : (

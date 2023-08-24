@@ -51,7 +51,7 @@ export default function ClientDetailsView() {
           <ClientDetailsDrawer type={type} />
         </div>
       </div>
-      <div>
+      <div className="min-h-[calc(100vh-38rem)]">
         <View type={type} />
       </div>
     </div>

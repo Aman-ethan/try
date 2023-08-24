@@ -53,7 +53,7 @@ export default function Estates() {
   if (isLoading) return <Skeleton />;
 
   return (
-    <div className="mt-4 h-[calc(100vh-35rem)] w-full overflow-y-scroll tab:w-11/12">
+    <div className="mt-4 space-y-6 w-full overflow-y-scroll tab:w-11/12">
       {data?.map((item: TEstate) => (
         <Card
           key={item?.id}
@@ -80,7 +80,6 @@ export default function Estates() {
             </div>,
           ]}
           headStyle={{ gap: "0.5rem" }}
-          className="mb-4"
         >
           <Row
             gutter={{
