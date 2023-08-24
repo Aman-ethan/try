@@ -45,7 +45,8 @@ export default function DeleteModal({ id, type }: IDeleteModalProps) {
   return (
     <>
       <Button
-        className="ml-4 border-red-300"
+        className="ml-4 border-red-300 flex justify-center items-center"
+        style={{ width: "34px", height: "34px" }}
         type="default"
         onClick={showModal}
         size="large"

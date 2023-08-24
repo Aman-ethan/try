@@ -45,11 +45,14 @@ export default function ClientDetailsDrawer({
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { placement } = useResize();
 
+  const deleteButtonStyle = edit
+    ? { height: "34px", width: "34px" }
+    : undefined;
   const title = edit ? `Edit` : `Add ${type.replace("_", " ")}`;
 
   return (
     <Drawer
-      width={720}
+      width={570}
       placement={placement}
       open={isDrawerOpen}
       onClose={() => {
@@ -60,9 +63,10 @@ export default function ClientDetailsDrawer({
         <Button
           onClick={() => setIsDrawerOpen(true)}
           type={edit ? "default" : "primary"}
-          className="capitalize"
+          className="capitalize flex justify-center items-center"
           size="large"
           icon={edit ? <EditOutlined className="text-sm" /> : undefined}
+          style={deleteButtonStyle}
         >
           {edit ? "" : `Add ${type.replace("_", " ")}`}
         </Button>
