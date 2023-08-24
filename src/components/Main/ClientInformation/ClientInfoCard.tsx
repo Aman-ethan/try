@@ -46,7 +46,7 @@ export default function ClientInfoCard() {
         <Col className="w-full tab:w-1/2 lap:w-1/3">
           <SelectClientWithParams
             searchParamKey={searchParamKey}
-            className="mob:w-full"
+            className="w-full"
             disabled={!selectedClient?.key}
             value={selectedClient?.value}
           />
@@ -62,9 +62,10 @@ export default function ClientInfoCard() {
           ) : (
             <div className="space-y-6">
               <div className="flex items-center justify-between space-x-4 tab:justify-start">
-                <Title className="text-xl tab:text-3xl">{name}</Title>
+                <Title level={3}>{name}</Title>
                 <Button
-                  className="flex items-center justify-center "
+                  className="flex items-center justify-center"
+                  style={{ width: "34px", height: "34px" }}
                   onClick={() => setEditClicked((prev) => !prev)}
                 >
                   <EditOutlined />
@@ -72,7 +73,11 @@ export default function ClientInfoCard() {
               </div>
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-1.5">
-                  <Avatar className="object-contain" icon={<UserOutlined />} />
+                  <Avatar
+                    className="object-contain"
+                    icon={<UserOutlined />}
+                    size={26}
+                  />
                   <Title level={3}>
                     {first_name} {last_name}
                   </Title>
