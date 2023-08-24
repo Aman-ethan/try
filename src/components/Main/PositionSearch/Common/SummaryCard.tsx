@@ -25,9 +25,7 @@ export default function SummaryCard({ type, value }: ISummaryCardProps) {
       }}
       className="w-full lap:w-1/3"
     >
-      <Title level={4} className="font-medium">
-        {formattedValue}
-      </Title>
+      <Title level={4}>{formattedValue}</Title>
       <p className="tab:text-md text-sm capitalize">
         {type.split("_").join(" ")}
       </p>

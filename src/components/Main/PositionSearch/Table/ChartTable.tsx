@@ -20,10 +20,10 @@ interface IChartTableProps {
 }
 
 const thClassName =
-  "relative z-10 bg-transparent border-none text-left text-sm tab:text-lg font-light text-neutral-9";
+  "relative z-10 bg-transparent border-none text-left text-md tab:text-lg font-light text-neutral-9";
 
 const trClassName =
-  "relative z-10 bg-transparent border-none text-left text-sm tab:text-lg font-light";
+  "relative z-10 bg-transparent border-none text-left text-sm tab:text-md font-light";
 
 const Columns: TableColumnsType<IBalanceSheetChart> = [
   {
@@ -66,7 +66,7 @@ export default function ChartTable({
 
   const textClass = clsx(
     progressType === "success" ? "text-summary-profit" : "text-summary-loss",
-    "text-base tab:text-xl basis-1/4 text-center"
+    "basis-1/4 text-center"
   );
 
   const renderRow = ({
@@ -108,14 +108,15 @@ export default function ChartTable({
           },
         }}
       />
-      <div className="flex justify-between border-t-4 py-4">
-        <Title level={5} className="tab:text-md basis-1/2 text-sm lap:text-lg">
+      <hr className="space-y-4 bg-neutral-4" />
+      <div className="flex justify-between py-4">
+        <Title level={5} className="basis-1/2 ml-2">
           {TotalText}
         </Title>
-        <Title level={5} className={textClass}>
+        <Title level={4} className={textClass}>
           <ToolTipText value={total} type="price" />
         </Title>
-        <Title level={5} className={textClass}>
+        <Title level={4} className={textClass}>
           {formatPercentage(percentage)}%
         </Title>
       </div>
