@@ -1,7 +1,7 @@
 "use client";
 
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Col, Divider, Row, Skeleton } from "antd";
+import { Avatar, Button, Divider, Skeleton } from "antd";
 import { useEffect, useState } from "react";
 import Title from "@/components/Typography/Title";
 import useClient from "@/hooks/useClient";
@@ -42,62 +42,55 @@ export default function ClientInfoCard() {
 
   return (
     <div className="space-y-6 lap:space-y-8">
-      <Row>
-        <Col className="w-full tab:w-1/2 lap:w-1/3">
-          <SelectClientWithParams
-            searchParamKey={searchParamKey}
-            className="w-full"
-            disabled={!selectedClient?.key}
-            value={selectedClient?.value}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Card
-          className="w-full rounded-lg p-4 tab:p-6 lap:p-10"
-          bodyStyle={{ padding: "0" }}
-        >
-          {isLoading ? (
-            <Skeleton />
-          ) : (
-            <div className="space-y-6">
-              <div className="flex items-center justify-between space-x-4 tab:justify-start">
+      <SelectClientWithParams
+        searchParamKey={searchParamKey}
+        className="w-full tab:max-w-[19.0625rem]"
+        disabled={!selectedClient?.key}
+        value={selectedClient?.value}
+      />
+      <div className="rounded-lg p-4 bg-neutral-1 tab:p-6 lap:p-8">
+        {isLoading ? (
+          <Skeleton />
+        ) : (
+          <>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between gap-4 tab:justify-start">
                 <Title level={3}>{name}</Title>
                 <Button
-                  className="flex items-center justify-center"
                   style={{ width: "34px", height: "34px" }}
                   onClick={() => setEditClicked((prev) => !prev)}
-                >
-                  <EditOutlined />
-                </Button>
+                  icon={<EditOutlined />}
+                />
               </div>
-              <div className="flex items-center gap-6">
+              <div className="flex items-center justify-between gap-6">
                 <div className="flex items-center gap-1.5">
                   <Avatar
                     className="object-contain"
                     icon={<UserOutlined />}
                     size={26}
                   />
-                  <Title level={3}>
+                  <p className="font-medium">
                     {first_name} {last_name}
-                  </Title>
+                  </p>
                 </div>
                 <CurrencyTag currency={reporting_currency} />
               </div>
-              <p className="text-lg text-neutral-9">
-                {city && country ? `${city}, ` : city}
-                {country}
-              </p>
-              <Divider className="bg-neutral-6" />
-              {editClicked ? (
-                <ProfileEdit setEditClicked={setEditClicked} />
-              ) : (
-                <ClientDetailsView />
-              )}
+              {city || country ? (
+                <p className="text-lg text-neutral-9">
+                  {city && country ? `${city}, ` : city}
+                  {country}
+                </p>
+              ) : null}
             </div>
-          )}
-        </Card>
-      </Row>
+            <Divider className="bg-neutral-6" />
+            {editClicked ? (
+              <ProfileEdit setEditClicked={setEditClicked} />
+            ) : (
+              <ClientDetailsView />
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
