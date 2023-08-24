@@ -38,7 +38,7 @@ export default function Select({
       defaultValue={loading ? undefined : defaultValue}
       value={loading ? undefined : value}
       disabled={loading}
-      className={clsx("initial:w-auto initial:tab:w-full", className)}
+      className={clsx("initial:w-full", className)}
       size={size}
       {...props}
     />

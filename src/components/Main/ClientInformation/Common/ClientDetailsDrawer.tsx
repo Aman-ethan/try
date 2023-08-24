@@ -45,11 +45,8 @@ export default function ClientDetailsDrawer({
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { placement } = useResize();
 
-  const title = (
-    <span className="text-xl font-medium capitalize">
-      {edit ? `Edit` : `Add ${type.replace("_", " ")}`}
-    </span>
-  );
+  const title = edit ? `Edit` : `Add ${type.replace("_", " ")}`;
+
   return (
     <Drawer
       width={720}

@@ -108,9 +108,9 @@ function BulkUpload() {
 export default function UploadStatement() {
   const { uploadType } = useFormType();
   return (
-    <div className="space-y-4 tab:space-y-8">
+    <div className="space-y-6 tab:space-y-8">
       <FormType />
-      <div className="space-y-6">
+      <div className="space-y-4 tab:space-y-6">
         {uploadType === "bulk" ? <BulkUpload /> : <ManualEntry />}
       </div>
     </div>

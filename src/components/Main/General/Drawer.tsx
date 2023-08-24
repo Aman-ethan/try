@@ -1,6 +1,6 @@
 import { CloseOutlined } from "@ant-design/icons";
 import { useMediaQuery } from "@mantine/hooks";
-import { Drawer as AntdDrawer, Button, Row, Divider } from "antd";
+import { Drawer as AntdDrawer, Button, Row } from "antd";
 import { KeyboardEvent, MouseEvent, cloneElement, useState } from "react";
 import { IDrawerProps } from "@/interfaces/Main";
 import Title from "@/components/Typography/Title";
@@ -19,7 +19,7 @@ export default function Drawer({
   footerStyle = { padding: "0", borderTop: "none" },
 }: IDrawerProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(open);
-  const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 768px)");
+  const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 640px)");
 
   const handleClose = (e: MouseEvent | KeyboardEvent) => {
     onClose?.(e);
@@ -42,18 +42,15 @@ export default function Drawer({
         open={open !== undefined ? open : isDrawerOpen}
         width={width}
         height="auto"
+        className="px-4 py-8 tab:px-6 lap:px-8"
         placement={MOBILE_BREAK_POINT ? "bottom" : "right"} // Use bottom placement for mobile screens, right for others
         onClose={handleClose}
         push={false}
         title={
-          <div className="px-4 pt-4 tab:px-6 tab:pt-6 lap:px-8 lap:pt-8">
-            <div className="flex justify-center tab:hidden">
-              <Divider className="m-0 mb-4 w-1/4 min-w-0 rounded-2xl border-t-4 border-solid border-gray-300" />
-            </div>
+          <div className="relative pb-2">
+            <div className=" h-1 w-16 absolute -top-1/2 right-1/2 bg-gray-300 translate-y-1/2 translate-x-1/2 rounded-md tab:hidden" />
             <Row justify="space-between" align="middle">
-              <Title level={4} className="text-base font-medium tab:text-xl">
-                {title}
-              </Title>
+              <Title level={4}>{title}</Title>
               <Button
                 onClick={handleClose}
                 type="text"
@@ -64,7 +61,7 @@ export default function Drawer({
         }
         headerStyle={{ borderBottom: "none", padding: "0" }}
         footer={
-          <div className="flex flex-col-reverse justify-end gap-4 bg-white p-4 tab:flex-row tab:px-6 tab:pb-8 tab:pt-4 lap:px-8">
+          <div className="flex flex-col-reverse justify-end gap-4 bg-white pt-4 tab:flex-row">
             {closeButton ? (
               <Button
                 size="large"
@@ -80,9 +77,7 @@ export default function Drawer({
         footerStyle={footerStyle}
         bodyStyle={{ padding: "0" }}
       >
-        <div className="p-4 max-h-[65vh] tab:max-h-none tab:p-6 lap:p-8">
-          {children}
-        </div>
+        <div className="py-4 max-h-[65vh] tab:max-h-none">{children}</div>
       </AntdDrawer>
     </FormProvider>
   );

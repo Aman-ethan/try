@@ -221,17 +221,17 @@ export default function TradeForm({
           name="security"
           className="min-w-0 flex-1"
         >
-          <Input placeholder="Security ID" disabled />
+          <Input placeholder="Security ID" disabled className="w-full" />
         </Form.Item>
         <Form.Item label="Currency" name="currency" className="min-w-0 flex-1">
-          <SelectCurrency placeholder="Currency" disabled />
+          <SelectCurrency placeholder="Currency" disabled className="w-full" />
         </Form.Item>
         <Form.Item
           label="Asset Type"
           name="asset_class"
           className="min-w-0 flex-1"
         >
-          <SelectAsset placeholder="Asset Type" disabled />
+          <SelectAsset placeholder="Asset Type" disabled className="w-full" />
         </Form.Item>
       </Row>
       <Form.Item

@@ -128,6 +128,7 @@ export interface IStatementFormProps {
 export interface IDrawerProps extends DrawerProps {
   button?: ReactElement;
   closeButton?: string;
+  title?: string;
 }
 
 export interface IBlotterTransactionStatement {

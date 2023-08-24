@@ -21,7 +21,7 @@ export default function Upload({
       accept={accept}
       {...props}
     >
-      <Row align="middle" className="flex-col gap-y-4 py-7">
+      <Row align="middle" className="flex-col gap-2 py-2 tab:py-7 tab:gap-4">
         <UploadIcon />
         <div className="space-y-2">
           <p className="flex justify-center font-medium text-neutral-13/80">
