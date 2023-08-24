@@ -41,7 +41,7 @@ export default function FormType() {
         setUploadType(e.target.value);
       }}
       size="large"
-      className="divider-0 flex gap-6 tab:w-1/2"
+      className="divider-0 flex gap-6 tab:w-[24.4375rem]"
     />
   );
 }

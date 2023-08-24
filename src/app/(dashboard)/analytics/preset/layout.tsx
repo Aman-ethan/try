@@ -7,7 +7,7 @@ interface IAnalyticsLayoutProps {
 
 export default function AnalyticsLayout({ children }: IAnalyticsLayoutProps) {
   return (
-    <div className="space-y-4 tab:space-y-6 lap:space-y-8">
+    <div className="space-y-6 lap:space-y-8">
       <CrudeHeader />
       {children}
     </div>

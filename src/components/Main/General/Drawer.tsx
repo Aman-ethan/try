@@ -12,7 +12,7 @@ export default function Drawer({
   children,
   footer,
   title,
-  width = 720,
+  width,
   open,
   closeButton,
   onClose,
@@ -20,6 +20,7 @@ export default function Drawer({
 }: IDrawerProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(open);
   const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 640px)");
+  const TABLET_BREAK_POINT = useMediaQuery("(max-width: 1024px)");
 
   const handleClose = (e: MouseEvent | KeyboardEvent) => {
     onClose?.(e);
@@ -40,7 +41,7 @@ export default function Drawer({
         closable={false}
         closeIcon={null}
         open={open !== undefined ? open : isDrawerOpen}
-        width={width}
+        width={width || TABLET_BREAK_POINT ? 570 : 720}
         height="auto"
         className="px-4 py-8 tab:px-6 lap:px-8"
         placement={MOBILE_BREAK_POINT ? "bottom" : "right"} // Use bottom placement for mobile screens, right for others
