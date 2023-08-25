@@ -95,3 +95,15 @@ th {
 .client-details-radio-group label {
   @apply !flex-auto;
 }
+
+.delete-confirm-overlay .ant-popconfirm-buttons {
+  @apply !flex;
+}
+
+.delete-confirm-overlay .ant-popconfirm-buttons > button {
+  @apply !flex-1;
+}
+
+.delete-confirm-overlay .ant-popconfirm-description{
+  @apply !mt-2 !mb-6;
+}

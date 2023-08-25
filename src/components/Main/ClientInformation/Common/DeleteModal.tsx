@@ -1,11 +1,18 @@
 "use client";
 
-import { DeleteOutlined, DeleteTwoTone } from "@ant-design/icons";
-import { Button, Drawer, Popconfirm, message } from "antd";
+import {
+  DeleteOutlined,
+  DeleteTwoTone,
+  CloseOutlined,
+} from "@ant-design/icons";
+import { Button, Popconfirm, message } from "antd";
 import { useState } from "react";
+import { useMediaQuery } from "@mantine/hooks";
 import revalidate from "@/lib/revalidate";
 import { useTransactionServerDeleteMutation } from "@/hooks/useMutation";
 import { TTabType } from "@/interfaces/Main";
+import Title from "@/components/Typography/Title";
+import Drawer from "../../General/Drawer";
 
 const DeleteHeader = {
   goal: "Goal",
@@ -17,7 +24,7 @@ interface IDeleteModalProps {
   type: TTabType;
 }
 
-function useDeleteClient({ type, id }: IDeleteModalProps) {
+function useDeleteClient({ id, type }: IDeleteModalProps) {
   const { trigger } = useTransactionServerDeleteMutation(`/${type}/${id}/`, {
     onSuccess: () => {
       message.success(` ${DeleteHeader[type]} deleted successfully`);
@@ -29,10 +36,13 @@ function useDeleteClient({ type, id }: IDeleteModalProps) {
     trigger,
   };
 }
-
 export default function DeleteModal({ id, type }: IDeleteModalProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { trigger } = useDeleteClient({ id, type });
+
+  const title = `Delete this ${DeleteHeader[type]}?`;
+  const description = `Deleting this ${DeleteHeader[type]} may impact related areas.`;
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -41,72 +51,86 @@ export default function DeleteModal({ id, type }: IDeleteModalProps) {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 768px)");
+  const content = (
+    <Button
+      className="ml-4 border-red-300"
+      type="default"
+      onClick={showModal}
+      size="large"
+      icon={<DeleteOutlined className="text-red-600" />}
+    />
+  );
 
-  return (
-    <>
-      <Button
-        className="ml-4 border-red-300 flex justify-center items-center"
-        style={{ width: "34px", height: "34px" }}
-        type="default"
-        onClick={showModal}
-        size="large"
-        icon={<DeleteOutlined className="text-red-600" />}
-      />
-      <Popconfirm
-        className="mob:hidden tab:block"
-        title={
-          <div className="flex justify-center">
-            <DeleteTwoTone twoToneColor="#F5222D" className="mr-2" />
-            Delete this {DeleteHeader[type]}?
-          </div>
-        }
-        description={`Deleting this ${DeleteHeader[type]} may impact related areas.`}
-        trigger="click"
-        open={isModalOpen}
-        okText="Delete"
-        cancelText="Cancel"
-        okButtonProps={{
-          danger: true,
-          ghost: true,
-          type: "primary",
-          size: "middle",
-          style: { marginRight: 50 },
-        }}
-        cancelButtonProps={{ type: "default", size: "middle" }}
-        onConfirm={trigger}
-        onCancel={handleCancel}
-        placement="bottomRight"
-        icon={null}
-        onOpenChange={setIsModalOpen}
-      />
-
+  if (MOBILE_BREAK_POINT) {
+    return (
       <Drawer
-        className="mob:block tab:hidden"
+        button={content}
         title={
-          <div className="flex justify-center">
-            <DeleteTwoTone twoToneColor="#F5222D" className="mr-2" />
-            Delete this {DeleteHeader[type]}?
+          <div className="flex gap-x-2">
+            <DeleteTwoTone twoToneColor="#F5222D" />
+            <p>{title}</p>
           </div>
         }
-        placement="bottom"
-        closable={false}
         onClose={handleCancel}
+        placement="bottom"
         open={isModalOpen}
         key="bottom"
         height="auto"
         footer={
           <div className="flex flex-col gap-4">
-            <Button type="primary" danger onClick={trigger}>
+            <Button type="primary" size="large" danger onClick={trigger}>
               Delete
             </Button>
-            <Button onClick={handleCancel}>Cancel</Button>
+            <Button onClick={handleCancel} size="large">
+              Cancel
+            </Button>
           </div>
         }
       >
-        <p className="text-center">
-          Deleting this {DeleteHeader[type]} may impact related areas.
-        </p>
+        <p>{description}</p>
       </Drawer>
+    );
+  }
+
+  return (
+    <>
+      {content}
+      <Popconfirm
+        title={
+          <div className="flex items-center">
+            <div className="flex flex-1 justify-center gap-x-2">
+              <DeleteTwoTone
+                twoToneColor="#F5222D"
+                style={{ fontSize: "20px" }}
+              />
+              <Title level={5} className="font-medium">
+                {title}
+              </Title>
+            </div>
+            <CloseOutlined onClick={handleCancel} />
+          </div>
+        }
+        description={<span>{description}</span>}
+        placement="bottomRight"
+        open={isModalOpen}
+        onCancel={handleCancel}
+        trigger="click"
+        okText="Delete"
+        cancelText="Cancel"
+        icon={null}
+        overlayClassName="delete-confirm-overlay"
+        okButtonProps={{
+          danger: true,
+          size: "large",
+          type: "primary",
+          style: { flex: "1" },
+        }}
+        cancelButtonProps={{
+          size: "large",
+          style: { flex: "1" },
+        }}
+      />
     </>
   );
 }
