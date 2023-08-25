@@ -5,9 +5,9 @@ WORKDIR /app
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
-    if [ -f pnpm-lock.yaml ]; then npm install -g pnpm && pnpm i --frozen-lockfile; \
-    elif [ -f yarn.lock ]; then npm install -g pnpm && yarn --frozen-lockfile; \
-    elif [ -f package-lock.json ]; then npm ci; \
+    if [ -f pnpm-lock.yaml ]; then npm install -g pnpm && pnpm i --frozen-lockfile && pnpm cache clean; \
+    elif [ -f yarn.lock ]; then npm install -g yarn && yarn --frozen-lockfile && yarn cache clean ; \
+    elif [ -f package-lock.json ]; then npm ci && npm cache clean --force; \
     else echo "Warning: Lockfile not found. It is recommended to commit lockfiles to version control." && yarn install; \
     fi
 
