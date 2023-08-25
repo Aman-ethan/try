@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
+// To add support for Docker to an existing project
+  output: 'standalone',
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,

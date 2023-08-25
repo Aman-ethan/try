@@ -1,6 +1,32 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Using Docker and Makefile
+
+### Development environment - for doing testing
+
+```
+make build-development
+make start-development
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+
+### Production environment - for users
+
+Multistage builds are highly recommended in production. Combined with the Next [Output Standalone](https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files) feature, only `node_modules` files required for production are copied into the final Docker image.
+
+First, run the production server (Final image approximately 110 MB).
+
+```
+make build-production
+make start-production
+```
+
+Open http://localhost:3000
+
+## Running Locally
 
 First, run the development server:
 
@@ -8,8 +34,16 @@ First, run the development server:
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
+```
+
+## Useful commands
+
+```bash
+# Stop all running containers
+docker kill $(docker ps -aq) && docker rm $(docker ps -aq)
+
+# Free space
+docker system prune -af --volumes
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
