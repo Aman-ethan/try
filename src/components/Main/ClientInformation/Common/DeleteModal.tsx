@@ -115,6 +115,7 @@ export default function DeleteModal({ id, type }: IDeleteModalProps) {
         description={<span>{description}</span>}
         placement="bottomRight"
         open={isModalOpen}
+        onConfirm={trigger}
         onCancel={handleCancel}
         trigger="click"
         okText="Delete"
