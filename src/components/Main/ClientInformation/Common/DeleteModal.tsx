@@ -54,8 +54,9 @@ export default function DeleteModal({ id, type }: IDeleteModalProps) {
   const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 768px)");
   const content = (
     <Button
-      className="ml-4 border-red-300"
+      className="ml-4 border-red-300 flex justify-center items-center"
       type="default"
+      style={{ width: "34px", height: "34px" }}
       onClick={showModal}
       size="large"
       icon={<DeleteOutlined className="text-red-600" />}
@@ -114,6 +115,7 @@ export default function DeleteModal({ id, type }: IDeleteModalProps) {
         description={<span>{description}</span>}
         placement="bottomRight"
         open={isModalOpen}
+        onConfirm={trigger}
         onCancel={handleCancel}
         trigger="click"
         okText="Delete"

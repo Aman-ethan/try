@@ -104,6 +104,6 @@ th {
   @apply !flex-1;
 }
 
-.delete-confirm-overlay .ant-popconfirm-description{
+.delete-confirm-overlay .ant-popconfirm-description {
   @apply !mt-2 !mb-6;
 }

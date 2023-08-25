@@ -48,11 +48,11 @@ export default function ClientDetailsDrawer({
   const deleteButtonStyle = edit
     ? { height: "34px", width: "34px" }
     : undefined;
-  const title = edit ? `Edit` : `Add ${type.replace("_", " ")}`;
+
+  const title = `${edit ? "Edit" : "Add"} ${type.replace("_", " ")}`;
 
   return (
     <Drawer
-      width={570}
       placement={placement}
       open={isDrawerOpen}
       onClose={() => {
@@ -71,7 +71,7 @@ export default function ClientDetailsDrawer({
           {edit ? "" : `Add ${type.replace("_", " ")}`}
         </Button>
       }
-      footer={<DrawerFormFooter />}
+      footer={<DrawerFormFooter submitText="Submit" />}
     >
       <DetailsForm id={id} type={type} onClose={() => setIsDrawerOpen(false)} />
     </Drawer>
