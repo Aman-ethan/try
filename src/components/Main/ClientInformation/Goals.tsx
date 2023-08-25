@@ -8,7 +8,7 @@ import useSearchParams from "@/hooks/useSearchParams";
 import buildURLSearchParams from "@/lib/buildURLSearchParams";
 import ClientDetailsDrawer from "./Common/ClientDetailsDrawer";
 import DeleteModal from "./Common/DeleteModal";
-import { AssetColorMap } from "./Forms/GoalsForm";
+import { AssetColorMap } from "./SelectAssetPreference";
 
 const AssetClassMap = {
   equity: "Equity",

@@ -1,10 +1,8 @@
 "use client";
 
-import { Form, Input, Row, Select, Spin, message, Tag, FormRule } from "antd";
+import { Form, Input, Row, Spin, message } from "antd";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { isArray } from "lodash";
-import { FormInstance } from "antd/lib/form";
 import useFormState from "@/hooks/useForm";
 import {
   useTransactionServerMutation,
@@ -12,29 +10,8 @@ import {
 } from "@/hooks/useMutation";
 import { useTransactionServerQuery } from "@/hooks/useQuery";
 import revalidate from "@/lib/revalidate";
-
-const AssetClassPreference = [
-  { label: "Equity", value: "equity" },
-  { label: "Fixed Income", value: "fixed_income" },
-  { label: "Cash", value: "cash" },
-  { label: "Alternative", value: "alternative" },
-];
-
-export const AssetColorMap = {
-  equity: "cyan",
-  fixed_income: "geekblue",
-  cash: "orange",
-  alternative: "red",
-};
-
-export type TAssetColorType = keyof typeof AssetColorMap;
-
-const AssetClassMap = {
-  equity: "Equity",
-  fixed_income: "Fixed Income",
-  cash: "Cash",
-  alternative: "Alternative",
-};
+import Select from "@/components/Input/Select";
+import SelectAssetPreference from "../SelectAssetPreference";
 
 const ReturnExpectations = [
   { label: "High", value: "high" },
@@ -100,115 +77,44 @@ type TGoalFormKeys = keyof TGoal;
 
 interface IGoalFormInputsProps {
   type: TGoalFormKeys;
-  label: string;
-  asset_class_preference: TAssetColorType[] | keyof typeof AssetColorMap;
-  form: FormInstance<any>;
 }
 
-const FormRules: Record<"asset_class_preference", FormRule[]> = {
-  asset_class_preference: [
-    { required: true, message: "Please select asset class preference" },
-  ],
-};
-
-const tagRender = () => <> </>;
-function GoalFormInputs({
-  type,
-  label,
-  asset_class_preference,
-  form,
-}: IGoalFormInputsProps) {
+function GoalFormInputs({ type }: IGoalFormInputsProps) {
   switch (type) {
     case "name":
-      return (
-        <Form.Item key={type} label={label} name={type} className="flex-1">
-          <Input placeholder="Enter goal name" />
-        </Form.Item>
-      );
+      return <Input placeholder="Enter goal name" />;
     case "asset_class_preference":
       return (
-        <div className="relative">
-          <Form.Item
-            key={type}
-            label={label}
-            name={type}
-            className="flex-1"
-            rules={FormRules.asset_class_preference}
-          >
-            <Select
-              options={AssetClassPreference}
-              placeholder="Select asset class preference"
-              mode="multiple"
-              tagRender={tagRender}
-              maxTagCount="responsive"
-            />
-          </Form.Item>
-
-          {isArray(asset_class_preference) &&
-            asset_class_preference?.length > 0 && (
-              <div style={{ marginTop: "10px" }}>
-                {asset_class_preference?.map((value: TAssetColorType) => (
-                  <Tag
-                    key={value}
-                    color={AssetColorMap[value]}
-                    closable
-                    onClose={() =>
-                      form.setFieldsValue({
-                        asset_class_preference: asset_class_preference.filter(
-                          (item: TAssetColorType) => item !== value
-                        ),
-                      })
-                    }
-                  >
-                    {AssetClassMap[value]}
-                  </Tag>
-                ))}
-              </div>
-            )}
-          {/* We can remove below code once backend Starts accepting multi-select */}
-          {!isArray(asset_class_preference) && asset_class_preference && (
-            <div style={{ marginTop: "10px" }}>
-              <Tag
-                key={asset_class_preference}
-                color="blue"
-                closable
-                onClose={() =>
-                  form.setFieldsValue({
-                    asset_class_preference: null,
-                  })
-                }
-              >
-                {AssetClassMap[asset_class_preference]}
-              </Tag>
-            </div>
-          )}
-        </div>
+        <SelectAssetPreference
+          name={type}
+          placeholder="Select asset class preference"
+        />
       );
     case "investment_horizon":
-      return (
-        <Form.Item key={type} label={label} name={type} className="flex-1">
-          <Input placeholder="Enter investment horizon" />
-        </Form.Item>
-      );
+      return <Input placeholder="Enter investment horizon" />;
     case "return_expectations":
       return (
-        <Form.Item key={type} label={label} name={type} className="flex-1">
-          <Select
-            options={ReturnExpectations}
-            placeholder="Select return expectations"
-          />
-        </Form.Item>
+        <Select
+          options={ReturnExpectations}
+          placeholder="Select return expectations"
+        />
       );
     default:
       return null;
   }
 }
 
+const GoalFormMap: Record<keyof TGoal, string> = {
+  name: "Goal Name",
+  asset_class_preference: "Asset Class Preference",
+  investment_horizon: "Investment Horizon",
+  return_expectations: "Return Expectations",
+};
+
 export default function GoalsForm({ id, onClose }: GoalsFormProps) {
   const [form] = Form.useForm();
   const { data, formId, trigger, update, getSearchParams, isLoading } =
     useGoal(id);
-  const assetClassValues = Form.useWatch("asset_class_preference", form);
 
   useEffect(() => {
     if (data) {
@@ -221,6 +127,13 @@ export default function GoalsForm({ id, onClose }: GoalsFormProps) {
   };
 
   const handleSubmit = async (values: TGoal) => {
+    if (
+      !values.asset_class_preference ||
+      values.asset_class_preference.length === 0
+    ) {
+      message.error("Please select asset class preference");
+      return;
+    }
     const client = getSearchParams("client_id");
     if (id) {
       await update({ client, ...values });
@@ -229,13 +142,6 @@ export default function GoalsForm({ id, onClose }: GoalsFormProps) {
     }
     onClose();
     onReset();
-  };
-
-  const GoalFormMap: Record<keyof TGoal, string> = {
-    name: "Goal Name",
-    asset_class_preference: "Asset Class Preference",
-    investment_horizon: "Investment Horizon",
-    return_expectations: "Return Expectations",
   };
 
   if (isLoading)
@@ -258,13 +164,9 @@ export default function GoalsForm({ id, onClose }: GoalsFormProps) {
     >
       <Row className="grid grid-cols-1 gap-6 tab:grid-cols-2 tab:gap-x-8">
         {Object.entries(GoalFormMap).map(([key, label]) => (
-          <GoalFormInputs
-            key={key}
-            label={label}
-            type={key as TGoalFormKeys}
-            asset_class_preference={assetClassValues}
-            form={form}
-          />
+          <Form.Item key={key} label={label} name={key} className="flex-1">
+            <GoalFormInputs type={key as TGoalFormKeys} />
+          </Form.Item>
         ))}
       </Row>
     </Form>
