@@ -35,8 +35,12 @@ export default function CompanyCard({
   }, [prefetch]);
 
   return (
-    <Card onClick={onClick} loading={loading} className="cursor-pointer">
-      <div className="mb-6 flex space-x-8">
+    <Card
+      onClick={onClick}
+      loading={loading}
+      className="cursor-pointer lap:p-8"
+    >
+      <div className="mb-8 flex space-x-8 lap:mb-12">
         <Title className="capitalize" level={3}>
           {companyData?.client_name}
         </Title>
@@ -44,34 +48,22 @@ export default function CompanyCard({
       </div>
       <Row gutter={16} className="flex flex-wrap items-center justify-between">
         <Col sm={12} md={8} lg={8} className="mb-2 space-y-2 tab:mb-0">
-          <Title className="font-normal" level={6}>
-            Net Worth
-          </Title>
-          <Title level={1} className="text-[2.375rem] font-normal">
+          <p>Net Worth</p>
+          <p className="text-3xl tab:text-[38px]">
             <TooltipText value={companyData?.networth} type="price" />
-          </Title>
+          </p>
         </Col>
         <Col sm={12} md={8} lg={8} className="mb-2 space-y-2 tab:mb-0">
-          <Title className="font-normal" level={6}>
-            Assets
-          </Title>
-          <Title
-            level={1}
-            className="text-[2.375rem] font-normal text-summary-profit"
-          >
+          <p>Assets</p>
+          <p className="text-3xl tab:text-[38px] text-summary-profit">
             <TooltipText value={companyData?.assets} type="price" />
-          </Title>
+          </p>
         </Col>
         <Col sm={12} md={8} lg={8} className="mb-2 space-y-2 tab:mb-0">
-          <Title className="font-normal" level={6}>
-            Liabilities
-          </Title>
-          <Title
-            level={1}
-            className="text-[2.375rem] font-normal text-summary-loss"
-          >
+          <p>Liabilities</p>
+          <p className="text-3xl tab:text-[38px] text-summary-loss">
             <TooltipText value={companyData?.liabilities} type="price" />
-          </Title>
+          </p>
         </Col>
       </Row>
     </Card>

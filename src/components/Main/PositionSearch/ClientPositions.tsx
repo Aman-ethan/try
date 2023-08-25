@@ -1,7 +1,8 @@
-import { ProCard, ProList } from "@ant-design/pro-components";
-import { Col, Empty, Row } from "antd";
+import { Card, Col, Empty, List, Row } from "antd";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import clsx from "clsx";
+import { useMediaQuery } from "@mantine/hooks";
 import Title from "@/components/Typography/Title";
 import { BalanceSheetUrl } from "@/constants/strings";
 import useReportDate from "@/hooks/useReportDate";
@@ -24,6 +25,13 @@ export default function ClientPositions({
 
   const reportDate = useReportDate();
 
+  const MOBILE_BREAK_POINT = useMediaQuery("(max-width: 768px)");
+
+  const containerClassName = clsx("rounded-lg initial:p-6", {
+    "bg-transparent p-0": MOBILE_BREAK_POINT,
+    "bg-white": !MOBILE_BREAK_POINT,
+  });
+
   function onItemClicked(record: IPositionNetWorth) {
     push(
       `${BalanceSheetUrl}/${buildURLSearchParams({
@@ -39,57 +47,60 @@ export default function ClientPositions({
   }, [prefetch]);
 
   return (
-    <ProList
-      locale={{ emptyText: <Empty /> }}
-      loading={loading}
-      toolBarRender={() => [<MonthPicker value={reportDate} />]}
-      dataSource={clients}
-      grid={{
-        gutter: 16,
-        column: 2,
-        xs: 1,
-        sm: 1,
-        md: 1,
-        lg: 2,
-        xl: 2,
-        xxl: 2,
-      }}
-      metas={{
-        content: {
-          render: (text: React.ReactNode, record: IPositionNetWorth) => (
-            <ProCard.Group direction="column">
-              <ProCard onClick={() => onItemClicked(record)}>
-                <div className="mb-8 flex justify-between">
-                  <Title level={3}>{record?.client_name}</Title>
-                  <CurrencyTag currency={record?.currency} />
-                </div>
-                <Row gutter={16}>
-                  <Col sm={12} md={8} lg={8}>
-                    <Title level={6}>Net Worth</Title>
-                    <Title level={4}>
-                      <TooltipText value={record?.networth} />
-                    </Title>
-                  </Col>
-                  <Col sm={12} md={8} lg={8} className="mb-2 tab:mb-0">
-                    <Title level={6} className="font-regular">
-                      Assets
-                    </Title>
-                    <Title level={4} className="text-summary-profit">
-                      <TooltipText value={record?.assets} />
-                    </Title>
-                  </Col>
-                  <Col sm={12} md={8} lg={8}>
-                    <Title level={6}>Liabilities</Title>
-                    <Title level={4} className="text-summary-loss">
-                      <TooltipText value={record?.liabilities} />
-                    </Title>
-                  </Col>
-                </Row>
-              </ProCard>
-            </ProCard.Group>
-          ),
-        },
-      }}
-    />
+    <div className={containerClassName}>
+      <div className="flex justify-end mb-6">
+        <MonthPicker value={reportDate} />
+      </div>
+      <List
+        rowKey="client_id"
+        locale={{ emptyText: <Empty /> }}
+        loading={loading}
+        dataSource={clients}
+        grid={{
+          gutter: 16,
+          column: 2,
+          xs: 1,
+          sm: 1,
+          md: 1,
+          lg: 2,
+          xl: 2,
+          xxl: 2,
+        }}
+        renderItem={(record: IPositionNetWorth) => (
+          <List.Item>
+            <Card
+              onClick={() => onItemClicked(record)}
+              className="cursor-pointer p-4 tab:p-6"
+              bordered
+            >
+              <div className="mb-8 flex justify-between">
+                <Title level={3}>{record?.client_name}</Title>
+                <CurrencyTag currency={record?.currency} />
+              </div>
+              <Row gutter={16} justify="space-between" align="middle">
+                <Col sm={12} md={8} lg={8} className="mb-2 tab:mb-0">
+                  <p>Net Worth</p>
+                  <Title level={3} className="font-normal">
+                    <TooltipText value={record?.networth} />
+                  </Title>
+                </Col>
+                <Col sm={12} md={8} lg={8} className="mb-2 tab:mb-0">
+                  <p>Assets</p>
+                  <Title level={3} className="font-normal text-summary-profit">
+                    <TooltipText value={record?.assets} />
+                  </Title>
+                </Col>
+                <Col sm={12} md={8} lg={8} className="mb-2 tab:mb-0">
+                  <p>Assets</p>
+                  <Title level={3} className="font-normal text-summary-loss">
+                    <TooltipText value={record?.liabilities} />
+                  </Title>
+                </Col>
+              </Row>
+            </Card>
+          </List.Item>
+        )}
+      />
+    </div>
   );
 }
