@@ -49,7 +49,7 @@ export default function PositionListItems() {
   return (
     <>
       <div className="flex flex-col space-y-4 tab:flex-row tab:justify-between tab:space-x-4 tab:space-y-0">
-        <div className="space-between flex w-full items-center space-x-2 tab:w-1/3">
+        <div className="space-between flex w-full items-center space-x-2 tab:w-2/5">
           <SearchPositionSecurities
             placeholder="Search security name or id"
             className="w-full"
@@ -77,7 +77,7 @@ export default function PositionListItems() {
           />
         </div>
       </div>
-      <Card>
+      <Card className="p-4">
         <div className={listItemsClasses}>
           <div className="flex w-full flex-col gap-y-4 tab:flex-row tab:justify-between">
             <div>

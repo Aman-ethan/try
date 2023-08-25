@@ -16,31 +16,31 @@ interface IListProps {
 
 export default function ListDetails({ record }: IListProps) {
   return (
-    <div className="flex w-full flex-col justify-start space-y-3 border py-3 lap:flex-row lap:justify-between lap:space-x-10 lap:space-y-0">
+    <div className="flex w-full flex-col justify-start space-y-4 lap:flex-row lap:justify-between lap:space-x-10 lap:space-y-0 lap:px-2">
       <div className="flex w-full basis-1/2 flex-col justify-start space-y-4 py-6">
         <div className="flex w-full flex-col space-y-2 tab:flex-row tab:justify-between tab:space-x-4 tab:space-y-0">
-          <div className="flex flex-nowrap items-center space-x-2">
+          <div className="flex items-center space-x-2">
             <PieChartOutlined />
             <span className="font-medium">{record?.asset_class}</span>
           </div>
-          <div className="flex flex-nowrap items-center space-x-2">
+          <div className="flex items-center space-x-2">
             <BankOutlined />
             <span className="whitespace-nowrap font-medium">
               {record?.custodian_name}
             </span>
           </div>
-          <div className="flex flex-nowrap items-center space-x-2">
+          <div className="flex items-center space-x-2">
             <TagOutlined />
             <span className="font-medium">{record?.isin}</span>
           </div>
         </div>
         <div>{record?.description}</div>
-        <div className="font-medium">
+        <div className="flex items-center space-x-2">
           <UserOutlined />
-          {record?.client_name}
+          <span className="font-medium">{record?.client_name}</span>
         </div>
       </div>
-      <div className="flex basis-1/2 flex-col items-end space-x-4 space-y-6 lap:flex-row lap:items-center lap:space-y-0">
+      <div className="flex basis-1/2 flex-col gap-4 lap:flex-row lap:items-center lap:gap-y-0">
         <div className="flex flex-col basis-[95%]">
           <div className="flex w-full flex-col space-y-2 bg-neutral-2 rounded-md px-3 py-4">
             <div className="space-y-2 flex flex-col tab:flex-row tab:justify-between tab:space-y-0">
@@ -117,7 +117,7 @@ export default function ListDetails({ record }: IListProps) {
             </div>
           )}
         </div>
-        <Button className="flex items-center justify-between space-x-2 px-2 lap:space-x-0">
+        <Button className="flex self-end items-center justify-between space-x-2 px-2 lap:space-x-0">
           <ShareAltOutlined className="pl-2 lap:pl-0" />
           <p className="block pr-2 lap:hidden lap:pr-0">Share</p>
         </Button>

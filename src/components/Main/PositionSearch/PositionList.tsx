@@ -45,7 +45,14 @@ export default function PositionList() {
             className={primarySelectClasses}
           />
         </div>
-        <MonthPicker disabled />
+        <div
+          className={clsx(
+            showFilter ? "block" : "hidden",
+            "tab:flex mt-4 tab:mt-0"
+          )}
+        >
+          <MonthPicker disabled />
+        </div>
       </div>
       <DetailsSummary />
       <PositionListItems />

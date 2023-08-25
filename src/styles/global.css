@@ -26,6 +26,15 @@ p {
   @apply px-2 pb-1 !pt-2;
 }
 
+.ant-pro-card .ant-pro-card-body {
+  padding-inline: 0;
+  padding-block: 0;
+}
+
+.ant-pro-list-row-content {
+  margin-inline: 0;
+}
+
 .divider-0 ::before {
   content: unset !important;
 }
