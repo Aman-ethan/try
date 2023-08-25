@@ -31,6 +31,16 @@ ENV NEXT_PUBLIC_TRANSACTION_SERVER_URL=${NEXT_PUBLIC_TRANSACTION_SERVER_URL}
 # Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line to disable telemetry at build time
 # ENV NEXT_TELEMETRY_DISABLED 1
+# Run ESLint to lint your code
+RUN \
+  if [ -f pnpm-lock.yaml ]; then pnpm lint; \
+  elif [ -f yarn.lock ]; then yarn lint; \
+  elif [ -f package-lock.json ]; then npm run lint; \
+  else yarn lint; \
+  fi
+
+# Check the exit code of ESLint and exit with an error code if there are issues
+RUN eslint_exit_code=$? && if [ $eslint_exit_code -ne 0 ]; then exit $eslint_exit_code; fi
 
 # Build Next.js based on the preferred package manager
 RUN \
